@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GJIMT | Digital Academic Ecosystem</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#b11217;
+  --glass:rgba(255,255,255,0.18);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
+  background-size:400% 400%;
+  animation:bgMove 12s ease infinite;
+  color:white;
+  overflow-x:hidden;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* ===== PARTICLES ===== */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
+
+/* ===== HEADER ===== */
+header{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:50px 20px 20px;
+}
+
+.logo-bar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.logo-bar img{
+  height:55px;
+  background:white;
+  padding:10px 16px;
+  border-radius:14px;
+  animation:fadeDown 1s ease forwards;
+}
+
+@keyframes fadeDown{
+  from{opacity:0;transform:translateY(-30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+header h1{
+  font-size:2.7rem;
+  margin-bottom:10px;
+}
+
+header p{
+  opacity:0.85;
+  font-size:1.15rem;
+}
+
+/* ===== CARDS ===== */
+.container{
+  position:relative;
+  z-index:2;
+  max-width:1200px;
+  margin:auto;
+  padding:60px 20px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:35px;
+}
+
+.card{
+  background:var(--glass);
+  backdrop-filter:blur(16px);
+  border-radius:26px;
+  padding:45px 30px;
+  text-align:center;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,0.25);
+  transition:0.5s;
+  box-shadow:0 0 0 rgba(255,255,255,0);
+}
+
+.card:hover{
+  transform:translateY(-15px) scale(1.04);
+  box-shadow:0 0 30px rgba(255,255,255,0.25);
+}
+
+.card img{
+  height:70px;
+  max-width:170px;
+  object-fit:contain;
+  margin-bottom:18px;
+  background:white;
+  padding:12px;
+  border-radius:16px;
+}
+
+.sub-logos{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.sub-logos img{
+  height:38px;
+  padding:6px 10px;
+  border-radius:10px;
+}
+
+.card h2{
+  margin-bottom:12px;
+  font-size:1.6rem;
+}
+
+.card p{
+  font-size:0.95rem;
+  opacity:0.9;
+  margin-bottom:22px;
+}
+
+.card span{
+  display:inline-block;
+  padding:12px 34px;
+  border-radius:30px;
+  background:var(--primary);
+  font-weight:600;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:25px;
+  font-size:0.9rem;
+  opacity:0.85;
+}
+
+@media(max-width:768px){
+  header h1{font-size:2.1rem}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<header>
+  <div class="logo-bar">
+    <img src="https://www.gjimt.ac.in/wp-content/uploads/2025/09/gjimt-logo.png">
+    <img src="skillx.jpg">
+    <img src="zerotohero.jpg">
+    <img src="n_ioa-logo-optimized.png">
+   
+  </div>
+
+  <h1>GJIMT Digital Academic Ecosystem</h1>
+  <p>Choose your pathway towards global careers</p>
+</header>
+
+<div class="container">
+  <div class="cards">
+
+    <!-- GJIMT + ACCA -->
+    <div class="card" onclick="window.open('https://www.gjimt.ac.in','_blank')">
+      <img src="download.png">
+      <div class="sub-logos">
+  
+      </div>
+      <h2>GJIMT</h2>
+      <p>NAAC Accredited institution with global collaborations including ACCA.</p>
+      <span>Visit GJIMT</span>
+    </div>
+
+    <!-- Integrated Programs -->
+    <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/new_gjimt-integrated-programs/index.html','_blank')">
+      <img src="zerotohero.jpg">
+      <h2>Integrated Programs</h2>
+      <p>AI, Full Stack & Information Security integrated degrees.</p>
+      <span>Explore Programs</span>
+    </div>
+
+    <!-- SkillX -->
+    <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/SkillXworkshops/','_blank')">
+      <img src="skillx.jpg">
+      <h2>SkillX</h2>
+      <p>Skill-based certifications & industry-focused learning.</p>
+      <span>Enter SkillX</span>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 Gian Jyoti Institute of Management & Technology | Powered by IOA
+</footer>
+
+<script>
+/* ===== PARTICLES SCRIPT ===== */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+let w,h,particles=[];
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+}
+window.addEventListener("resize",resize);
+resize();
+
+for(let i=0;i<60;i++){
+  particles.push({
+    x:Math.random()*w,
+    y:Math.random()*h,
+    r:Math.random()*2+1,
+    dx:(Math.random()-0.5)*0.6,
+    dy:(Math.random()-0.5)*0.6
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle="rgba(255,255,255,0.6)";
+  particles.forEach(p=>{
+    p.x+=p.dx;
+    p.y+=p.dy;
+    if(p.x<0||p.x>w)p.dx*=-1;
+    if(p.y<0||p.y>h)p.dy*=-1;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
