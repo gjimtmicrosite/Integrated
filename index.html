@@ -35,14 +35,14 @@ body{
   100%{background-position:0% 50%}
 }
 
-/* ===== PARTICLES ===== */
+/* PARTICLES */
 canvas{
   position:fixed;
   inset:0;
   z-index:0;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 header{
   position:relative;
   z-index:2;
@@ -82,31 +82,30 @@ header p{
   font-size:1.15rem;
 }
 
-/* ===== CARDS ===== */
+/* CARDS */
 .container{
   position:relative;
   z-index:2;
-  max-width:1200px;
+  max-width:1400px;
   margin:auto;
   padding:60px 20px;
 }
 
 .cards{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:35px;
+  grid-template-columns:repeat(4,1fr); /* FORCE ONE LINE */
+  gap:30px;
 }
 
 .card{
   background:var(--glass);
   backdrop-filter:blur(16px);
   border-radius:26px;
-  padding:45px 30px;
+  padding:45px 28px;
   text-align:center;
   cursor:pointer;
   border:1px solid rgba(255,255,255,0.25);
   transition:0.5s;
-  box-shadow:0 0 0 rgba(255,255,255,0);
 }
 
 .card:hover{
@@ -124,22 +123,9 @@ header p{
   border-radius:16px;
 }
 
-.sub-logos{
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  margin-bottom:15px;
-}
-
-.sub-logos img{
-  height:38px;
-  padding:6px 10px;
-  border-radius:10px;
-}
-
 .card h2{
   margin-bottom:12px;
-  font-size:1.6rem;
+  font-size:1.5rem;
 }
 
 .card p{
@@ -150,13 +136,13 @@ header p{
 
 .card span{
   display:inline-block;
-  padding:12px 34px;
+  padding:12px 32px;
   border-radius:30px;
   background:var(--primary);
   font-weight:600;
 }
 
-/* ===== FOOTER ===== */
+/* FOOTER */
 footer{
   position:relative;
   z-index:2;
@@ -166,7 +152,12 @@ footer{
   opacity:0.85;
 }
 
-@media(max-width:768px){
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .cards{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  .cards{grid-template-columns:1fr;}
   header h1{font-size:2.1rem}
 }
 </style>
@@ -182,7 +173,6 @@ footer{
     <img src="skillx.jpg">
     <img src="zerotohero.jpg">
     <img src="n_ioa-logo-optimized.png">
-   
   </div>
 
   <h1>GJIMT Digital Academic Ecosystem</h1>
@@ -192,19 +182,16 @@ footer{
 <div class="container">
   <div class="cards">
 
-    <!-- GJIMT + ACCA -->
-    <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/ACCA/','_blank')">
+    <!-- ACCA -->
+    <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/ACCA/','_self')">
       <img src="download.png">
-      <div class="sub-logos">
-  
-      </div>
       <h2>ACCA @GJIMT</h2>
       <p>NAAC Accredited institution with global collaborations including ACCA.</p>
       <span>Visit GJIMT</span>
     </div>
 
     <!-- Integrated Programs -->
-    <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/new_gjimt-integrated-programs/index.html','_blank')">
+    <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/new_gjimt-integrated-programs/index.html','_self')">
       <img src="zerotohero.jpg">
       <h2>Integrated Programs</h2>
       <p>AI, Full Stack & Information Security integrated degrees.</p>
@@ -212,22 +199,30 @@ footer{
     </div>
 
     <!-- SkillX -->
-    <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/SkillXworkshops/','_blank')">
+    <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/SkillXworkshops/','_self')">
       <img src="skillx.jpg">
       <h2>SkillX</h2>
       <p>Skill-based certifications & industry-focused learning.</p>
       <span>Enter SkillX</span>
     </div>
 
+    <!-- Digital Marketing -->
+    <div class="card" onclick="window.open('digital-marketing.html','_self')">
+      <img src="digital-marketing.png">
+      <h2>Digital Marketing</h2>
+      <p>SEO, Social Media, Performance Marketing & AI-driven campaigns.</p>
+      <span>Explore Marketing</span>
+    </div>
+
   </div>
 </div>
 
 <footer>
-  © 2026 Gian Jyoti Institute of Management & Technology 
+  © 2026 Gian Jyoti Institute of Management & Technology
 </footer>
 
 <script>
-/* ===== PARTICLES SCRIPT ===== */
+/* PARTICLES */
 const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
 let w,h,particles=[];
@@ -267,5 +262,3 @@ animate();
 
 </body>
 </html>
-
-
