@@ -11,6 +11,7 @@
 :root{
   --primary:#b11217;
   --glass:rgba(255,255,255,0.18);
+  --accent:#b11217;
 }
 
 *{
@@ -86,14 +87,14 @@ header p{
 .container{
   position:relative;
   z-index:2;
-  max-width:1400px;
+  max-width:1500px;
   margin:auto;
   padding:60px 20px;
 }
 
 .cards{
   display:grid;
-  grid-template-columns:repeat(4,1fr); /* FORCE ONE LINE */
+  grid-template-columns:repeat(5,1fr);
   gap:30px;
 }
 
@@ -142,6 +143,17 @@ header p{
   font-weight:600;
 }
 
+/* BOOTCAMP SPECIAL */
+.card.bootcamp{
+  
+}
+
+.card.bootcamp span{
+  background:linear-gradient(135deg,#b11217,#b11217);
+  color:#000;
+  font-weight:700;
+}
+
 /* FOOTER */
 footer{
   position:relative;
@@ -153,7 +165,10 @@ footer{
 }
 
 /* RESPONSIVE */
-@media(max-width:1100px){
+@media(max-width:1200px){
+  .cards{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:900px){
   .cards{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:600px){
@@ -214,6 +229,14 @@ footer{
       <span>Explore Marketing</span>
     </div>
 
+    <!-- BOOTCAMP -->
+    <div class="card bootcamp" onclick="window.open('https://gjimtmicrosite.github.io/bootcamp/','_self')">
+      <img src="bootcamp.png">
+      <h2>Bootcamps</h2>
+      <p>Intensive hands-on bootcamps focused on placement & real-world projects.</p>
+      <span style="color:white;">Join Bootcamp</span>
+    </div>
+
   </div>
 </div>
 
@@ -262,9 +285,3 @@ animate();
 
 </body>
 </html>
-
-
-
-
-
-
