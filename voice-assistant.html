@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillX AI Voice Assistant</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
+background-size:400% 400%;
+animation:bgMove 10s ease infinite;
+color:white;
+
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+.container{
+
+width:420px;
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(18px);
+padding:40px;
+border-radius:25px;
+box-shadow:0 0 40px rgba(0,0,0,0.4);
+text-align:center;
+
+}
+
+.logo{
+
+font-size:28px;
+font-weight:600;
+margin-bottom:10px;
+
+}
+
+.subtitle{
+
+opacity:0.8;
+font-size:14px;
+margin-bottom:35px;
+
+}
+
+/* MIC BUTTON */
+
+.mic{
+
+width:120px;
+height:120px;
+border-radius:50%;
+background:linear-gradient(135deg,#b11217,#ff3b3b);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:50px;
+margin:auto;
+cursor:pointer;
+transition:0.4s;
+box-shadow:0 0 30px rgba(255,50,50,0.6);
+
+}
+
+.mic:hover{
+
+transform:scale(1.08);
+
+}
+
+.mic.listening{
+
+animation:pulse 1.2s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{box-shadow:0 0 20px rgba(255,50,50,0.5)}
+50%{box-shadow:0 0 50px rgba(255,50,50,1)}
+100%{box-shadow:0 0 20px rgba(255,50,50,0.5)}
+
+}
+
+.status{
+
+margin-top:18px;
+font-size:14px;
+opacity:0.9;
+
+}
+
+/* CHAT BOX */
+
+.chat{
+
+margin-top:30px;
+text-align:left;
+
+}
+
+.box{
+
+background:rgba(255,255,255,0.15);
+padding:14px;
+border-radius:12px;
+margin-bottom:12px;
+font-size:14px;
+
+}
+
+.question{
+
+border-left:4px solid #00d2ff;
+
+}
+
+.answer{
+
+border-left:4px solid #ff4b2b;
+
+}
+
+/* FOOTER */
+
+.footer{
+
+margin-top:25px;
+font-size:12px;
+opacity:0.6;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">🎤 SkillX AI Assistant</div>
+
+<div class="subtitle">
+Ask anything about SkillX Programs
+</div>
+
+<div id="mic" class="mic" onclick="startListening()">
+🎤
+</div>
+
+<div class="status" id="status">
+Tap microphone and ask your question
+</div>
+
+<div class="chat">
+
+<div id="questionBox" class="box question" style="display:none;"></div>
+
+<div id="answerBox" class="box answer" style="display:none;"></div>
+
+</div>
+
+<div class="footer">
+Powered by SkillX AI • GJIMT
+</div>
+
+</div>
+
+<script>
+
+const mic = document.getElementById("mic");
+const status = document.getElementById("status");
+
+const recognition = new webkitSpeechRecognition();
+recognition.lang = "en-IN";
+recognition.continuous = false;
+recognition.interimResults = false;
+
+function startListening(){
+
+mic.classList.add("listening");
+status.innerHTML="Listening...";
+
+recognition.start();
+
+}
+
+recognition.onresult = function(event){
+
+let question = event.results[0][0].transcript;
+
+document.getElementById("questionBox").style.display="block";
+document.getElementById("questionBox").innerHTML="👤 " + question;
+
+status.innerHTML="Thinking...";
+
+sendToAI(question);
+
+}
+
+recognition.onend=function(){
+
+mic.classList.remove("listening");
+
+}
+
+async function sendToAI(question){
+
+const response = await fetch(
+"https://aiprojectsgjimt.app.n8n.cloud/webhook/ai-kiosk",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify({
+query:question
+})
+});
+
+const data = await response.json();
+
+document.getElementById("answerBox").style.display="block";
+
+document.getElementById("answerBox").innerHTML=
+"🤖 " + data.output;
+
+status.innerHTML="Tap mic to ask another question";
+
+speak(data.output);
+
+}
+
+function speak(text){
+
+const speech = new SpeechSynthesisUtterance(text);
+
+speech.lang="en-IN";
+speech.rate=1;
+
+speechSynthesis.speak(speech);
+
+}
+
+</script>
+
+</body>
+</html>
