@@ -211,7 +211,12 @@ footer{
   opacity:0;
   transition:0.3s;
 }
-
+.voice-assistant img{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  object-fit:cover;
+}
 .voice-assistant:hover::after{
   opacity:1;
 }
@@ -326,11 +331,13 @@ animate();
 }
 </script>
 <!-- VOICE ASSISTANT BUTTON -->
+<!-- VOICE ASSISTANT AVATAR -->
 <div class="voice-assistant" onclick="openAssistant()">
-🎤
+  <img src="ai-assistant.png" alt="AI Assistant">
 </div>
 </body>
 </html>
+
 
 
 
