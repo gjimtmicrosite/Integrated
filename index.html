@@ -175,6 +175,46 @@ footer{
   .cards{grid-template-columns:1fr;}
   header h1{font-size:2.1rem}
 }
+  /* VOICE ASSISTANT BUTTON */
+.voice-assistant{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  width:70px;
+  height:70px;
+  background:linear-gradient(135deg,#b11217,#ff3b3b);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  color:white;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  z-index:999;
+  transition:0.4s;
+}
+
+.voice-assistant:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px rgba(255,255,255,0.6);
+}
+
+.voice-assistant::after{
+  content:"Voice Assistant";
+  position:absolute;
+  right:80px;
+  background:rgba(0,0,0,0.7);
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:12px;
+  opacity:0;
+  transition:0.3s;
+}
+
+.voice-assistant:hover::after{
+  opacity:1;
+}
 </style>
 </head>
 
@@ -281,9 +321,16 @@ function animate(){
   requestAnimationFrame(animate);
 }
 animate();
+  function openAssistant(){
+  window.open("assistant.html","_self");
+}
 </script>
-
+<!-- VOICE ASSISTANT BUTTON -->
+<div class="voice-assistant" onclick="openAssistant()">
+🎤
+</div>
 </body>
 </html>
+
 
 
