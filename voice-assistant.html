@@ -18,7 +18,6 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-
 height:100vh;
 display:flex;
 justify-content:center;
@@ -27,7 +26,6 @@ background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
 background-size:400% 400%;
 animation:bgMove 10s ease infinite;
 color:white;
-
 }
 
 @keyframes bgMove{
@@ -37,7 +35,6 @@ color:white;
 }
 
 .container{
-
 width:420px;
 background:rgba(255,255,255,0.1);
 backdrop-filter:blur(18px);
@@ -45,111 +42,88 @@ padding:40px;
 border-radius:25px;
 box-shadow:0 0 40px rgba(0,0,0,0.4);
 text-align:center;
-
 }
 
 .logo{
-
 font-size:28px;
 font-weight:600;
 margin-bottom:10px;
-
 }
 
 .subtitle{
-
 opacity:0.8;
 font-size:14px;
 margin-bottom:35px;
-
 }
 
-/* MIC BUTTON */
+/* AI GIRL BUTTON */
 
-.mic{
-
+.ai-avatar{
 width:120px;
 height:120px;
 border-radius:50%;
-background:linear-gradient(135deg,#b11217,#ff3b3b);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:50px;
 margin:auto;
 cursor:pointer;
-transition:0.4s;
+overflow:hidden;
 box-shadow:0 0 30px rgba(255,50,50,0.6);
-
+transition:0.4s;
 }
 
-.mic:hover{
+.ai-avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
 
+.ai-avatar:hover{
 transform:scale(1.08);
-
 }
 
-.mic.listening{
-
+.ai-avatar.listening{
 animation:pulse 1.2s infinite;
-
 }
 
 @keyframes pulse{
-
 0%{box-shadow:0 0 20px rgba(255,50,50,0.5)}
 50%{box-shadow:0 0 50px rgba(255,50,50,1)}
 100%{box-shadow:0 0 20px rgba(255,50,50,0.5)}
-
 }
 
 .status{
-
 margin-top:18px;
 font-size:14px;
 opacity:0.9;
-
 }
 
 /* CHAT BOX */
 
 .chat{
-
 margin-top:30px;
 text-align:left;
-
 }
 
 .box{
-
 background:rgba(255,255,255,0.15);
 padding:14px;
 border-radius:12px;
 margin-bottom:12px;
 font-size:14px;
-
 }
 
 .question{
-
 border-left:4px solid #00d2ff;
-
 }
 
 .answer{
-
 border-left:4px solid #ff4b2b;
-
 }
 
 /* FOOTER */
 
 .footer{
-
 margin-top:25px;
 font-size:12px;
 opacity:0.6;
-
 }
 
 </style>
@@ -160,18 +134,22 @@ opacity:0.6;
 
 <div class="container">
 
-<div class="logo">🎤 SkillX AI Assistant</div>
+<div class="logo">SkillX AI Assistant</div>
 
 <div class="subtitle">
 Ask anything about SkillX Programs
 </div>
 
-<div id="mic" class="mic" onclick="startListening()">
-🎤
+<!-- AI GIRL AVATAR BUTTON -->
+
+<div id="mic" class="ai-avatar" onclick="startListening()">
+
+<img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
+
 </div>
 
 <div class="status" id="status">
-Tap microphone and ask your question
+Tap the AI assistant and ask your question
 </div>
 
 <div class="chat">
@@ -244,10 +222,10 @@ const data = await response.json();
 
 document.getElementById("answerBox").style.display="block";
 
-document.getElementById("answerBox").innerHTML=
+document.getElementById("answerBox").innerHTML =
 "🤖 " + data.output;
 
-status.innerHTML="Tap mic to ask another question";
+status.innerHTML="Tap assistant to ask another question";
 
 speak(data.output);
 
