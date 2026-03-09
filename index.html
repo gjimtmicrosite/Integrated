@@ -176,6 +176,7 @@ footer{
   header h1{font-size:2.1rem}
 }
   /* VOICE ASSISTANT BUTTON */
+/* AI VOICE ASSISTANT BUTTON */
 .voice-assistant{
   position:fixed;
   bottom:30px;
@@ -186,67 +187,17 @@ footer{
   cursor:pointer;
   z-index:999;
 
-  background-image:url("ai-assistant.png"); /* your girl AI image */
+  background-image:url("ai-assistant.png"); /* girl AI image */
   background-size:cover;
   background-position:center;
-  background-repeat:no-repeat;
 
   box-shadow:0 10px 25px rgba(0,0,0,0.3);
   transition:0.4s;
 }
 
 .voice-assistant:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 20px rgba(255,255,255,0.6);
-}
-
-.voice-assistant:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 20px rgba(255,255,255,0.6);
-}
-
-.voice-assistant::after{
-  content:"Voice Assistant";
-  position:absolute;
-  right:80px;
-  background:rgba(0,0,0,0.7);
-  padding:6px 12px;
-  border-radius:8px;
-  font-size:12px;
-  opacity:0;
-  transition:0.3s;
-}
-.voice-assistant img{
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  object-fit:cover;
-}
-.voice-assistant:hover::after{
-  opacity:1;
-}
-  .voice-assistant{
-  position:fixed;
-  bottom:30px;
-  right:30px;
-  width:70px;
-  height:70px;
-  background:linear-gradient(135deg,#b11217,#ff3b3b);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
-  z-index:999;
-  overflow:hidden; /* IMPORTANT */
-}
-
-.voice-assistant img{
-  width:100%;
-  height:100%;
-  object-fit:cover; /* makes image fill circle properly */
-  border-radius:50%;
+  transform:scale(1.12);
+  box-shadow:0 0 25px rgba(255,255,255,0.6);
 }
 </style>
 </head>
@@ -363,6 +314,7 @@ animate();
 <div class="voice-assistant" onclick="openAssistant()"></div>
 </body>
 </html>
+
 
 
 
