@@ -180,19 +180,24 @@ footer{
   position:fixed;
   bottom:30px;
   right:30px;
-  width:70px;
-  height:70px;
-  background:linear-gradient(135deg,#b11217,#ff3b3b);
+  width:75px;
+  height:75px;
   border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  color:white;
   cursor:pointer;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
   z-index:999;
+
+  background-image:url("ai-assistant.png"); /* your girl AI image */
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
   transition:0.4s;
+}
+
+.voice-assistant:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px rgba(255,255,255,0.6);
 }
 
 .voice-assistant:hover{
@@ -355,11 +360,10 @@ animate();
 </script>
 <!-- VOICE ASSISTANT BUTTON -->
 <!-- VOICE ASSISTANT AVATAR -->
-<div class="voice-assistant" onclick="openAssistant()">
-  <img src="ai-assistant.png" alt="AI Assistant">
-</div>
+<div class="voice-assistant" onclick="openAssistant()"></div>
 </body>
 </html>
+
 
 
 
