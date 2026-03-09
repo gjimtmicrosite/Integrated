@@ -220,6 +220,29 @@ footer{
 .voice-assistant:hover::after{
   opacity:1;
 }
+  .voice-assistant{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  width:70px;
+  height:70px;
+  background:linear-gradient(135deg,#b11217,#ff3b3b);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  z-index:999;
+  overflow:hidden; /* IMPORTANT */
+}
+
+.voice-assistant img{
+  width:100%;
+  height:100%;
+  object-fit:cover; /* makes image fill circle properly */
+  border-radius:50%;
+}
 </style>
 </head>
 
@@ -337,6 +360,7 @@ animate();
 </div>
 </body>
 </html>
+
 
 
 
