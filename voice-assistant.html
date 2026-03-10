@@ -149,7 +149,7 @@ Ask anything about SkillX Programs
 </div>
 
 <div id="mic" class="ai-avatar" onclick="startListening()">
-<img src="ai-lady-robot.png" alt="AI Lady Robot">
+<img src="https://i.ibb.co/0jqHpnp/ai-robot-woman.png">
 </div>
 
 <div class="status" id="status">
@@ -182,14 +182,28 @@ const status = document.getElementById("status");
 
 let voices = [];
 
-speechSynthesis.onvoiceschanged = () => {
+function loadVoices(){
 voices = speechSynthesis.getVoices();
-};
+}
 
-const recognition = new webkitSpeechRecognition();
-recognition.lang = "en-IN";
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+/* SPEECH RECOGNITION SUPPORT */
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+status.innerHTML = "Speech Recognition not supported in this browser";
+}
+
+const recognition = new SpeechRecognition();
+
+recognition.lang = "hi-IN";
 recognition.continuous = false;
 recognition.interimResults = false;
+
+/* START LISTENING */
 
 function startListening(){
 
@@ -217,23 +231,45 @@ recognition.onend=function(){
 mic.classList.remove("listening");
 }
 
-/* LOCAL INTRODUCTION LOGIC */
+/* MULTI LANGUAGE INTRO */
 
 function checkLocalAnswers(question){
 
 let q = question.toLowerCase();
 
-if(q.includes("your name") || q.includes("who are you") || q.includes("introduce yourself")){
+/* ENGLISH */
 
-let intro = "Hello, I am Noor, the AI assistant robot for GJIMT. I am here to help you with information about SkillX programs, admissions, and campus services.";
+if(q.includes("your name") || q.includes("who are you") || q.includes("introduce")){
+
+let intro = "Hello, I am Noor, the AI assistant robot for GJIMT. I help visitors with SkillX programs, admissions and campus information.";
 
 showAnswer(intro);
+return;
+}
 
-}else{
+/* HINDI */
+
+if(q.includes("तुम्हारा नाम") || q.includes("आप कौन") || q.includes("परिचय")){
+
+let intro = "नमस्ते, मैं नूर हूँ। मैं जी जे आई एम टी के लिए एआई असिस्टेंट रोबोट हूँ और स्किल एक्स प्रोग्राम तथा एडमिशन की जानकारी देने में मदद करती हूँ।";
+
+showAnswer(intro);
+return;
+}
+
+/* PUNJABI */
+
+if(q.includes("ਤੇਰਾ ਨਾਮ") || q.includes("ਤੁਸੀਂ ਕੌਣ") || q.includes("ਪਰਚੇ")){
+
+let intro = "ਸਤ ਸ੍ਰੀ ਅਕਾਲ, ਮੈਂ ਨੂਰ ਹਾਂ। ਮੈਂ ਜੀ ਜੇ ਆਈ ਐਮ ਟੀ ਲਈ ਇੱਕ ਏਆਈ ਅਸਿਸਟੈਂਟ ਰੋਬੋਟ ਹਾਂ ਅਤੇ ਸਕਿਲ ਐਕਸ ਪ੍ਰੋਗਰਾਮ ਅਤੇ ਦਾਖਲੇ ਬਾਰੇ ਜਾਣਕਾਰੀ ਦਿੰਦੀ ਹਾਂ।";
+
+showAnswer(intro);
+return;
+}
+
+/* OTHERWISE CALL AI */
 
 sendToAI(question);
-
-}
 
 }
 
@@ -252,6 +288,8 @@ speak(text);
 
 async function sendToAI(question){
 
+try{
+
 const response = await fetch(
 "https://aiprojectsgjimt.app.n8n.cloud/webhook/ai-kiosk",
 {
@@ -259,14 +297,18 @@ method:"POST",
 headers:{
 "Content-Type":"application/json"
 },
-body: JSON.stringify({
-query:question
-})
+body: JSON.stringify({query:question})
 });
 
 const data = await response.json();
 
 showAnswer(data.output);
+
+}catch(error){
+
+showAnswer("Sorry, I cannot connect to the server right now.");
+
+}
 
 }
 
@@ -276,15 +318,14 @@ function speak(text){
 
 const speech = new SpeechSynthesisUtterance(text);
 
-speech.lang = "en-IN";
-speech.rate = 0.95;
-speech.pitch = 1.2;
+speech.lang="en-IN";
+speech.rate=0.95;
+speech.pitch=1.2;
 
 let femaleVoice = voices.find(v =>
 v.name.includes("Female") ||
 v.name.includes("Zira") ||
 v.name.includes("Samantha") ||
-v.name.includes("Google UK English Female") ||
 v.name.includes("Heera")
 );
 
