@@ -56,7 +56,7 @@ font-size:15px;
 margin-bottom:25px;
 }
 
-/* AI LADY IMAGE */
+/* AI IMAGE */
 
 .ai-avatar{
 width:250px;
@@ -90,7 +90,24 @@ font-size:14px;
 opacity:0.9;
 }
 
-/* CHAT BOX */
+/* STOP BUTTON */
+
+.stop-btn{
+margin-top:10px;
+padding:8px 18px;
+border:none;
+border-radius:20px;
+background:#ff4b2b;
+color:white;
+cursor:pointer;
+font-size:13px;
+}
+
+.stop-btn:hover{
+background:#ff2a00;
+}
+
+/* CHAT */
 
 .chat{
 margin-top:25px;
@@ -113,8 +130,6 @@ border-left:4px solid #00d2ff;
 border-left:4px solid #ff4b2b;
 }
 
-/* FOOTER */
-
 .footer{
 margin-top:20px;
 font-size:12px;
@@ -135,17 +150,17 @@ opacity:0.6;
 Ask anything about SkillX Programs
 </div>
 
-<!-- AI LADY ROBOT -->
+<!-- AI LADY -->
 
 <div id="mic" class="ai-avatar" onclick="startListening()">
-
 <img src="ai-lady-robot.png" alt="AI Lady Robot">
-
 </div>
 
 <div class="status" id="status">
 Tap the AI assistant and ask your question
 </div>
+
+<button class="stop-btn" onclick="stopSpeaking()">Stop Voice</button>
 
 <div class="chat">
 
@@ -165,6 +180,12 @@ Powered by SkillX AI • GJIMT
 
 const mic = document.getElementById("mic");
 const status = document.getElementById("status");
+
+let voices = [];
+
+speechSynthesis.onvoiceschanged = () => {
+voices = speechSynthesis.getVoices();
+};
 
 const recognition = new webkitSpeechRecognition();
 recognition.lang = "en-IN";
@@ -230,10 +251,35 @@ function speak(text){
 
 const speech = new SpeechSynthesisUtterance(text);
 
-speech.lang="en-IN";
-speech.rate=1;
+speech.lang = "en-IN";
+speech.rate = 0.95;
+speech.pitch = 1.2;
+
+/* Select Female Voice */
+
+let femaleVoice = voices.find(v =>
+v.name.includes("Female") ||
+v.name.includes("Zira") ||
+v.name.includes("Samantha") ||
+v.name.includes("Google UK English Female") ||
+v.name.includes("Heera")
+);
+
+if(femaleVoice){
+speech.voice = femaleVoice;
+}
 
 speechSynthesis.speak(speech);
+
+}
+
+/* STOP BUTTON */
+
+function stopSpeaking(){
+
+speechSynthesis.cancel();
+
+status.innerHTML="Voice stopped";
 
 }
 
