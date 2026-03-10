@@ -149,7 +149,7 @@ Ask anything about SkillX Programs
 </div>
 
 <div id="mic" class="ai-avatar" onclick="startListening()">
-<img src="https://i.ibb.co/0jqHpnp/ai-robot-woman.png">
+<img src="ai-lady-robot.png" alt="AI Robot">
 </div>
 
 <div class="status" id="status">
@@ -189,21 +189,15 @@ voices = speechSynthesis.getVoices();
 speechSynthesis.onvoiceschanged = loadVoices;
 loadVoices();
 
-/* SPEECH RECOGNITION SUPPORT */
+/* Speech Recognition */
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-if(!SpeechRecognition){
-status.innerHTML = "Speech Recognition not supported in this browser";
-}
 
 const recognition = new SpeechRecognition();
 
 recognition.lang = "hi-IN";
 recognition.continuous = false;
 recognition.interimResults = false;
-
-/* START LISTENING */
 
 function startListening(){
 
@@ -231,13 +225,11 @@ recognition.onend=function(){
 mic.classList.remove("listening");
 }
 
-/* MULTI LANGUAGE INTRO */
+/* INTRODUCTION */
 
 function checkLocalAnswers(question){
 
 let q = question.toLowerCase();
-
-/* ENGLISH */
 
 if(q.includes("your name") || q.includes("who are you") || q.includes("introduce")){
 
@@ -245,29 +237,8 @@ let intro = "Hello, I am Noor, the AI assistant robot for GJIMT. I help visitors
 
 showAnswer(intro);
 return;
+
 }
-
-/* HINDI */
-
-if(q.includes("तुम्हारा नाम") || q.includes("आप कौन") || q.includes("परिचय")){
-
-let intro = "नमस्ते, मैं नूर हूँ। मैं जी जे आई एम टी के लिए एआई असिस्टेंट रोबोट हूँ और स्किल एक्स प्रोग्राम तथा एडमिशन की जानकारी देने में मदद करती हूँ।";
-
-showAnswer(intro);
-return;
-}
-
-/* PUNJABI */
-
-if(q.includes("ਤੇਰਾ ਨਾਮ") || q.includes("ਤੁਸੀਂ ਕੌਣ") || q.includes("ਪਰਚੇ")){
-
-let intro = "ਸਤ ਸ੍ਰੀ ਅਕਾਲ, ਮੈਂ ਨੂਰ ਹਾਂ। ਮੈਂ ਜੀ ਜੇ ਆਈ ਐਮ ਟੀ ਲਈ ਇੱਕ ਏਆਈ ਅਸਿਸਟੈਂਟ ਰੋਬੋਟ ਹਾਂ ਅਤੇ ਸਕਿਲ ਐਕਸ ਪ੍ਰੋਗਰਾਮ ਅਤੇ ਦਾਖਲੇ ਬਾਰੇ ਜਾਣਕਾਰੀ ਦਿੰਦੀ ਹਾਂ।";
-
-showAnswer(intro);
-return;
-}
-
-/* OTHERWISE CALL AI */
 
 sendToAI(question);
 
@@ -284,7 +255,7 @@ speak(text);
 
 }
 
-/* AI WEBHOOK */
+/* WEBHOOK */
 
 async function sendToAI(question){
 
@@ -304,9 +275,9 @@ const data = await response.json();
 
 showAnswer(data.output);
 
-}catch(error){
+}catch{
 
-showAnswer("Sorry, I cannot connect to the server right now.");
+showAnswer("Sorry, I cannot connect to the AI server right now.");
 
 }
 
@@ -325,8 +296,7 @@ speech.pitch=1.2;
 let femaleVoice = voices.find(v =>
 v.name.includes("Female") ||
 v.name.includes("Zira") ||
-v.name.includes("Samantha") ||
-v.name.includes("Heera")
+v.name.includes("Samantha")
 );
 
 if(femaleVoice){
@@ -340,15 +310,19 @@ speechSynthesis.speak(speech);
 /* PAUSE */
 
 function pauseVoice(){
+
 speechSynthesis.pause();
 status.innerHTML="Voice Paused";
+
 }
 
 /* PLAY */
 
 function playVoice(){
+
 speechSynthesis.resume();
 status.innerHTML="Voice Resumed";
+
 }
 
 </script>
