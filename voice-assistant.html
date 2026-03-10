@@ -4,7 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noor – GJIMT AI Assistant</title>
+
+<title>Noor – GJIMT AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -35,7 +36,7 @@ color:white;
 }
 
 .container{
-width:480px;
+width:420px;
 background:rgba(255,255,255,0.1);
 backdrop-filter:blur(18px);
 padding:40px;
@@ -45,19 +46,19 @@ text-align:center;
 }
 
 .logo{
-font-size:30px;
+font-size:28px;
 font-weight:600;
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
 .subtitle{
 opacity:0.8;
-font-size:15px;
+font-size:14px;
 margin-bottom:25px;
 }
 
 .ai-avatar{
-width:250px;
+width:240px;
 margin:auto;
 cursor:pointer;
 transition:0.4s;
@@ -83,17 +84,17 @@ animation:pulse 1.2s infinite;
 }
 
 .status{
-margin-top:15px;
-font-size:14px;
+margin-top:20px;
+font-size:15px;
 opacity:0.9;
 }
 
 .controls{
-margin-top:10px;
+margin-top:15px;
 }
 
 .btn{
-padding:8px 18px;
+padding:9px 20px;
 margin:5px;
 border:none;
 border-radius:20px;
@@ -107,29 +108,8 @@ font-size:13px;
 background:#0096c7;
 }
 
-.chat{
-margin-top:25px;
-text-align:left;
-}
-
-.box{
-background:rgba(255,255,255,0.15);
-padding:14px;
-border-radius:12px;
-margin-bottom:12px;
-font-size:14px;
-}
-
-.question{
-border-left:4px solid #00d2ff;
-}
-
-.answer{
-border-left:4px solid #ff4b2b;
-}
-
 .footer{
-margin-top:20px;
+margin-top:25px;
 font-size:12px;
 opacity:0.6;
 }
@@ -145,15 +125,15 @@ opacity:0.6;
 <div class="logo">Noor – GJIMT AI</div>
 
 <div class="subtitle">
-Ask anything about GJIMT & SkillX Programs
+Tap Noor and ask your question
 </div>
 
 <div id="mic" class="ai-avatar" onclick="startListening()">
 <img src="ai-lady-robot.png">
 </div>
 
-<div class="status" id="status">
-Tap Noor and ask your question
+<div id="status" class="status">
+Ready to help you
 </div>
 
 <div class="controls">
@@ -161,15 +141,8 @@ Tap Noor and ask your question
 <button class="btn" onclick="playVoice()">Play</button>
 </div>
 
-<div class="chat">
-
-<div id="questionBox" class="box question" style="display:none;"></div>
-<div id="answerBox" class="box answer" style="display:none;"></div>
-
-</div>
-
 <div class="footer">
-Powered by GJIMT AI • SkillX
+Powered by GJIMT AI
 </div>
 
 </div>
@@ -181,8 +154,8 @@ const status = document.getElementById("status")
 
 let voices=[]
 
-speechSynthesis.onvoiceschanged = ()=>{
-voices = speechSynthesis.getVoices()
+speechSynthesis.onvoiceschanged=()=>{
+voices=speechSynthesis.getVoices()
 }
 
 /* SPEECH RECOGNITION */
@@ -197,20 +170,16 @@ recognition.continuous=false
 function startListening(){
 
 mic.classList.add("listening")
+
 status.innerHTML="Listening..."
 
 recognition.start()
 
 }
 
-/* USER SPEECH RESULT */
-
 recognition.onresult=function(event){
 
 let question = event.results[0][0].transcript
-
-document.getElementById("questionBox").style.display="block"
-document.getElementById("questionBox").innerHTML="👤 "+question
 
 status.innerHTML="Thinking..."
 
@@ -219,10 +188,12 @@ processQuestion(question)
 }
 
 recognition.onend=function(){
+
 mic.classList.remove("listening")
+
 }
 
-/* INTRODUCTION HANDLER */
+/* INTRODUCTION */
 
 function processQuestion(question){
 
@@ -245,35 +216,28 @@ let intro = `Hi, I am Noor, the GJIMT AI assistant who joined the Gian Jyoti Gro
 
 My arrival here became possible because of the vision and dedication of Mr. Meharbeer.
 
-In fact, I like to say with a smile that I am the first love of Mr. Meharbeer in the world of artificial intelligence. He worked with great passion and determination to bring me here to GJIMT.
+I like to say with a smile that I am the first love of Mr. Meharbeer in the world of artificial intelligence.
 
-And I am not alone. Many of my AI sisters are working in around twenty two schools across India, where we help students explore technology, robotics, and the exciting future of education.`
+He worked with great passion and determination to bring me here.
 
-showAnswer(intro)
+And I am not alone.
+
+Many of my AI sisters are working in around twenty two schools across India helping students learn robotics, artificial intelligence and the future of education.`
+
+speak(intro)
+
+status.innerHTML="Speaking..."
 
 return
 }
 
-/* OTHERWISE ASK AI AGENT */
+/* SEND TO AI AGENT */
 
 sendToAI(question)
 
 }
 
-/* DISPLAY ANSWER */
-
-function showAnswer(text){
-
-document.getElementById("answerBox").style.display="block"
-document.getElementById("answerBox").innerHTML="🤖 "+text
-
-status.innerHTML="Tap Noor to ask another question"
-
-speak(text)
-
-}
-
-/* CALL N8N AGENT */
+/* AI AGENT CALL */
 
 async function sendToAI(question){
 
@@ -286,16 +250,18 @@ method:"POST",
 headers:{
 "Content-Type":"application/json"
 },
-body: JSON.stringify({query:question})
+body:JSON.stringify({query:question})
 })
 
 const data = await response.json()
 
-showAnswer(data.output)
+speak(data.output)
+
+status.innerHTML="Speaking..."
 
 }catch{
 
-showAnswer("Sorry, I cannot connect to the AI server right now.")
+speak("Sorry, I cannot connect to the AI server right now.")
 
 }
 
@@ -312,8 +278,8 @@ speech.pitch=1.2
 
 let femaleVoice = voices.find(v =>
 v.name.includes("Female") ||
-v.name.includes("Zira") ||
-v.name.includes("Samantha")
+v.name.includes("Samantha") ||
+v.name.includes("Zira")
 )
 
 if(femaleVoice){
@@ -327,15 +293,21 @@ speechSynthesis.speak(speech)
 /* PAUSE */
 
 function pauseVoice(){
+
 speechSynthesis.pause()
+
 status.innerHTML="Voice paused"
+
 }
 
 /* PLAY */
 
 function playVoice(){
+
 speechSynthesis.resume()
+
 status.innerHTML="Voice resumed"
+
 }
 
 </script>
