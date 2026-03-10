@@ -90,21 +90,25 @@ font-size:14px;
 opacity:0.9;
 }
 
-/* STOP BUTTON */
+/* VOICE CONTROLS */
 
-.stop-btn{
+.controls{
 margin-top:10px;
+}
+
+.btn{
 padding:8px 18px;
+margin:5px;
 border:none;
 border-radius:20px;
-background:#ff4b2b;
+background:#00c6ff;
 color:white;
 cursor:pointer;
 font-size:13px;
 }
 
-.stop-btn:hover{
-background:#ff2a00;
+.btn:hover{
+background:#0096c7;
 }
 
 /* CHAT */
@@ -150,8 +154,6 @@ opacity:0.6;
 Ask anything about SkillX Programs
 </div>
 
-<!-- AI LADY -->
-
 <div id="mic" class="ai-avatar" onclick="startListening()">
 <img src="ai-lady-robot.png" alt="AI Lady Robot">
 </div>
@@ -160,7 +162,12 @@ Ask anything about SkillX Programs
 Tap the AI assistant and ask your question
 </div>
 
-<button class="stop-btn" onclick="stopSpeaking()">Stop Voice</button>
+<!-- PLAY / PAUSE BUTTONS -->
+
+<div class="controls">
+<button class="btn" onclick="pauseVoice()">Pause</button>
+<button class="btn" onclick="playVoice()">Play</button>
+</div>
 
 <div class="chat">
 
@@ -215,9 +222,7 @@ sendToAI(question);
 }
 
 recognition.onend=function(){
-
 mic.classList.remove("listening");
-
 }
 
 async function sendToAI(question){
@@ -237,15 +242,15 @@ query:question
 const data = await response.json();
 
 document.getElementById("answerBox").style.display="block";
-
-document.getElementById("answerBox").innerHTML =
-"🤖 " + data.output;
+document.getElementById("answerBox").innerHTML = "🤖 " + data.output;
 
 status.innerHTML="Tap assistant to ask another question";
 
 speak(data.output);
 
 }
+
+/* FEMALE VOICE */
 
 function speak(text){
 
@@ -254,8 +259,6 @@ const speech = new SpeechSynthesisUtterance(text);
 speech.lang = "en-IN";
 speech.rate = 0.95;
 speech.pitch = 1.2;
-
-/* Select Female Voice */
 
 let femaleVoice = voices.find(v =>
 v.name.includes("Female") ||
@@ -273,14 +276,18 @@ speechSynthesis.speak(speech);
 
 }
 
-/* STOP BUTTON */
+/* PAUSE */
 
-function stopSpeaking(){
+function pauseVoice(){
+speechSynthesis.pause();
+status.innerHTML="Voice Paused";
+}
 
-speechSynthesis.cancel();
+/* PLAY / RESUME */
 
-status.innerHTML="Voice stopped";
-
+function playVoice(){
+speechSynthesis.resume();
+status.innerHTML="Voice Resumed";
 }
 
 </script>
