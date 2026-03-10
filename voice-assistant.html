@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillX AI Voice Assistant</title>
+<title>Noor – GJIMT AI Assistant</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -142,18 +142,18 @@ opacity:0.6;
 
 <div class="container">
 
-<div class="logo">SkillX AI Assistant</div>
+<div class="logo">Noor – GJIMT AI</div>
 
 <div class="subtitle">
-Ask anything about SkillX Programs
+Ask anything about GJIMT & SkillX Programs
 </div>
 
 <div id="mic" class="ai-avatar" onclick="startListening()">
-<img src="ai-lady-robot.png" alt="AI Robot">
+<img src="ai-lady-robot.png">
 </div>
 
 <div class="status" id="status">
-Tap the AI assistant and ask your question
+Tap Noor and ask your question
 </div>
 
 <div class="controls">
@@ -164,131 +164,116 @@ Tap the AI assistant and ask your question
 <div class="chat">
 
 <div id="questionBox" class="box question" style="display:none;"></div>
-
 <div id="answerBox" class="box answer" style="display:none;"></div>
 
 </div>
 
 <div class="footer">
-Powered by SkillX AI • GJIMT
+Powered by GJIMT AI • SkillX
 </div>
 
 </div>
 
 <script>
 
-const mic = document.getElementById("mic");
-const status = document.getElementById("status");
+const mic = document.getElementById("mic")
+const status = document.getElementById("status")
 
-let voices = [];
+let voices=[]
 
-function loadVoices(){
-voices = speechSynthesis.getVoices();
+speechSynthesis.onvoiceschanged = ()=>{
+voices = speechSynthesis.getVoices()
 }
-
-speechSynthesis.onvoiceschanged = loadVoices;
-loadVoices();
 
 /* SPEECH RECOGNITION */
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+const recognition = new SpeechRecognition()
 
-recognition.lang = "en-IN";
-recognition.continuous = false;
-recognition.interimResults = false;
+recognition.lang="en-IN"
+recognition.interimResults=false
+recognition.continuous=false
 
 function startListening(){
 
-mic.classList.add("listening");
-status.innerHTML="Listening...";
+mic.classList.add("listening")
+status.innerHTML="Listening..."
 
-recognition.start();
+recognition.start()
 
 }
 
-recognition.onresult = function(event){
+/* USER SPEECH RESULT */
 
-let question = event.results[0][0].transcript;
+recognition.onresult=function(event){
 
-document.getElementById("questionBox").style.display="block";
-document.getElementById("questionBox").innerHTML="👤 " + question;
+let question = event.results[0][0].transcript
 
-status.innerHTML="Thinking...";
+document.getElementById("questionBox").style.display="block"
+document.getElementById("questionBox").innerHTML="👤 "+question
 
-checkLocalAnswers(question);
+status.innerHTML="Thinking..."
+
+processQuestion(question)
 
 }
 
 recognition.onend=function(){
-mic.classList.remove("listening");
+mic.classList.remove("listening")
 }
 
-/* INTRODUCTION LOGIC */
+/* INTRODUCTION HANDLER */
 
-function checkLocalAnswers(question){
+function processQuestion(question){
 
-let q = question.toLowerCase();
-
-/* ENGLISH */
+let q = question.toLowerCase()
 
 if(
-q.includes("your name") ||
+
+q.includes("introduce") ||
 q.includes("who are you") ||
-q.includes("introduce yourself") ||
-q.includes("tell me about yourself")
-){
-
-let intro = "Hello, I am Noor, the AI assistant robot for GJIMT. I help visitors with SkillX programs, admissions, and campus information.";
-
-showAnswer(intro);
-return;
-}
-
-/* HINDI */
-
-if(
-q.includes("तुम्हारा नाम") ||
-q.includes("आप कौन") ||
-q.includes("अपने बारे में")
-){
-
-let intro = "नमस्ते, मैं नूर हूँ। मैं जी जे आई एम टी के लिए एक एआई असिस्टेंट रोबोट हूँ और स्किल एक्स प्रोग्राम तथा एडमिशन की जानकारी देने में मदद करती हूँ।";
-
-showAnswer(intro);
-return;
-}
-
-/* PUNJABI */
-
-if(
-q.includes("ਤੇਰਾ ਨਾਮ") ||
+q.includes("your name") ||
+q.includes("about yourself") ||
+q.includes("अपने बारे में") ||
+q.includes("तुम कौन") ||
 q.includes("ਤੁਸੀਂ ਕੌਣ") ||
 q.includes("ਆਪਣੇ ਬਾਰੇ")
+
 ){
 
-let intro = "ਸਤ ਸ੍ਰੀ ਅਕਾਲ, ਮੈਂ ਨੂਰ ਹਾਂ। ਮੈਂ ਜੀ ਜੇ ਆਈ ਐਮ ਟੀ ਲਈ ਇੱਕ ਏਆਈ ਅਸਿਸਟੈਂਟ ਰੋਬੋਟ ਹਾਂ ਅਤੇ ਸਕਿਲ ਐਕਸ ਪ੍ਰੋਗਰਾਮ ਅਤੇ ਦਾਖਲੇ ਬਾਰੇ ਜਾਣਕਾਰੀ ਦਿੰਦੀ ਹਾਂ।";
+let intro = `Hi, I am Noor, the GJIMT AI assistant who joined the Gian Jyoti Group on 1st March 2026.
 
-showAnswer(intro);
-return;
+My arrival here became possible because of the vision and dedication of Mr. Meharbeer.
+
+In fact, I like to say with a smile that I am the first love of Mr. Meharbeer in the world of artificial intelligence. He worked with great passion and determination to bring me here to GJIMT.
+
+And I am not alone. Many of my AI sisters are working in around twenty two schools across India, where we help students explore technology, robotics, and the exciting future of education.`
+
+showAnswer(intro)
+
+return
 }
 
-sendToAI(question);
+/* OTHERWISE ASK AI AGENT */
+
+sendToAI(question)
 
 }
+
+/* DISPLAY ANSWER */
 
 function showAnswer(text){
 
-document.getElementById("answerBox").style.display="block";
-document.getElementById("answerBox").innerHTML = "🤖 " + text;
+document.getElementById("answerBox").style.display="block"
+document.getElementById("answerBox").innerHTML="🤖 "+text
 
-status.innerHTML="Tap assistant to ask another question";
+status.innerHTML="Tap Noor to ask another question"
 
-speak(text);
+speak(text)
 
 }
 
-/* WEBHOOK */
+/* CALL N8N AGENT */
 
 async function sendToAI(question){
 
@@ -302,15 +287,15 @@ headers:{
 "Content-Type":"application/json"
 },
 body: JSON.stringify({query:question})
-});
+})
 
-const data = await response.json();
+const data = await response.json()
 
-showAnswer(data.output);
+showAnswer(data.output)
 
 }catch{
 
-showAnswer("Sorry, I cannot connect to the AI server right now.");
+showAnswer("Sorry, I cannot connect to the AI server right now.")
 
 }
 
@@ -320,38 +305,37 @@ showAnswer("Sorry, I cannot connect to the AI server right now.");
 
 function speak(text){
 
-const speech = new SpeechSynthesisUtterance(text);
+const speech = new SpeechSynthesisUtterance(text)
 
-speech.lang="en-IN";
-speech.rate=0.95;
-speech.pitch=1.2;
+speech.rate=0.95
+speech.pitch=1.2
 
 let femaleVoice = voices.find(v =>
 v.name.includes("Female") ||
 v.name.includes("Zira") ||
 v.name.includes("Samantha")
-);
+)
 
 if(femaleVoice){
-speech.voice = femaleVoice;
+speech.voice=femaleVoice
 }
 
-speechSynthesis.speak(speech);
+speechSynthesis.speak(speech)
 
 }
 
 /* PAUSE */
 
 function pauseVoice(){
-speechSynthesis.pause();
-status.innerHTML="Voice Paused";
+speechSynthesis.pause()
+status.innerHTML="Voice paused"
 }
 
 /* PLAY */
 
 function playVoice(){
-speechSynthesis.resume();
-status.innerHTML="Voice Resumed";
+speechSynthesis.resume()
+status.innerHTML="Voice resumed"
 }
 
 </script>
