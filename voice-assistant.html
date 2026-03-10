@@ -189,13 +189,12 @@ voices = speechSynthesis.getVoices();
 speechSynthesis.onvoiceschanged = loadVoices;
 loadVoices();
 
-/* Speech Recognition */
+/* SPEECH RECOGNITION */
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
 const recognition = new SpeechRecognition();
 
-recognition.lang = "hi-IN";
+recognition.lang = "en-IN";
 recognition.continuous = false;
 recognition.interimResults = false;
 
@@ -225,19 +224,53 @@ recognition.onend=function(){
 mic.classList.remove("listening");
 }
 
-/* INTRODUCTION */
+/* INTRODUCTION LOGIC */
 
 function checkLocalAnswers(question){
 
 let q = question.toLowerCase();
 
-if(q.includes("your name") || q.includes("who are you") || q.includes("introduce")){
+/* ENGLISH */
 
-let intro = "Hello, I am Noor, the AI assistant robot for GJIMT. I help visitors with SkillX programs, admissions and campus information.";
+if(
+q.includes("your name") ||
+q.includes("who are you") ||
+q.includes("introduce yourself") ||
+q.includes("tell me about yourself")
+){
+
+let intro = "Hello, I am Noor, the AI assistant robot for GJIMT. I help visitors with SkillX programs, admissions, and campus information.";
 
 showAnswer(intro);
 return;
+}
 
+/* HINDI */
+
+if(
+q.includes("तुम्हारा नाम") ||
+q.includes("आप कौन") ||
+q.includes("अपने बारे में")
+){
+
+let intro = "नमस्ते, मैं नूर हूँ। मैं जी जे आई एम टी के लिए एक एआई असिस्टेंट रोबोट हूँ और स्किल एक्स प्रोग्राम तथा एडमिशन की जानकारी देने में मदद करती हूँ।";
+
+showAnswer(intro);
+return;
+}
+
+/* PUNJABI */
+
+if(
+q.includes("ਤੇਰਾ ਨਾਮ") ||
+q.includes("ਤੁਸੀਂ ਕੌਣ") ||
+q.includes("ਆਪਣੇ ਬਾਰੇ")
+){
+
+let intro = "ਸਤ ਸ੍ਰੀ ਅਕਾਲ, ਮੈਂ ਨੂਰ ਹਾਂ। ਮੈਂ ਜੀ ਜੇ ਆਈ ਐਮ ਟੀ ਲਈ ਇੱਕ ਏਆਈ ਅਸਿਸਟੈਂਟ ਰੋਬੋਟ ਹਾਂ ਅਤੇ ਸਕਿਲ ਐਕਸ ਪ੍ਰੋਗਰਾਮ ਅਤੇ ਦਾਖਲੇ ਬਾਰੇ ਜਾਣਕਾਰੀ ਦਿੰਦੀ ਹਾਂ।";
+
+showAnswer(intro);
+return;
 }
 
 sendToAI(question);
@@ -310,19 +343,15 @@ speechSynthesis.speak(speech);
 /* PAUSE */
 
 function pauseVoice(){
-
 speechSynthesis.pause();
 status.innerHTML="Voice Paused";
-
 }
 
 /* PLAY */
 
 function playVoice(){
-
 speechSynthesis.resume();
 status.innerHTML="Voice Resumed";
-
 }
 
 </script>
