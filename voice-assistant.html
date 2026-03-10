@@ -1,188 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillX AI Voice Assistant</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
-background-size:400% 400%;
-animation:bgMove 10s ease infinite;
-color:white;
-}
-
-@keyframes bgMove{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
-.container{
-width:480px;
-background:rgba(255,255,255,0.1);
-backdrop-filter:blur(18px);
-padding:40px;
-border-radius:25px;
-box-shadow:0 0 40px rgba(0,0,0,0.4);
-text-align:center;
-}
-
-.logo{
-font-size:30px;
-font-weight:600;
-margin-bottom:10px;
-}
-
-.subtitle{
-opacity:0.8;
-font-size:15px;
-margin-bottom:25px;
-}
-
-/* AI IMAGE */
-
-.ai-avatar{
-width:250px;
-margin:auto;
-cursor:pointer;
-transition:0.4s;
-}
-
-.ai-avatar img{
-width:100%;
-border-radius:20px;
-}
-
-.ai-avatar:hover{
-transform:scale(1.05);
-}
-
-.ai-avatar.listening{
-animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-0%{filter:drop-shadow(0 0 10px red)}
-50%{filter:drop-shadow(0 0 35px red)}
-100%{filter:drop-shadow(0 0 10px red)}
-}
-
-.status{
-margin-top:15px;
-font-size:14px;
-opacity:0.9;
-}
-
-/* VOICE CONTROLS */
-
-.controls{
-margin-top:10px;
-}
-
-.btn{
-padding:8px 18px;
-margin:5px;
-border:none;
-border-radius:20px;
-background:#00c6ff;
-color:white;
-cursor:pointer;
-font-size:13px;
-}
-
-.btn:hover{
-background:#0096c7;
-}
-
-/* CHAT */
-
-.chat{
-margin-top:25px;
-text-align:left;
-}
-
-.box{
-background:rgba(255,255,255,0.15);
-padding:14px;
-border-radius:12px;
-margin-bottom:12px;
-font-size:14px;
-}
-
-.question{
-border-left:4px solid #00d2ff;
-}
-
-.answer{
-border-left:4px solid #ff4b2b;
-}
-
-.footer{
-margin-top:20px;
-font-size:12px;
-opacity:0.6;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="logo">SkillX AI Assistant</div>
-
-<div class="subtitle">
-Ask anything about SkillX Programs
-</div>
-
-<div id="mic" class="ai-avatar" onclick="startListening()">
-<img src="ai-lady-robot.png" alt="AI Lady Robot">
-</div>
-
-<div class="status" id="status">
-Tap the AI assistant and ask your question
-</div>
-
-<!-- PLAY / PAUSE BUTTONS -->
-
-<div class="controls">
-<button class="btn" onclick="pauseVoice()">Pause</button>
-<button class="btn" onclick="playVoice()">Play</button>
-</div>
-
-<div class="chat">
-
-<div id="questionBox" class="box question" style="display:none;"></div>
-
-<div id="answerBox" class="box answer" style="display:none;"></div>
-
-</div>
-
-<div class="footer">
-Powered by SkillX AI • GJIMT
-</div>
-
-</div>
-
 <script>
 
 const mic = document.getElementById("mic");
@@ -194,8 +9,11 @@ speechSynthesis.onvoiceschanged = () => {
 voices = speechSynthesis.getVoices();
 };
 
+/* SPEECH RECOGNITION */
+
 const recognition = new webkitSpeechRecognition();
-recognition.lang = "en-IN";
+
+recognition.lang = "hi-IN";   // Hindi + Punjabi accent support
 recognition.continuous = false;
 recognition.interimResults = false;
 
@@ -217,13 +35,68 @@ document.getElementById("questionBox").innerHTML="👤 " + question;
 
 status.innerHTML="Thinking...";
 
-sendToAI(question);
+checkLocalAnswers(question);
 
 }
 
 recognition.onend=function(){
 mic.classList.remove("listening");
 }
+
+/* MULTI LANGUAGE INTRODUCTION */
+
+function checkLocalAnswers(question){
+
+let q = question.toLowerCase();
+
+/* ENGLISH */
+
+if(q.includes("your name") || q.includes("who are you") || q.includes("introduce yourself")){
+
+let intro = "Hello, I am Noor, the AI assistant robot for GJIMT. I help visitors with SkillX programs, admissions, and campus information.";
+
+showAnswer(intro);
+return;
+}
+
+/* HINDI */
+
+if(q.includes("तुम्हारा नाम") || q.includes("आप कौन") || q.includes("अपना परिचय")){
+
+let intro = "नमस्ते, मैं नूर हूँ। मैं जी जे आई एम टी के लिए एक एआई असिस्टेंट रोबोट हूँ। मैं स्किल एक्स प्रोग्राम, एडमिशन और कैंपस जानकारी में आपकी मदद कर सकती हूँ।";
+
+showAnswer(intro);
+return;
+}
+
+/* PUNJABI */
+
+if(q.includes("ਤੇਰਾ ਨਾਮ") || q.includes("ਤੁਸੀਂ ਕੌਣ") || q.includes("ਆਪਣਾ ਪਰਚੇ")){
+
+let intro = "ਸਤ ਸ੍ਰੀ ਅਕਾਲ, ਮੈਂ ਨੂਰ ਹਾਂ। ਮੈਂ ਜੀ ਜੇ ਆਈ ਐਮ ਟੀ ਲਈ ਇੱਕ ਏਆਈ ਅਸਿਸਟੈਂਟ ਰੋਬੋਟ ਹਾਂ। ਮੈਂ ਸਕਿਲ ਐਕਸ ਪ੍ਰੋਗਰਾਮ, ਦਾਖਲੇ ਅਤੇ ਕੈਂਪਸ ਜਾਣਕਾਰੀ ਵਿੱਚ ਤੁਹਾਡੀ ਮਦਦ ਕਰ ਸਕਦੀ ਹਾਂ।";
+
+showAnswer(intro);
+return;
+}
+
+/* OTHERWISE SEND TO AI */
+
+sendToAI(question);
+
+}
+
+function showAnswer(text){
+
+document.getElementById("answerBox").style.display="block";
+document.getElementById("answerBox").innerHTML = "🤖 " + text;
+
+status.innerHTML="Tap assistant to ask another question";
+
+speak(text);
+
+}
+
+/* AI WEBHOOK */
 
 async function sendToAI(question){
 
@@ -241,12 +114,7 @@ query:question
 
 const data = await response.json();
 
-document.getElementById("answerBox").style.display="block";
-document.getElementById("answerBox").innerHTML = "🤖 " + data.output;
-
-status.innerHTML="Tap assistant to ask another question";
-
-speak(data.output);
+showAnswer(data.output);
 
 }
 
@@ -256,15 +124,14 @@ function speak(text){
 
 const speech = new SpeechSynthesisUtterance(text);
 
-speech.lang = "en-IN";
-speech.rate = 0.95;
-speech.pitch = 1.2;
+speech.lang="hi-IN";
+speech.rate=0.95;
+speech.pitch=1.2;
 
 let femaleVoice = voices.find(v =>
 v.name.includes("Female") ||
 v.name.includes("Zira") ||
 v.name.includes("Samantha") ||
-v.name.includes("Google UK English Female") ||
 v.name.includes("Heera")
 );
 
@@ -279,18 +146,19 @@ speechSynthesis.speak(speech);
 /* PAUSE */
 
 function pauseVoice(){
+
 speechSynthesis.pause();
 status.innerHTML="Voice Paused";
+
 }
 
-/* PLAY / RESUME */
+/* PLAY */
 
 function playVoice(){
+
 speechSynthesis.resume();
 status.innerHTML="Voice Resumed";
+
 }
 
 </script>
-
-</body>
-</html>
