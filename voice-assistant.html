@@ -208,13 +208,11 @@ mic.classList.remove("listening")
 
 }
 
-/* QUESTION PROCESSING */
+/* QUESTION PROCESS */
 
 function processQuestion(question){
 
 let q = question.toLowerCase()
-
-/* CUSTOM INTRO */
 
 if(
 q.includes("who are you") ||
@@ -230,7 +228,7 @@ let intro = `Hello. I am Noor, the artificial intelligence assistant of GJIMT.
 
 I joined the Gian Jyoti Group on the first of March 2026.
 
-My arrival here became possible because of the vision and dedication of Chairman Mr.J.S bedi and  director Dr. Aneet Bedi.
+My arrival here became possible because of the vision and dedication of Mister Meharbeer.
 
 He worked with great passion and determination to bring artificial intelligence and robotics to the campus.
 
@@ -245,68 +243,33 @@ status.innerHTML="Speaking..."
 return
 }
 
-/* GJIMT INFO */
+/* SEND QUESTION TO AI AGENT */
 
-if(q.includes("gjimt") || q.includes("gian jyoti")){
-
-let reply = `Gian Jyoti Institute of Management and Technology, also known as GJIMT, is a leading educational institution located in Mohali.
-
-It offers undergraduate and postgraduate programs in management, commerce, computer applications and other professional fields.
-
-GJIMT focuses on innovation, industry exposure and modern technologies such as artificial intelligence and robotics.`
-
-speak(reply)
-
-status.innerHTML="Speaking..."
-
-return
-}
-
-/* OTHERWISE ASK AI */
-
-askChatGPT(question)
+sendToAI(question)
 
 }
 
-/* CHATGPT API */
+/* AI WEBHOOK */
 
-async function askChatGPT(question){
+async function sendToAI(question){
 
 try{
 
-const response = await fetch("https://api.openai.com/v1/chat/completions",{
-
+const response = await fetch(
+"https://aiprojectsgjimt.app.n8n.cloud/webhook/ai-kiosk",
+{
 method:"POST",
-
 headers:{
-"Content-Type":"application/json",
-"Authorization":"Bearer YOUR_OPENAI_API_KEY"
+"Content-Type":"application/json"
 },
-
-body:JSON.stringify({
-
-model:"gpt-4o-mini",
-
-messages:[
-{
-role:"system",
-content:"You are Noor, a polite female AI assistant working for GJIMT college in India."
-},
-{
-role:"user",
-content:question
-}
-]
-
-})
-
+body:JSON.stringify({query:question})
 })
 
 const data = await response.json()
 
-let answer = data.choices[0].message.content
+let reply = data.output || data.response || "Sorry, I did not understand."
 
-speak(answer)
+speak(reply)
 
 status.innerHTML="Speaking..."
 
@@ -318,7 +281,7 @@ speak("Sorry, I cannot connect to the AI server right now.")
 
 }
 
-/* SPEAK FUNCTION */
+/* SPEAK */
 
 function speak(text){
 
@@ -363,7 +326,7 @@ status.innerHTML="Voice resumed"
 
 }
 
-/* STOP (RESET) */
+/* STOP */
 
 function stopAssistant(){
 
