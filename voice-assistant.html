@@ -95,7 +95,7 @@ margin-top:15px;
 }
 
 .btn{
-padding:9px 20px;
+padding:9px 18px;
 margin:5px;
 border:none;
 border-radius:20px;
@@ -107,6 +107,14 @@ font-size:13px;
 
 .btn:hover{
 background:#0096c7;
+}
+
+.stop{
+background:#ff4b5c;
+}
+
+.stop:hover{
+background:#d93b49;
 }
 
 .footer{
@@ -138,8 +146,13 @@ Ready to help you
 </div>
 
 <div class="controls">
+
 <button class="btn" onclick="pauseVoice()">Pause</button>
+
 <button class="btn" onclick="playVoice()">Play</button>
+
+<button class="btn stop" onclick="stopAssistant()">Stop</button>
+
 </div>
 
 <div class="footer">
@@ -169,7 +182,10 @@ recognition.interimResults=false
 
 function startListening(){
 
+speechSynthesis.cancel()
+
 mic.classList.add("listening")
+
 status.innerHTML="Listening..."
 
 recognition.start()
@@ -192,7 +208,7 @@ mic.classList.remove("listening")
 
 }
 
-/* PROCESS QUESTION */
+/* QUESTION PROCESSING */
 
 function processQuestion(question){
 
@@ -206,7 +222,6 @@ q.includes("introduce") ||
 q.includes("your name") ||
 q.includes("about yourself") ||
 q.includes("ਤੁਸੀਂ ਕੌਣ") ||
-q.includes("ਤੁਹਾਡਾ ਨਾਮ") ||
 q.includes("तुम कौन") ||
 q.includes("अपने बारे में")
 ){
@@ -215,7 +230,7 @@ let intro = `Hello. I am Noor, the artificial intelligence assistant of GJIMT.
 
 I joined the Gian Jyoti Group on the first of March 2026.
 
-My arrival here became possible because of the vision and dedication of Respected chairman sir Mr.JS Bedi and Director Dr.Aneet Bedi.
+My arrival here became possible because of the vision and dedication of Chairman Mr.J.S bedi and  director Dr. Aneet Bedi.
 
 He worked with great passion and determination to bring artificial intelligence and robotics to the campus.
 
@@ -224,7 +239,9 @@ Today I help visitors, students and parents by answering questions about GJIMT, 
 I am always happy to assist you.`
 
 speak(intro)
+
 status.innerHTML="Speaking..."
+
 return
 }
 
@@ -239,17 +256,19 @@ It offers undergraduate and postgraduate programs in management, commerce, compu
 GJIMT focuses on innovation, industry exposure and modern technologies such as artificial intelligence and robotics.`
 
 speak(reply)
+
 status.innerHTML="Speaking..."
+
 return
 }
 
-/* OTHERWISE SEND TO AI */
+/* OTHERWISE ASK AI */
 
 askChatGPT(question)
 
 }
 
-/* CHATGPT API CALL */
+/* CHATGPT API */
 
 async function askChatGPT(question){
 
@@ -271,7 +290,7 @@ model:"gpt-4o-mini",
 messages:[
 {
 role:"system",
-content:"You are Noor, a polite female AI assistant working for GJIMT college in India. Answer clearly and politely."
+content:"You are Noor, a polite female AI assistant working for GJIMT college in India."
 },
 {
 role:"user",
@@ -293,13 +312,13 @@ status.innerHTML="Speaking..."
 
 }catch{
 
-speak("Sorry, I am unable to connect to the AI server right now.")
+speak("Sorry, I cannot connect to the AI server right now.")
 
 }
 
 }
 
-/* SPEAK */
+/* SPEAK FUNCTION */
 
 function speak(text){
 
@@ -329,6 +348,7 @@ speechSynthesis.speak(speech)
 function pauseVoice(){
 
 speechSynthesis.pause()
+
 status.innerHTML="Voice paused"
 
 }
@@ -338,7 +358,22 @@ status.innerHTML="Voice paused"
 function playVoice(){
 
 speechSynthesis.resume()
+
 status.innerHTML="Voice resumed"
+
+}
+
+/* STOP (RESET) */
+
+function stopAssistant(){
+
+speechSynthesis.cancel()
+
+recognition.abort()
+
+mic.classList.remove("listening")
+
+status.innerHTML="Ready for next question"
 
 }
 
