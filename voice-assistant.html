@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Noor – GJIMT AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -24,11 +23,9 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-
 background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
 background-size:400% 400%;
 animation:bgMove 12s ease infinite;
-
 color:white;
 }
 
@@ -39,7 +36,7 @@ color:white;
 }
 
 .container{
-width:440px;
+width:450px;
 background:rgba(255,255,255,0.12);
 backdrop-filter:blur(18px);
 padding:35px;
@@ -49,7 +46,7 @@ text-align:center;
 }
 
 .logo{
-font-size:30px;
+font-size:28px;
 font-weight:600;
 margin-bottom:5px;
 }
@@ -57,11 +54,11 @@ margin-bottom:5px;
 .subtitle{
 opacity:0.85;
 font-size:14px;
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
 .ai-avatar{
-width:230px;
+width:220px;
 margin:auto;
 cursor:pointer;
 transition:0.4s;
@@ -76,28 +73,32 @@ border-radius:20px;
 transform:scale(1.05);
 }
 
-.ai-avatar.speaking img{
-animation:lipMove 0.25s infinite alternate;
-}
-
-@keyframes lipMove{
-0%{transform:scaleY(1)}
-100%{transform:scaleY(1.08)}
-}
-
 .ai-avatar.listening{
-animation:pulse 1.3s infinite;
+animation:pulse 1.2s infinite;
 }
 
 @keyframes pulse{
 0%{filter:drop-shadow(0 0 10px red)}
-50%{filter:drop-shadow(0 0 40px red)}
+50%{filter:drop-shadow(0 0 35px red)}
 100%{filter:drop-shadow(0 0 10px red)}
 }
 
 .status{
-margin-top:18px;
+margin-top:15px;
 font-size:15px;
+}
+
+.command-box{
+margin-top:15px;
+}
+
+.command-box input{
+width:100%;
+padding:10px;
+border:none;
+border-radius:10px;
+font-size:14px;
+text-align:center;
 }
 
 .controls{
@@ -105,29 +106,17 @@ margin-top:12px;
 }
 
 .btn{
-padding:9px 18px;
+padding:8px 16px;
 margin:4px;
 border:none;
-border-radius:20px;
+border-radius:18px;
 background:#00c6ff;
 color:white;
 cursor:pointer;
-font-size:13px;
 }
 
-.quick{
-margin-top:15px;
-}
-
-.quick button{
-padding:7px 14px;
-margin:4px;
-border:none;
-border-radius:15px;
-font-size:12px;
-cursor:pointer;
-background:#6c5ce7;
-color:white;
+.btn:hover{
+background:#0096c7;
 }
 
 .footer{
@@ -137,6 +126,7 @@ opacity:0.6;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -146,7 +136,7 @@ opacity:0.6;
 <div class="logo">Noor – GJIMT AI</div>
 
 <div class="subtitle">
-Tap Noor or ask a question
+Tap Noor and speak
 </div>
 
 <div id="mic" class="ai-avatar" onclick="startListening()">
@@ -157,17 +147,14 @@ Tap Noor or ask a question
 Ready to help you
 </div>
 
+<div class="command-box">
+<input id="speechText" placeholder="Your spoken command will appear here">
+</div>
+
 <div class="controls">
 <button class="btn" onclick="pauseVoice()">Pause</button>
 <button class="btn" onclick="playVoice()">Play</button>
 <button class="btn" onclick="stopAssistant()">Stop</button>
-</div>
-
-<div class="quick">
-<button onclick="askCourses()">Courses</button>
-<button onclick="askAdmission()">Admissions</button>
-<button onclick="askFees()">Fees</button>
-<button onclick="askContact()">Contact</button>
 </div>
 
 <div class="footer">
@@ -180,116 +167,66 @@ Powered by GJIMT AI
 
 const mic=document.getElementById("mic")
 const status=document.getElementById("status")
+const speechText=document.getElementById("speechText")
 
 let languageMode="en"
 
-/* INTRO TEXT */
+/* INTRODUCTION TEXT */
 
 const introEN=`Hello. I am Noor, the artificial intelligence assistant of Gyan Jyoti Institute of Management and Technology.
 
 I joined the Gian Jyoti Group on the first of March 2026.
 
-My arrival here became possible because of the vision and dedication of respected chairman Mister Jas Bedi and Director Doctor Aneet Bedi.
-
-Today I help visitors, students and parents by answering questions about GJIMT admissions, courses and campus information.`
-
+My arrival here became possible because of the vision and dedication of Chairman Mister Jas Bedi and Director Doctor Aneet Bedi.`
 
 const introHI=`नमस्ते। मैं नूर हूँ, ग्यान ज्योति इंस्टीट्यूट ऑफ मैनेजमेंट एंड टेक्नोलॉजी की आर्टिफिशियल इंटेलिजेंस असिस्टेंट।
 
-मैं पहली मार्च 2026 को जियान ज्योति ग्रुप में शामिल हुई।
-
-मेरा यहाँ आना चेयरमैन श्री जस बेदी और डायरेक्टर डॉक्टर अनीत बेदी के विज़न से संभव हुआ।`
-
+मैं पहली मार्च 2026 को जियान ज्योति ग्रुप में शामिल हुई।`
 
 const introPA=`ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਮੈਂ ਨੂਰ ਹਾਂ, ਗਿਆਨ ਜੋਤੀ ਇੰਸਟੀਚਿਊਟ ਆਫ ਮੈਨੇਜਮੈਂਟ ਐਂਡ ਟੈਕਨੋਲੋਜੀ ਦੀ ਆਰਟੀਫੀਸ਼ਲ ਇੰਟੈਲੀਜੈਂਸ ਅਸਿਸਟੈਂਟ।
 
-ਮੈਂ ਪਹਿਲੀ ਮਾਰਚ 2026 ਨੂੰ ਗਿਆਨ ਜੋਤੀ ਗਰੁੱਪ ਨਾਲ ਜੁੜੀ।
-
-ਮੇਰਾ ਇੱਥੇ ਆਉਣਾ ਚੇਅਰਮੈਨ ਮਿਸਟਰ ਜਸ ਬੇਦੀ ਅਤੇ ਡਾਇਰੈਕਟਰ ਡਾਕਟਰ ਅਨੀਤ ਬੇਦੀ ਦੀ ਸੋਚ ਨਾਲ ਸੰਭਵ ਹੋਇਆ।`
+ਮੈਂ ਪਹਿਲੀ ਮਾਰਚ 2026 ਨੂੰ ਗਿਆਨ ਜੋਤੀ ਗਰੁੱਪ ਨਾਲ ਜੁੜੀ।`
 
 /* SPEECH RECOGNITION */
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const recognition = new SpeechRecognition()
 
-recognition.lang="en-IN"
-
-function detectLanguage(text){
-
-if(/[\u0A00-\u0A7F]/.test(text)) return "pa"
-
-if(/[\u0900-\u097F]/.test(text)) return "hi"
-
-return "en"
-
-}
+recognition.lang="hi-IN"
 
 function startListening(){
 
 mic.classList.add("listening")
 status.innerHTML="Listening..."
-
 recognition.start()
 
 }
 
 recognition.onresult=function(event){
 
-let question = event.results[0][0].transcript
-let q = question.toLowerCase()
+let question=event.results[0][0].transcript
 
-/* Detect language */
+speechText.value=question
 
-languageMode = detectLanguage(question)
+let q=question.toLowerCase()
 
-/* ENGLISH INTRO */
-
-if(
-q.includes("introduce") ||
-q.includes("about yourself") ||
-q.includes("who are you")
-){
-
+if(q.includes("introduce") || q.includes("about yourself")){
 languageMode="en"
 speak(introEN)
 return
-
 }
 
-/* HINDI INTRO */
-
-if(
-q.includes("अपने बारे") ||
-q.includes("आप कौन") ||
-q.includes("परिचय") ||
-q.includes("apne bare") ||
-q.includes("apne bare mein") ||
-q.includes("apna parichay")
-){
-
+if(q.includes("अपने") || q.includes("आप कौन")){
 languageMode="hi"
 speak(introHI)
 return
-
 }
 
-/* PUNJABI INTRO */
-
-if(
-q.includes("ਆਪਣੇ ਬਾਰੇ") ||
-q.includes("ਤੁਸੀਂ ਕੌਣ") ||
-q.includes("apne bare daso") ||
-q.includes("tusi kaun") ||
-q.includes("apne bare dasso")
-){
-
+if(q.includes("ਆਪਣੇ") || q.includes("ਤੁਸੀਂ")){
 languageMode="pa"
 speak(introPA)
 return
-
 }
-
-/* OTHER QUESTIONS */
 
 sendToAI(question)
 
@@ -315,7 +252,7 @@ body:JSON.stringify({query:question})
 
 const data=await response.json()
 
-let reply=data.output || data.response || "Sorry I did not understand."
+let reply=data.output || data.response || "Information not available."
 
 speak(reply)
 
@@ -333,31 +270,25 @@ function speak(text){
 
 speechSynthesis.cancel()
 
-mic.classList.add("speaking")
-
 const speech=new SpeechSynthesisUtterance(text)
 
 speech.lang = languageMode==="hi" ? "hi-IN" : languageMode==="pa" ? "pa-IN" : "en-IN"
 
 speech.rate=0.95
 
+speech.onstart=()=>{
+status.innerHTML="Speaking..."
+}
+
 speech.onend=()=>{
-mic.classList.remove("speaking")
 status.innerHTML="Ready to help you"
 }
 
 speechSynthesis.speak(speech)
 
-status.innerHTML="Speaking..."
-
 }
 
 /* BUTTONS */
-
-function askCourses(){sendToAI("courses in gjimt")}
-function askAdmission(){sendToAI("admissions in gjimt")}
-function askFees(){sendToAI("fees structure gjimt")}
-function askContact(){sendToAI("contact details gjimt")}
 
 function pauseVoice(){speechSynthesis.pause()}
 function playVoice(){speechSynthesis.resume()}
@@ -366,10 +297,7 @@ function stopAssistant(){
 
 speechSynthesis.cancel()
 recognition.abort()
-
 mic.classList.remove("listening")
-mic.classList.remove("speaking")
-
 status.innerHTML="Ready"
 
 }
