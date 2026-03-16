@@ -1,143 +1,90 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Noor – GJIMT AI</title>
+<title>Noor – GJIMT AI 3D Assistant</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
 body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
-background-size:400% 400%;
-animation:bgMove 12s ease infinite;
 color:white;
 }
 
-@keyframes bgMove{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
 .container{
-width:430px;
-background:rgba(255,255,255,0.1);
-backdrop-filter:blur(18px);
-padding:35px;
+width:460px;
+text-align:center;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(16px);
+padding:30px;
 border-radius:25px;
 box-shadow:0 0 40px rgba(0,0,0,0.4);
-text-align:center;
 }
 
 .logo{
 font-size:28px;
 font-weight:600;
-margin-bottom:5px;
 }
 
 .subtitle{
-opacity:0.8;
 font-size:14px;
-margin-bottom:20px;
+opacity:.8;
+margin-bottom:15px;
 }
 
-.ai-avatar{
-width:220px;
+#avatarCanvas{
+width:260px;
+height:260px;
 margin:auto;
-cursor:pointer;
-transition:0.4s;
-}
-
-.ai-avatar img{
-width:100%;
 border-radius:20px;
-}
-
-.ai-avatar:hover{
-transform:scale(1.05);
-}
-
-.ai-avatar.listening{
-animation:pulse 1.2s infinite;
-}
-
-.ai-avatar.speaking{
-animation:talkGlow 1s infinite alternate;
-}
-
-@keyframes pulse{
-0%{filter:drop-shadow(0 0 10px red)}
-50%{filter:drop-shadow(0 0 35px red)}
-100%{filter:drop-shadow(0 0 10px red)}
-}
-
-@keyframes talkGlow{
-from{filter:drop-shadow(0 0 10px cyan)}
-to{filter:drop-shadow(0 0 35px cyan)}
+overflow:hidden;
 }
 
 .status{
-margin-top:18px;
-font-size:15px;
-opacity:0.9;
+margin-top:15px;
+font-size:14px;
 }
 
 .controls{
-margin-top:10px;
+margin-top:12px;
 }
 
-.btn{
-padding:8px 16px;
+button{
+padding:8px 15px;
 margin:4px;
 border:none;
 border-radius:18px;
 background:#00c6ff;
 color:white;
 cursor:pointer;
-font-size:13px;
-}
-
-.btn:hover{
-background:#0096c7;
 }
 
 .quick{
-margin-top:15px;
+margin-top:12px;
 }
 
 .quick button{
-padding:7px 12px;
-margin:3px;
-border:none;
-border-radius:15px;
-font-size:12px;
-cursor:pointer;
 background:#6c5ce7;
-color:white;
 }
 
 .footer{
-margin-top:20px;
 font-size:12px;
-opacity:0.6;
+margin-top:15px;
+opacity:.6;
 }
 
 </style>
@@ -148,23 +95,16 @@ opacity:0.6;
 <div class="container">
 
 <div class="logo">Noor – GJIMT AI</div>
+<div class="subtitle">Say "Hello Noor" or press Start</div>
 
-<div class="subtitle">
-Say "Hello Noor" or tap the avatar
-</div>
+<div id="avatarCanvas"></div>
 
-<div id="mic" class="ai-avatar" onclick="startListening()">
-<img src="ai-lady-robot.png">
-</div>
-
-<div id="status" class="status">
-Ready to help you
-</div>
+<div class="status" id="status">Ready to help you</div>
 
 <div class="controls">
-<button class="btn" onclick="pauseVoice()">Pause</button>
-<button class="btn" onclick="playVoice()">Play</button>
-<button class="btn" onclick="stopAssistant()">Stop</button>
+<button onclick="startListening()">Start</button>
+<button onclick="pauseVoice()">Pause</button>
+<button onclick="stopAssistant()">Stop</button>
 </div>
 
 <div class="quick">
@@ -174,103 +114,106 @@ Ready to help you
 <button onclick="askContact()">Contact</button>
 </div>
 
-<div class="footer">
-Powered by GJIMT AI
-</div>
+<div class="footer">Powered by GJIMT AI</div>
 
 </div>
 
 <script>
 
-const mic=document.getElementById("mic")
-const status=document.getElementById("status")
+/* 3D AVATAR */
+
+let scene = new THREE.Scene()
+let camera = new THREE.PerspectiveCamera(35,1,0.1,1000)
+let renderer = new THREE.WebGLRenderer({alpha:true})
+
+renderer.setSize(260,260)
+document.getElementById("avatarCanvas").appendChild(renderer.domElement)
+
+camera.position.z = 2
+
+const light = new THREE.HemisphereLight(0xffffff,0x444444)
+scene.add(light)
+
+let avatar
+
+const loader = new THREE.GLTFLoader()
+
+loader.load(
+
+"https://models.readyplayer.me/69b785224d98c76821309d95.glb",
+
+function(gltf){
+
+avatar = gltf.scene
+scene.add(avatar)
+
+animate()
+
+}
+
+)
+
+function animate(){
+
+requestAnimationFrame(animate)
+
+if(avatar){
+avatar.rotation.y += 0.002
+}
+
+renderer.render(scene,camera)
+
+}
+
+/* SPEECH */
 
 let voices=[]
-let languageMode="en"
-
-/* Load voices */
-
 speechSynthesis.onvoiceschanged=()=>{
 voices=speechSynthesis.getVoices()
 }
 
-/* Speech Recognition */
+function speak(text){
+
+const speech=new SpeechSynthesisUtterance(text)
+
+speech.rate=0.95
+speech.pitch=1.2
+
+let voice=voices.find(v=>v.lang==="en-IN") || voices[0]
+speech.voice=voice
+
+speech.onstart=()=>{
+document.getElementById("status").innerHTML="Speaking..."
+}
+
+speech.onend=()=>{
+document.getElementById("status").innerHTML="Ready to help you"
+}
+
+speechSynthesis.speak(speech)
+
+}
+
+/* SPEECH RECOGNITION */
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const recognition = new SpeechRecognition()
 
 recognition.lang="en-IN"
-recognition.interimResults=false
 
 function startListening(){
 
-speechSynthesis.cancel()
-
-mic.classList.add("listening")
-status.innerHTML="Listening..."
-
+document.getElementById("status").innerHTML="Listening..."
 recognition.start()
 
 }
-
-/* Wake word */
 
 recognition.onresult=function(event){
 
 let question=event.results[0][0].transcript
 
 if(question.toLowerCase().includes("hello noor")){
-
 speak("Hello, how may I assist you today?")
-return
-
-}
-
-processQuestion(question)
-
-}
-
-recognition.onend=function(){
-mic.classList.remove("listening")
-}
-
-/* Language detection */
-
-function detectLanguage(text){
-
-if(/[\u0A00-\u0A7F]/.test(text)){
-return "pa"
-}
-
-if(/[\u0900-\u097F]/.test(text)){
-return "hi"
-}
-
-return "en"
-
-}
-
-/* Question processor */
-
-function processQuestion(question){
-
-let q=question.toLowerCase()
-
-if(q.includes("hindi")){
-languageMode="hi"
-speak("अब मैं हिंदी में बात करूँगी")
-return
-}
-
-if(q.includes("punjabi")){
-languageMode="pa"
-speak("ਹੁਣ ਮੈਂ ਪੰਜਾਬੀ ਵਿੱਚ ਗੱਲ ਕਰਾਂਗੀ")
-return
-}
-
-if(q.includes("english")){
-languageMode="en"
-speak("Now I will speak in English")
 return
 }
 
@@ -278,13 +221,13 @@ sendToAI(question)
 
 }
 
-/* AI webhook */
+/* AI WEBHOOK */
 
 async function sendToAI(question){
 
 try{
 
-const response=await fetch(
+const response = await fetch(
 "https://aiprojectsgjimt.app.n8n.cloud/webhook/ai-kiosk",
 {
 method:"POST",
@@ -298,14 +241,6 @@ const data=await response.json()
 
 let reply=data.output || data.response || "Sorry I did not understand."
 
-if(languageMode==="hi"){
-reply=await translate(reply,"hi")
-}
-
-if(languageMode==="pa"){
-reply=await translate(reply,"pa")
-}
-
 speak(reply)
 
 }catch{
@@ -316,75 +251,24 @@ speak("Server connection problem.")
 
 }
 
-/* Translation */
+/* QUICK BUTTONS */
 
-async function translate(text,target){
-
-let url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
-
-let res=await fetch(url)
-let data=await res.json()
-
-return data[0][0][0]
-
-}
-
-/* Speak */
-
-function speak(text){
-
-speechSynthesis.cancel()
-
-mic.classList.add("speaking")
-
-const speech=new SpeechSynthesisUtterance(text)
-
-speech.rate=0.95
-speech.pitch=1.2
-
-let voice=voices.find(v=>v.lang==="en-IN") || voices[0]
-
-speech.voice=voice
-
-speech.onend=()=>{
-mic.classList.remove("speaking")
-status.innerHTML="Ready to help you"
-}
-
-speechSynthesis.speak(speech)
-
-status.innerHTML="Speaking..."
-
-}
-
-/* Quick buttons */
-
-function askCourses(){sendToAI("What courses are available at GJIMT")}
-function askAdmission(){sendToAI("Tell me about GJIMT admissions")}
+function askCourses(){sendToAI("What courses are offered at GJIMT")}
+function askAdmission(){sendToAI("Tell me about admissions at GJIMT")}
 function askFees(){sendToAI("Tell me about course fees at GJIMT")}
 function askContact(){sendToAI("Give contact details of GJIMT")}
 
-/* Controls */
+/* CONTROLS */
 
 function pauseVoice(){
 speechSynthesis.pause()
-status.innerHTML="Voice paused"
-}
-
-function playVoice(){
-speechSynthesis.resume()
-status.innerHTML="Voice resumed"
 }
 
 function stopAssistant(){
 
 speechSynthesis.cancel()
 recognition.abort()
-
-mic.classList.remove("listening")
-mic.classList.remove("speaking")
-
-status.innerHTML="Ready for next question"
+document.getElementById("status").innerHTML="Stopped"
 
 }
 
