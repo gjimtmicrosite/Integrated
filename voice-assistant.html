@@ -235,13 +235,20 @@ recognition.start()
 
 recognition.onresult=function(event){
 
-let question=event.results[0][0].transcript.toLowerCase()
+let question = event.results[0][0].transcript
+let q = question.toLowerCase()
 
-languageMode=detectLanguage(question)
+/* Detect language */
 
-/* INTRO DETECTION */
+languageMode = detectLanguage(question)
 
-if(question.includes("introduce") || question.includes("about yourself")){
+/* ENGLISH INTRO */
+
+if(
+q.includes("introduce") ||
+q.includes("about yourself") ||
+q.includes("who are you")
+){
 
 languageMode="en"
 speak(introEN)
@@ -249,7 +256,16 @@ return
 
 }
 
-if(question.includes("अपने बारे") || question.includes("आप कौन")){
+/* HINDI INTRO */
+
+if(
+q.includes("अपने बारे") ||
+q.includes("आप कौन") ||
+q.includes("परिचय") ||
+q.includes("apne bare") ||
+q.includes("apne bare mein") ||
+q.includes("apna parichay")
+){
 
 languageMode="hi"
 speak(introHI)
@@ -257,7 +273,15 @@ return
 
 }
 
-if(question.includes("ਆਪਣੇ ਬਾਰੇ") || question.includes("ਤੁਸੀਂ ਕੌਣ")){
+/* PUNJABI INTRO */
+
+if(
+q.includes("ਆਪਣੇ ਬਾਰੇ") ||
+q.includes("ਤੁਸੀਂ ਕੌਣ") ||
+q.includes("apne bare daso") ||
+q.includes("tusi kaun") ||
+q.includes("apne bare dasso")
+){
 
 languageMode="pa"
 speak(introPA)
@@ -265,7 +289,7 @@ return
 
 }
 
-/* SEND OTHER QUESTIONS */
+/* OTHER QUESTIONS */
 
 sendToAI(question)
 
