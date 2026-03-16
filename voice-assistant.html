@@ -243,35 +243,47 @@ recognition.start()
 recognition.onresult=function(event){
 
 let question=event.results[0][0].transcript
+let q=question.toLowerCase()
+
+/* detect language automatically */
 
 languageMode = detectLanguage(question)
 
-let q=question.toLowerCase()
+/* INTRODUCTION DETECTION */
 
-if(q.includes("introduce") || q.includes("about yourself") || q.includes("parichay") || q.includes("apne bare") || q.includes("ਦੱਸੋ")){
+/* English */
+if(q.includes("introduce") || q.includes("about yourself")){
 
-if(languageMode==="hi"){
-speak(introHI)
-}
-else if(languageMode==="pa"){
-speak(introPA)
-}
-else{
 speak(introEN)
-}
-
 return
 
 }
 
+/* Hindi */
+
+if(q.includes("परिचय") || q.includes("अपने बारे") || q.includes("आप कौन") || q.includes("आपका परिचय")){
+
+languageMode="hi"
+speak(introHI)
+return
+
+}
+
+/* Punjabi */
+
+if(q.includes("ਆਪਣੇ ਬਾਰੇ") || q.includes("ਤੁਸੀਂ ਕੌਣ") || q.includes("ਪਰਿਚਯ")){
+
+languageMode="pa"
+speak(introPA)
+return
+
+}
+
+/* If none matched send to AI */
+
 sendToAI(question)
 
 }
-
-recognition.onend=function(){
-mic.classList.remove("listening")
-}
-
 /* AI webhook */
 
 async function sendToAI(question){
