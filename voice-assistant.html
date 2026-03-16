@@ -175,7 +175,6 @@ let languageMode="en"
 /* INTRODUCTION TEXT */
 
 const introEN=`Hello. I am Noor, the artificial intelligence assistant of Gyan Jyoti Institute of Management and Technology.
-
 I joined the Gian Jyoti Group on the first of March 2026.`
 
 const introHI=`नमस्ते। मैं नूर हूँ, ग्यान ज्योति इंस्टीट्यूट ऑफ मैनेजमेंट एंड टेक्नोलॉजी की आर्टिफिशियल इंटेलिजेंस असिस्टेंट।`
@@ -241,29 +240,29 @@ status.innerHTML="Thinking..."
 try{
 
 const response = await fetch("https://aiprojectsgjimt.app.n8n.cloud/webhook/ai-kiosk",{
-
 method:"POST",
-
 headers:{
 "Content-Type":"application/json"
 },
-
 body:JSON.stringify({
 query:question
 })
-
 })
 
-const data = await response.json()
+if(!response.ok){
+throw new Error("Server error")
+}
 
-let reply = data.output || data.response || data.answer || "Information not available."
+const data = await response.json().catch(()=>({}))
+
+let reply = data.output || data.response || data.answer || "Sorry, I could not find the information."
 
 speak(reply)
 
 }catch(error){
 
-console.log(error)
-speak("Server connection problem.")
+console.log("Error:",error)
+speak("Sorry, there is a server connection problem.")
 
 }
 
