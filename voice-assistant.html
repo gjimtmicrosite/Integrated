@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,27 +71,25 @@ width:100%;
 border-radius:20px;
 }
 
-.ai-avatar:hover{
-transform:scale(1.05);
+/* speaking animation */
+
+.ai-avatar.speaking img{
+animation:lipMove 0.3s infinite alternate;
+}
+
+@keyframes lipMove{
+0%{transform:scaleY(1)}
+100%{transform:scaleY(1.08)}
 }
 
 .ai-avatar.listening{
 animation:pulse 1.2s infinite;
 }
 
-.ai-avatar.speaking{
-animation:talkGlow 1s infinite alternate;
-}
-
 @keyframes pulse{
 0%{filter:drop-shadow(0 0 10px red)}
 50%{filter:drop-shadow(0 0 35px red)}
 100%{filter:drop-shadow(0 0 10px red)}
-}
-
-@keyframes talkGlow{
-from{filter:drop-shadow(0 0 10px cyan)}
-to{filter:drop-shadow(0 0 35px cyan)}
 }
 
 .status{
@@ -113,10 +111,6 @@ background:#00c6ff;
 color:white;
 cursor:pointer;
 font-size:13px;
-}
-
-.btn:hover{
-background:#0096c7;
 }
 
 .quick{
@@ -188,19 +182,29 @@ const status=document.getElementById("status")
 let voices=[]
 let languageMode="en"
 
-/* Load voices */
+/* Noor Introduction */
+
+const noorIntro = `Hello. I am Noor, the artificial intelligence assistant of Gyan Jyoti Institute of Management and Technology.
+
+I joined the Gian Jyoti Group on the first of March 2026.
+
+My arrival here became possible because of the vision and dedication of Respected chairman Mister Jas Bedi and Director Doctor Aneet Bedi.
+
+He worked with great passion and determination to bring artificial intelligence and robotics to the campus.
+
+Today I help visitors, students and parents by answering questions about Gyan Jyoti Institute of Management and Technology, admissions, courses and campus information.
+
+I am always happy to assist you.`
+
 
 speechSynthesis.onvoiceschanged=()=>{
 voices=speechSynthesis.getVoices()
 }
 
-/* Speech Recognition */
-
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const recognition = new SpeechRecognition()
 
 recognition.lang="en-IN"
-recognition.interimResults=false
 
 function startListening(){
 
@@ -213,15 +217,15 @@ recognition.start()
 
 }
 
-/* Wake word */
-
 recognition.onresult=function(event){
 
-let question=event.results[0][0].transcript
+let question=event.results[0][0].transcript.toLowerCase()
 
-if(question.toLowerCase().includes("hello noor")){
+/* introduction trigger */
 
-speak("Hello, how may I assist you today?")
+if(question.includes("introduce") || question.includes("about yourself")){
+
+speak(noorIntro)
 return
 
 }
@@ -234,47 +238,34 @@ recognition.onend=function(){
 mic.classList.remove("listening")
 }
 
-/* Process question */
-
 function processQuestion(question){
 
 let q=question.toLowerCase()
 
 if(q.includes("hindi")){
-
 languageMode="hi"
 recognition.lang="hi-IN"
-
 speak("अब मैं हिंदी में बात करूँगी")
 return
-
 }
 
 if(q.includes("punjabi")){
-
 languageMode="pa"
 recognition.lang="pa-IN"
-
 speak("ਹੁਣ ਮੈਂ ਪੰਜਾਬੀ ਵਿੱਚ ਗੱਲ ਕਰਾਂਗੀ")
 return
-
 }
 
 if(q.includes("english")){
-
 languageMode="en"
 recognition.lang="en-IN"
-
 speak("Now I will speak in English")
 return
-
 }
 
 sendToAI(question)
 
 }
-
-/* AI Webhook */
 
 async function sendToAI(question){
 
@@ -294,14 +285,6 @@ const data=await response.json()
 
 let reply=data.output || data.response || "Sorry I did not understand."
 
-if(languageMode==="hi"){
-reply=await translate(reply,"hi")
-}
-
-if(languageMode==="pa"){
-reply=await translate(reply,"pa")
-}
-
 speak(reply)
 
 }catch{
@@ -312,35 +295,6 @@ speak("Server connection problem.")
 
 }
 
-/* Translation */
-
-async function translate(text,target){
-
-try{
-
-let url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
-
-let res=await fetch(url)
-let data=await res.json()
-
-let translated=""
-
-data[0].forEach(item=>{
-translated+=item[0]
-})
-
-return translated
-
-}catch{
-
-return text
-
-}
-
-}
-
-/* Speak */
-
 function speak(text){
 
 speechSynthesis.cancel()
@@ -350,30 +304,9 @@ mic.classList.add("speaking")
 const speech=new SpeechSynthesisUtterance(text)
 
 speech.rate=0.95
-speech.pitch=1.2
+speech.pitch=1.1
 
-let voice
-
-if(languageMode==="hi"){
-speech.lang="hi-IN"
-voice=voices.find(v=>v.lang==="hi-IN")
-}
-
-else if(languageMode==="pa"){
-speech.lang="pa-IN"
-voice=voices.find(v=>v.lang==="pa-IN")
-}
-
-else{
 speech.lang="en-IN"
-voice=voices.find(v=>v.lang==="en-IN")
-}
-
-if(!voice){
-voice=voices[0]
-}
-
-speech.voice=voice
 
 speech.onend=()=>{
 mic.classList.remove("speaking")
@@ -386,23 +319,17 @@ status.innerHTML="Speaking..."
 
 }
 
-/* Quick buttons */
-
 function askCourses(){sendToAI("What courses are available at GJIMT")}
 function askAdmission(){sendToAI("Tell me about admissions at GJIMT")}
 function askFees(){sendToAI("Tell me about fees structure at GJIMT")}
 function askContact(){sendToAI("Give contact details of GJIMT")}
 
-/* Controls */
-
 function pauseVoice(){
 speechSynthesis.pause()
-status.innerHTML="Voice paused"
 }
 
 function playVoice(){
 speechSynthesis.resume()
-status.innerHTML="Voice resumed"
 }
 
 function stopAssistant(){
@@ -413,7 +340,7 @@ recognition.abort()
 mic.classList.remove("listening")
 mic.classList.remove("speaking")
 
-status.innerHTML="Ready for next question"
+status.innerHTML="Ready"
 
 }
 
