@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -148,9 +149,7 @@ Ready to help you
 <div class="controls">
 
 <button class="btn" onclick="pauseVoice()">Pause</button>
-
 <button class="btn" onclick="playVoice()">Play</button>
-
 <button class="btn stop" onclick="stopAssistant()">Stop</button>
 
 </div>
@@ -169,6 +168,8 @@ const status = document.getElementById("status")
 let voices=[]
 let languageMode="en"
 
+/* LOAD VOICES */
+
 speechSynthesis.onvoiceschanged=()=>{
 voices=speechSynthesis.getVoices()
 }
@@ -180,13 +181,13 @@ const recognition = new SpeechRecognition()
 
 recognition.lang="en-IN"
 recognition.interimResults=false
+recognition.maxAlternatives=1
 
 function startListening(){
 
 speechSynthesis.cancel()
 
 mic.classList.add("listening")
-
 status.innerHTML="Listening..."
 
 recognition.start()
@@ -196,7 +197,6 @@ recognition.start()
 recognition.onresult=function(event){
 
 let question = event.results[0][0].transcript
-
 status.innerHTML="Thinking..."
 
 processQuestion(question)
@@ -204,9 +204,7 @@ processQuestion(question)
 }
 
 recognition.onend=function(){
-
 mic.classList.remove("listening")
-
 }
 
 /* PROCESS QUESTION */
@@ -217,22 +215,18 @@ let q = question.toLowerCase()
 
 /* SWITCH LANGUAGE */
 
-if(q.includes("speak in hindi") || q.includes("hindi bolo") || q.includes("hindi mein")){
+if(q.includes("hindi bolo") || q.includes("speak in hindi") || q.includes("hindi mein")){
 
 languageMode="hi"
-
 speak("अब मैं हिंदी में बात करूँगी")
-
 return
 
 }
 
-if(q.includes("speak in english")){
+if(q.includes("english bolo") || q.includes("speak in english")){
 
 languageMode="en"
-
 speak("Now I will speak in English")
-
 return
 
 }
@@ -248,7 +242,6 @@ I joined the Gian Jyoti Group on the first of March 2026.
 Today I help visitors, students and parents by answering questions about admissions, courses and campus information.`
 
 speak(intro)
-
 return
 
 }
@@ -278,9 +271,7 @@ const data = await response.json()
 let reply = data.output || data.response || "Sorry I did not understand."
 
 if(languageMode==="hi"){
-
 reply = await translateToHindi(reply)
-
 }
 
 speak(reply)
@@ -293,7 +284,7 @@ speak("Server connection problem.")
 
 }
 
-/* TRANSLATE */
+/* TRANSLATE TO HINDI */
 
 async function translateToHindi(text){
 
@@ -302,7 +293,6 @@ try{
 let url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(text)}`
 
 let res=await fetch(url)
-
 let data=await res.json()
 
 return data[0][0][0]
@@ -315,7 +305,7 @@ return text
 
 }
 
-/* SPEAK */
+/* SPEAK FUNCTION */
 
 function speak(text){
 
@@ -323,16 +313,16 @@ speechSynthesis.cancel()
 
 const speech=new SpeechSynthesisUtterance(text)
 
-speech.rate=0.95
-speech.pitch=1.15
+speech.rate=0.92
+speech.pitch=1.2
 
-let voice
+let selectedVoice
 
 if(languageMode==="hi"){
 
 speech.lang="hi-IN"
 
-voice=voices.find(v =>
+selectedVoice = voices.find(v =>
 v.lang==="hi-IN" &&
 (v.name.toLowerCase().includes("female") ||
 v.name.toLowerCase().includes("google"))
@@ -342,21 +332,29 @@ v.name.toLowerCase().includes("google"))
 
 speech.lang="en-IN"
 
-voice=voices.find(v =>
-v.lang==="en-IN" &&
-(v.name.toLowerCase().includes("female") ||
-v.name.toLowerCase().includes("google"))
+/* Force Indian female voice */
+
+selectedVoice = voices.find(v =>
+(v.lang==="en-IN" &&
+v.name.toLowerCase().includes("female"))
+)
+
+|| voices.find(v =>
+v.lang==="en-IN"
 )
 
 }
 
-if(voice){
-speech.voice=voice
+/* Apply voice */
+
+if(selectedVoice){
+speech.voice = selectedVoice
 }
 
-speechSynthesis.speak(speech)
+speech.onstart = ()=> status.innerHTML="Speaking..."
+speech.onend = ()=> status.innerHTML="Ready to help you"
 
-status.innerHTML="Speaking..."
+speechSynthesis.speak(speech)
 
 }
 
@@ -365,7 +363,6 @@ status.innerHTML="Speaking..."
 function pauseVoice(){
 
 speechSynthesis.pause()
-
 status.innerHTML="Voice paused"
 
 }
@@ -373,7 +370,6 @@ status.innerHTML="Voice paused"
 function playVoice(){
 
 speechSynthesis.resume()
-
 status.innerHTML="Voice resumed"
 
 }
@@ -381,7 +377,6 @@ status.innerHTML="Voice resumed"
 function stopAssistant(){
 
 speechSynthesis.cancel()
-
 recognition.abort()
 
 mic.classList.remove("listening")
@@ -393,5 +388,5 @@ status.innerHTML="Ready for next question"
 </script>
 
 </body>
-
 </html>
+```
