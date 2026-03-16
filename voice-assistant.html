@@ -151,7 +151,7 @@ Ready to help you
 
 <button class="btn" onclick="playVoice()">Play</button>
 
-<button class="btn stop" onclick="stopAssistant()">Stops</button>
+<button class="btn stop" onclick="stopAssistant()">Stop</button>
 
 </div>
 
@@ -219,18 +219,18 @@ q.includes("who are you") ||
 q.includes("introduce") ||
 q.includes("your name") ||
 q.includes("about yourself") ||
-q.includes("ਤੁਸੀਂ ਕੌਣ") ||
 q.includes("तुम कौन") ||
-q.includes("अपने बारे में")
+q.includes("अपने बारे में") ||
+q.includes("तुम्हारा नाम")
 ){
 
 let intro = `Hello. I am Noor, the artificial intelligence assistant of GJIMT.
 
 I joined the Gian Jyoti Group on the first of March 2026.
 
-My arrival here became possible because of the vision and dedication of Respected chairman Mr.Jas Bedi and director Dr.aneet Bedi.
+My arrival here became possible because of the vision and dedication of Respected chairman Mister Jas Bedi and director Doctor Aneet Bedi.
 
-He worked with great passion and determination to bring artificial intelligence and robotics to the campus.
+They worked with great passion and determination to bring artificial intelligence and robotics to the campus.
 
 Today I help visitors, students and parents by answering questions about GJIMT, admissions, courses and campus information.
 
@@ -242,8 +242,6 @@ status.innerHTML="Speaking..."
 
 return
 }
-
-/* SEND QUESTION TO AI AGENT */
 
 sendToAI(question)
 
@@ -281,7 +279,7 @@ speak("Sorry, I cannot connect to the AI server right now.")
 
 }
 
-/* SPEAK */
+/* SPEAK FUNCTION WITH LANGUAGE DETECTION */
 
 function speak(text){
 
@@ -290,16 +288,33 @@ speechSynthesis.cancel()
 const speech = new SpeechSynthesisUtterance(text)
 
 speech.rate=0.95
-speech.pitch=1.2
+speech.pitch=1.1
 
-let femaleVoice = voices.find(v =>
-v.name.includes("Female") ||
-v.name.includes("Samantha") ||
-v.name.includes("Zira")
+/* Detect Hindi */
+
+let hindiPattern = /[\u0900-\u097F]/
+
+let selectedVoice
+
+if(hindiPattern.test(text)){
+
+speech.lang="hi-IN"
+
+selectedVoice = voices.find(v => v.lang === "hi-IN")
+
+}else{
+
+speech.lang="en-IN"
+
+selectedVoice = voices.find(v =>
+v.lang === "en-IN" ||
+v.name.includes("India")
 )
 
-if(femaleVoice){
-speech.voice=femaleVoice
+}
+
+if(selectedVoice){
+speech.voice = selectedVoice
 }
 
 speechSynthesis.speak(speech)
@@ -345,5 +360,3 @@ status.innerHTML="Ready for next question"
 </body>
 
 </html>
-
-
