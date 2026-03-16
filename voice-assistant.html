@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,9 +24,11 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
+
 background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
 background-size:400% 400%;
 animation:bgMove 12s ease infinite;
+
 color:white;
 }
 
@@ -38,31 +39,46 @@ color:white;
 }
 
 .container{
-width:430px;
-background:rgba(255,255,255,0.1);
+
+width:440px;
+
+background:rgba(255,255,255,0.12);
 backdrop-filter:blur(18px);
+
 padding:35px;
+
 border-radius:25px;
-box-shadow:0 0 40px rgba(0,0,0,0.4);
+
+box-shadow:0 0 40px rgba(0,0,0,0.5);
+
 text-align:center;
+
 }
 
 .logo{
-font-size:28px;
+font-size:30px;
 font-weight:600;
 margin-bottom:5px;
 }
 
 .subtitle{
-opacity:0.8;
+opacity:0.85;
 font-size:14px;
 margin-bottom:20px;
 }
 
+/* Avatar */
+
 .ai-avatar{
-width:220px;
+
+width:230px;
+
 margin:auto;
+
 cursor:pointer;
+
+transition:0.4s;
+
 }
 
 .ai-avatar img{
@@ -70,10 +86,14 @@ width:100%;
 border-radius:20px;
 }
 
-/* lip movement animation */
+.ai-avatar:hover{
+transform:scale(1.05);
+}
+
+/* speaking animation */
 
 .ai-avatar.speaking img{
-animation:lipMove 0.2s infinite alternate;
+animation:lipMove 0.25s infinite alternate;
 }
 
 @keyframes lipMove{
@@ -81,13 +101,15 @@ animation:lipMove 0.2s infinite alternate;
 100%{transform:scaleY(1.08)}
 }
 
+/* listening glow */
+
 .ai-avatar.listening{
-animation:pulse 1.2s infinite;
+animation:pulse 1.3s infinite;
 }
 
 @keyframes pulse{
 0%{filter:drop-shadow(0 0 10px red)}
-50%{filter:drop-shadow(0 0 35px red)}
+50%{filter:drop-shadow(0 0 40px red)}
 100%{filter:drop-shadow(0 0 10px red)}
 }
 
@@ -97,17 +119,34 @@ font-size:15px;
 }
 
 .controls{
-margin-top:10px;
+margin-top:12px;
 }
 
 .btn{
-padding:8px 16px;
+
+padding:9px 18px;
+
 margin:4px;
+
 border:none;
-border-radius:18px;
+
+border-radius:20px;
+
 background:#00c6ff;
+
 color:white;
+
 cursor:pointer;
+
+font-size:13px;
+
+transition:0.3s;
+
+}
+
+.btn:hover{
+background:#0096c7;
+transform:scale(1.05);
 }
 
 .quick{
@@ -115,14 +154,27 @@ margin-top:15px;
 }
 
 .quick button{
-padding:7px 12px;
-margin:3px;
+
+padding:7px 14px;
+
+margin:4px;
+
 border:none;
+
 border-radius:15px;
+
 font-size:12px;
+
 cursor:pointer;
+
 background:#6c5ce7;
+
 color:white;
+
+}
+
+.quick button:hover{
+background:#5848d6;
 }
 
 .footer{
@@ -141,13 +193,11 @@ opacity:0.6;
 <div class="logo">Noor – GJIMT AI</div>
 
 <div class="subtitle">
-Say "Hello Noor" or tap the avatar
+Tap Noor or say "Hello Noor"
 </div>
 
 <div id="mic" class="ai-avatar" onclick="startListening()">
-
 <img src="ai-lady-robot.png">
-
 </div>
 
 <div id="status" class="status">
@@ -179,8 +229,13 @@ const mic=document.getElementById("mic")
 const status=document.getElementById("status")
 
 let languageMode="en"
+let voices=[]
 
-/* Introductions */
+speechSynthesis.onvoiceschanged=()=>{
+voices=speechSynthesis.getVoices()
+}
+
+/* INTRODUCTIONS */
 
 const introEN=`Hello. I am Noor, the artificial intelligence assistant of Gyan Jyoti Institute of Management and Technology.
 
@@ -188,44 +243,42 @@ I joined the Gian Jyoti Group on the first of March 2026.
 
 My arrival here became possible because of the vision and dedication of respected chairman Mister Jas Bedi and Director Doctor Aneet Bedi.
 
-Today I help visitors, students and parents by answering questions about Gyan Jyoti Institute of Management and Technology, admissions, courses and campus information.
+Today I help visitors, students and parents by answering questions about GJIMT, admissions, courses and campus information.
 
 I am always happy to assist you.`
+
 
 const introHI=`नमस्ते। मैं नूर हूँ, ग्यान ज्योति इंस्टीट्यूट ऑफ मैनेजमेंट एंड टेक्नोलॉजी की आर्टिफिशियल इंटेलिजेंस असिस्टेंट।
 
 मैं पहली मार्च 2026 को जियान ज्योति ग्रुप में शामिल हुई।
 
-मेरा यहाँ आना चेयरमैन श्री जस बेदी और डायरेक्टर डॉक्टर अनीत बेदी के विज़न और प्रयासों से संभव हुआ।
+मेरा यहाँ आना चेयरमैन श्री जस बेदी और डायरेक्टर डॉक्टर अनीत बेदी के विज़न से संभव हुआ।
 
-आज मैं छात्रों, अभिभावकों और विज़िटर्स को कॉलेज की जानकारी, एडमिशन और कोर्स से जुड़ी जानकारी देने में सहायता करती हूँ।
+आज मैं छात्रों, अभिभावकों और विज़िटर्स को कॉलेज की जानकारी और एडमिशन से जुड़ी सहायता देती हूँ।`
 
-आपकी सहायता करके मुझे खुशी होती है।`
 
 const introPA=`ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਮੈਂ ਨੂਰ ਹਾਂ, ਗਿਆਨ ਜੋਤੀ ਇੰਸਟੀਚਿਊਟ ਆਫ ਮੈਨੇਜਮੈਂਟ ਐਂਡ ਟੈਕਨੋਲੋਜੀ ਦੀ ਆਰਟੀਫੀਸ਼ਲ ਇੰਟੈਲੀਜੈਂਸ ਅਸਿਸਟੈਂਟ।
 
 ਮੈਂ ਪਹਿਲੀ ਮਾਰਚ 2026 ਨੂੰ ਗਿਆਨ ਜੋਤੀ ਗਰੁੱਪ ਨਾਲ ਜੁੜੀ।
 
-ਮੇਰਾ ਇੱਥੇ ਆਉਣਾ ਚੇਅਰਮੈਨ ਮਿਸਟਰ ਜਸ ਬੇਦੀ ਅਤੇ ਡਾਇਰੈਕਟਰ ਡਾਕਟਰ ਅਨੀਤ ਬੇਦੀ ਦੀ ਸੋਚ ਅਤੇ ਮਿਹਨਤ ਨਾਲ ਸੰਭਵ ਹੋਇਆ।
+ਮੇਰਾ ਇੱਥੇ ਆਉਣਾ ਚੇਅਰਮੈਨ ਮਿਸਟਰ ਜਸ ਬੇਦੀ ਅਤੇ ਡਾਇਰੈਕਟਰ ਡਾਕਟਰ ਅਨੀਤ ਬੇਦੀ ਦੀ ਸੋਚ ਨਾਲ ਸੰਭਵ ਹੋਇਆ।
 
 ਅੱਜ ਮੈਂ ਵਿਦਿਆਰਥੀਆਂ ਅਤੇ ਵਿਜ਼ਟਰਜ਼ ਨੂੰ ਕਾਲਜ ਦੀ ਜਾਣਕਾਰੀ ਅਤੇ ਐਡਮਿਸ਼ਨ ਬਾਰੇ ਮਦਦ ਕਰਦੀ ਹਾਂ।`
 
-/* speech recognition */
+/* SPEECH RECOGNITION */
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const recognition = new SpeechRecognition()
 
 recognition.lang="en-IN"
 
+/* language detect */
+
 function detectLanguage(text){
 
-if(/[\u0A00-\u0A7F]/.test(text)){
-return "pa"
-}
+if(/[\u0A00-\u0A7F]/.test(text)) return "pa"
 
-if(/[\u0900-\u097F]/.test(text)){
-return "hi"
-}
+if(/[\u0900-\u097F]/.test(text)) return "hi"
 
 return "en"
 
@@ -245,23 +298,19 @@ recognition.onresult=function(event){
 let question=event.results[0][0].transcript
 let q=question.toLowerCase()
 
-/* detect language automatically */
+languageMode=detectLanguage(question)
 
-languageMode = detectLanguage(question)
+/* INTRO KEYWORDS */
 
-/* INTRODUCTION DETECTION */
-
-/* English */
 if(q.includes("introduce") || q.includes("about yourself")){
 
+languageMode="en"
 speak(introEN)
 return
 
 }
 
-/* Hindi */
-
-if(q.includes("परिचय") || q.includes("अपने बारे") || q.includes("आप कौन") || q.includes("आपका परिचय")){
+if(q.includes("अपने बारे") || q.includes("परिचय") || q.includes("आप कौन")){
 
 languageMode="hi"
 speak(introHI)
@@ -269,9 +318,7 @@ return
 
 }
 
-/* Punjabi */
-
-if(q.includes("ਆਪਣੇ ਬਾਰੇ") || q.includes("ਤੁਸੀਂ ਕੌਣ") || q.includes("ਪਰਿਚਯ")){
+if(q.includes("ਆਪਣੇ ਬਾਰੇ") || q.includes("ਤੁਸੀਂ ਕੌਣ")){
 
 languageMode="pa"
 speak(introPA)
@@ -279,11 +326,16 @@ return
 
 }
 
-/* If none matched send to AI */
+/* otherwise send to AI */
 
 sendToAI(question)
 
 }
+
+recognition.onend=function(){
+mic.classList.remove("listening")
+}
+
 /* AI webhook */
 
 async function sendToAI(question){
@@ -312,7 +364,7 @@ speak("Server connection problem.")
 
 }
 
-/* speaking */
+/* SPEAK */
 
 function speak(text){
 
@@ -325,6 +377,12 @@ const speech=new SpeechSynthesisUtterance(text)
 speech.lang = languageMode==="hi" ? "hi-IN" : languageMode==="pa" ? "pa-IN" : "en-IN"
 
 speech.rate=0.95
+
+/* prefer female voice */
+
+let female=voices.find(v=>v.name.toLowerCase().includes("female") || v.name.includes("Google"))
+
+if(female) speech.voice=female
 
 speech.onend=()=>{
 mic.classList.remove("speaking")
@@ -363,4 +421,3 @@ status.innerHTML="Ready"
 
 </body>
 </html>
-
