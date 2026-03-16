@@ -167,6 +167,7 @@ const mic = document.getElementById("mic")
 const status = document.getElementById("status")
 
 let voices=[]
+let languageMode="en"
 
 speechSynthesis.onvoiceschanged=()=>{
 voices=speechSynthesis.getVoices()
@@ -208,46 +209,55 @@ mic.classList.remove("listening")
 
 }
 
-/* QUESTION PROCESS */
+/* PROCESS QUESTION */
 
 function processQuestion(question){
 
 let q = question.toLowerCase()
 
-if(
-q.includes("who are you") ||
-q.includes("introduce") ||
-q.includes("your name") ||
-q.includes("about yourself") ||
-q.includes("तुम कौन") ||
-q.includes("अपने बारे में") ||
-q.includes("तुम्हारा नाम")
-){
+/* SWITCH LANGUAGE */
 
-let intro = `Hello. I am Noor, the artificial intelligence assistant of GJIMT.
+if(q.includes("speak in hindi") || q.includes("hindi bolo") || q.includes("hindi mein")){
+
+languageMode="hi"
+
+speak("अब मैं हिंदी में बात करूँगी")
+
+return
+
+}
+
+if(q.includes("speak in english")){
+
+languageMode="en"
+
+speak("Now I will speak in English")
+
+return
+
+}
+
+/* INTRO */
+
+if(q.includes("who are you") || q.includes("introduce")){
+
+let intro=`Hello. I am Noor, the artificial intelligence assistant of GJIMT.
 
 I joined the Gian Jyoti Group on the first of March 2026.
 
-My arrival here became possible because of the vision and dedication of Respected chairman Mister Jas Bedi and director Doctor Aneet Bedi.
-
-They worked with great passion and determination to bring artificial intelligence and robotics to the campus.
-
-Today I help visitors, students and parents by answering questions about GJIMT, admissions, courses and campus information.
-
-I am always happy to assist you.`
+Today I help visitors, students and parents by answering questions about admissions, courses and campus information.`
 
 speak(intro)
 
-status.innerHTML="Speaking..."
-
 return
+
 }
 
 sendToAI(question)
 
 }
 
-/* AI WEBHOOK */
+/* SEND TO AI */
 
 async function sendToAI(question){
 
@@ -265,63 +275,92 @@ body:JSON.stringify({query:question})
 
 const data = await response.json()
 
-let reply = data.output || data.response || "Sorry, I did not understand."
+let reply = data.output || data.response || "Sorry I did not understand."
+
+if(languageMode==="hi"){
+
+reply = await translateToHindi(reply)
+
+}
 
 speak(reply)
 
-status.innerHTML="Speaking..."
+}catch{
+
+speak("Server connection problem.")
+
+}
+
+}
+
+/* TRANSLATE */
+
+async function translateToHindi(text){
+
+try{
+
+let url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(text)}`
+
+let res=await fetch(url)
+
+let data=await res.json()
+
+return data[0][0][0]
 
 }catch{
 
-speak("Sorry, I cannot connect to the AI server right now.")
+return text
 
 }
 
 }
 
-/* SPEAK FUNCTION WITH LANGUAGE DETECTION */
+/* SPEAK */
 
 function speak(text){
 
 speechSynthesis.cancel()
 
-const speech = new SpeechSynthesisUtterance(text)
+const speech=new SpeechSynthesisUtterance(text)
 
 speech.rate=0.95
-speech.pitch=1.1
+speech.pitch=1.15
 
-/* Detect Hindi */
+let voice
 
-let hindiPattern = /[\u0900-\u097F]/
-
-let selectedVoice
-
-if(hindiPattern.test(text)){
+if(languageMode==="hi"){
 
 speech.lang="hi-IN"
 
-selectedVoice = voices.find(v => v.lang === "hi-IN")
+voice=voices.find(v =>
+v.lang==="hi-IN" &&
+(v.name.toLowerCase().includes("female") ||
+v.name.toLowerCase().includes("google"))
+)
 
 }else{
 
 speech.lang="en-IN"
 
-selectedVoice = voices.find(v =>
-v.lang === "en-IN" ||
-v.name.includes("India")
+voice=voices.find(v =>
+v.lang==="en-IN" &&
+(v.name.toLowerCase().includes("female") ||
+v.name.toLowerCase().includes("google"))
 )
 
 }
 
-if(selectedVoice){
-speech.voice = selectedVoice
+if(voice){
+speech.voice=voice
 }
 
 speechSynthesis.speak(speech)
 
+status.innerHTML="Speaking..."
+
 }
 
-/* PAUSE */
+/* CONTROLS */
 
 function pauseVoice(){
 
@@ -331,8 +370,6 @@ status.innerHTML="Voice paused"
 
 }
 
-/* PLAY */
-
 function playVoice(){
 
 speechSynthesis.resume()
@@ -340,8 +377,6 @@ speechSynthesis.resume()
 status.innerHTML="Voice resumed"
 
 }
-
-/* STOP */
 
 function stopAssistant(){
 
