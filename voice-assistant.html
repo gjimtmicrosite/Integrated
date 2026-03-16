@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -192,12 +192,14 @@ const introPA=`ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਮੈਂ ਨੂਰ ਹਾਂ
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const recognition = new SpeechRecognition()
 
-recognition.lang="hi-IN"
+recognition.lang="en-IN"
+recognition.interimResults=false
 
 function startListening(){
 
 mic.classList.add("listening")
 status.innerHTML="Listening..."
+
 recognition.start()
 
 }
@@ -210,30 +212,43 @@ speechText.value=question
 
 let q=question.toLowerCase()
 
-if(q.includes("introduce") || q.includes("about yourself")){
-languageMode="en"
-speak(introEN)
-return
-}
+/* HINDI DETECTION */
 
-if(q.includes("अपने") || q.includes("आप कौन")){
+if(q.includes("अपने बारे") || q.includes("आप कौन") || q.includes("परिचय")){
+
 languageMode="hi"
 speak(introHI)
 return
 }
 
-if(q.includes("ਆਪਣੇ") || q.includes("ਤੁਸੀਂ")){
+/* PUNJABI DETECTION */
+
+if(q.includes("ਆਪਣੇ") || q.includes("ਤੁਸੀਂ") || q.includes("ਦੱਸੋ")){
+
 languageMode="pa"
 speak(introPA)
 return
 }
+
+/* ENGLISH */
+
+if(q.includes("introduce") || q.includes("about yourself")){
+
+languageMode="en"
+speak(introEN)
+return
+}
+
+/* SEND TO AI */
 
 sendToAI(question)
 
 }
 
 recognition.onend=function(){
+
 mic.classList.remove("listening")
+
 }
 
 /* AI WEBHOOK */
@@ -275,13 +290,18 @@ const speech=new SpeechSynthesisUtterance(text)
 speech.lang = languageMode==="hi" ? "hi-IN" : languageMode==="pa" ? "pa-IN" : "en-IN"
 
 speech.rate=0.95
+speech.pitch=1.1
 
 speech.onstart=()=>{
+
 status.innerHTML="Speaking..."
+
 }
 
 speech.onend=()=>{
+
 status.innerHTML="Ready to help you"
+
 }
 
 speechSynthesis.speak(speech)
@@ -290,14 +310,25 @@ speechSynthesis.speak(speech)
 
 /* BUTTONS */
 
-function pauseVoice(){speechSynthesis.pause()}
-function playVoice(){speechSynthesis.resume()}
+function pauseVoice(){
+
+speechSynthesis.pause()
+
+}
+
+function playVoice(){
+
+speechSynthesis.resume()
+
+}
 
 function stopAssistant(){
 
 speechSynthesis.cancel()
 recognition.abort()
+
 mic.classList.remove("listening")
+
 status.innerHTML="Ready"
 
 }
