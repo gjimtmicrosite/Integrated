@@ -245,15 +245,24 @@ headers:{
 "Content-Type":"application/json"
 },
 body:JSON.stringify({
-question: question   // ✅ FIXED HERE
+question: question   // ✅ FIXED KEY
 })
 })
 
-if(!response.ok){
-throw new Error("Server error")
+const data = await response.json().catch(()=>({}))
+
+let reply = data.output || data.answer || data.response || "Sorry, no response from AI."
+
+speak(reply)
+
+}catch(error){
+
+console.log(error)
+speak("Server connection error")
+
 }
 
-const data = await response.json()
+}
 
 // ✅ CLEAN RESPONSE HANDLING
 let reply = data.answer || "Sorry, I could not find the information."
