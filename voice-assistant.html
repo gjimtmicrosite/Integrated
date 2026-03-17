@@ -1,169 +1,3 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noor – GJIMT AI</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
-background-size:400% 400%;
-animation:bgMove 12s ease infinite;
-color:white;
-}
-
-@keyframes bgMove{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
-.container{
-width:450px;
-background:rgba(255,255,255,0.12);
-backdrop-filter:blur(18px);
-padding:35px;
-border-radius:25px;
-box-shadow:0 0 40px rgba(0,0,0,0.5);
-text-align:center;
-}
-
-.logo{
-font-size:28px;
-font-weight:600;
-margin-bottom:5px;
-}
-
-.subtitle{
-opacity:0.85;
-font-size:14px;
-margin-bottom:18px;
-}
-
-.ai-avatar{
-width:220px;
-margin:auto;
-cursor:pointer;
-transition:0.4s;
-}
-
-.ai-avatar img{
-width:100%;
-border-radius:20px;
-}
-
-.ai-avatar:hover{
-transform:scale(1.05);
-}
-
-.ai-avatar.listening{
-animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-0%{filter:drop-shadow(0 0 10px red)}
-50%{filter:drop-shadow(0 0 35px red)}
-100%{filter:drop-shadow(0 0 10px red)}
-}
-
-.status{
-margin-top:15px;
-font-size:15px;
-}
-
-.command-box{
-margin-top:15px;
-}
-
-.command-box input{
-width:100%;
-padding:10px;
-border:none;
-border-radius:10px;
-font-size:14px;
-text-align:center;
-}
-
-.controls{
-margin-top:12px;
-}
-
-.btn{
-padding:8px 16px;
-margin:4px;
-border:none;
-border-radius:18px;
-background:#00c6ff;
-color:white;
-cursor:pointer;
-}
-
-.btn:hover{
-background:#0096c7;
-}
-
-.footer{
-margin-top:20px;
-font-size:12px;
-opacity:0.6;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="logo">Noor – GJIMT AI</div>
-
-<div class="subtitle">
-Tap Noor and speak
-</div>
-
-<div id="mic" class="ai-avatar" onclick="startListening()">
-<img src="ai-lady-robot.png">
-</div>
-
-<div id="status" class="status">
-Ready to help you
-</div>
-
-<div class="command-box">
-<input id="speechText" placeholder="Your spoken command will appear here">
-</div>
-
-<div class="controls">
-<button class="btn" onclick="pauseVoice()">Pause</button>
-<button class="btn" onclick="playVoice()">Play</button>
-<button class="btn" onclick="stopAssistant()">Stop</button>
-</div>
-
-<div class="footer">
-Powered by GJIMT AI
-</div>
-
-</div>
-
 <script>
 
 const mic=document.getElementById("mic")
@@ -172,18 +6,14 @@ const speechText=document.getElementById("speechText")
 
 let languageMode="en"
 
-/* INTRODUCTION TEXT */
-
-const introEN=`Hello. I am Noor, the artificial intelligence assistant of Gyan Jyoti Institute of Management and Technology.
-I joined the Gian Jyoti Group on the first of March 2026.`
-
-const introHI=`नमस्ते। मैं नूर हूँ, ग्यान ज्योति इंस्टीट्यूट ऑफ मैनेजमेंट एंड टेक्नोलॉजी की आर्टिफिशियल इंटेलिजेंस असिस्टेंट।`
-
-const introPA=`ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਮੈਂ ਨੂਰ ਹਾਂ, ਗਿਆਨ ਜੋਤੀ ਇੰਸਟੀਚਿਊਟ ਆਫ ਮੈਨੇਜਮੈਂਟ ਐਂਡ ਟੈਕਨੋਲੋਜੀ ਦੀ ਆਰਟੀਫੀਸ਼ਲ ਇੰਟੈਲੀਜੈਂਸ ਅਸਿਸਟੈਂਟ।`
-
 /* SPEECH RECOGNITION */
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+
+if(!SpeechRecognition){
+alert("Speech Recognition not supported in this browser. Use Chrome.")
+}
+
 const recognition = new SpeechRecognition()
 
 recognition.lang="en-IN"
@@ -202,26 +32,6 @@ recognition.onresult=function(event){
 
 let question=event.results[0][0].transcript
 speechText.value=question
-
-let q=question.toLowerCase()
-
-if(q.includes("introduce") || q.includes("about yourself")){
-languageMode="en"
-speak(introEN)
-return
-}
-
-if(q.includes("अपने बारे") || q.includes("आप कौन")){
-languageMode="hi"
-speak(introHI)
-return
-}
-
-if(q.includes("ਆਪਣੇ") || q.includes("ਤੁਸੀਂ")){
-languageMode="pa"
-speak(introPA)
-return
-}
 
 sendToAI(question)
 
@@ -245,7 +55,7 @@ headers:{
 "Content-Type":"application/json"
 },
 body:JSON.stringify({
-question: question   // ✅ FIXED KEY
+question: question
 })
 })
 
@@ -257,26 +67,13 @@ speak(reply)
 
 }catch(error){
 
-console.log(error)
+console.log("Error:",error)
 speak("Server connection error")
 
 }
 
 }
 
-// ✅ CLEAN RESPONSE HANDLING
-let reply = data.answer || "Sorry, I could not find the information."
-
-speak(reply)
-
-}catch(error){
-
-console.log("Error:",error)
-speak("Sorry, there is a server connection problem.")
-
-}
-
-}
 /* TEXT TO SPEECH */
 
 function speak(text){
@@ -323,6 +120,3 @@ status.innerHTML="Ready"
 }
 
 </script>
-
-</body>
-</html>
