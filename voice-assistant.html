@@ -1,3 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noor – GJIMT AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
+background-size:400% 400%;
+animation:bgMove 12s ease infinite;
+color:white;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+.container{
+width:450px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(18px);
+padding:35px;
+border-radius:25px;
+box-shadow:0 0 40px rgba(0,0,0,0.5);
+text-align:center;
+}
+
+.logo{
+font-size:28px;
+font-weight:600;
+margin-bottom:5px;
+}
+
+.subtitle{
+opacity:0.85;
+font-size:14px;
+margin-bottom:18px;
+}
+
+.ai-avatar{
+width:220px;
+margin:auto;
+cursor:pointer;
+transition:0.4s;
+}
+
+.ai-avatar img{
+width:100%;
+border-radius:20px;
+}
+
+.ai-avatar:hover{
+transform:scale(1.05);
+}
+
+.ai-avatar.listening{
+animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+0%{filter:drop-shadow(0 0 10px red)}
+50%{filter:drop-shadow(0 0 35px red)}
+100%{filter:drop-shadow(0 0 10px red)}
+}
+
+.status{
+margin-top:15px;
+font-size:15px;
+}
+
+.command-box{
+margin-top:15px;
+}
+
+.command-box input{
+width:100%;
+padding:10px;
+border:none;
+border-radius:10px;
+font-size:14px;
+text-align:center;
+}
+
+.controls{
+margin-top:12px;
+}
+
+.btn{
+padding:8px 16px;
+margin:4px;
+border:none;
+border-radius:18px;
+background:#00c6ff;
+color:white;
+cursor:pointer;
+}
+
+.btn:hover{
+background:#0096c7;
+}
+
+.footer{
+margin-top:20px;
+font-size:12px;
+opacity:0.6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">Noor – GJIMT AI</div>
+
+<div class="subtitle">
+Tap Noor and speak
+</div>
+
+<div id="mic" class="ai-avatar" onclick="startListening()">
+<img src="ai-lady-robot.png">
+</div>
+
+<div id="status" class="status">
+Ready to help you
+</div>
+
+<div class="command-box">
+<input id="speechText" placeholder="Your spoken command will appear here">
+</div>
+
+<div class="controls">
+<button class="btn" onclick="pauseVoice()">Pause</button>
+<button class="btn" onclick="playVoice()">Play</button>
+<button class="btn" onclick="stopAssistant()">Stop</button>
+</div>
+
+<div class="footer">
+Powered by GJIMT AI
+</div>
+
+</div>
 <script>
 
 const mic=document.getElementById("mic")
