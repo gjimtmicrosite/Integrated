@@ -245,7 +245,7 @@ headers:{
 "Content-Type":"application/json"
 },
 body:JSON.stringify({
-query:question
+question: question   // ✅ FIXED HERE
 })
 })
 
@@ -253,9 +253,10 @@ if(!response.ok){
 throw new Error("Server error")
 }
 
-const data = await response.json().catch(()=>({}))
+const data = await response.json()
 
-let reply = data.output || data.response || data.answer || "Sorry, I could not find the information."
+// ✅ CLEAN RESPONSE HANDLING
+let reply = data.answer || "Sorry, I could not find the information."
 
 speak(reply)
 
@@ -267,7 +268,6 @@ speak("Sorry, there is a server connection problem.")
 }
 
 }
-
 /* TEXT TO SPEECH */
 
 function speak(text){
