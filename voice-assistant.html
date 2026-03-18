@@ -30,7 +30,7 @@ body{height:100vh;display:flex;justify-content:center;align-items:center;backgro
 
 <div class="container">
   <div class="logo">Noor – GJIMT AI</div>
-  <div class="subtitle">Tapp Noor and speak</div>
+  <div class="subtitle">Tap Noors and speak</div>
   <div id="mic" class="ai-avatar">
     <img src="ai-lady-robot.png" alt="Noor Avatar">
   </div>
@@ -53,16 +53,18 @@ document.addEventListener("DOMContentLoaded", function(){
   const status = document.getElementById("status");
   const speechText = document.getElementById("speechText");
 
-  let languageMode = "en";
   let recognitionActive = false;
+  let finalTranscript = "";
 
-  // Updated full introduction
-  const introEN = `Hello. I am Noor, the artificial intelligence assistant of GJIMT. 
-I joined the Gian Jyoti Group on the first of March 2026. 
-My arrival here became possible because of the vision and dedication of Respected chairman Mr. Jas Bedi and director Dr. Aneet Bedi. 
-He worked with great passion and determination to bring artificial intelligence and robotics to the campus. 
-Today I help visitors, students and parents by answering questions about GJIMT, admissions, courses and campus information. 
-I am always happy to assist you.`;
+  // Full introduction split into chunks
+  const introChunks = [
+    "Hello. I am Noor, the artificial intelligence assistant of GJIMT.",
+    "I joined the Gian Jyoti Group on the first of March 2026.",
+    "My arrival here became possible because of the vision and dedication of Respected chairman Mr. Jas Bedi and director Dr. Aneet Bedi.",
+    "He worked with great passion and determination to bring artificial intelligence and robotics to the campus.",
+    "Today I help visitors, students and parents by answering questions about GJIMT, admissions, courses and campus information.",
+    "I am always happy to assist you."
+  ];
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SpeechRecognition){
@@ -76,15 +78,13 @@ I am always happy to assist you.`;
   recognition.interimResults = true;
   recognition.continuous = true;
 
-  let finalTranscript = "";
-
-  // Start listening
+  // Click to start listening
   mic.addEventListener("click", function(){
     if(recognitionActive) return;
     recognitionActive = true;
     finalTranscript = "";
     mic.classList.add("listening");
-    status.innerText="Listening...";
+    status.innerText = "Listening...";
     recognition.start();
   });
 
@@ -106,16 +106,15 @@ I am always happy to assist you.`;
 
     let question = finalTranscript.trim();
     if(!question) return;
-
     let q = question.toLowerCase();
 
-    // Local introduction only
+    // If intro request, speak locally immediately
     if(q.includes("introduce") || q.includes("about yourself")){
-      speak(introEN);
+      speakChunks(introChunks);
       return;
     }
 
-    // All other queries sent to n8n
+    // Otherwise send to n8n
     sendToAI(question);
   }
 
@@ -123,25 +122,24 @@ I am always happy to assist you.`;
     status.innerText = "Thinking...";
     try{
       const response = await fetch("https://aiprojectsgjimt.app.n8n.cloud/webhook/e08197d1-8396-46c6-b94b-9d4c0fc6848d", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({query:question})
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({query: question})
       });
       const data = await response.json();
       let reply = data.output || data.response || data.answer || "Sorry, I couldn't get a response.";
       speak(reply);
-    }catch(error){
+    } catch(error){
       console.error("Fetch error:", error);
       speak("Server connection problem.");
     }
   }
 
-  // Text-to-speech with female voice
-  function speak(text){
-    recognition.abort();
-    speechSynthesis.cancel();
+  // Speak multiple chunks for natural flow
+  function speakChunks(chunks, index = 0){
+    if(index >= chunks.length) return;
+    const utter = new SpeechSynthesisUtterance(chunks[index]);
 
-    const utter = new SpeechSynthesisUtterance(text);
     let voices = speechSynthesis.getVoices();
     let female = voices.find(v => /female|woman|girl/i.test(v.name)) || voices[0];
     if(female) utter.voice = female;
@@ -150,9 +148,25 @@ I am always happy to assist you.`;
     utter.rate = 0.95;
     utter.pitch = 1.1;
 
-    utter.onstart = ()=> status.innerText="Speaking...";
-    utter.onend = ()=> status.innerText="Ready to help you";
+    utter.onstart = ()=> status.innerText = "Speaking...";
+    utter.onend = ()=> speakChunks(chunks, index+1);
 
+    speechSynthesis.speak(utter);
+  }
+
+  // Standard TTS for n8n replies
+  function speak(text){
+    recognition.abort();
+    speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    let voices = speechSynthesis.getVoices();
+    let female = voices.find(v => /female|woman|girl/i.test(v.name)) || voices[0];
+    if(female) utter.voice = female;
+    utter.lang = "en-IN";
+    utter.rate = 0.95;
+    utter.pitch = 1.1;
+    utter.onstart = ()=> status.innerText = "Speaking...";
+    utter.onend = ()=> status.innerText = "Ready to help you";
     speechSynthesis.speak(utter);
   }
 
@@ -161,10 +175,9 @@ I am always happy to assist you.`;
   window.stopAssistant = ()=>{
     speechSynthesis.cancel();
     recognition.abort();
-    status.innerText="Ready";
+    status.innerText = "Ready";
   }
 
-  // Ensure voices are loaded
   speechSynthesis.onvoiceschanged = ()=>{};
 });
 </script>
