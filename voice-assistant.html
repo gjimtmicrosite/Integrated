@@ -119,7 +119,7 @@ body{
   <div class="controls">
     <button class="btn" onclick="pauseVoice()">Pause</button>
     <button class="btn" onclick="playVoice()">Play</button>
-    <button class="btn" onclick="stopAssistant()">Stop</button>
+    <button class="btn" onclick="stopAssistant()">Stopa</button>
   </div>
   <div class="footer">Powered by GJIMT AI</div>
 </div>
@@ -132,6 +132,8 @@ document.addEventListener("DOMContentLoaded", function(){
   const speechText = document.getElementById("speechText");
 
   let languageMode = "en";
+  let recognitionActive = false;
+  let voices = [];
 
   /* INTRODUCTION TEXT */
   const introEN = `Hello. I am Noor, the artificial intelligence assistant of Gyan Jyoti Institute of Management and Technology. I joined the Gyan Jyoti Group on the first of March 2026.`;
@@ -145,11 +147,14 @@ document.addEventListener("DOMContentLoaded", function(){
     mic.style.cursor = "not-allowed";
     return;
   }
+
   const recognition = new SpeechRecognition();
   recognition.lang = "en-IN";
   recognition.interimResults = false;
 
   function startListening(){
+    if(recognitionActive) return; // prevent multiple triggers
+    recognitionActive = true;
     mic.classList.add("listening");
     status.innerHTML="Listening...";
     recognition.start();
@@ -177,14 +182,16 @@ document.addEventListener("DOMContentLoaded", function(){
       speak(introPA);
       return;
     }
+
     sendToAI(question);
   }
 
   recognition.onend = function(){
+    recognitionActive = false;
     mic.classList.remove("listening");
   }
 
-  /* SEND QUESTION TO N8N */
+  /* FETCH AI RESPONSE */
   async function sendToAI(question){
     status.innerHTML="Thinking...";
     try{
@@ -194,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function(){
         body:JSON.stringify({query:question})
       });
       const data = await response.json();
-      let reply = data.output || data.response || data.answer || "Information not available.";
+      let reply = data.output || data.response || data.answer || "Sorry, I couldn't get a response.";
       speak(reply);
     }catch(error){
       console.log(error);
@@ -204,13 +211,27 @@ document.addEventListener("DOMContentLoaded", function(){
 
   /* TEXT TO SPEECH */
   function speak(text){
+    recognitionActive = false; // stop recognition while speaking
+    recognition.abort();
     speechSynthesis.cancel();
+
     const speech = new SpeechSynthesisUtterance(text);
+
+    // choose female voice if available
+    voices = speechSynthesis.getVoices();
+    const femaleVoice = voices.find(v => v.name.toLowerCase().includes('female') || v.lang.startsWith(languageMode==='hi'?'hi':'pa') && v.name.toLowerCase().includes('female')) || voices[0];
+    speech.voice = femaleVoice;
+
     speech.lang = languageMode==="hi" ? "hi-IN" : languageMode==="pa" ? "pa-IN" : "en-IN";
     speech.rate = 0.95;
     speech.pitch = 1.1;
+
     speech.onstart = ()=>{ status.innerHTML="Speaking..."; }
-    speech.onend = ()=>{ status.innerHTML="Ready to help you"; }
+    speech.onend = ()=>{
+      status.innerHTML="Ready to help you";
+      recognitionActive = false; // allow listening again
+    }
+
     speechSynthesis.speak(speech);
   }
 
@@ -220,9 +241,13 @@ document.addEventListener("DOMContentLoaded", function(){
   window.stopAssistant = ()=>{
     speechSynthesis.cancel();
     recognition.abort();
+    recognitionActive = false;
     mic.classList.remove("listening");
     status.innerHTML="Ready";
   }
+
+  // Load voices on Chrome (sometimes delayed)
+  speechSynthesis.onvoiceschanged = () => { voices = speechSynthesis.getVoices(); };
 
 });
 </script>
