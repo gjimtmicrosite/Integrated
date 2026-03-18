@@ -30,7 +30,7 @@ body{height:100vh;display:flex;justify-content:center;align-items:center;backgro
 
 <div class="container">
   <div class="logo">Noor – GJIMT AI</div>
-  <div class="subtitle">Tap Noors and speak</div>
+  <div class="subtitle">Tap Noor and speak</div>
   <div id="mic" class="ai-avatar">
     <img src="ai-lady-robot.png" alt="Noor Avatar">
   </div>
@@ -40,7 +40,7 @@ body{height:100vh;display:flex;justify-content:center;align-items:center;backgro
   </div>
   <div class="controls">
     <button class="btn" onclick="pauseVoice()">Pause</button>
-    <button class="btn" onclick="playVoice()">Plaay</button>
+    <button class="btn" onclick="playVoice()">Play</button>
     <button class="btn" onclick="stopAssistant()">Stop</button>
   </div>
   <div class="footer">Powered by GJIMT AI</div>
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function(){
   let recognitionActive = false;
   let finalTranscript = "";
 
-  // Full introduction split into chunks
+  // Full introduction in chunks
   const introChunks = [
     "Hello. I am Noor, the artificial intelligence assistant of GJIMT.",
     "I joined the Gian Jyoti Group on the first of March 2026.",
@@ -73,14 +73,10 @@ document.addEventListener("DOMContentLoaded", function(){
     return;
   }
 
- 
-
   const recognition = new SpeechRecognition();
-recognition.lang = "en-IN";
-recognition.interimResults = true;  // show live text
-recognition.continuous = false;    // stop automatically after pause
-
-  
+  recognition.lang = "en-IN";
+  recognition.interimResults = true;  
+  recognition.continuous = false;  // stops automatically after pause
 
   // Click to start listening
   mic.addEventListener("click", function(){
@@ -112,7 +108,7 @@ recognition.continuous = false;    // stop automatically after pause
     if(!question) return;
     let q = question.toLowerCase();
 
-    // If intro request, speak locally immediately
+    // If introduction request
     if(q.includes("introduce") || q.includes("about yourself")){
       speakChunks(introChunks);
       return;
@@ -132,42 +128,41 @@ recognition.continuous = false;    // stop automatically after pause
       });
       const data = await response.json();
       let reply = data.output || data.response || data.answer || "Sorry, I couldn't get a response.";
-      speak(reply);
+      
+      // Speak n8n reply WITHOUT stopping recognition
+      speak(reply, false);
+
     } catch(error){
       console.error("Fetch error:", error);
-      speak("Server connection problem.");
+      speak("Server connection problem.", false);
     }
   }
 
-  // Speak multiple chunks for natural flow
+  // Speak multiple chunks for intro
   function speakChunks(chunks, index = 0){
     if(index >= chunks.length) return;
     const utter = new SpeechSynthesisUtterance(chunks[index]);
-
     let voices = speechSynthesis.getVoices();
     let female = voices.find(v => /female|woman|girl/i.test(v.name)) || voices[0];
     if(female) utter.voice = female;
-
     utter.lang = "en-IN";
-    utter.rate = 0.95;
+    utter.rate = 1.0;  // slightly faster
     utter.pitch = 1.1;
-
     utter.onstart = ()=> status.innerText = "Speaking...";
     utter.onend = ()=> speakChunks(chunks, index+1);
-
     speechSynthesis.speak(utter);
   }
 
-  // Standard TTS for n8n replies
-  function speak(text){
-    recognition.abort();
+  // Standard TTS; stopRecognition = true for local intro, false for n8n replies
+  function speak(text, stopRecognition = true){
+    if(stopRecognition) recognition.abort(); // only for intro
     speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(text);
     let voices = speechSynthesis.getVoices();
     let female = voices.find(v => /female|woman|girl/i.test(v.name)) || voices[0];
     if(female) utter.voice = female;
     utter.lang = "en-IN";
-    utter.rate = 0.95;
+    utter.rate = 1.0; // slightly faster
     utter.pitch = 1.1;
     utter.onstart = ()=> status.innerText = "Speaking...";
     utter.onend = ()=> status.innerText = "Ready to help you";
@@ -176,7 +171,7 @@ recognition.continuous = false;    // stop automatically after pause
 
   window.pauseVoice = ()=> speechSynthesis.pause();
   window.playVoice = ()=> speechSynthesis.resume();
-  window.stopAssistant = ()=>{
+  window.stopAssistant = ()=> {
     speechSynthesis.cancel();
     recognition.abort();
     status.innerText = "Ready";
