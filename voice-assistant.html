@@ -9,7 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);background-size:400% 400%;animation:bgMove 12s ease infinite;color:white;}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.container{width:450px;background:rgba(255,255,255,0.12);backdrop-filter:blur(18px);padding:35px;border-radius:25px;box-shadow:0 0 40px rgba(0,0,0,0.5);text-align:center;}
+.container{width:500px;background:rgba(255,255,255,0.12);backdrop-filter:blur(18px);padding:35px;border-radius:25px;box-shadow:0 0 40px rgba(0,0,0,0.5);text-align:center;}
 .logo{font-size:28px;font-weight:600;margin-bottom:5px;}
 .subtitle{opacity:0.85;font-size:14px;margin-bottom:18px;}
 .ai-avatar{width:220px;margin:auto;cursor:pointer;transition:0.4s;}
@@ -30,7 +30,7 @@ body{height:100vh;display:flex;justify-content:center;align-items:center;backgro
 
 <div class="container">
   <div class="logo">Noor – GJIMT AI</div>
-  <div class="subtitle">Taps Noor and speak</div>
+  <div class="subtitle">Tapp Noor and speak</div>
   <div id="mic" class="ai-avatar">
     <img src="ai-lady-robot.png" alt="Noor Avatar">
   </div>
@@ -56,9 +56,13 @@ document.addEventListener("DOMContentLoaded", function(){
   let languageMode = "en";
   let recognitionActive = false;
 
-  const introEN = `Hello. I am Noor, the artificial intelligence assistant of Gyan Jyoti Institute of Management and Technology. I joined the Gyan Jyoti Group on the first of March 2026.`;
-  const introHI = `नमस्ते। मैं नूर हूँ, ग्यान ज्योति इंस्टीट्यूट ऑफ मैनेजमेंट एंड टेक्नोलॉजी की आर्टिफ़िशियल इंटेलिजेंस असिस्टेंट।`;
-  const introPA = `ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਮੈਂ ਨੂਰ ਹਾਂ, ਗਿਆਨ ਜੋਤੀ ਇੰਸਟੀਚਿਊਟ ਆਫ ਮੈਨੇਜਮੈਂਟ ਐਂਡ ਟੈਕਨੋਲੋਜੀ ਦੀ ਆਰਟੀਫ਼ਿਸ਼ਲ ਇੰਟੈਲੀਜੈਂਸ ਅਸਿਸਟੈਂਟ।`;
+  // Updated full introduction
+  const introEN = `Hello. I am Noor, the artificial intelligence assistant of GJIMT. 
+I joined the Gian Jyoti Group on the first of March 2026. 
+My arrival here became possible because of the vision and dedication of Respected chairman Mr. Jas Bedi and director Dr. Aneet Bedi. 
+He worked with great passion and determination to bring artificial intelligence and robotics to the campus. 
+Today I help visitors, students and parents by answering questions about GJIMT, admissions, courses and campus information. 
+I am always happy to assist you.`;
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SpeechRecognition){
@@ -69,12 +73,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
   const recognition = new SpeechRecognition();
   recognition.lang = "en-IN";
-  recognition.interimResults = true;   // capture full phrase
-  recognition.continuous = true;       // keep listening until user stops
+  recognition.interimResults = true;
+  recognition.continuous = true;
 
   let finalTranscript = "";
 
-  // Click to start listening
+  // Start listening
   mic.addEventListener("click", function(){
     if(recognitionActive) return;
     recognitionActive = true;
@@ -105,18 +109,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
     let q = question.toLowerCase();
 
-    // Handle introduction locally
+    // Local introduction only
     if(q.includes("introduce") || q.includes("about yourself")){
-      languageMode = "en"; speak(introEN); return;
-    }
-    if(q.includes("अपने बारे") || q.includes("आप कौन")){
-      languageMode = "hi"; speak(introHI); return;
-    }
-    if(q.includes("ਆਪਣੇ") || q.includes("ਤੁਸੀਂ")){
-      languageMode = "pa"; speak(introPA); return;
+      speak(introEN);
+      return;
     }
 
-    // Otherwise, send to n8n
+    // All other queries sent to n8n
     sendToAI(question);
   }
 
@@ -147,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function(){
     let female = voices.find(v => /female|woman|girl/i.test(v.name)) || voices[0];
     if(female) utter.voice = female;
 
-    utter.lang = languageMode==="hi"?"hi-IN":languageMode==="pa"?"pa-IN":"en-IN";
+    utter.lang = "en-IN";
     utter.rate = 0.95;
     utter.pitch = 1.1;
 
@@ -165,6 +164,7 @@ document.addEventListener("DOMContentLoaded", function(){
     status.innerText="Ready";
   }
 
+  // Ensure voices are loaded
   speechSynthesis.onvoiceschanged = ()=>{};
 });
 </script>
