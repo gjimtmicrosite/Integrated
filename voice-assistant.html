@@ -154,7 +154,7 @@ Ready to help you
 
 <div class="controls">
 <button class="btn" onclick="pauseVoice()">Pause</button>
-<button class="btn" onclick="playVoice()">Plays</button>
+<button class="btn" onclick="playVoice()">Play</button>
 <button class="btn" onclick="stopAssistant()">Stop</button>
 </div>
 
@@ -163,6 +163,7 @@ Powered by GJIMT AI
 </div>
 
 </div>
+
 <script>
 
 const mic=document.getElementById("mic")
@@ -171,14 +172,19 @@ const speechText=document.getElementById("speechText")
 
 let languageMode="en"
 
+/* INTRODUCTION TEXT */
+
+const introEN=`Hello. I am Noor, the artificial intelligence assistant of Gyan Jyoti Institute of Management and Technology.
+
+I joined the Gian Jyoti Group on the first of March 2026.`
+
+const introHI=नमस्ते। मैं नूर हूँ, ग्यान ज्योति इंस्टीट्यूट ऑफ मैनेजमेंट एंड टेक्नोलॉजी की आर्टिफिशियल इंटेलिजेंस असिस्टेंट।
+
+const introPA=ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਮੈਂ ਨੂਰ ਹਾਂ, ਗਿਆਨ ਜੋਤੀ ਇੰਸਟੀਚਿਊਟ ਆਫ ਮੈਨੇਜਮੈਂਟ ਐਂਡ ਟੈਕਨੋਲੋਜੀ ਦੀ ਆਰਟੀਫੀਸ਼ਲ ਇੰਟੈਲੀਜੈਂਸ ਅਸਿਸਟੈਂਟ।
+
 /* SPEECH RECOGNITION */
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-
-if(!SpeechRecognition){
-alert("Speech Recognition not supported in this browser. Use Chrome.")
-}
-
 const recognition = new SpeechRecognition()
 
 recognition.lang="en-IN"
@@ -198,6 +204,26 @@ recognition.onresult=function(event){
 let question=event.results[0][0].transcript
 speechText.value=question
 
+let q=question.toLowerCase()
+
+if(q.includes("introduce") || q.includes("about yourself")){
+languageMode="en"
+speak(introEN)
+return
+}
+
+if(q.includes("अपने बारे") || q.includes("आप कौन")){
+languageMode="hi"
+speak(introHI)
+return
+}
+
+if(q.includes("ਆਪਣੇ") || q.includes("ਤੁਸੀਂ")){
+languageMode="pa"
+speak(introPA)
+return
+}
+
 sendToAI(question)
 
 }
@@ -214,26 +240,30 @@ status.innerHTML="Thinking..."
 
 try{
 
-const response = await fetch("https://aiprojectsgjimt.app.n8n.cloud/webhook/e08197d1-8396-46c6-b94b-9d4c0fc6848d",{
+const response = await fetch("https://aiprojectsgjimt.app.n8n.cloud/webhook-test/ai-kiosk",{
+
 method:"POST",
+
 headers:{
 "Content-Type":"application/json"
 },
+
 body:JSON.stringify({
-question: question
-})
+query:question
 })
 
-const data = await response.json().catch(()=>({}))
+})
 
-let reply = data.output || data.answer || data.response || "Sorry, no response from AI."
+const data = await response.json()
+
+let reply = data.output || data.response || data.answer || "Information not available."
 
 speak(reply)
 
 }catch(error){
 
-console.log("Error:",error)
-speak("Server connection error")
+console.log(error)
+speak("Server connection problem.")
 
 }
 
@@ -285,3 +315,6 @@ status.innerHTML="Ready"
 }
 
 </script>
+
+</body>
+</html>
