@@ -6,102 +6,24 @@
 <title>Noor – GJIMT AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
-body{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
-  background-size:400% 400%;
-  animation:bgMove 12s ease infinite;
-  color:white;
-}
-@keyframes bgMove{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-.container{
-  width:450px;
-  background:rgba(255,255,255,0.12);
-  backdrop-filter:blur(18px);
-  padding:35px;
-  border-radius:25px;
-  box-shadow:0 0 40px rgba(0,0,0,0.5);
-  text-align:center;
-}
-.logo{
-  font-size:28px;
-  font-weight:600;
-  margin-bottom:5px;
-}
-.subtitle{
-  opacity:0.85;
-  font-size:14px;
-  margin-bottom:18px;
-}
-.ai-avatar{
-  width:220px;
-  margin:auto;
-  cursor:pointer;
-  transition:0.4s;
-}
-.ai-avatar img{
-  width:100%;
-  border-radius:20px;
-}
-.ai-avatar:hover{
-  transform:scale(1.05);
-}
-.ai-avatar.listening{
-  animation:pulse 1.2s infinite;
-}
-@keyframes pulse{
-  0%{filter:drop-shadow(0 0 10px red)}
-  50%{filter:drop-shadow(0 0 35px red)}
-  100%{filter:drop-shadow(0 0 10px red)}
-}
-.status{
-  margin-top:15px;
-  font-size:15px;
-}
-.command-box{
-  margin-top:15px;
-}
-.command-box input{
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  font-size:14px;
-  text-align:center;
-}
-.controls{
-  margin-top:12px;
-}
-.btn{
-  padding:8px 16px;
-  margin:4px;
-  border:none;
-  border-radius:18px;
-  background:#00c6ff;
-  color:white;
-  cursor:pointer;
-}
-.btn:hover{
-  background:#0096c7;
-}
-.footer{
-  margin-top:20px;
-  font-size:12px;
-  opacity:0.6;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);background-size:400% 400%;animation:bgMove 12s ease infinite;color:white;}
+@keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.container{width:450px;background:rgba(255,255,255,0.12);backdrop-filter:blur(18px);padding:35px;border-radius:25px;box-shadow:0 0 40px rgba(0,0,0,0.5);text-align:center;}
+.logo{font-size:28px;font-weight:600;margin-bottom:5px;}
+.subtitle{opacity:0.85;font-size:14px;margin-bottom:18px;}
+.ai-avatar{width:220px;margin:auto;cursor:pointer;transition:0.4s;}
+.ai-avatar img{width:100%;border-radius:20px;}
+.ai-avatar:hover{transform:scale(1.05);}
+.ai-avatar.listening{animation:pulse 1.2s infinite;}
+@keyframes pulse{0%{filter:drop-shadow(0 0 10px red)}50%{filter:drop-shadow(0 0 35px red)}100%{filter:drop-shadow(0 0 10px red)}}
+.status{margin-top:15px;font-size:15px;}
+.command-box{margin-top:15px;}
+.command-box input{width:100%;padding:10px;border:none;border-radius:10px;font-size:14px;text-align:center;}
+.controls{margin-top:12px;}
+.btn{padding:8px 16px;margin:4px;border:none;border-radius:18px;background:#00c6ff;color:white;cursor:pointer;}
+.btn:hover{background:#0096c7;}
+.footer{margin-top:20px;font-size:12px;opacity:0.6;}
 </style>
 </head>
 <body>
@@ -119,7 +41,7 @@ body{
   <div class="controls">
     <button class="btn" onclick="pauseVoice()">Pause</button>
     <button class="btn" onclick="playVoice()">Play</button>
-    <button class="btn" onclick="stopAssistant()">Stopa</button>
+    <button class="btn" onclick="stopAssistant()">Stop</button>
   </div>
   <div class="footer">Powered by GJIMT AI</div>
 </div>
@@ -133,17 +55,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
   let languageMode = "en";
   let recognitionActive = false;
-  let voices = [];
 
-  /* INTRODUCTION TEXT */
+  // Hardcoded introduction text (HTML page)
   const introEN = `Hello. I am Noor, the artificial intelligence assistant of Gyan Jyoti Institute of Management and Technology. I joined the Gyan Jyoti Group on the first of March 2026.`;
   const introHI = `नमस्ते। मैं नूर हूँ, ग्यान ज्योति इंस्टीट्यूट ऑफ मैनेजमेंट एंड टेक्नोलॉजी की आर्टिफिशियल इंटेलिजेंस असिस्टेंट।`;
   const introPA = `ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਮੈਂ ਨੂਰ ਹਾਂ, ਗਿਆਨ ਜੋਤੀ ਇੰਸਟੀਚਿਊਟ ਆਫ ਮੈਨੇਜਮੈਂਟ ਐਂਡ ਟੈਕਨੋਲੋਜੀ ਦੀ ਆਰਟੀਫੀਸ਼ਲ ਇੰਟੈਲੀਜੈਂਸ ਅਸਿਸਟੈਂਟ।`;
 
-  /* SPEECH RECOGNITION */
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SpeechRecognition){
-    status.innerHTML = "Speech Recognition not supported in this browser.";
+    status.innerText = "Speech Recognition not supported in this browser.";
     mic.style.cursor = "not-allowed";
     return;
   }
@@ -152,104 +72,97 @@ document.addEventListener("DOMContentLoaded", function(){
   recognition.lang = "en-IN";
   recognition.interimResults = false;
 
-  function startListening(){
-    if(recognitionActive) return; // prevent multiple triggers
+  // Click to start listening
+  mic.addEventListener("click", function(){
+    if(recognitionActive) return;
     recognitionActive = true;
     mic.classList.add("listening");
-    status.innerHTML="Listening...";
+    status.innerText="Listening...";
     recognition.start();
-  }
-
-  mic.addEventListener("click", startListening);
+  });
 
   recognition.onresult = function(event){
     let question = event.results[0][0].transcript;
     speechText.value = question;
+    recognitionActive = false;
+    recognition.stop();
+
     let q = question.toLowerCase();
 
+    // Handle introduction locally
     if(q.includes("introduce") || q.includes("about yourself")){
-      languageMode = "en";
-      speak(introEN);
-      return;
+      languageMode = "en"; speak(introEN); return;
     }
     if(q.includes("अपने बारे") || q.includes("आप कौन")){
-      languageMode = "hi";
-      speak(introHI);
-      return;
+      languageMode = "hi"; speak(introHI); return;
     }
     if(q.includes("ਆਪਣੇ") || q.includes("ਤੁਸੀਂ")){
-      languageMode = "pa";
-      speak(introPA);
-      return;
+      languageMode = "pa"; speak(introPA); return;
     }
 
+    // Otherwise, send question to n8n webhook
     sendToAI(question);
   }
 
   recognition.onend = function(){
-    recognitionActive = false;
     mic.classList.remove("listening");
+    recognitionActive = false;
   }
 
-  /* FETCH AI RESPONSE */
+  // Send question to n8n backend
   async function sendToAI(question){
-    status.innerHTML="Thinking...";
+    status.innerText = "Thinking...";
     try{
-      const response = await fetch("https://aiprojectsgjimt.app.n8n.cloud/webhook/e08197d1-8396-46c6-b94b-9d4c0fc6848d",{
+      const response = await fetch("https://aiprojectsgjimt.app.n8n.cloud/webhook/e08197d1-8396-46c6-b94b-9d4c0fc6848d", {
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({query:question})
+        body: JSON.stringify({query:question})
       });
+
       const data = await response.json();
       let reply = data.output || data.response || data.answer || "Sorry, I couldn't get a response.";
       speak(reply);
+
     }catch(error){
-      console.log(error);
+      console.error("Fetch error:", error);
       speak("Server connection problem.");
     }
   }
 
-  /* TEXT TO SPEECH */
+  // Text-to-speech with female voice
   function speak(text){
-    recognitionActive = false; // stop recognition while speaking
     recognition.abort();
     speechSynthesis.cancel();
 
-    const speech = new SpeechSynthesisUtterance(text);
+    const utter = new SpeechSynthesisUtterance(text);
 
-    // choose female voice if available
-    voices = speechSynthesis.getVoices();
-    const femaleVoice = voices.find(v => v.name.toLowerCase().includes('female') || v.lang.startsWith(languageMode==='hi'?'hi':'pa') && v.name.toLowerCase().includes('female')) || voices[0];
-    speech.voice = femaleVoice;
+    let voices = speechSynthesis.getVoices();
+    let female = voices.find(v => /female|woman|girl/i.test(v.name)) || voices[0];
+    if(female) utter.voice = female;
 
-    speech.lang = languageMode==="hi" ? "hi-IN" : languageMode==="pa" ? "pa-IN" : "en-IN";
-    speech.rate = 0.95;
-    speech.pitch = 1.1;
+    utter.lang = languageMode==="hi"?"hi-IN":languageMode==="pa"?"pa-IN":"en-IN";
+    utter.rate = 0.95;
+    utter.pitch = 1.1;
 
-    speech.onstart = ()=>{ status.innerHTML="Speaking..."; }
-    speech.onend = ()=>{
-      status.innerHTML="Ready to help you";
-      recognitionActive = false; // allow listening again
-    }
+    utter.onstart = ()=> status.innerText="Speaking...";
+    utter.onend = ()=> status.innerText="Ready to help you";
 
-    speechSynthesis.speak(speech);
+    speechSynthesis.speak(utter);
   }
 
-  /* BUTTONS */
+  // Voice control buttons
   window.pauseVoice = ()=> speechSynthesis.pause();
   window.playVoice = ()=> speechSynthesis.resume();
   window.stopAssistant = ()=>{
     speechSynthesis.cancel();
     recognition.abort();
-    recognitionActive = false;
-    mic.classList.remove("listening");
-    status.innerHTML="Ready";
+    status.innerText="Ready";
   }
 
-  // Load voices on Chrome (sometimes delayed)
-  speechSynthesis.onvoiceschanged = () => { voices = speechSynthesis.getVoices(); };
-
+  // Ensure voices are loaded
+  speechSynthesis.onvoiceschanged = ()=>{};
 });
 </script>
+
 </body>
 </html>
