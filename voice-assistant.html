@@ -107,6 +107,10 @@ document.addEventListener("DOMContentLoaded", function(){
     let question = finalTranscript.trim();
     if(!question) return;
     let q = question.toLowerCase();
+    if(q.includes("stop") || q.includes("band karo") || q.includes("ruk jao")){
+    stopAssistant()
+    return
+}
 
     // If introduction request
     if(q.includes("introduce") || q.includes("about yourself")){
