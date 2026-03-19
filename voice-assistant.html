@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function(){
         body: JSON.stringify({query: question})
       });
       const data = await response.json();
-      let reply = data.output || data.response || data.answer || "Sorry, I couldn't get a response.";
+      let reply = data.reply || data.output || data.response || "Information not available.";
       
       // Speak n8n reply WITHOUT stopping recognition
       speak(reply, false);
