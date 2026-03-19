@@ -38,12 +38,33 @@ box-shadow:0 0 40px rgba(0,0,0,0.5);
 text-align:center;
 }
 
-.logo{font-size:28px;font-weight:600;margin-bottom:5px;}
-.subtitle{opacity:0.85;font-size:14px;margin-bottom:18px;}
+.logo{
+font-size:28px;
+font-weight:600;
+margin-bottom:5px;
+}
 
-.ai-avatar{width:220px;margin:auto;cursor:pointer;transition:0.4s;}
-.ai-avatar img{width:100%;border-radius:20px;}
-.ai-avatar:hover{transform:scale(1.05);}
+.subtitle{
+opacity:0.85;
+font-size:14px;
+margin-bottom:18px;
+}
+
+.ai-avatar{
+width:220px;
+margin:auto;
+cursor:pointer;
+transition:0.4s;
+}
+
+.ai-avatar img{
+width:100%;
+border-radius:20px;
+}
+
+.ai-avatar:hover{
+transform:scale(1.05);
+}
 
 .ai-avatar.listening{
 animation:pulse 1.2s infinite;
@@ -55,9 +76,15 @@ animation:pulse 1.2s infinite;
 100%{filter:drop-shadow(0 0 10px red)}
 }
 
-.status{margin-top:15px;font-size:15px;}
+.status{
+margin-top:15px;
+font-size:15px;
+}
 
-.command-box{margin-top:15px;}
+.command-box{
+margin-top:15px;
+}
+
 .command-box input{
 width:100%;
 padding:10px;
@@ -67,7 +94,10 @@ font-size:14px;
 text-align:center;
 }
 
-.controls{margin-top:12px;}
+.controls{
+margin-top:12px;
+}
+
 .btn{
 padding:8px 16px;
 margin:4px;
@@ -77,9 +107,16 @@ background:#00c6ff;
 color:white;
 cursor:pointer;
 }
-.btn:hover{background:#0096c7;}
 
-.footer{margin-top:20px;font-size:12px;opacity:0.6;}
+.btn:hover{
+background:#0096c7;
+}
+
+.footer{
+margin-top:20px;
+font-size:12px;
+opacity:0.6;
+}
 </style>
 
 </head>
@@ -91,7 +128,7 @@ cursor:pointer;
   <div class="subtitle">Tap Noor and speak</div>
 
   <div id="mic" class="ai-avatar">
-    <img src="ai-lady-robot.png">
+    <img src="ai-lady-robot.png" alt="Noor Avatar">
   </div>
 
   <div id="status" class="status">Ready to help you</div>
@@ -118,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   let recognitionActive = false;
   let finalTranscript = "";
+  let isSpeaking = false;
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -131,19 +169,17 @@ document.addEventListener("DOMContentLoaded", function(){
   recognition.interimResults = true;
   recognition.continuous = false;
 
-  // 🔊 START LISTENING
-  function startListening(){
+  // START LISTENING
+  mic.addEventListener("click", function(){
     if(recognitionActive) return;
     recognitionActive = true;
     finalTranscript = "";
     mic.classList.add("listening");
     status.innerText = "Listening...";
     recognition.start();
-  }
+  });
 
-  mic.addEventListener("click", startListening);
-
-  // 🎤 GET SPEECH
+  // GET SPEECH
   recognition.onresult = function(event){
     let interim = "";
     for(let i=event.resultIndex;i<event.results.length;i++){
@@ -156,13 +192,10 @@ document.addEventListener("DOMContentLoaded", function(){
     speechText.value = finalTranscript + interim;
   }
 
-  // 🎯 COMMAND CHECKS
-  function isStop(text){
-    return text.includes("stop") || text.includes("ruk jao") || text.includes("band karo");
-  }
-
-  function isContinue(text){
-    return text.includes("continue") || text.includes("resume") || text.includes("chalu karo");
+  // STOP COMMAND CHECK
+  function isStopCommand(text){
+    let q = text.toLowerCase();
+    return q.includes("stop") || q.includes("band karo") || q.includes("ruk jao");
   }
 
   recognition.onend = function(){
@@ -172,24 +205,16 @@ document.addEventListener("DOMContentLoaded", function(){
     let question = finalTranscript.trim();
     if(!question) return;
 
-    let q = question.toLowerCase();
-
-    // 🛑 STOP
-    if(isStop(q)){
+    // STOP VOICE COMMAND
+    if(isStopCommand(question)){
       stopAssistant();
-      return;
-    }
-
-    // ▶ CONTINUE
-    if(isContinue(q)){
-      startListening();
       return;
     }
 
     sendToAI(question);
   }
 
-  // 🌐 SEND TO AI
+  // SEND TO N8N
   async function sendToAI(question){
     status.innerText = "Thinking...";
     try{
@@ -200,47 +225,58 @@ document.addEventListener("DOMContentLoaded", function(){
       });
 
       const data = await response.json();
+
       let reply = data.output || "Information not available.";
 
+      // CLEAN TEXT FOR SPEECH
       reply = reply.replace(/[*#\n]/g, " ");
 
       speak(reply);
 
     } catch(error){
-      console.log(error);
+      console.error(error);
       speak("Server connection problem.");
     }
   }
 
-  // 🔊 SPEAK
+  // SPEAK FUNCTION
   function speak(text){
+
     speechSynthesis.cancel();
 
     const utter = new SpeechSynthesisUtterance(text);
 
     let voices = speechSynthesis.getVoices();
     let female = voices.find(v => /female|woman/i.test(v.name)) || voices[0];
+
     if(female) utter.voice = female;
 
     utter.lang = "en-IN";
     utter.rate = 1.0;
     utter.pitch = 1.1;
 
-    utter.onstart = ()=> status.innerText = "Speaking...";
-    utter.onend = ()=> status.innerText = "Ready to help you";
+    utter.onstart = ()=>{
+      isSpeaking = true;
+      status.innerText = "Speaking...";
+    }
+
+    utter.onend = ()=>{
+      isSpeaking = false;
+      status.innerText = "Ready to help you";
+    }
 
     speechSynthesis.speak(utter);
   }
 
-  // 🎛 CONTROLS
+  // CONTROLS
   window.pauseVoice = ()=> speechSynthesis.pause();
   window.playVoice = ()=> speechSynthesis.resume();
 
   window.stopAssistant = ()=>{
     speechSynthesis.cancel();
     recognition.abort();
-    recognitionActive = false;
-    status.innerText = "Stopped (say continue)";
+    isSpeaking = false;
+    status.innerText = "Stopped";
   }
 
 });
