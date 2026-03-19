@@ -1,48 +1,148 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Noor – GJIMT AI</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);background-size:400% 400%;animation:bgMove 12s ease infinite;color:white;}
-@keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.container{width:500px;background:rgba(255,255,255,0.12);backdrop-filter:blur(18px);padding:35px;border-radius:25px;box-shadow:0 0 40px rgba(0,0,0,0.5);text-align:center;}
-.logo{font-size:28px;font-weight:600;margin-bottom:5px;}
-.subtitle{opacity:0.85;font-size:14px;margin-bottom:18px;}
-.ai-avatar{width:220px;margin:auto;cursor:pointer;transition:0.4s;}
-.ai-avatar img{width:100%;border-radius:20px;}
-.ai-avatar:hover{transform:scale(1.05);}
-.ai-avatar.listening{animation:pulse 1.2s infinite;}
-@keyframes pulse{0%{filter:drop-shadow(0 0 10px red)}50%{filter:drop-shadow(0 0 35px red)}100%{filter:drop-shadow(0 0 10px red)}}
-.status{margin-top:15px;font-size:15px;}
-.command-box{margin-top:15px;}
-.command-box input{width:100%;padding:10px;border:none;border-radius:10px;font-size:14px;text-align:center;}
-.controls{margin-top:12px;}
-.btn{padding:8px 16px;margin:4px;border:none;border-radius:18px;background:#00c6ff;color:white;cursor:pointer;}
-.btn:hover{background:#0096c7;}
-.footer{margin-top:20px;font-size:12px;opacity:0.6;}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#3a0f0f);
+background-size:400% 400%;
+animation:bgMove 12s ease infinite;
+color:white;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+.container{
+width:500px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(18px);
+padding:35px;
+border-radius:25px;
+box-shadow:0 0 40px rgba(0,0,0,0.5);
+text-align:center;
+}
+
+.logo{
+font-size:28px;
+font-weight:600;
+margin-bottom:5px;
+}
+
+.subtitle{
+opacity:0.85;
+font-size:14px;
+margin-bottom:18px;
+}
+
+.ai-avatar{
+width:220px;
+margin:auto;
+cursor:pointer;
+transition:0.4s;
+}
+
+.ai-avatar img{
+width:100%;
+border-radius:20px;
+}
+
+.ai-avatar:hover{
+transform:scale(1.05);
+}
+
+.ai-avatar.listening{
+animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+0%{filter:drop-shadow(0 0 10px red)}
+50%{filter:drop-shadow(0 0 35px red)}
+100%{filter:drop-shadow(0 0 10px red)}
+}
+
+.status{
+margin-top:15px;
+font-size:15px;
+}
+
+.command-box{
+margin-top:15px;
+}
+
+.command-box input{
+width:100%;
+padding:10px;
+border:none;
+border-radius:10px;
+font-size:14px;
+text-align:center;
+}
+
+.controls{
+margin-top:12px;
+}
+
+.btn{
+padding:8px 16px;
+margin:4px;
+border:none;
+border-radius:18px;
+background:#00c6ff;
+color:white;
+cursor:pointer;
+}
+
+.btn:hover{
+background:#0096c7;
+}
+
+.footer{
+margin-top:20px;
+font-size:12px;
+opacity:0.6;
+}
 </style>
+
 </head>
+
 <body>
 
 <div class="container">
   <div class="logo">Noor – GJIMT AI</div>
   <div class="subtitle">Tap Noor and speak</div>
+
   <div id="mic" class="ai-avatar">
     <img src="ai-lady-robot.png" alt="Noor Avatar">
   </div>
+
   <div id="status" class="status">Ready to help you</div>
+
   <div class="command-box">
     <input id="speechText" placeholder="Your spoken command will appear here">
   </div>
+
   <div class="controls">
     <button class="btn" onclick="pauseVoice()">Pause</button>
     <button class="btn" onclick="playVoice()">Play</button>
     <button class="btn" onclick="stopAssistant()">Stop</button>
   </div>
+
   <div class="footer">Powered by GJIMT AI</div>
 </div>
 
@@ -55,30 +155,21 @@ document.addEventListener("DOMContentLoaded", function(){
 
   let recognitionActive = false;
   let finalTranscript = "";
-
-  // Full introduction in chunks
-  const introChunks = [
-    "Hello. I am Noor, the artificial intelligence assistant of GJIMT.",
-    "I joined the Gian Jyoti Group on the first of March 2026.",
-    "My arrival here became possible because of the vision and dedication of Respected chairman Mr. Jas Bedi and director Dr. Aneet Bedi.",
-    "He worked with great passion and determination to bring artificial intelligence and robotics to the campus.",
-    "Today I help visitors, students and parents by answering questions about GJIMT, admissions, courses and campus information.",
-    "I am always happy to assist you."
-  ];
+  let isSpeaking = false;
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
   if(!SpeechRecognition){
-    status.innerText = "Speech Recognition not supported in this browser.";
-    mic.style.cursor = "not-allowed";
+    status.innerText = "Speech Recognition not supported.";
     return;
   }
 
   const recognition = new SpeechRecognition();
   recognition.lang = "en-IN";
-  recognition.interimResults = true;  
-  recognition.continuous = false;  // stops automatically after pause
+  recognition.interimResults = true;
+  recognition.continuous = false;
 
-  // Click to start listening
+  // START LISTENING
   mic.addEventListener("click", function(){
     if(recognitionActive) return;
     recognitionActive = true;
@@ -88,16 +179,23 @@ document.addEventListener("DOMContentLoaded", function(){
     recognition.start();
   });
 
+  // GET SPEECH
   recognition.onresult = function(event){
-    let interimTranscript = "";
+    let interim = "";
     for(let i=event.resultIndex;i<event.results.length;i++){
       if(event.results[i].isFinal){
         finalTranscript += event.results[i][0].transcript + " ";
       } else {
-        interimTranscript += event.results[i][0].transcript;
+        interim += event.results[i][0].transcript;
       }
     }
-    speechText.value = finalTranscript + interimTranscript;
+    speechText.value = finalTranscript + interim;
+  }
+
+  // STOP COMMAND CHECK
+  function isStopCommand(text){
+    let q = text.toLowerCase();
+    return q.includes("stop") || q.includes("band karo") || q.includes("ruk jao");
   }
 
   recognition.onend = function(){
@@ -106,22 +204,17 @@ document.addEventListener("DOMContentLoaded", function(){
 
     let question = finalTranscript.trim();
     if(!question) return;
-    let q = question.toLowerCase();
-    if(q.includes("stop") || q.includes("band karo") || q.includes("ruk jao")){
-    stopAssistant()
-    return
-}
 
-    // If introduction request
-    if(q.includes("introduce") || q.includes("about yourself")){
-      speakChunks(introChunks);
+    // STOP VOICE COMMAND
+    if(isStopCommand(question)){
+      stopAssistant();
       return;
     }
 
-    // Otherwise send to n8n
     sendToAI(question);
   }
 
+  // SEND TO N8N
   async function sendToAI(question){
     status.innerText = "Thinking...";
     try{
@@ -130,58 +223,62 @@ document.addEventListener("DOMContentLoaded", function(){
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify({query: question})
       });
+
       const data = await response.json();
-      let reply = data.reply || data.output || data.response || "Information not available.";
-      
-      // Speak n8n reply WITHOUT stopping recognition
-      speak(reply, false);
+
+      let reply = data.output || "Information not available.";
+
+      // CLEAN TEXT FOR SPEECH
+      reply = reply.replace(/[*#\n]/g, " ");
+
+      speak(reply);
 
     } catch(error){
-      console.error("Fetch error:", error);
-      speak("Server connection problem.", false);
+      console.error(error);
+      speak("Server connection problem.");
     }
   }
 
-  // Speak multiple chunks for intro
-  function speakChunks(chunks, index = 0){
-    if(index >= chunks.length) return;
-    const utter = new SpeechSynthesisUtterance(chunks[index]);
-    let voices = speechSynthesis.getVoices();
-    let female = voices.find(v => /female|woman|girl/i.test(v.name)) || voices[0];
-    if(female) utter.voice = female;
-    utter.lang = "en-IN";
-    utter.rate = 1.0;  // slightly faster
-    utter.pitch = 1.1;
-    utter.onstart = ()=> status.innerText = "Speaking...";
-    utter.onend = ()=> speakChunks(chunks, index+1);
-    speechSynthesis.speak(utter);
-  }
+  // SPEAK FUNCTION
+  function speak(text){
 
-  // Standard TTS; stopRecognition = true for local intro, false for n8n replies
-  function speak(text, stopRecognition = true){
-    if(stopRecognition) recognition.abort(); // only for intro
     speechSynthesis.cancel();
+
     const utter = new SpeechSynthesisUtterance(text);
+
     let voices = speechSynthesis.getVoices();
-    let female = voices.find(v => /female|woman|girl/i.test(v.name)) || voices[0];
+    let female = voices.find(v => /female|woman/i.test(v.name)) || voices[0];
+
     if(female) utter.voice = female;
+
     utter.lang = "en-IN";
-    utter.rate = 1.0; // slightly faster
+    utter.rate = 1.0;
     utter.pitch = 1.1;
-    utter.onstart = ()=> status.innerText = "Speaking...";
-    utter.onend = ()=> status.innerText = "Ready to help you";
+
+    utter.onstart = ()=>{
+      isSpeaking = true;
+      status.innerText = "Speaking...";
+    }
+
+    utter.onend = ()=>{
+      isSpeaking = false;
+      status.innerText = "Ready to help you";
+    }
+
     speechSynthesis.speak(utter);
   }
 
+  // CONTROLS
   window.pauseVoice = ()=> speechSynthesis.pause();
   window.playVoice = ()=> speechSynthesis.resume();
-  window.stopAssistant = ()=> {
+
+  window.stopAssistant = ()=>{
     speechSynthesis.cancel();
     recognition.abort();
-    status.innerText = "Ready";
+    isSpeaking = false;
+    status.innerText = "Stopped";
   }
 
-  speechSynthesis.onvoiceschanged = ()=>{};
 });
 </script>
 
