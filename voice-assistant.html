@@ -213,6 +213,21 @@ document.addEventListener("DOMContentLoaded", function(){
 
     sendToAI(question);
   }
+   // CONTINUE COMMAND ✅
+  if(q.includes("continue") || q.includes("resume") || q.includes("chalu karo")){
+    startListeningAgain();
+    return;
+  }
+
+  // INTRO
+  if(q.includes("introduce") || q.includes("about yourself")){
+    speakChunks(introChunks);
+    return;
+  }
+
+  // NORMAL QUERY
+  sendToAI(question);
+}
 
   // SEND TO N8N
   async function sendToAI(question){
