@@ -246,17 +246,25 @@ document.addEventListener("DOMContentLoaded", function(){
 
     const utter = new SpeechSynthesisUtterance(text);
 
-   let voices = speechSynthesis.getVoices();
+  let voices = speechSynthesis.getVoices();
 
-// Try to find Indian voice
-let indianVoice = voices.find(v => v.lang === "en-IN");
+// ✅ Find Indian Female Voice
+let indianFemale = voices.find(v =>
+  v.lang === "en-IN" &&
+  /female|woman|heera|zira/i.test(v.name)
+);
 
-// If not found, fallback to any English voice
-if (indianVoice) {
-  utter.voice = indianVoice;
-} else {
-  utter.voice = voices.find(v => v.lang.startsWith("en")) || voices[0];
+// 🔁 Fallbacks
+if (!indianFemale) {
+  indianFemale = voices.find(v => v.lang === "en-IN");
 }
+
+if (!indianFemale) {
+  indianFemale = voices.find(v => /female|woman/i.test(v.name));
+}
+
+// 🎙️ Final voice set
+utter.voice = indianFemale || voices[0];
 
     utter.lang = "en-IN";
     utter.rate = 1.0;
