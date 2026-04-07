@@ -46,111 +46,111 @@ header{
   position:relative;
   z-index:2;
   text-align:center;
-  padding:40px 15px 10px;
+  padding:45px 20px 15px;
 }
 
 .logo-bar{
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:15px;
+  gap:18px;
   flex-wrap:wrap;
-  margin-bottom:15px;
+  margin-bottom:20px;
 }
 
 .logo-bar img{
-  height:45px;
+  height:50px;
   background:white;
-  padding:8px 12px;
-  border-radius:10px;
+  padding:10px 14px;
+  border-radius:12px;
 }
 
 header h1{
-  font-size:2.2rem;
+  font-size:2.4rem;
 }
 
 header p{
-  font-size:1rem;
-  opacity:0.8;
+  font-size:1.05rem;
+  opacity:0.85;
 }
 
 /* CONTAINER */
 .container{
   position:relative;
   z-index:2;
-  max-width:1500px;
+  max-width:1400px;
   margin:auto;
-  padding:40px 15px;
+  padding:50px 20px;
 }
 
-/* UPDATED GRID */
+/* GRID (BALANCED) */
 .cards{
   display:grid;
-  grid-template-columns:repeat(6,1fr); /* MORE CARDS IN ONE ROW */
-  gap:18px;
+  grid-template-columns:repeat(5,1fr); /* PERFECT BALANCE */
+  gap:22px;
 }
 
-/* SMALL CARD */
+/* CARD */
 .card{
   background:var(--glass);
-  backdrop-filter:blur(12px);
-  border-radius:18px;
-  padding:20px 15px;
+  backdrop-filter:blur(14px);
+  border-radius:22px;
+  padding:28px 18px;
   text-align:center;
   cursor:pointer;
-  border:1px solid rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.25);
   transition:0.4s;
 }
 
 .card:hover{
-  transform:translateY(-8px) scale(1.03);
-  box-shadow:0 0 20px rgba(255,255,255,0.2);
+  transform:translateY(-10px) scale(1.04);
+  box-shadow:0 0 25px rgba(255,255,255,0.25);
 }
 
-/* SMALL IMAGE */
+/* IMAGE */
 .card img{
-  height:50px;
-  max-width:120px;
+  height:60px;
+  max-width:140px;
   object-fit:contain;
-  margin-bottom:10px;
+  margin-bottom:14px;
   background:white;
-  padding:6px;
-  border-radius:10px;
+  padding:8px;
+  border-radius:12px;
 }
 
-/* SMALL TEXT */
+/* TEXT */
 .card h2{
-  font-size:1.1rem;
-  margin-bottom:6px;
+  font-size:1.25rem;
+  margin-bottom:8px;
 }
 
 .card p{
-  font-size:0.8rem;
-  opacity:0.85;
-  margin-bottom:12px;
+  font-size:0.9rem;
+  opacity:0.9;
+  margin-bottom:15px;
 }
 
 /* BUTTON */
 .card span{
   display:inline-block;
-  padding:6px 18px;
-  border-radius:20px;
+  padding:8px 22px;
+  border-radius:25px;
   background:var(--primary);
-  font-size:0.8rem;
+  font-size:0.85rem;
   font-weight:600;
 }
 
 /* FOOTER */
 footer{
   text-align:center;
-  padding:20px;
-  font-size:0.8rem;
-  opacity:0.8;
+  padding:25px;
+  font-size:0.85rem;
+  opacity:0.85;
 }
 
 /* RESPONSIVE */
 @media(max-width:1200px){
-  .cards{grid-template-columns:repeat(4,1fr);}
+  .cards{grid-template-columns:repeat(3,1fr);}
 }
 @media(max-width:800px){
   .cards{grid-template-columns:repeat(2,1fr);}
@@ -162,17 +162,17 @@ footer{
 /* VOICE ASSISTANT */
 .voice-assistant{
   position:fixed;
-  bottom:20px;
-  right:20px;
-  width:65px;
-  height:65px;
+  bottom:25px;
+  right:25px;
+  width:70px;
+  height:70px;
   border-radius:50%;
   cursor:pointer;
   z-index:999;
   background-image:url("ai-assistant.jpg");
   background-size:cover;
   background-position:center;
-  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
 .voice-assistant:hover{
@@ -234,8 +234,6 @@ footer{
       <p>Placement training</p>
       <span>Join Bootcamp</span>
     </div>
-
-    <!-- ADD MORE CARDS HERE EASILY -->
 
   </div>
 </div>
