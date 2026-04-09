@@ -74,6 +74,27 @@ header p{
   opacity:0.85;
 }
 
+/* 🔥 BLINKING BUTTON */
+.quiz-btn{
+  display:inline-block;
+  margin-top:25px;
+  padding:14px 30px;
+  font-size:1rem;
+  font-weight:600;
+  border-radius:30px;
+  background:linear-gradient(45deg,#ff416c,#ff4b2b);
+  color:white;
+  cursor:pointer;
+  text-decoration:none;
+  animation:blink 1.2s infinite;
+  box-shadow:0 0 15px rgba(255,75,43,0.6);
+}
+
+@keyframes blink{
+  0%,100%{opacity:1; transform:scale(1);}
+  50%{opacity:0.5; transform:scale(1.08);}
+}
+
 /* CONTAINER */
 .container{
   position:relative;
@@ -83,10 +104,10 @@ header p{
   padding:50px 20px;
 }
 
-/* GRID (BALANCED) */
+/* GRID */
 .cards{
   display:grid;
-  grid-template-columns:repeat(5,1fr); /* PERFECT BALANCE */
+  grid-template-columns:repeat(5,1fr);
   gap:22px;
 }
 
@@ -195,6 +216,12 @@ footer{
 
   <h1>GJIMT Digital Academic Ecosystem</h1>
   <p>Choose your pathway towards global careers</p>
+
+  <!-- 🔥 NEW BLINKING BUTTON -->
+  <a href="ai-mastery-quiz.html" class="quiz-btn">
+    🚀 Start AI Mastery Quiz
+  </a>
+
 </header>
 
 <div class="container">
@@ -202,7 +229,7 @@ footer{
 
     <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/ACCA/','_self')">
       <img src="ACCA.png">
-  <h2>ACCA, CPA/CFA, CA, CAPM, PMP Certifications</h2>
+      <h2>ACCA, CPA/CFA, CA, CAPM, PMP Certifications</h2>
       <p>Global accounting program</p>
       <span>Visit GJIMT</span>
     </div>
