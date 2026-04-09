@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Mastery Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f7f6f2; --surface:#f9f8f5; --surface2:#fbfbf9; --surface-off:#f3f0ec;
+  --surface-dyn:#e6e4df; --div:#dcd9d5; --border:#d4d1ca;
+  --text:#28251d; --muted:#7a7974; --faint:#bab9b4;
+  --primary:#01696f; --primary-h:#0c4e54; --primary-hl:#cedcd8;
+  --success:#437a22; --success-hl:#d4dfcc;
+  --warn:#964219; --warn-hl:#ddcfc6;
+  --err:#a12c7b; --err-hl:#e0ced7;
+  --gold:#d19900; --gold-hl:#e9e0c6;
+  --purple:#7a39bb; --purple-hl:#dacfde;
+  --blue:#006494; --blue-hl:#c6d8e4;
+  --orange:#da7101; --orange-hl:#e7d7c4;
+  --r-lg:.75rem; --r-xl:1rem; --r-full:9999px;
+  --ease:180ms cubic-bezier(.16,1,.3,1);
+}
+[data-theme="dark"] {
+  --bg:#171614; --surface:#1c1b19; --surface2:#201f1d; --surface-off:#1d1c1a;
+  --surface-dyn:#2d2c2a; --div:#262523; --border:#393836;
+  --text:#cdccca; --muted:#797876; --faint:#5a5957;
+  --primary:#4f98a3; --primary-h:#227f8b; --primary-hl:#313b3b;
+  --success:#6daa45; --success-hl:#3a4435;
+  --warn:#bb653b; --warn-hl:#564942;
+  --err:#d163a7; --err-hl:#4c3d46;
+  --gold:#e8af34; --gold-hl:#4d4332;
+  --purple:#a86fdf; --purple-hl:#4e4652;
+  --blue:#5591c7; --blue-hl:#3a4550;
+  --orange:#fdab43; --orange-hl:#564b3e;
+}
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+body { min-height:100vh; font-family:'Inter',sans-serif; font-size:16px; color:var(--text); background:var(--bg); line-height:1.6; -webkit-font-smoothing:antialiased; }
+button { cursor:pointer; background:none; border:none; font:inherit; color:inherit; }
+.app { max-width:700px; margin:0 auto; padding:40px 20px; }
+header { display:flex; justify-content:space-between; align-items:center; margin-bottom:48px; padding-bottom:24px; border-bottom:1px solid var(--div); }
+.logo { display:flex; align-items:center; gap:12px; }
+.logo-text { font-family:'Instrument Serif',Georgia,serif; font-size:1.25rem; font-style:italic; }
+.theme-btn { width:40px; height:40px; border-radius:var(--r-full); display:flex; align-items:center; justify-content:center; color:var(--muted); border:1px solid var(--border); transition:background var(--ease); }
+.theme-btn:hover { background:var(--surface-off); color:var(--text); }
+.prog-wrap { margin-bottom:32px; }
+.prog-labels { display:flex; justify-content:space-between; font-size:.8rem; color:var(--muted); margin-bottom:8px; }
+.prog-track { height:6px; background:var(--surface-dyn); border-radius:var(--r-full); overflow:hidden; }
+.prog-fill { height:100%; background:var(--primary); border-radius:var(--r-full); transition:width .4s ease; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-xl); padding:32px; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+.q-cat { font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--primary); margin-bottom:16px; }
+.q-text { font-family:'Instrument Serif',Georgia,serif; font-size:1.55rem; line-height:1.3; margin-bottom:28px; font-style:italic; }
+.opts { display:flex; flex-direction:column; gap:10px; }
+.opt-btn {
+  display:flex; align-items:flex-start; gap:14px;
+  padding:14px 18px; width:100%; text-align:left;
+  border:2px solid var(--border); border-radius:var(--r-lg);
+  background:var(--surface2); font-size:.9rem; line-height:1.5; color:var(--text);
+  cursor:pointer; transition:border-color .15s, background .15s, color .15s;
+}
+.opt-btn:hover { border-color:var(--primary); background:var(--primary-hl); }
+.opt-btn.selected { border-color:var(--primary); background:var(--primary-hl); color:var(--primary); }
+.opt-label {
+  flex-shrink:0; width:26px; height:26px; border-radius:var(--r-full);
+  border:2px solid currentColor; display:flex; align-items:center; justify-content:center;
+  font-size:.72rem; font-weight:700; opacity:.6;
+}
+.opt-btn.selected .opt-label { background:var(--primary); color:#fff; border-color:var(--primary); opacity:1; }
+.btn-primary {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  background:var(--primary); color:#fff; border-radius:var(--r-lg);
+  padding:13px 32px; font-size:.9rem; font-weight:600; margin-top:28px;
+  border:none; cursor:pointer; transition:background var(--ease);
+}
+.btn-primary:hover { background:var(--primary-h); }
+.btn-primary:disabled { opacity:.4; cursor:default; pointer-events:none; }
+.btn-outline {
+  display:inline-flex; align-items:center; justify-content:center;
+  background:transparent; color:var(--primary); border:2px solid var(--primary);
+  border-radius:var(--r-lg); padding:11px 32px; font-size:.9rem; font-weight:600;
+  cursor:pointer; transition:background var(--ease);
+}
+.btn-outline:hover { background:var(--primary-hl); }
+.screen { display:none; }
+.screen.active { display:block; }
+.intro-badge { display:inline-flex; align-items:center; background:var(--primary-hl); color:var(--primary); border-radius:var(--r-full); padding:5px 16px; font-size:.75rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin-bottom:20px; }
+.intro-h { font-family:'Instrument Serif',Georgia,serif; font-size:2.8rem; line-height:1.15; margin-bottom:16px; font-style:italic; }
+.intro-sub { font-size:1rem; color:var(--muted); max-width:52ch; margin-bottom:32px; line-height:1.7; }
+.lvl-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px; margin-bottom:32px; }
+.lvl-chip { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); padding:12px 14px; }
+.lvl-n { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--primary); margin-bottom:2px; }
+.lvl-name { font-size:.875rem; font-weight:600; margin-bottom:2px; }
+.lvl-desc { font-size:.75rem; color:var(--muted); line-height:1.4; }
+.res-emoji { font-size:3.5rem; margin-bottom:14px; line-height:1; }
+.res-badge { display:inline-block; font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 14px; border-radius:var(--r-full); margin-bottom:14px; }
+.res-title { font-family:'Instrument Serif',Georgia,serif; font-size:2.6rem; line-height:1.2; margin-bottom:12px; font-style:italic; }
+.res-desc { font-size:1rem; color:var(--muted); line-height:1.7; max-width:56ch; margin-bottom:24px; }
+.score-wrap { margin-bottom:28px; }
+.score-lbl { font-size:.875rem; color:var(--muted); margin-bottom:8px; display:flex; justify-content:space-between; }
+.score-track { height:10px; background:var(--surface-dyn); border-radius:var(--r-full); overflow:hidden; }
+.score-fill { height:100%; border-radius:var(--r-full); transition:width .8s cubic-bezier(.16,1,.3,1); }
+.traits { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:28px; }
+.trait { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); padding:14px; }
+.trait-lbl { font-size:.7rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px; }
+.trait-val { font-size:.875rem; font-weight:500; }
+.next-steps { background:var(--surface-off); border-radius:var(--r-xl); padding:24px; }
+.next-steps h3 { font-size:1rem; font-weight:700; margin-bottom:16px; }
+.next-steps ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.next-steps li { display:flex; align-items:flex-start; gap:10px; font-size:.875rem; color:var(--muted); }
+.next-steps li::before { content:"->"; color:var(--primary); font-weight:700; flex-shrink:0; }
+.btn-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+@media(max-width:480px) {
+  .traits { grid-template-columns:1fr; }
+  .card { padding:20px; }
+  .q-text { font-size:1.25rem; }
+  .intro-h { font-size:2rem; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">
+      <svg width="32" height="32" viewBox="0 0 34 34" fill="none">
+        <circle cx="17" cy="17" r="16" stroke="#01696f" stroke-width="1.5" opacity="0.35"/>
+        <circle cx="17" cy="17" r="6.5" fill="#01696f" opacity="0.85"/>
+        <path d="M17 3v11M17 20v11M3 17h11M20 17h11" stroke="#01696f" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+        <circle cx="17" cy="6" r="2.2" fill="#01696f" opacity="0.55"/>
+        <circle cx="17" cy="28" r="2.2" fill="#01696f" opacity="0.55"/>
+        <circle cx="6" cy="17" r="2.2" fill="#01696f" opacity="0.55"/>
+        <circle cx="28" cy="17" r="2.2" fill="#01696f" opacity="0.55"/>
+      </svg>
+      <span class="logo-text">AI Mastery Quiz</span>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </header>
+
+  <!-- INTRO -->
+  <div class="screen active" id="screenIntro">
+    <div class="intro-badge">Discover Your AI Mastery Level</div>
+    <h1 class="intro-h">Where do you stand<br>on the AI spectrum?</h1>
+    <p class="intro-sub">Answer 14 scenario-based questions and find out which of the 7 AI mastery levels you have reached — from curious beginner to rare Unicorn.</p>
+    <div class="lvl-grid">
+      <div class="lvl-chip"><div class="lvl-n">Level 1</div><div class="lvl-name">The Question Asker</div><div class="lvl-desc">Exploring what AI can do</div></div>
+      <div class="lvl-chip"><div class="lvl-n">Level 2</div><div class="lvl-name">The Prompt Crafter</div><div class="lvl-desc">Writing intentional prompts</div></div>
+      <div class="lvl-chip"><div class="lvl-n">Level 3</div><div class="lvl-name">The Power User</div><div class="lvl-desc">Multi-tool productivity</div></div>
+      <div class="lvl-chip"><div class="lvl-n">Level 4</div><div class="lvl-name">The Workflow Weaver</div><div class="lvl-desc">Automating connected tasks</div></div>
+      <div class="lvl-chip"><div class="lvl-n">Level 5</div><div class="lvl-name">The Builder</div><div class="lvl-desc">Creating AI-powered products</div></div>
+      <div class="lvl-chip"><div class="lvl-n">Level 6</div><div class="lvl-name">The Architect</div><div class="lvl-desc">Designing AI systems</div></div>
+      <div class="lvl-chip"><div class="lvl-n">Level 7</div><div class="lvl-name">The Unicorn</div><div class="lvl-desc">Rare visionary leader</div></div>
+    </div>
+    <button class="btn-primary" id="btnStart">Begin the Quiz &rarr;</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="screen" id="screenQuiz">
+    <div class="prog-wrap">
+      <div class="prog-labels">
+        <span id="qLabel">Question 1 of 14</span>
+        <span id="qPct">0%</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    </div>
+    <div class="card">
+      <div class="q-cat" id="qCat"></div>
+      <p class="q-text" id="qText"></p>
+      <div class="opts" id="qOpts"></div>
+      <button class="btn-primary" id="btnNext" disabled>Next Question &rarr;</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" id="screenResult">
+    <div class="res-emoji" id="resEmoji"></div>
+    <div class="res-badge" id="resBadge"></div>
+    <h2 class="res-title" id="resTitle"></h2>
+    <p class="res-desc" id="resDesc"></p>
+    <div class="score-wrap">
+      <div class="score-lbl"><span>Your AI Score</span><span id="resScore"></span></div>
+      <div class="score-track"><div class="score-fill" id="resBar" style="width:0%"></div></div>
+    </div>
+    <div class="traits" id="resTraits"></div>
+    <div class="next-steps">
+      <h3>Your next steps</h3>
+      <ul id="resSteps"></ul>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" id="btnRetry" style="margin-top:0">Retake Quiz</button>
+      <button class="btn-outline" id="btnShare">Copy &amp; Share Result</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+var QS = [
+  {cat:"Discovery", q:"When you first tried an AI chatbot, what did you do?",
+   opts:["Asked a simple question just to see if it works","Tested different types of prompts to explore its range","Immediately probed its limits, edge cases, and failure modes","Started thinking about how to integrate it into existing workflows"]},
+  {cat:"Prompting", q:"How do you typically write a prompt for an AI tool?",
+   opts:["Type what is on my mind and hope for the best","Think about what I want and write a clear, direct instruction","Use structured prompts with role, context, format, and constraints","Design reusable prompt templates others on my team can deploy"]},
+  {cat:"Tool Usage", q:"How many different AI tools do you actively use each week?",
+   opts:["Just one (usually ChatGPT or Gemini)","2 to 3 tools for different tasks","4 to 6 specialised tools, each chosen for a specific purpose","7 or more tools with a clear mental map of when to use which"]},
+  {cat:"Workflow", q:"How does AI fit into your daily work routine?",
+   opts:["I use it occasionally when I remember it exists","I use it for specific tasks like drafting emails or research","It is integrated into most of my work, saving me several hours daily","I have redesigned my entire workflow around AI capabilities"]},
+  {cat:"Automation", q:"Have you ever connected two or more AI or digital tools to automate a task?",
+   opts:["No, I would not know where to start","I have thought about it but have not tried yet","Yes, I have done basic automations using Zapier, Make, or similar","Yes, I build complex multi-step pipelines with conditional logic"]},
+  {cat:"Problem Solving", q:"When AI gives you a poor or incorrect output, what do you do?",
+   opts:["Try again with the exact same prompt","Tweak the wording slightly and retry once or twice","Systematically analyse what went wrong and redesign the prompt","Debug it like code, isolating variables until the root cause is found"]},
+  {cat:"Building", q:"Have you ever built something using an AI API or no-code AI platform?",
+   opts:["No, I only use ready-made AI products as an end user","I have used no-code AI tools to create small personal projects","I have built chatbots or apps using APIs like OpenAI or Anthropic","I have shipped AI-powered products or features used by real users"]},
+  {cat:"Understanding", q:"How well do you understand how large language models (LLMs) actually work?",
+   opts:["I know they are AI that generates text, that is about it","I understand tokens, temperature, context windows, and basic training","I understand transformers, embeddings, fine-tuning, and RAG","I can make informed architecture decisions and explain their tradeoffs"]},
+  {cat:"Strategy", q:"How do you approach AI adoption at an organisational or team level?",
+   opts:["I use AI for myself and have not thought beyond personal productivity","I have suggested a couple of AI tools to colleagues occasionally","I have created guidelines, SOPs, or training for AI use in my team","I have designed and am executing an institutional AI strategy and roadmap"]},
+  {cat:"Output Quality", q:"How do you judge whether an AI output is good enough to use?",
+   opts:["If it sounds right and reads well, I use it","Quick read-through and fix any obvious errors before submitting","I verify facts, check for bias, and refine structure before use","I apply a quality rubric and test outputs against specific success criteria"]},
+  {cat:"Iteration", q:"How many prompt iterations do you typically go through to get the output you want?",
+   opts:["1 to 2 times — I use whatever comes back","3 to 5 times — I do some back-and-forth refinement","6 to 10 times — I treat it like a creative collaboration","As many as needed — I have a systematic refinement process"]},
+  {cat:"Learning", q:"How do you stay updated on AI developments and new capabilities?",
+   opts:["I hear about major things through social media or news","I follow a few AI newsletters, podcasts, or YouTube channels","I read research, test new models weekly, and experiment proactively","I participate in communities, attend events, and contribute to discourse"]},
+  {cat:"Integration", q:"How deeply is AI embedded in the products or services you deliver to others?",
+   opts:["Not at all, AI stays as a personal productivity tool","Minor touches, AI helps me produce deliverables faster","Core feature, the value I deliver depends on AI capabilities","Central architecture, the product itself is an AI system"]},
+  {cat:"Vision", q:"How do you see AI's role in your field over the next 3 years?",
+   opts:["I am not sure, I will adapt when it becomes necessary","It will probably automate some tasks and make work more efficient","It will fundamentally reshape roles, and I am actively preparing for that","I am already shaping how AI will be adopted and governed in my industry"]}
+];
+
+var LV = [
+  {n:1, name:"The Question Asker", emoji:"🔍", col:"#006494", bg:"#c6d8e4",
+   desc:"You have discovered AI and you are genuinely curious. That is the essential first step that most people never take. You use AI reactively and occasionally. A rich journey lies ahead.",
+   traits:[{l:"Mode",v:"Exploration"},{l:"Primary Tool",v:"ChatGPT / Gemini"},{l:"AI Tenure",v:"Less than 3 months"},{l:"Main Use",v:"Information lookup"}],
+   steps:["Use one AI tool every single day for 30 days","Learn structured prompts: Role + Task + Context + Format","Try Perplexity, Claude, or Canva AI this week","Follow 2 AI educators on YouTube or LinkedIn"]},
+  {n:2, name:"The Prompt Crafter", emoji:"✍️", col:"#437a22", bg:"#d4dfcc",
+   desc:"You understand that output quality depends on input quality. You write intentional prompts and get noticeably better results than most people around you.",
+   traits:[{l:"Mode",v:"Intentional Use"},{l:"Strength",v:"Prompt writing"},{l:"AI Tenure",v:"3 to 6 months"},{l:"Main Use",v:"Writing and Research"}],
+   steps:["Build a personal library of reusable prompt templates","Learn chain-of-thought, few-shot, and role prompting","Explore domain-specific AI tools for your field","Experiment with multi-turn conversations"]},
+  {n:3, name:"The Power User", emoji:"⚡", col:"#964219", bg:"#ddcfc6",
+   desc:"You have moved beyond a single tool. You know which AI to use for which job and are saving significant hours every week. AI is a genuine productivity multiplier.",
+   traits:[{l:"Mode",v:"Multi-tool Mastery"},{l:"Tools per Week",v:"4 to 6 AI tools"},{l:"Time Saved",v:"5 to 10 hrs/week"},{l:"Main Use",v:"Cross-domain tasks"}],
+   steps:["Map your workflow and identify top 3 automation opportunities","Learn one automation platform: Make, Zapier, or n8n","Build and share your AI SOPs with colleagues","Explore AI tools in adjacent domains"]},
+  {n:4, name:"The Workflow Weaver", emoji:"🔗", col:"#d19900", bg:"#e9e0c6",
+   desc:"You do not just use AI, you choreograph it. You have connected tools, built pipelines, and created systems that run semi-autonomously.",
+   traits:[{l:"Mode",v:"System Design"},{l:"Tools per Week",v:"6 or more"},{l:"Time Saved",v:"15 to 25 hrs/week"},{l:"Main Use",v:"Automated pipelines"}],
+   steps:["Document your automation systems so others can learn","Explore AI agents like AutoGPT and CrewAI","Think about deploying AI systems across your organisation","Learn APIs and webhooks for deeper integrations"]},
+  {n:5, name:"The Builder", emoji:"🏗️", col:"#da7101", bg:"#e7d7c4",
+   desc:"You have crossed from user to creator. You have shipped AI-powered tools, apps, or systems that others use. You understand both the technical and human dimensions.",
+   traits:[{l:"Mode",v:"Creator and Maker"},{l:"Skills",v:"APIs, no-code/low-code"},{l:"Output",v:"Deployable AI products"},{l:"Main Use",v:"Building for others"}],
+   steps:["Learn fine-tuning and RAG for domain-specific AI","Build in public on LinkedIn or GitHub","Explore vector databases and LangChain","Study AI ethics and responsible deployment"]},
+  {n:6, name:"The Architect", emoji:"🏛️", col:"#7a39bb", bg:"#dacfde",
+   desc:"You design the systems that builders build upon. You make infrastructure decisions, define AI strategy, and understand enterprise-grade AI requirements.",
+   traits:[{l:"Mode",v:"System Architecture"},{l:"Skills",v:"MLOps, LLM Architecture"},{l:"Output",v:"AI strategies and platforms"},{l:"Influence",v:"Teams and organisations"}],
+   steps:["Contribute to open-source AI projects or research","Publish your frameworks and thought leadership","Mentor Builders and Power Users in your network","Explore multimodal AI and agentic systems"]},
+  {n:7, name:"The Unicorn", emoji:"🦄", col:"#a12c7b", bg:"#e0ced7",
+   desc:"You exist at the rare intersection of deep technical knowledge, strategic vision, and leadership. You are not just building with AI, you are shaping what AI becomes.",
+   traits:[{l:"Mode",v:"Visionary Leadership"},{l:"Skills",v:"Full-stack AI and Strategy"},{l:"Output",v:"Industry-shaping work"},{l:"Influence",v:"Entire industries"}],
+   steps:["Share your perspective on AI's societal impact at scale","Build communities accelerating responsible AI adoption","Mentor the next generation of Architects","Publish research or frameworks that shift global discourse"]}
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+var currentQ = 0;
+var scores   = [];
+var selected = -1;   // -1 = nothing chosen; 0..3 = option index
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.getElementById('screenIntro').style.display  = 'none';
+  document.getElementById('screenQuiz').style.display   = 'none';
+  document.getElementById('screenResult').style.display = 'none';
+  document.getElementById(id).style.display = 'block';
+}
+
+// ─── QUIZ LOGIC ──────────────────────────────────────────────────────────────
+function renderQuestion() {
+  var q = QS[currentQ];
+  selected = -1;
+
+  document.getElementById('qLabel').textContent = 'Question ' + (currentQ + 1) + ' of ' + QS.length;
+  document.getElementById('qPct').textContent   = Math.round((currentQ / QS.length) * 100) + '%';
+  document.getElementById('progFill').style.width = (currentQ / QS.length * 100) + '%';
+  document.getElementById('qCat').textContent  = q.cat;
+  document.getElementById('qText').textContent = q.q;
+
+  var btnNext = document.getElementById('btnNext');
+  btnNext.disabled = true;
+  btnNext.textContent = (currentQ === QS.length - 1) ? 'See My Result' : 'Next Question';
+
+  var container = document.getElementById('qOpts');
+  container.innerHTML = '';
+
+  var LETTERS = ['A','B','C','D'];
+  for (var i = 0; i < q.opts.length; i++) {
+    var btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.setAttribute('data-index', String(i));
+    btn.innerHTML =
+      '<span class="opt-label">' + LETTERS[i] + '</span>' +
+      '<span>' + q.opts[i] + '</span>';
+    container.appendChild(btn);
+  }
+
+  // Single delegated listener on the container — avoids closure-capture issues
+  container.onclick = function(e) {
+    var btn = e.target.closest('.opt-btn');
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute('data-index'), 10);
+    selected = idx;
+    var all = container.querySelectorAll('.opt-btn');
+    for (var k = 0; k < all.length; k++) { all[k].classList.remove('selected'); }
+    btn.classList.add('selected');
+    document.getElementById('btnNext').disabled = false;
+  };
+}
+
+function startQuiz() {
+  currentQ = 0;
+  scores   = [];
+  selected = -1;
+  showScreen('screenQuiz');
+  renderQuestion();
+}
+
+function goNext() {
+  if (selected === -1) return;
+  scores.push(selected + 1);   // store 1-based score
+  if (currentQ < QS.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+// ─── RESULT ──────────────────────────────────────────────────────────────────
+function showResult() {
+  var total = 0;
+  for (var i = 0; i < scores.length; i++) { total += scores[i]; }
+  var max  = QS.length * 4;
+  var pct  = total / max;
+  var li   = pct < 0.22 ? 0 : pct < 0.36 ? 1 : pct < 0.50 ? 2 : pct < 0.63 ? 3 : pct < 0.75 ? 4 : pct < 0.88 ? 5 : 6;
+  var lv   = LV[li];
+
+  document.getElementById('resEmoji').textContent = lv.emoji;
+
+  var badge = document.getElementById('resBadge');
+  badge.textContent    = 'Level ' + lv.n;
+  badge.style.background = lv.bg;
+  badge.style.color      = lv.col;
+
+  document.getElementById('resTitle').textContent = lv.name;
+  document.getElementById('resDesc').textContent  = lv.desc;
+  document.getElementById('resScore').textContent = total + ' / ' + max;
+
+  var bar = document.getElementById('resBar');
+  bar.style.background = lv.col;
+  bar.style.width      = '0%';
+  setTimeout(function() { bar.style.width = (pct * 100).toFixed(1) + '%'; }, 200);
+
+  var traitsEl = document.getElementById('resTraits');
+  traitsEl.innerHTML = '';
+  for (var i = 0; i < lv.traits.length; i++) {
+    var d = document.createElement('div');
+    d.className = 'trait';
+    d.innerHTML = '<div class="trait-lbl">' + lv.traits[i].l + '</div><div class="trait-val">' + lv.traits[i].v + '</div>';
+    traitsEl.appendChild(d);
+  }
+
+  var stepsEl = document.getElementById('resSteps');
+  stepsEl.innerHTML = '';
+  for (var i = 0; i < lv.steps.length; i++) {
+    var li2 = document.createElement('li');
+    li2.textContent = lv.steps[i];
+    stepsEl.appendChild(li2);
+  }
+
+  showScreen('screenResult');
+}
+
+// ─── BUTTON WIRING ───────────────────────────────────────────────────────────
+document.getElementById('btnStart').onclick  = function() { startQuiz(); };
+document.getElementById('btnNext').onclick   = function() { goNext(); };
+document.getElementById('btnRetry').onclick  = function() { startQuiz(); };
+document.getElementById('btnShare').onclick  = function() {
+  var title = document.getElementById('resTitle').textContent;
+  var badge = document.getElementById('resBadge').textContent;
+  var msg   = 'I just took the AI Mastery Quiz! I am ' + badge + ': "' + title + '". Discover your AI level too.';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(msg).then(function() { alert('Copied! Share on LinkedIn or WhatsApp.'); });
+  } else {
+    prompt('Copy this result:', msg);
+  }
+};
+
+// ─── THEME TOGGLE ────────────────────────────────────────────────────────────
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+document.getElementById('themeBtn').onclick = function() {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+};
+
+// ─── INITIAL SCREEN ──────────────────────────────────────────────────────────
+showScreen('screenIntro');
+</script>
+</body>
+</html>
