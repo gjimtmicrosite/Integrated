@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,14 +35,12 @@ body{
   100%{background-position:0% 50%}
 }
 
-/* PARTICLES */
 canvas{
   position:fixed;
   inset:0;
   z-index:0;
 }
 
-/* HEADER */
 header{
   position:relative;
   z-index:2;
@@ -74,7 +73,6 @@ header p{
   opacity:0.85;
 }
 
-/* 🔥 BLINKING BUTTON */
 .quiz-btn{
   display:inline-block;
   margin-top:25px;
@@ -95,7 +93,6 @@ header p{
   50%{opacity:0.5; transform:scale(1.08);}
 }
 
-/* CONTAINER */
 .container{
   position:relative;
   z-index:2;
@@ -104,14 +101,12 @@ header p{
   padding:50px 20px;
 }
 
-/* GRID */
 .cards{
   display:grid;
   grid-template-columns:repeat(5,1fr);
   gap:22px;
 }
 
-/* CARD */
 .card{
   background:var(--glass);
   backdrop-filter:blur(14px);
@@ -128,7 +123,6 @@ header p{
   box-shadow:0 0 25px rgba(255,255,255,0.25);
 }
 
-/* IMAGE */
 .card img{
   height:60px;
   max-width:140px;
@@ -139,20 +133,27 @@ header p{
   border-radius:12px;
 }
 
-/* TEXT */
-.card h2{
-  font-size:1.25rem;
-  margin-bottom:8px;
+/* 🔥 NEW MULTI-LINE DESIGN */
+.multi-line{
+  font-size:1.15rem;
+  font-weight:600;
+  line-height:1.6;
+  margin-bottom:10px;
+}
+
+.multi-line span{
+  display:block;
+  padding:4px 0;
+  border-bottom:1px solid rgba(255,255,255,0.2);
 }
 
 .card p{
   font-size:0.9rem;
   opacity:0.9;
-  margin-bottom:15px;
+  margin:12px 0;
 }
 
-/* BUTTON */
-.card span{
+.card span.btn{
   display:inline-block;
   padding:8px 22px;
   border-radius:25px;
@@ -161,7 +162,6 @@ header p{
   font-weight:600;
 }
 
-/* FOOTER */
 footer{
   text-align:center;
   padding:25px;
@@ -169,7 +169,6 @@ footer{
   opacity:0.85;
 }
 
-/* RESPONSIVE */
 @media(max-width:1200px){
   .cards{grid-template-columns:repeat(3,1fr);}
 }
@@ -178,26 +177,6 @@ footer{
 }
 @media(max-width:500px){
   .cards{grid-template-columns:1fr;}
-}
-
-/* VOICE ASSISTANT */
-.voice-assistant{
-  position:fixed;
-  bottom:25px;
-  right:25px;
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  cursor:pointer;
-  z-index:999;
-  background-image:url("ai-assistant.jpg");
-  background-size:cover;
-  background-position:center;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
-}
-
-.voice-assistant:hover{
-  transform:scale(1.1);
 }
 </style>
 </head>
@@ -217,49 +196,56 @@ footer{
   <h1>GJIMT Digital Academic Ecosystem</h1>
   <p>Choose your pathway towards global careers</p>
 
-  <!-- 🔥 NEW BLINKING BUTTON -->
   <a href="ai-mastery-quiz.html" class="quiz-btn">
     🚀 Start AI Mastery Quiz
   </a>
-
 </header>
 
 <div class="container">
   <div class="cards">
 
+    <!-- ✅ UPDATED FIRST CARD -->
     <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/ACCA/','_self')">
       <img src="ACCA.png">
-      <h2>ACCA, CPA/CFA, CA, CAPM, PMP Certifications</h2>
+
+      <h2 class="multi-line">
+        <span>ACCA</span>
+        <span>CPA / CFA</span>
+        <span>CA</span>
+        <span>CAPM</span>
+        <span>PMP</span>
+      </h2>
+
       <p>Global accounting program</p>
-      <span>Visit GJIMT</span>
+      <span class="btn">Visit GJIMT</span>
     </div>
 
     <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/new_gjimt-integrated-programs/index.html','_self')">
       <img src="zerotohero.jpg">
       <h2>Integrated</h2>
       <p>AI & Tech degrees</p>
-      <span>Explore Programs</span>
+      <span class="btn">Explore Programs</span>
     </div>
 
     <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/SkillXworkshops/','_self')">
       <img src="skillx.jpg">
       <h2>SkillX</h2>
       <p>Industry skills</p>
-      <span>Enter SkillX</span>
+      <span class="btn">Enter SkillX</span>
     </div>
 
     <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/digital-marketing/','_self')">
       <img src="download.jpg">
       <h2>Marketing</h2>
       <p>Digital growth</p>
-      <span>Explore Marketing</span>
+      <span class="btn">Explore Marketing</span>
     </div>
 
     <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/bootcamp/','_self')">
       <img src="bootcamp.jpg">
       <h2>Bootcamp</h2>
       <p>Placement training</p>
-      <span>Join Bootcamp</span>
+      <span class="btn">Join Bootcamp</span>
     </div>
 
   </div>
@@ -316,3 +302,4 @@ function openAssistant(){
 
 </body>
 </html>
+```
