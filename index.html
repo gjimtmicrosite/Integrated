@@ -219,13 +219,45 @@ footer{
       <img src="ACCA.png">
 
       <h2 class="multi-line">
-    <span><a href="https://example.com/acca" target="_self">ACCA</a></span>
-    <span><a href="https://example.com/cpa" target="_self">CPA/CFA</a> 
-    <span><a href="https://example.com/ca" target="_self">CA</a></span>
-    <span><a href="https://example.com/capm" target="_self">CAPM</a></span>
-    <span><a href="https://example.com/pmp" target="_self">PMP</a></span>
+    <span><div class="course" onclick="handleCourse('ACCA')"><h2>ACCA</h2></div></span>
+    <span><a href="https://gjimtmicrosite.github.io/ACCA/cpa.html" target="_self">CPA</a> 
+         <span><a href="https://gjimtmicrosite.github.io/ACCA/cfa.html" target="_self">CFA</a></span>
+    <span><a href="https://gjimtmicrosite.github.io/ACCA/ca.html" target="_self">CA</a></span>
+    <span><a href="https://gjimtmicrosite.github.io/ACCA/capm.htmlm" target="_self">CAPM</a></span>
+    <span><a href="https://gjimtmicrosite.github.io/ACCA/pmp.html" target="_self">PMP</a></span>
   </h2>
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <h3>Choose Your Entry Level</h3>
 
+    <button class="option-btn" onclick="goToPage('plus2')">Under Graduate</button>
+    <button class="option-btn" onclick="goToPage('graduation')">Graduation</button>
+
+    <div class="close" onclick="closePopup()">Close</div>
+  </div>
+</div>
+
+<script>
+function handleCourse(course){
+  if(course === "ACCA"){
+    document.getElementById("popup").classList.add("active");
+  } else {
+    window.location.href = course + ".html";
+  }
+}
+
+function closePopup(){
+  document.getElementById("popup").classList.remove("active");
+}
+
+function goToPage(type){
+  if(type === "plus2"){
+    window.location.href = "ACCA_plus2.html";
+  } else {
+    window.location.href = "ACCA_graduation.html";
+  }
+}
+</script>
       <p>Global accounting program</p>
       <span class="btn">Visit GJIMT</span>
     </div>
