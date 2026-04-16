@@ -221,7 +221,42 @@ line-height:1.2;
   color:white;
   cursor:pointer;
 }
+/* ✅ QR SECTION */
+.qr-section{
+  margin-top:25px;
+  display:flex;
+  justify-content:center;
+}
 
+.qr-container{
+  display:flex;
+  gap:25px;
+  flex-wrap:wrap;
+}
+
+.qr-box{
+  text-align:center;
+  cursor:pointer;
+}
+
+.qr-box img{
+  width:110px;
+  height:110px;
+  border-radius:12px;
+  background:white;
+  padding:6px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.3);
+  transition:0.3s;
+}
+
+.qr-box img:hover{
+  transform:scale(1.1) rotate(2deg);
+}
+
+.qr-box p{
+  margin-top:8px;
+  font-size:0.85rem;
+}
 .close{
   position:absolute;
   top:10px;
@@ -267,6 +302,28 @@ footer{
     <a href="https://gjimtmicrosite.github.io/ACCA/career-quiz.html" class="btn-3d">🎯 Career Quiz After +2</a>
     <a href="https://gjimtmicrosite.github.io/SkillXworkshops/gjimt-SkillX-Quiz.html" class="btn-3d">⚡ SkillX Quiz</a>
   </div>
+
+  <!-- ✅ QR CODE SECTION -->
+<div class="qr-section">
+  <div class="qr-container">
+
+    <div class="qr-box" onclick="openQR('ai-mastery-quiz.html')">
+      <img src="AI Quiz.jpeg">
+      <p>AI Quiz</p>
+    </div>
+
+    <div class="qr-box" onclick="openQR('https://gjimtmicrosite.github.io/ACCA/career-quiz.html')">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://gjimtmicrosite.github.io/ACCA/career-quiz.html">
+      <p>Career Quiz</p>
+    </div>
+
+    <div class="qr-box" onclick="openQR('gjimt-SkillX-Quiz.html')">
+      <img src="SkillX.jpeg">
+      <p>SkillX Quiz</p>
+    </div>
+
+  </div>
+</div>
 </header>
 
 <div class="container">
@@ -382,6 +439,9 @@ function goUG(){
 }
 function goGrad(){
   window.location.href="https://gjimtmicrosite.github.io/ACCA/ACCA_graduation.html";
+}
+  function openQR(url){
+  window.open(url,'_blank');
 }
 </script>
 
