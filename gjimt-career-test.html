@@ -1,190 +1,615 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>GJIMT Career Guidance Test</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--blue:#0A3663;--gold:#D4AF37;--light:#f4f7fb;--white:#fff;--gray:#6c757d;--green:#28a745;--radius:12px}
-body{font-family:'Segoe UI',sans-serif;background:var(--light);color:#222;min-height:100vh}
-header{background:var(--blue);color:#fff;padding:16px 20px;text-align:center}
-header h1{font-size:clamp(1.1rem,4vw,1.6rem);color:var(--gold);margin-bottom:4px}
-header p{font-size:clamp(0.75rem,3vw,0.95rem);opacity:.9}
-.lang-bar{display:flex;justify-content:center;gap:10px;padding:12px;background:#e8eef5;flex-wrap:wrap}
-.lang-btn{padding:7px 22px;border:2px solid var(--blue);border-radius:20px;background:#fff;color:var(--blue);font-weight:600;cursor:pointer;font-size:.9rem;transition:all .2s}
-.lang-btn.active,.lang-btn:hover{background:var(--blue);color:#fff}
-.card{background:#fff;border-radius:var(--radius);padding:28px 24px;margin:20px auto;max-width:680px;box-shadow:0 4px 18px rgba(0,0,0,.09)}
-.card h2{color:var(--blue);font-size:clamp(1rem,4vw,1.3rem);margin-bottom:18px;border-bottom:3px solid var(--gold);padding-bottom:10px}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-weight:600;margin-bottom:6px;font-size:.92rem;color:var(--blue)}
-.form-group input,.form-group select{width:100%;padding:11px 14px;border:1.5px solid #ccd6e0;border-radius:8px;font-size:1rem;font-family:inherit;transition:border .2s;background:#fff}
-.form-group input:focus,.form-group select:focus{border-color:var(--blue);outline:none}
-.progress-wrap{margin-bottom:18px}
-.prog-label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--gray);margin-bottom:5px}
-.prog-bar{height:9px;background:#dde4ec;border-radius:10px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--gold));border-radius:10px;transition:width .4s ease}
-.q-num{font-size:.8rem;color:var(--gray);margin-bottom:5px;font-weight:600;letter-spacing:.3px}
-.q-text{font-size:clamp(.95rem,3.5vw,1.1rem);font-weight:700;color:#1a1a2e;margin-bottom:20px;line-height:1.55}
-.likert{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:6px}
-.l-item{display:flex;flex-direction:column;align-items:center}
-.l-item input[type=radio]{display:none}
-.l-item label{width:100%;text-align:center;background:#eef2f7;border:2px solid #ccd6e0;border-radius:10px;padding:11px 3px;cursor:pointer;transition:all .2s;font-size:.73rem;color:#444;font-weight:500;line-height:1.35;user-select:none}
-.l-item input[type=radio]:checked + label{background:var(--blue);color:#fff;border-color:var(--blue);transform:scale(1.06);box-shadow:0 2px 8px rgba(10,54,99,.3)}
-.btn{display:inline-block;padding:13px 28px;border-radius:10px;border:none;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none;text-align:center;font-family:inherit}
-.btn-primary{background:var(--blue);color:#fff;width:100%;margin-top:12px}
-.btn-primary:hover{background:#0d4a8a}
-.btn-primary:disabled{opacity:.45;cursor:not-allowed}
-.btn-gold{background:var(--gold);color:var(--blue)}
-.btn-gold:hover{background:#c8a430}
-.btn-green{background:var(--green);color:#fff}
-.btn-green:hover{background:#218838}
-.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.action-row .btn{flex:1;min-width:130px;font-size:.85rem;padding:12px 8px}
-.rank-card{border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;border-left:6px solid}
-.rank-1{border-color:var(--gold);background:#fffbee}
-.rank-2{border-color:#6c8ebf;background:#f0f4ff}
-.rank-3{border-color:#82b366;background:#f0fff4}
-.rank-badge{display:inline-block;padding:3px 13px;border-radius:20px;font-size:.76rem;font-weight:700;margin-bottom:9px}
-.rank-1 .rank-badge{background:var(--gold);color:var(--blue)}
-.rank-2 .rank-badge{background:#6c8ebf;color:#fff}
-.rank-3 .rank-badge{background:#82b366;color:#fff}
-.rank-title{font-size:1.1rem;font-weight:700;color:var(--blue);margin-bottom:7px}
-.rank-why{font-size:.87rem;color:#444;line-height:1.65;margin-bottom:6px}
-.rank-career{font-size:.82rem;color:#555;font-style:italic;line-height:1.5}
-.chart-wrap{position:relative;width:100%;max-width:420px;height:420px;margin:0 auto 26px}
-.chart-wrap canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important}
-.alert{padding:11px 15px;border-radius:8px;font-size:.88rem;margin-top:12px}
-.alert-ok{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
-.alert-err{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
-.hidden{display:none!important}
-.info-bar{background:#e8f0fe;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.88rem;color:#0A3663;font-weight:500;line-height:1.5}
-@media(max-width:500px){
-  .card{padding:18px 14px;margin:10px}
-  .likert{gap:4px}
-  .l-item label{padding:9px 2px;font-size:.66rem}
-  .chart-wrap{height:300px}
-  .action-row .btn{min-width:90px;font-size:.78rem;padding:10px 5px}
-}
-@media print{
-  header,.lang-bar,.action-row,.alert{display:none!important}
-  .card{box-shadow:none;margin:0;padding:8px;max-width:100%}
-  body{background:#fff}
-  .chart-wrap{height:350px}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GJIMT Career Psychometric Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{
+      --blue:#0A3663;
+      --blue-dark:#072748;
+      --gold:#D4AF37;
+      --gold-dark:#b89322;
+      --bg:#f5f7fb;
+      --surface:#ffffff;
+      --surface-2:#f0f4f8;
+      --text:#1f2937;
+      --muted:#5b6472;
+      --border:#d9e1ea;
+      --success:#2e7d32;
+      --danger:#b42318;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(10,54,99,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Inter',sans-serif;background:linear-gradient(180deg,#f8fbff 0%,#f4f6fa 100%);color:var(--text)}
+    .wrap{max-width:980px;margin:0 auto;padding:24px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .hero{padding:28px 28px 20px}
+    h1{margin:0 0 8px;font:700 clamp(2rem,4vw,3rem) 'Playfair Display',serif;color:var(--blue);text-align:center}
+    .sub{text-align:center;color:var(--muted);font-size:1.05rem;margin-bottom:18px}
+    .langbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+    .lang-btn{border:1px solid var(--border);background:#fff;color:var(--blue);padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;min-height:44px}
+    .lang-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .full{grid-column:1 / -1}
+    .field label{display:block;font-size:.95rem;font-weight:700;margin:0 0 8px;color:var(--text)}
+    .field input,.field select{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;font:inherit;background:#fff}
+    .field input:focus,.field select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(10,54,99,.1)}
+    .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+    .btn{appearance:none;border:none;border-radius:12px;padding:13px 18px;font:700 1rem 'Inter',sans-serif;cursor:pointer;min-height:48px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+    .btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:var(--blue-dark)}
+    .btn-gold{background:var(--gold);color:#1b1b1b}.btn-gold:hover{background:var(--gold-dark)}
+    .btn-outline{background:#fff;color:var(--blue);border:1px solid var(--border)}
+    .section{padding:24px 28px}
+    .hidden{display:none !important}
+    .sticky-top{position:sticky;top:0;z-index:40;background:rgba(245,247,251,.95);backdrop-filter:blur(8px);padding-bottom:8px}
+    .progress-shell{margin-top:6px}
+    .progress{height:10px;background:#e7edf5;border-radius:999px;overflow:hidden}
+    .progress > div{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--blue));transition:width .25s ease}
+    .progress-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.92rem;margin-top:8px}
+    .intro{padding:20px 24px;background:linear-gradient(135deg,rgba(10,54,99,.05),rgba(212,175,55,.09));border:1px solid var(--border);border-radius:14px;margin-bottom:20px}
+    .intro h2{margin:0 0 8px;color:var(--blue);font-size:1.25rem}
+    .questions{display:grid;gap:14px}
+    .q-card{padding:18px;border:1px solid var(--border);border-radius:14px;background:#fff}
+    .q-title{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+    .q-no{width:30px;height:30px;border-radius:999px;background:var(--blue);color:#fff;font-size:.9rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 30px;margin-top:2px}
+    .q-text{font-size:1.05rem;font-weight:600;line-height:1.5}
+    .opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .opt input{display:none}
+    .opt label{display:flex;align-items:center;justify-content:center;min-height:46px;border:2px solid var(--border);border-radius:12px;background:var(--surface-2);cursor:pointer;font-weight:700;transition:.2s ease}
+    .opt label:hover{border-color:var(--blue)}
+    .opt input:checked + label{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .results-head{text-align:center;margin-bottom:18px}
+    .results-head h2{margin:0 0 8px;color:var(--blue);font-size:2rem}
+    .chart-box{padding:16px;border:1px solid var(--border);border-radius:16px;background:#fff;height:460px;margin-bottom:20px}
+    .score-note{font-size:.95rem;color:var(--muted);text-align:center;margin:8px 0 18px}
+    .rank-list{display:grid;gap:14px}
+    .rank{padding:18px;border-radius:16px;border:1px solid var(--border);background:#fff}
+    .rank.top{background:linear-gradient(135deg,rgba(212,175,55,.14),rgba(10,54,99,.05));border-color:#e5c96f}
+    .rank h3{margin:0 0 8px;color:var(--blue);font-size:1.25rem}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--gold);font-weight:800;font-size:.78rem;color:#231f10;margin-bottom:8px}
+    .why{margin-top:10px;padding:14px;border-left:4px solid var(--blue);background:#f8fbff;border-radius:10px;color:var(--muted)}
+    .program-meta{color:var(--muted);margin:6px 0}
+    .riasec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+    .mini{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);text-align:center}
+    .mini strong{display:block;font-size:1.25rem;color:var(--blue)}
+    .footer-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+    .muted{color:var(--muted)}
+    @media (max-width:760px){
+      .wrap{padding:14px}
+      .grid,.riasec-grid,.opts{grid-template-columns:1fr}
+      .hero,.section{padding:18px}
+      .chart-box{height:380px}
+      .q-text{font-size:1rem}
+    }
+    @media print{
+      .no-print,.sticky-top{display:none !important}
+      body{background:#fff}
+      .card{box-shadow:none;border:none}
+      .chart-box,.rank{break-inside:avoid}
+      .wrap{max-width:100%;padding:0}
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <div id="registration" class="card hero">
+      <h1 data-i18n="title">Which Career Pathway is right for you?</h1>
+      <div class="sub" data-i18n="subtitle">GJIMT Career Psychometric Test for Class 12th Students</div>
 
-<header>
-  <h1 id="hTitle">GJIMT Career Guidance Test</h1>
-  <p id="hSub">Gian Jyoti Institute of Management &amp; Technology, Mohali</p>
-</header>
+      <div class="langbar">
+        <button class="lang-btn active" type="button" data-lang="en">English</button>
+        <button class="lang-btn" type="button" data-lang="hi">हिंदी</button>
+        <button class="lang-btn" type="button" data-lang="pa">ਪੰਜਾਬੀ</button>
+      </div>
 
-<div class="lang-bar">
-  <button class="lang-btn active" onclick="setLang('en')">English</button>
-  <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
-  <button class="lang-btn" onclick="setLang('pa')">ਪੰਜਾਬੀ</button>
-</div>
-
-<!-- SCREEN 1: Info Form -->
-<div id="s1" class="card">
-  <h2 id="t_infoTitle">Student Information</h2>
-  <div class="info-bar" id="t_infoNote">Please fill in all details carefully. Your results will be saved for GJIMT admissions counselling.</div>
-  <div class="form-group">
-    <label id="t_lName">Full Name *</label>
-    <input type="text" id="stName" placeholder="Enter your full name"/>
-  </div>
-  <div class="form-group">
-   <label id="t_lPhone">Phone Number *</label>
-    <input type="tel" id="stPhone" placeholder="+91 XXXXX XXXXX"/>
-  </div>
-  <div class="form-group">
-    <label id="t_lBoard">Board *</label>
-    <select id="stBoard">
-      <option value="">-- Select Board --</option>
-      <option value="CBSE">CBSE</option>
-      <option value="PSEB">PSEB</option>
-      <option value="ICSE">ICSE</option>
-      <option value="Other State Board">Other State Board</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label id="t_lStream">Stream (Class 12) *</label>
-    <select id="stStream">
-      <option value="">-- Select Stream --</option>
-      <option value="Commerce">Commerce</option>
-      <option value="Non-Medical">Non-Medical (Science)</option>
-      <option value="Medical">Medical (Science)</option>
-      <option value="Arts">Arts / Humanities</option>
-      <option value="Vocational">Vocational</option>
-    </select>
-  </div>
-  <button class="btn btn-primary" id="t_btnStart" onclick="startTest()">Start Test →</button>
-</div>
-
-<!-- SCREEN 2: Questions -->
-<div id="s2" class="card hidden">
-  <div class="progress-wrap">
-    <div class="prog-label">
-      <span id="qLabel">Question 1 of 42</span>
-      <span id="qPct">0%</span>
+      <form id="regForm">
+        <div class="grid">
+          <div class="field">
+            <label for="name" data-i18n="name">Full Name</label>
+            <input id="name" required />
+          </div>
+          <div class="field">
+            <label for="phone" data-i18n="phone">Phone / WhatsApp Number</label>
+            <input id="phone" required />
+          </div>
+          <div class="field">
+            <label for="board" data-i18n="board">Class 12th Board</label>
+            <select id="board" required></select>
+          </div>
+          <div class="field">
+            <label for="stream" data-i18n="stream">Class 12th Stream</label>
+            <select id="stream" required></select>
+          </div>
+          <div class="field full">
+            <div class="intro">
+              <h2 data-i18n="instructionsTitle">How to answer</h2>
+              <div class="muted" data-i18n="instructionsText">Read each statement carefully. Choose Yes if it sounds like you, and No if it does not. There are no right or wrong answers.</div>
+            </div>
+          </div>
+        </div>
+        <div class="cta-row">
+          <button class="btn btn-primary" type="submit"><span data-i18n="startBtn">Start the Test</span></button>
+        </div>
+      </form>
     </div>
-    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-  </div>
-  <div class="q-num" id="qNum"></div>
-  <div class="q-text" id="qText"></div>
-  <div class="likert" id="likertDiv"></div>
-  <button class="btn btn-primary" id="btnNext" onclick="nextQ()" style="margin-top:18px" disabled>Next →</button>
-</div>
 
-<!-- SCREEN 3: Results -->
-<div id="s3" class="card hidden">
-  <h2 id="t_resTitle">Your Career Profile</h2>
-  <p id="resGreet" style="margin-bottom:18px;color:#444;font-size:.95rem;line-height:1.6"></p>
-  <div class="chart-wrap">anvas id="radarChart"></canvas></div>
-  <div id="rankDiv"></div>
-  <div id="msgOk" class="alert alert-ok hidden"></div>
-  <div id="msgErr" class="alert alert-err hidden"></div>
-  <div class="action-row">
-    <button class="btn btn-green" onclick="window.print()" id="t_btnPrint">🖨️ Print / Save PDF</button>
-    <a class="btn btn-gold" href="tel:+919876543210" id="t_btnCall">📞 Call Admissions</a>
-    <button class="btn btn-primary" onclick="location.reload()" id="t_btnRetake">🔄 Retake Test</button>
+    <div id="testScreen" class="hidden">
+      <div class="sticky-top no-print">
+        <div class="langbar" style="margin-top:8px; margin-bottom:10px;">
+          <button class="lang-btn active" type="button" data-lang="en">English</button>
+          <button class="lang-btn" type="button" data-lang="hi">हिंदी</button>
+          <button class="lang-btn" type="button" data-lang="pa">ਪੰਜਾਬੀ</button>
+        </div>
+        <div class="progress-shell">
+          <div class="progress"><div id="bar"></div></div>
+          <div class="progress-meta">
+            <span data-i18n="progressLabel">Progress</span>
+            <span><span id="answered">0</span> / 42</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section">
+        <div class="intro">
+          <h2 data-i18n="questionHeader">Answer all 42 questions</h2>
+          <div class="muted" data-i18n="questionSub">The language toggle works live. You can switch between English, Hindi, and Punjabi anytime.</div>
+        </div>
+        <div id="questions" class="questions"></div>
+        <div class="cta-row no-print">
+          <button id="submitBtn" class="btn btn-primary" type="button" disabled><span data-i18n="resultBtn">See My Result</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="resultScreen" class="hidden">
+      <div class="card section">
+        <div class="results-head">
+          <h2 data-i18n="resultTitle">Your Career Profile</h2>
+          <div class="muted"><span data-i18n="preparedFor">Prepared for</span> <strong id="studentNameOut"></strong></div>
+        </div>
+
+        <div class="chart-box"><canvas id="radarChart"></canvas></div>
+        <div class="score-note" data-i18n="chartNote">This chart shows your interest pattern across the six RIASEC dimensions.</div>
+
+        <div id="riasecScores" class="riasec-grid"></div>
+        <div id="rankings" class="rank-list"></div>
+
+        <div class="footer-actions no-print">
+          <a href="tel:+919876543210" class="btn btn-gold"><i data-lucide="phone-call"></i><span data-i18n="callBtn">Call GJIMT Admissions</span></a>
+          <button class="btn btn-outline" onclick="window.print()"><i data-lucide="printer"></i><span data-i18n="printBtn">Download / Print Result</span></button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
 <script>
-// ═══════════════════════════════════════════════════
-//  PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW
-// ═══════════════════════════════════════════════════
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztYlFE_Mvf6K0Al0ILAvOueZberhKeOlajJfmsVvnEZGst4ErjV7XJuwHjsWxcKCDuRA/exec';
-
-// ─── TRANSLATIONS ───────────────────────────────────
-const LANG = {
+const translations = {
   en: {
-    hTitle:'GJIMT Career Guidance Test',
-    hSub:'Gian Jyoti Institute of Management & Technology, Mohali',
-    infoTitle:'Student Information',
-    infoNote:'Please fill in all details carefully. Your results will be saved for GJIMT admissions counselling.',
-    lName:'Full Name *', lPhone:'Phone Number *', lBoard:'Board *', lStream:'Stream (Class 12) *',
-    btnStart:'Start Test →',
-    qOf:'Question {n} of 42',
-    scale:['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'],
-    btnNext:'Next →', btnFinish:'See My Results →',
-    resTitle:'Your Career Profile',
-    greet:'Hello {name}! Based on your responses and your {stream} stream background, here is your personalised career recommendation.',
-    badges:['🥇 Best Fit','🥈 Good Fit','🥉 Possible Fit'],
-    chartTitle:'Your RIASEC Personality Profile',
-    dims:['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'],
-    saveOk:'✅ Your results have been saved to GJIMT admissions records successfully!',
-    saveErr:'⚠️ Could not save results online. Please use Print / Save PDF to keep a copy.',
-    btnPrint:'🖨️ Print / Save PDF', btnCall:'📞 Call Admissions', btnRetake:'🔄 Retake Test',
-    whyLabel:'Why this fits you:',
-    careerLabel:'Career paths:',
-    programs:{
-      BBA:{
-        name:'BBA – Bachelor of Business Administration',
-        desc:'A 3-year management program covering marketing, finance, HR, entrepreneurship and leadership. Perfect for students who enjoy working with people, making decisions and building organisations.',
-        why:{
-          E:'Your high Enterprising score shows strong leadership and business drive
+    title: 'Which Career Pathway is right for you?',
+    subtitle: 'GJIMT Career Psychometric Test for Class 12th Students',
+    name: 'Full Name',
+    phone: 'Phone / WhatsApp Number',
+    board: 'Class 12th Board',
+    stream: 'Class 12th Stream',
+    instructionsTitle: 'How to answer',
+    instructionsText: 'Read each statement carefully. Choose Yes if it sounds like you, and No if it does not. There are no right or wrong answers.',
+    startBtn: 'Start the Test',
+    progressLabel: 'Progress',
+    questionHeader: 'Answer all 42 questions',
+    questionSub: 'The language toggle works live. You can switch between English, Hindi, and Punjabi anytime.',
+    resultBtn: 'See My Result',
+    resultTitle: 'Your Career Profile',
+    preparedFor: 'Prepared for',
+    chartNote: 'This chart shows your interest pattern across the six RIASEC dimensions.',
+    callBtn: 'Call GJIMT Admissions',
+    printBtn: 'Download / Print Result',
+    yes: 'Yes',
+    no: 'No',
+    boards: ['Select your board','CBSE','PSEB','ICSE','Other State Board'],
+    streams: ['Select your stream','Commerce','Non-Medical','Medical','Arts','Vocational'],
+    topFit: 'Best Match',
+    whyBest: 'Why this is your best fit',
+    streamFactored: 'Stream factored',
+    scoreLabel: 'Score',
+    rank2: 'Second Match',
+    rank3: 'Third Match'
+  },
+  hi: {
+    title: 'आपके लिए कौन-सा करियर पाथवे सही है?',
+    subtitle: 'कक्षा 12वीं के विद्यार्थियों के लिए GJIMT करियर साइकोमेट्रिक टेस्ट',
+    name: 'पूरा नाम',
+    phone: 'फोन / व्हाट्सऐप नंबर',
+    board: 'कक्षा 12वीं बोर्ड',
+    stream: 'कक्षा 12वीं स्ट्रीम',
+    instructionsTitle: 'कैसे उत्तर दें',
+    instructionsText: 'हर कथन को ध्यान से पढ़ें। यदि वह आप पर लागू होता है तो Yes चुनें, नहीं तो No चुनें। कोई उत्तर सही या गलत नहीं है।',
+    startBtn: 'टेस्ट शुरू करें',
+    progressLabel: 'प्रगति',
+    questionHeader: 'सभी 42 प्रश्नों के उत्तर दें',
+    questionSub: 'भाषा टॉगल तुरंत काम करता है। आप कभी भी English, Hindi और Punjabi में बदल सकते हैं।',
+    resultBtn: 'मेरा परिणाम देखें',
+    resultTitle: 'आपकी करियर प्रोफाइल',
+    preparedFor: 'तैयार किया गया',
+    chartNote: 'यह चार्ट RIASEC के छह आयामों में आपकी रुचि का पैटर्न दिखाता है।',
+    callBtn: 'GJIMT एडमिशन को कॉल करें',
+    printBtn: 'रिज़ल्ट डाउनलोड / प्रिंट करें',
+    yes: 'हाँ',
+    no: 'नहीं',
+    boards: ['अपना बोर्ड चुनें','CBSE','PSEB','ICSE','अन्य राज्य बोर्ड'],
+    streams: ['अपनी स्ट्रीम चुनें','कॉमर्स','नॉन-मेडिकल','मेडिकल','आर्ट्स','वोकेशनल'],
+    topFit: 'सबसे उपयुक्त',
+    whyBest: 'यह आपके लिए सबसे उपयुक्त क्यों है',
+    streamFactored: 'स्ट्रीम को शामिल किया गया',
+    scoreLabel: 'स्कोर',
+    rank2: 'दूसरा मैच',
+    rank3: 'तीसरा मैच'
+  },
+  pa: {
+    title: 'ਤੁਹਾਡੇ ਲਈ ਕਿਹੜਾ ਕਰੀਅਰ ਪਾਥਵੇ ਠੀਕ ਹੈ?',
+    subtitle: 'ਕਲਾਸ 12ਵੀਂ ਦੇ ਵਿਦਿਆਰਥੀਆਂ ਲਈ GJIMT ਕਰੀਅਰ ਸਾਈਕੋਮੈਟਰਿਕ ਟੈਸਟ',
+    name: 'ਪੂਰਾ ਨਾਮ',
+    phone: 'ਫੋਨ / ਵਟਸਐਪ ਨੰਬਰ',
+    board: 'ਕਲਾਸ 12ਵੀਂ ਬੋਰਡ',
+    stream: 'ਕਲਾਸ 12ਵੀਂ ਸਟ੍ਰੀਮ',
+    instructionsTitle: 'ਕਿਵੇਂ ਜਵਾਬ ਦੇਣਾ ਹੈ',
+    instructionsText: 'ਹਰ ਬਿਆਨ ਧਿਆਨ ਨਾਲ ਪੜ੍ਹੋ। ਜੇ ਇਹ ਤੁਹਾਡੇ ਨਾਲ ਮਿਲਦਾ ਹੈ ਤਾਂ Yes ਚੁਣੋ, ਨਹੀਂ ਤਾਂ No। ਕੋਈ ਜਵਾਬ ਸਹੀ ਜਾਂ ਗਲਤ ਨਹੀਂ ਹੈ।',
+    startBtn: 'ਟੈਸਟ ਸ਼ੁਰੂ ਕਰੋ',
+    progressLabel: 'ਤਰੱਕੀ',
+    questionHeader: 'ਸਾਰੇ 42 ਪ੍ਰਸ਼ਨਾਂ ਦੇ ਜਵਾਬ ਦਿਓ',
+    questionSub: 'ਭਾਸ਼ਾ ਟੌਗਲ ਤੁਰੰਤ ਕੰਮ ਕਰਦਾ ਹੈ। ਤੁਸੀਂ ਕਿਸੇ ਵੀ ਵੇਲੇ English, Hindi ਅਤੇ Punjabi ਵਿਚ ਬਦਲ ਸਕਦੇ ਹੋ।',
+    resultBtn: 'ਮੇਰਾ ਨਤੀਜਾ ਵੇਖੋ',
+    resultTitle: 'ਤੁਹਾਡੀ ਕਰੀਅਰ ਪ੍ਰੋਫਾਈਲ',
+    preparedFor: 'ਤਿਆਰ ਕੀਤਾ ਗਿਆ',
+    chartNote: 'ਇਹ ਚਾਰਟ RIASEC ਦੇ ਛੇ ਮਾਪਾਂ ਵਿੱਚ ਤੁਹਾਡੀ ਰੁਚੀ ਦਾ ਪੈਟਰਨ ਦਿਖਾਉਂਦਾ ਹੈ।',
+    callBtn: 'GJIMT ਦਾਖਲਾ ਟੀਮ ਨੂੰ ਕਾਲ ਕਰੋ',
+    printBtn: 'ਨਤੀਜਾ ਡਾਊਨਲੋਡ / ਪ੍ਰਿੰਟ ਕਰੋ',
+    yes: 'ਹਾਂ',
+    no: 'ਨਹੀਂ',
+    boards: ['ਆਪਣਾ ਬੋਰਡ ਚੁਣੋ','CBSE','PSEB','ICSE','ਹੋਰ ਰਾਜ ਬੋਰਡ'],
+    streams: ['ਆਪਣੀ ਸਟ੍ਰੀਮ ਚੁਣੋ','ਕਾਮਰਸ','ਨਾਨ-ਮੈਡੀਕਲ','ਮੈਡੀਕਲ','ਆਰਟਸ','ਵੋਕੇਸ਼ਨਲ'],
+    topFit: 'ਸਭ ਤੋਂ ਵਧੀਆ ਮੇਲ',
+    whyBest: 'ਇਹ ਤੁਹਾਡੇ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਕਿਉਂ ਹੈ',
+    streamFactored: 'ਸਟ੍ਰੀਮ ਸ਼ਾਮਲ ਕੀਤੀ ਗਈ',
+    scoreLabel: 'ਸਕੋਰ',
+    rank2: 'ਦੂਜਾ ਮੇਲ',
+    rank3: 'ਤੀਜਾ ਮੇਲ'
+  }
+};
+
+const questions = [
+  {id:1,type:'R',en:'I like to work on cars.',hi:'मुझे गाड़ियों पर काम करना पसंद है।',pa:'ਮੈਨੂੰ ਕਾਰਾਂ ਉੱਤੇ ਕੰਮ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:2,type:'I',en:'I like to do puzzles.',hi:'मुझे पहेलियाँ हल करना पसंद है।',pa:'ਮੈਨੂੰ ਬੁਝਾਰਤਾਂ ਹੱਲ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:3,type:'A',en:'I am good at working independently.',hi:'मैं स्वतंत्र रूप से काम करने में अच्छा/अच्छी हूँ।',pa:'ਮੈਂ ਖੁਦਮੁਖਤਿਆਰ ਤੌਰ ਤੇ ਕੰਮ ਕਰਨ ਵਿੱਚ ਚੰਗਾ/ਚੰਗੀ ਹਾਂ।'},
+  {id:4,type:'S',en:'I like to work in teams.',hi:'मुझे टीम में काम करना पसंद है।',pa:'ਮੈਨੂੰ ਟੀਮ ਵਿੱਚ ਕੰਮ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:5,type:'E',en:'I am an ambitious person; I set goals for myself.',hi:'मैं महत्वाकांक्षी हूँ और अपने लिए लक्ष्य तय करता/करती हूँ।',pa:'ਮੈਂ ਮਹੱਤਵਾਕਾਂਕਸ਼ੀ ਹਾਂ ਅਤੇ ਆਪਣੇ ਲਈ ਲਕਸ਼ ਨਿਰਧਾਰਤ ਕਰਦਾ/ਕਰਦੀ ਹਾਂ।'},
+  {id:6,type:'C',en:'I like to organize things like files, desks, or materials.',hi:'मुझे फाइलें, डेस्क या सामग्री व्यवस्थित करना पसंद है।',pa:'ਮੈਨੂੰ ਫਾਈਲਾਂ, ਡੈੱਸਕ ਜਾਂ ਸਮੱਗਰੀ ਸਜਾਉਣਾ ਪਸੰਦ ਹੈ।'},
+  {id:7,type:'R',en:'I like to build things.',hi:'मुझे चीज़ें बनाना पसंद है।',pa:'ਮੈਨੂੰ ਚੀਜ਼ਾਂ ਬਣਾਉਣਾ ਪਸੰਦ ਹੈ।'},
+  {id:8,type:'A',en:'I like to read about art and music.',hi:'मुझे कला और संगीत के बारे में पढ़ना पसंद है।',pa:'ਮੈਨੂੰ ਕਲਾ ਅਤੇ ਸੰਗੀਤ ਬਾਰੇ ਪੜ੍ਹਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:9,type:'C',en:'I like to have clear instructions to follow.',hi:'मुझे स्पष्ट निर्देशों का पालन करना पसंद है।',pa:'ਮੈਨੂੰ ਸਪੱਸ਼ਟ ਹਦਾਇਤਾਂ ਮੰਨਣਾ ਪਸੰਦ ਹੈ।'},
+  {id:10,type:'E',en:'I like trying to influence or persuade people.',hi:'मुझे लोगों को प्रभावित या मनाना पसंद है।',pa:'ਮੈਨੂੰ ਲੋਕਾਂ ਨੂੰ ਪ੍ਰਭਾਵਿਤ ਜਾਂ ਮਨਾਉਣਾ ਪਸੰਦ ਹੈ।'},
+  {id:11,type:'I',en:'I like to do experiments.',hi:'मुझे प्रयोग करना पसंद है।',pa:'ਮੈਨੂੰ ਤਜਰਬੇ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:12,type:'S',en:'I like to teach or train people.',hi:'मुझे लोगों को सिखाना या प्रशिक्षित करना पसंद है।',pa:'ਮੈਨੂੰ ਲੋਕਾਂ ਨੂੰ ਸਿਖਾਉਣਾ ਜਾਂ ਟ੍ਰੇਨ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:13,type:'S',en:'I like trying to help people solve their problems.',hi:'मुझे लोगों की समस्याएँ सुलझाने में मदद करना पसंद है।',pa:'ਮੈਨੂੰ ਲੋਕਾਂ ਦੀਆਂ ਸਮੱਸਿਆਵਾਂ ਹੱਲ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:14,type:'R',en:'I like taking care of animals.',hi:'मुझे जानवरों की देखभाल करना पसंद है।',pa:'ਮੈਨੂੰ ਜਾਨਵਰਾਂ ਦੀ ਦੇਖਭਾਲ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:15,type:'C',en:'I would not mind working 8 hours per day in an office.',hi:'मुझे रोज़ 8 घंटे कार्यालय में काम करने में कोई आपत्ति नहीं है।',pa:'ਮੈਨੂੰ ਦਿਨ ਦੇ 8 ਘੰਟੇ ਦਫ਼ਤਰ ਵਿੱਚ ਕੰਮ ਕਰਨ ਨਾਲ ਕੋਈ ਐਤਰਾਜ਼ ਨਹੀਂ।'},
+  {id:16,type:'E',en:'I like selling things.',hi:'मुझे चीज़ें बेचना पसंद है।',pa:'ਮੈਨੂੰ ਚੀਜ਼ਾਂ ਵੇਚਣਾ ਪਸੰਦ ਹੈ।'},
+  {id:17,type:'A',en:'I enjoy creative writing.',hi:'मुझे रचनात्मक लेखन पसंद है।',pa:'ਮੈਨੂੰ ਰਚਨਾਤਮਕ ਲਿਖਤ ਪਸੰਦ ਹੈ।'},
+  {id:18,type:'I',en:'I enjoy science.',hi:'मुझे विज्ञान पसंद है।',pa:'ਮੈਨੂੰ ਵਿਗਿਆਨ ਪਸੰਦ ਹੈ।'},
+  {id:19,type:'E',en:'I am quick to take on new responsibilities.',hi:'मैं नई ज़िम्मेदारियाँ जल्दी लेने के लिए तैयार रहता/रहती हूँ।',pa:'ਮੈਂ ਨਵੀਆਂ ਜ਼ਿੰਮੇਵਾਰੀਆਂ ਜਲਦੀ ਸਵੀਕਾਰ ਕਰ ਲੈਂਦਾ/ਲੈਂਦੀ ਹਾਂ।'},
+  {id:20,type:'S',en:'I am interested in helping people.',hi:'मुझे लोगों की मदद करने में रुचि है।',pa:'ਮੈਨੂੰ ਲੋਕਾਂ ਦੀ ਮਦਦ ਕਰਨ ਵਿੱਚ ਰੁਚੀ ਹੈ।'},
+  {id:21,type:'I',en:'I enjoy trying to figure out how things work.',hi:'मुझे यह समझना पसंद है कि चीज़ें कैसे काम करती हैं।',pa:'ਮੈਨੂੰ ਇਹ ਸਮਝਣਾ ਪਸੰਦ ਹੈ ਕਿ ਚੀਜ਼ਾਂ ਕਿਵੇਂ ਕੰਮ ਕਰਦੀਆਂ ਹਨ।'},
+  {id:22,type:'R',en:'I like putting things together or assembling things.',hi:'मुझे चीज़ों को जोड़ना या असेंबल करना पसंद है।',pa:'ਮੈਨੂੰ ਚੀਜ਼ਾਂ ਨੂੰ ਜੋੜਨਾ ਜਾਂ ਅਸੈਂਬਲ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:23,type:'A',en:'I am a creative person.',hi:'मैं एक रचनात्मक व्यक्ति हूँ।',pa:'ਮੈਂ ਇੱਕ ਰਚਨਾਤਮਕ ਵਿਅਕਤੀ ਹਾਂ।'},
+  {id:24,type:'C',en:'I pay attention to details.',hi:'मैं बारीकियों पर ध्यान देता/देती हूँ।',pa:'ਮੈਂ ਵੇਰਵਿਆਂ ਉੱਤੇ ਧਿਆਨ ਦਿੰਦਾ/ਦਿੰਦੀ ਹਾਂ।'},
+  {id:25,type:'C',en:'I like to do filing or typing.',hi:'मुझे फाइलिंग या टाइपिंग करना पसंद है।',pa:'ਮੈਨੂੰ ਫਾਈਲਿੰਗ ਜਾਂ ਟਾਈਪਿੰਗ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:26,type:'I',en:'I like to analyze things like problems or situations.',hi:'मुझे समस्याओं या स्थितियों का विश्लेषण करना पसंद है।',pa:'ਮੈਨੂੰ ਸਮੱਸਿਆਵਾਂ ਜਾਂ ਸਥਿਤੀਆਂ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:27,type:'A',en:'I like to play instruments or sing.',hi:'मुझे वाद्य बजाना या गाना पसंद है।',pa:'ਮੈਨੂੰ ਸਾਜ਼ ਵਜਾਉਣਾ ਜਾਂ ਗਾਉਣਾ ਪਸੰਦ ਹੈ।'},
+  {id:28,type:'S',en:'I enjoy learning about other cultures.',hi:'मुझे अन्य संस्कृतियों के बारे में सीखना पसंद है।',pa:'ਮੈਨੂੰ ਹੋਰ ਸਭਿਆਚਾਰਾਂ ਬਾਰੇ ਸਿੱਖਣਾ ਪਸੰਦ ਹੈ।'},
+  {id:29,type:'E',en:'I would like to start my own business.',hi:'मैं अपना खुद का व्यवसाय शुरू करना चाहूँगा/चाहूँगी।',pa:'ਮੈਂ ਆਪਣਾ ਖੁਦ ਦਾ ਕਾਰੋਬਾਰ ਸ਼ੁਰੂ ਕਰਨਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ।'},
+  {id:30,type:'R',en:'I like to cook.',hi:'मुझे खाना बनाना पसंद है।',pa:'ਮੈਨੂੰ ਖਾਣਾ ਬਣਾਉਣਾ ਪਸੰਦ ਹੈ।'},
+  {id:31,type:'A',en:'I like acting in plays.',hi:'मुझे नाटकों में अभिनय करना पसंद है।',pa:'ਮੈਨੂੰ ਨਾਟਕਾਂ ਵਿੱਚ ਅਦਾਕਾਰੀ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:32,type:'R',en:'I am a practical person.',hi:'मैं एक व्यावहारिक व्यक्ति हूँ।',pa:'ਮੈਂ ਇੱਕ ਵਿਵਹਾਰਕ ਵਿਅਕਤੀ ਹਾਂ।'},
+  {id:33,type:'C',en:'I like working with numbers or charts.',hi:'मुझे संख्याओं या चार्ट के साथ काम करना पसंद है।',pa:'ਮੈਨੂੰ ਅੰਕਾਂ ਜਾਂ ਚਾਰਟਾਂ ਨਾਲ ਕੰਮ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:34,type:'S',en:'I like getting into discussions about issues.',hi:'मुझे मुद्दों पर चर्चा करना पसंद है।',pa:'ਮੈਨੂੰ ਮੁੱਦਿਆਂ ਉੱਤੇ ਚਰਚਾ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:35,type:'C',en:'I am good at keeping records of my work.',hi:'मैं अपने काम का रिकॉर्ड रखने में अच्छा/अच्छी हूँ।',pa:'ਮੈਂ ਆਪਣੇ ਕੰਮ ਦਾ ਰਿਕਾਰਡ ਰੱਖਣ ਵਿੱਚ ਚੰਗਾ/ਚੰਗੀ ਹਾਂ।'},
+  {id:36,type:'E',en:'I like to lead.',hi:'मुझे नेतृत्व करना पसंद है।',pa:'ਮੈਨੂੰ ਨੇਤ੍ਰਿਤਵ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:37,type:'R',en:'I like working outdoors.',hi:'मुझे बाहर काम करना पसंद है।',pa:'ਮੈਨੂੰ ਬਾਹਰ ਕੰਮ ਕਰਨਾ ਪਸੰਦ ਹੈ।'},
+  {id:38,type:'C',en:'I would like to work in an office.',hi:'मैं कार्यालय में काम करना चाहूँगा/चाहूँगी।',pa:'ਮੈਂ ਦਫ਼ਤਰ ਵਿੱਚ ਕੰਮ ਕਰਨਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ।'},
+  {id:39,type:'I',en:'I am good at maths.',hi:'मैं गणित में अच्छा/अच्छी हूँ।',pa:'ਮੈਂ ਗਣਿਤ ਵਿੱਚ ਚੰਗਾ/ਚੰਗੀ ਹਾਂ।'},
+  {id:40,type:'S',en:'I like helping people.',hi:'मुझे लोगों की मदद करना पसंद है।',pa:'ਮੈਨੂੰ ਲੋਕਾਂ ਦੀ ਮਦਦ ਕਰਨੀ ਪਸੰਦ ਹੈ।'},
+  {id:41,type:'A',en:'I like to draw.',hi:'मुझे चित्र बनाना पसंद है।',pa:'ਮੈਨੂੰ ਚਿੱਤਰ ਬਣਾਉਣਾ ਪਸੰਦ ਹੈ।'},
+  {id:42,type:'E',en:'I like to give speeches.',hi:'मुझे भाषण देना पसंद है।',pa:'ਮੈਨੂੰ ਭਾਸ਼ਣ ਦੇਣਾ ਪਸੰਦ ਹੈ।'}
+];
+
+const programs = {
+  BBA: {
+    name: 'Bachelor of Business Administration (BBA)',
+    desc: {
+      en: 'Best for students who enjoy leadership, teamwork, communication, persuasion, management, and entrepreneurship.',
+      hi: 'उन विद्यार्थियों के लिए बेहतर जो नेतृत्व, टीमवर्क, संचार, प्रबंधन और उद्यमिता पसंद करते हैं।',
+      pa: 'ਉਹਨਾਂ ਵਿਦਿਆਰਥੀਆਂ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਜੋ ਨੇਤ੍ਰਿਤਵ, ਟੀਮਵਰਕ, ਸੰਚਾਰ, ਪ੍ਰਬੰਧਨ ਅਤੇ ਉਦਯਮਤਾ ਪਸੰਦ ਕਰਦੇ ਹਨ।'
+    },
+    why: {
+      en: 'Your profile shows strong enterprising and people-oriented traits. This suggests you may enjoy business, management, marketing, entrepreneurship, client interaction, team coordination, and leadership roles.',
+      hi: 'आपकी प्रोफाइल में enterprising और people-oriented traits मजबूत हैं। इससे संकेत मिलता है कि आपको business, management, marketing, entrepreneurship, client interaction और leadership roles पसंद आ सकते हैं।',
+      pa: 'ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਵਿੱਚ enterprising ਅਤੇ ਲੋਕ-ਕੇਂਦਰਤ ਗੁਣ ਮਜ਼ਬੂਤ ਹਨ। ਇਸ ਨਾਲ ਸੰਕੇਤ ਮਿਲਦਾ ਹੈ ਕਿ ਤੁਹਾਨੂੰ business, management, marketing, entrepreneurship ਅਤੇ leadership roles ਪਸੰਦ ਆ ਸਕਦੇ ਹਨ।'
+    },
+    expect: {
+      en: 'You can expect careers in management, sales, marketing, HR, operations, startups, and business development.',
+      hi: 'आप management, sales, marketing, HR, operations, startups और business development में करियर बना सकते हैं।',
+      pa: 'ਤੁਸੀਂ management, sales, marketing, HR, operations, startups ਅਤੇ business development ਵਿੱਚ ਕਰੀਅਰ ਬਣਾ ਸਕਦੇ ਹੋ।'
+    }
+  },
+  BCA: {
+    name: 'Bachelor of Computer Applications (BCA)',
+    desc: {
+      en: 'Best for students who enjoy logic, technology, systems, analysis, coding, and solving structured problems.',
+      hi: 'उन विद्यार्थियों के लिए बेहतर जो logic, technology, systems, analysis, coding और structured problem solving पसंद करते हैं।',
+      pa: 'ਉਹਨਾਂ ਵਿਦਿਆਰਥੀਆਂ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਜੋ logic, technology, systems, analysis, coding ਅਤੇ structured problem solving ਪਸੰਦ ਕਰਦੇ ਹਨ।'
+    },
+    why: {
+      en: 'Your profile shows strong investigative and practical traits. This means you may enjoy working with computers, software, data, digital tools, coding logic, and technical problem solving.',
+      hi: 'आपकी प्रोफाइल में investigative और practical traits मजबूत हैं। इसका अर्थ है कि आपको computers, software, data, coding logic और technical problem solving पसंद आ सकते हैं।',
+      pa: 'ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਵਿੱਚ investigative ਅਤੇ practical traits ਮਜ਼ਬੂਤ ਹਨ। ਇਸਦਾ ਅਰਥ ਹੈ ਕਿ ਤੁਹਾਨੂੰ computers, software, data, coding logic ਅਤੇ technical problem solving ਪਸੰਦ ਆ ਸਕਦੇ ਹਨ।'
+    },
+    expect: {
+      en: 'You can expect careers in software development, web/app development, IT support, data handling, testing, and digital technology roles.',
+      hi: 'आप software development, web/app development, IT support, testing, data handling और digital technology roles में करियर बना सकते हैं।',
+      pa: 'ਤੁਸੀਂ software development, web/app development, IT support, testing, data handling ਅਤੇ digital technology roles ਵਿੱਚ ਕਰੀਅਰ ਬਣਾ ਸਕਦੇ ਹੋ।'
+    }
+  },
+  BCom: {
+    name: 'Bachelor of Commerce (Hons.)',
+    desc: {
+      en: 'Best for students who are organized, comfortable with numbers, records, office systems, business processes, finance, and accounting.',
+      hi: 'उन विद्यार्थियों के लिए बेहतर जो organized हैं, numbers, records, office systems, finance और accounting में सहज हैं।',
+      pa: 'ਉਹਨਾਂ ਵਿਦਿਆਰਥੀਆਂ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਜੋ organized ਹਨ ਅਤੇ numbers, records, office systems, finance ਅਤੇ accounting ਨਾਲ ਸੁਖੀ ਹਨ।'
+    },
+    why: {
+      en: 'Your profile shows strong conventional traits with support from enterprising skills. This suggests you may do well in finance, accounting, taxation, commerce, analytics, office systems, and structured business work.',
+      hi: 'आपकी प्रोफाइल में conventional traits मजबूत हैं और enterprising traits का support भी है। इससे संकेत मिलता है कि आप finance, accounting, taxation, commerce, analytics और structured business work में अच्छा कर सकते हैं।',
+      pa: 'ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਵਿੱਚ conventional traits ਮਜ਼ਬੂਤ ਹਨ ਅਤੇ enterprising traits ਦਾ support ਵੀ ਹੈ। ਇਸ ਨਾਲ ਸੰਕੇਤ ਮਿਲਦਾ ਹੈ ਕਿ ਤੁਸੀਂ finance, accounting, taxation, commerce, analytics ਅਤੇ structured business work ਵਿੱਚ ਚੰਗਾ ਕਰ ਸਕਦੇ ਹੋ।'
+    },
+    expect: {
+      en: 'You can expect careers in accounting, banking, finance, taxation, auditing, insurance, analytics, and corporate administration.',
+      hi: 'आप accounting, banking, finance, taxation, auditing, insurance, analytics और corporate administration में करियर बना सकते हैं।',
+      pa: 'ਤੁਸੀਂ accounting, banking, finance, taxation, auditing, insurance, analytics ਅਤੇ corporate administration ਵਿੱਚ ਕਰੀਅਰ ਬਣਾ ਸਕਦੇ ਹੋ।'
+    }
+  }
+};
+
+let lang = 'en';
+let student = {};
+let chartInstance = null;
+
+function populateSelects(){
+  const board = document.getElementById('board');
+  const stream = document.getElementById('stream');
+  board.innerHTML = '';
+  stream.innerHTML = '';
+  translations[lang].boards.forEach((item, idx) => {
+    const op = document.createElement('option');
+    op.value = idx === 0 ? '' : ['CBSE','PSEB','ICSE','Other State Board'][idx-1];
+    op.textContent = item;
+    if(idx===0){ op.disabled = true; op.selected = true; }
+    board.appendChild(op);
+  });
+  translations[lang].streams.forEach((item, idx) => {
+    const values = ['','Commerce','Non-Medical','Medical','Arts','Vocational'];
+    const op = document.createElement('option');
+    op.value = values[idx];
+    op.textContent = item;
+    if(idx===0){ op.disabled = true; op.selected = true; }
+    stream.appendChild(op);
+  });
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(translations[lang][key]) el.textContent = translations[lang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  populateSelects();
+  renderQuestions();
+  if(!document.getElementById('resultScreen').classList.contains('hidden')) renderResults(window.latestResults);
+}
+
+function setLanguage(next){
+  lang = next;
+  applyI18n();
+}
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.lang-btn');
+  if(btn) setLanguage(btn.dataset.lang);
+});
+
+function renderQuestions(){
+  const container = document.getElementById('questions');
+  if(!container) return;
+  const saved = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(inp => saved[inp.name] = inp.value);
+  container.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-title">
+        <div class="q-no">${idx+1}</div>
+        <div class="q-text">${q[lang]}</div>
+      </div>
+      <div class="opts">
+        <div class="opt">
+          <input type="radio" id="q${q.id}_yes" name="q${q.id}" value="1" ${saved['q'+q.id]==='1'?'checked':''}>
+          <label for="q${q.id}_yes">${translations[lang].yes}</label>
+        </div>
+        <div class="opt">
+          <input type="radio" id="q${q.id}_no" name="q${q.id}" value="0" ${saved['q'+q.id]==='0'?'checked':''}>
+          <label for="q${q.id}_no">${translations[lang].no}</label>
+        </div>
+      </div>`;
+    container.appendChild(card);
+  });
+  attachProgressEvents();
+  updateProgress();
+}
+
+function attachProgressEvents(){
+  document.querySelectorAll('#questions input[type=radio]').forEach(inp => {
+    inp.addEventListener('change', updateProgress);
+  });
+}
+
+function updateProgress(){
+  const answered = document.querySelectorAll('#questions input[type=radio]:checked').length;
+  document.getElementById('answered').textContent = answered;
+  document.getElementById('bar').style.width = (answered / questions.length * 100) + '%';
+  document.getElementById('submitBtn').disabled = answered !== questions.length;
+}
+
+function regSubmit(e){
+  e.preventDefault();
+  student = {
+    name: document.getElementById('name').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    board: document.getElementById('board').value,
+    stream: document.getElementById('stream').value
+  };
+  document.getElementById('registration').classList.add('hidden');
+  document.getElementById('testScreen').classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+  renderQuestions();
+  lucide.createIcons();
+}
+
+document.getElementById('regForm').addEventListener('submit', regSubmit);
+
+document.getElementById('submitBtn').addEventListener('click', () => {
+  const scores = {R:0,I:0,A:0,S:0,E:0,C:0};
+  questions.forEach(q => {
+    const val = document.querySelector(`input[name="q${q.id}"]:checked`);
+    if(val && val.value === '1') scores[q.type] += 1;
+  });
+
+  const pScores = {
+    BBA: scores.E + scores.S * 0.5 + scores.A * 0.5,
+    BCA: scores.I + scores.R * 0.5,
+    BCom: scores.C + scores.E * 0.5
+  };
+
+  if(student.stream === 'Commerce') { pScores.BCom += 1.5; pScores.BBA += 1.0; }
+  else if(student.stream === 'Non-Medical' || student.stream === 'Medical') { pScores.BCA += 1.5; }
+  else if(student.stream === 'Arts') { pScores.BBA += 1.0; }
+  else if(student.stream === 'Vocational') { pScores.BCA += 0.5; pScores.BBA += 0.5; }
+
+  const ranked = Object.entries(pScores).sort((a,b) => b[1]-a[1]).map(x => x[0]);
+  const payload = {scores, ranked, pScores};
+  window.latestResults = payload;
+  document.getElementById('testScreen').classList.add('hidden');
+  document.getElementById('resultScreen').classList.remove('hidden');
+  renderResults(payload);
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+function renderResults(data){
+  if(!data) return;
+  document.getElementById('studentNameOut').textContent = student.name || '';
+  const scoreWrap = document.getElementById('riasecScores');
+  const mapNames = {
+    en:['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'],
+    hi:['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'],
+    pa:['Realistic','Investigative','Artistic','Social','Enterprising','Conventional']
+  };
+  const keyOrder = ['R','I','A','S','E','C'];
+  scoreWrap.innerHTML = keyOrder.map((k, i) => `<div class="mini"><div>${mapNames[lang][i]}</div><strong>${data.scores[k]}</strong><div>${translations[lang].scoreLabel}</div></div>`).join('');
+
+  const rankings = document.getElementById('rankings');
+  rankings.innerHTML = '';
+  data.ranked.forEach((code, idx) => {
+    const meta = programs[code];
+    const box = document.createElement('div');
+    box.className = 'rank' + (idx===0 ? ' top' : '');
+    const badge = idx===0 ? translations[lang].topFit : (idx===1 ? translations[lang].rank2 : translations[lang].rank3);
+    box.innerHTML = `
+      <div class="badge">${badge}</div>
+      <h3>${meta.name}</h3>
+      <div class="program-meta">${meta.desc[lang]}</div>
+      ${idx===0 ? `<div class="why"><strong>${translations[lang].whyBest}:</strong><br>${meta.why[lang]}<br><br><strong>${translations[lang].streamFactored}:</strong> ${student.stream}<br><br><strong>Career Outlook:</strong> ${meta.expect[lang]}</div>` : `<div class="program-meta">${meta.expect[lang]}</div>`}
+    `;
+    rankings.appendChild(box);
+  });
+
+  renderChart(data.scores);
+  lucide.createIcons();
+}
+
+function renderChart(scores){
+  const ctx = document.getElementById('radarChart');
+  if(chartInstance) chartInstance.destroy();
+  chartInstance = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'],
+      datasets: [{
+        label: 'RIASEC Score',
+        data: [scores.R, scores.I, scores.A, scores.S, scores.E, scores.C],
+        fill: true,
+        backgroundColor: 'rgba(10,54,99,0.18)',
+        borderColor: '#0A3663',
+        pointBackgroundColor: '#D4AF37',
+        pointBorderColor: '#0A3663',
+        pointRadius: 4,
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context){ return ' ' + context.label + ': ' + context.raw; }
+          }
+        }
+      },
+      scales: {
+        r: {
+          beginAtZero: true,
+          min: 0,
+          max: 7,
+          ticks: {
+            stepSize: 1,
+            display: true,
+            backdropColor: 'transparent',
+            color: '#4b5563',
+            font: { size: 11, weight: '600' }
+          },
+          pointLabels: {
+            color: '#0A3663',
+            font: { size: 14, weight: '700', family: 'Inter' }
+          },
+          grid: { color: 'rgba(10,54,99,.15)' },
+          angleLines: { color: 'rgba(10,54,99,.15)' }
+        }
+      }
+    }
+  });
+}
+
+populateSelects();
+applyI18n();
+lucide.createIcons();
+</script>
+</body>
+</html>
