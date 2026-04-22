@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillX Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+/* ===== SIDEBAR ===== */
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 230px;
+    height: 100vh;
+    background: #0b2c4a;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu button {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.menu button:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+/* Push content */
+.main-content {
+    margin-left: 230px;
+    width: 100%;
+}
+
+/* ===== YOUR ORIGINAL CSS (UNCHANGED) ===== */
+
+body {
+    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+/* DASHBOARD BUTTON */
+.dashboard-btn {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* STATS CARDS */
+.stats {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 150px;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.stat-card:hover { transform: translateY(-5px); }
+
+.stat-title { font-size: 12px; color: #555; }
+.stat-value { font-size: 20px; font-weight: 600; color: #333; }
+
+/* CARD */
+.card {
+    margin: 15px;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* SEARCH */
+.search-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.search-box input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* TABLE */
+.table-container { overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background: #667eea;
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+}
+
+td {
+    padding: 10px;
+    font-size: 12px;
+    text-align: center;
+}
+
+tr:nth-child(even) { background: #f8f9ff; }
+tr:hover { background: #eef1ff; }
+
+/* CLICKABLE NAME */
+.name-link {
+    color: #667eea;
+    cursor: pointer;
+    font-weight: 500;
+}
+.name-link:hover { text-decoration: underline; }
+
+/* BADGES */
+.badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    color: white;
+}
+
+.green { background: #28a745; }
+.orange { background: #ff9800; }
+.blue { background: #2196f3; }
+
+/* ===== MODAL ===== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left:0; top:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.6);
+    perspective: 1000px;
+}
+
+.modal-content {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(15px);
+    margin: 8% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 15px;
+    transform: rotateX(10deg) rotateY(-10deg) scale(0.9);
+    transition: all 0.4s ease;
+}
+
+.modal.show .modal-content {
+    transform: rotateX(0deg) rotateY(0deg) scale(1);
+}
+
+.close {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* POPUP COLORS */
+#pName { color:#667eea; font-weight:600; }
+#pMust { color:#28a745; }
+#pP2 { color:#ff9800; }
+#pP3 { color:#2196f3; }
+#pDomain { color:#9c27b0; }
+#pPrice { color:#e91e63; }
+
+/* MOBILE */
+@media(max-width: 768px) {
+    .stats { flex-direction: column; }
+    .search-box input { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>📊 Dashboards</h2>
+    <div class="menu">
+        <button onclick="goDashboard()">🏠 Home</button>
+        <button>🤖 AI Quiz</button>
+        <button>🎓 Career Quiz</button>
+        <button>💼 SkillX Quiz</button>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+<div class="header">
+   
+    🚀 SkillX Smart Dashboard
+</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <div class="stat-title">Total Students</div>
+        <div class="stat-value" id="total">0</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">Top Domain</div>
+        <div class="stat-value" id="domain">-</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">Avg Score</div>
+        <div class="stat-value" id="avg">0</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="search-box">
+        <input type="text" id="search" placeholder="🔍 Search student..." onkeyup="searchTable()">
+    </div>
+
+    <div class="table-container">
+        <div class="loader" id="loader">Loading data...</div>
+
+        <table id="dataTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Program</th>
+                    <th>Stream</th>
+                    <th>Maths</th>
+                    <th>Digital</th>
+                    <th>Comm</th>
+                    <th>Business</th>
+                    <th>Domain</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="modal">
+    <div class="modal-content" id="card3d">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h3 id="pName"></h3>
+        <p><b>Must Do:</b> <span id="pMust"></span></p>
+        <p><b>Priority 2:</b> <span id="pP2"></span></p>
+        <p><b>Priority 3:</b> <span id="pP3"></span></p>
+        <p><b>Bundle Domain:</b> <span id="pDomain"></span></p>
+        <p><b>Bundle Price:</b> ₹<span id="pPrice"></span></p>
+    </div>
+</div>
+
+<script>
+const sheetURL = "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
+
+fetch(sheetURL)
+.then(res => res.json())
+.then(data => {
+
+    document.getElementById("loader").style.display = "none";
+
+    if (!data || data.length === 0) {
+        document.getElementById("loader").innerText = "No Data Found";
+        return;
+    }
+
+    document.getElementById("dataTable").style.display = "table";
+
+    let total = data.length;
+    let domainCount = {};
+    let totalScore = 0;
+
+    let bodyHTML = "";
+
+    data.forEach(row => {
+
+        let digital = Number(row["Digital Score"]) || 0;
+        let comm = Number(row["Communication Score"]) || 0;
+        let business = Number(row["Business Score"]) || 0;
+
+        let avgScore = (digital + comm + business) / 3;
+        totalScore += avgScore;
+
+        let domain = row["Bundle Domain"] || "-";
+        domainCount[domain] = (domainCount[domain] || 0) + 1;
+
+        bodyHTML += `<tr>
+            <td class="name-link" onclick='showPopup(${JSON.stringify(row)})'>${row["Name"] || "-"}</td>
+            <td>${row["Phone"] || "-"}</td>
+            <td>${row["Program"] || "-"}</td>
+            <td>${row["Stream"] || "-"}</td>
+            <td>${row["Maths12"] || "-"}</td>
+            <td><span class="badge blue">${digital}</span></td>
+            <td><span class="badge green">${comm}</span></td>
+            <td><span class="badge orange">${business}</span></td>
+            <td>${domain}</td>
+            <td>₹${row["Bundle Price"] || "-"}</td>
+        </tr>`;
+    });
+
+    document.getElementById("tableBody").innerHTML = bodyHTML;
+
+    document.getElementById("total").innerText = total;
+
+    let topDomain = Object.keys(domainCount).reduce((a,b)=> domainCount[a]>domainCount[b]?a:b);
+    document.getElementById("domain").innerText = topDomain;
+
+    document.getElementById("avg").innerText = (totalScore / total).toFixed(1);
+
+});
+
+// FUNCTIONS
+function showPopup(row){
+    let modal = document.getElementById("popup");
+    modal.style.display = "block";
+    setTimeout(()=> modal.classList.add("show"),10);
+
+    document.getElementById("pName").innerText = row["Name"];
+    document.getElementById("pMust").innerText = row["Must Do"];
+    document.getElementById("pP2").innerText = row["Priority 2"];
+    document.getElementById("pP3").innerText = row["Priority 3"];
+    document.getElementById("pDomain").innerText = row["Bundle Domain"];
+    document.getElementById("pPrice").innerText = row["Bundle Price"];
+}
+
+function closePopup(){
+    let modal = document.getElementById("popup");
+    modal.classList.remove("show");
+    setTimeout(()=> modal.style.display="none",300);
+}
+
+function searchTable() {
+    let input = document.getElementById("search").value.toLowerCase();
+    let rows = document.querySelectorAll("#tableBody tr");
+
+    rows.forEach(row => {
+        let text = row.innerText.toLowerCase();
+        row.style.display = text.includes(input) ? "" : "none";
+    });
+}
+
+function goDashboard() {
+    window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>
