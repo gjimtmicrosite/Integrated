@@ -85,11 +85,7 @@ header p{
 }
 
 .container{
-  position:relative;
-  z-index:2;
-  max-width:1400px;
-  margin:auto;
-  padding:50px 20px;
+  padding-bottom: 0;   /* removes bottom gap */
 }
 
 .cards{
@@ -278,10 +274,15 @@ line-height:1.2;
   right:15px;
   cursor:pointer;
 }
-
+.dashboard-center{
+  text-align:center;
+  margin: 0;        /* remove all outer space */
+  padding: 5px 0;   /* very small spacing */
+}
 footer{
   text-align:center;
-  padding:20px;
+  padding: 5px 0 15px;  /* reduce top space */
+  margin: 0;
 }
 
 /* responsive */
@@ -402,12 +403,15 @@ footer{
     </div>
 
   </div>
+<div class="dashboard-center">
+  <a href="https://gjimtmicrosite.github.io/Integrated/dashboard.html" class="footer-btn">
+    📊 Result Dashboard
+  </a>
+</div>
 </div>
 
 <footer>
   © 2026 Gian Jyoti Institute of Management & Technology <br>
-
-  <a href="https://gjimtmicrosite.github.io/Integrated/dashboard.html" class="footer-btn">📊 Result Dashboard</a>
 </footer>
 
 <!-- POPUP -->
