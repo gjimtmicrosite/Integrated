@@ -297,10 +297,15 @@ line-height:1.2;
 }
 footer{
   text-align:center;
-  padding: 5px 0 15px;  /* reduce top space */
-  margin: 0;
-}
+  padding:10px 0 15px;
+  position:relative;
+  z-index:5;
 
+  display:flex;
+  flex-direction:column;
+  align-items:center;   /* 🔥 centers everything */
+  justify-content:center;
+}
 /* responsive */
 @media(max-width:1200px){
   .cards{grid-template-columns:repeat(3,1fr);}
@@ -387,7 +392,7 @@ footer{
         <span><a href="https://gjimtmicrosite.github.io/ACCA/ca.html">CA</a></span>
         <span><a href="https://gjimtmicrosite.github.io/ACCA/capm.html">CAPM</a></span>
         <span><a href="https://gjimtmicrosite.github.io/ACCA/pmp.html">PMP</a></span>
-		
+	
       </h2>
 
       <p>Global accounting program</p>
@@ -413,6 +418,7 @@ footer{
       <p>Click. Create. Convert.</p>
     </div>
 
+
     <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/bootcamp/','_self')">
       <img src="bootcamp.jpg">
       <h2>Bootcamp</h2>
@@ -420,18 +426,15 @@ footer{
     </div>
 
   </div>
-  <div class="dashboard-center">
-  <a href="https://gjimtmicrosite.github.io/Integrated/dashboard.html" class="footer-btn">
+
+</div>
+
+<footer>
+  © 2026 Gian Jyoti Institute of Management & Technology
+
+  <a href="dashboard.html" class="footer-btn">
     📊 Result Dashboard
   </a>
-</div>
-</div>
-
- 
-<footer>
-  © 2026 Gian Jyoti Institute of Management & Technology <br>
-
- 
 </footer>
 
 <!-- POPUP -->
