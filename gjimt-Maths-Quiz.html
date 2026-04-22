@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GJIMT SkillX Maths Readiness Quiz</title>
+  <style>
+    :root{
+      --bg1:#fff7ed;
+      --bg2:#fff1f2;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --primary:#f97316;
+      --primary-dark:#ea580c;
+      --secondary:#ec4899;
+      --accent:#7c3aed;
+      --success:#16a34a;
+      --warning:#d97706;
+      --danger:#dc2626;
+      --border:#fed7aa;
+      --shadow:0 20px 45px rgba(249,115,22,.15);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, #fff7ed 0%, #fff1f2 35%, #fdf2f8 65%, #ffffff 100%);
+      min-height:100vh;
+    }
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:26px 18px 40px;
+    }
+    .hero{
+      background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 35%,#ffe4e6 100%);
+      border:1px solid rgba(249,115,22,.18);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:28px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-60px;
+      top:-50px;
+      width:220px;
+      height:220px;
+      background:radial-gradient(circle, rgba(236,72,153,.18) 0%, rgba(236,72,153,0) 70%);
+      border-radius:50%;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .brand-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid rgba(249,115,22,.25);
+      color:var(--primary-dark);
+      font-weight:700;
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+    h1{
+      margin:8px 0 8px;
+      font-size:clamp(30px, 5vw, 46px);
+      line-height:1.08;
+    }
+    .sub{
+      margin:0;
+      font-size:17px;
+      line-height:1.6;
+      color:#374151;
+      max-width:820px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:24px;
+      margin-top:24px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      border:1px solid rgba(249,115,22,.12);
+      padding:24px;
+    }
+    .card h2{
+      margin:0 0 16px;
+      font-size:24px;
+    }
+    .card h3{
+      margin:0 0 12px;
+      font-size:18px;
+    }
+    .muted{
+      color:var(--muted);
+      line-height:1.6;
+    }
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      background:#fff7ed;
+      color:#9a3412;
+      border:1px solid #fdba74;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    label{
+      display:block;
+      margin:14px 0 8px;
+      font-size:14px;
+      font-weight:700;
+      color:#374151;
+    }
+    input, select{
+      width:100%;
+      padding:14px 14px;
+      border-radius:14px;
+      border:1px solid #d1d5db;
+      font-size:15px;
+      outline:none;
+      transition:.2s ease;
+      background:#fff;
+    }
+    input:focus, select:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 4px rgba(249,115,22,.12);
+    }
+
+    .help-box{
+      margin-top:18px;
+      padding:16px;
+      border-radius:16px;
+      background:linear-gradient(135deg,#fff7ed,#fff1f2);
+      border:1px solid rgba(249,115,22,.15);
+    }
+    .help-box ul{
+      margin:10px 0 0 18px;
+      padding:0;
+      line-height:1.7;
+    }
+
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:14px 18px;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      color:#fff;
+      box-shadow:0 14px 28px rgba(236,72,153,.22);
+    }
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-secondary{
+      background:#fff7ed;
+      color:#9a3412;
+      border:1px solid #fdba74;
+    }
+    .btn-dark{
+      background:#111827;
+      color:#fff;
+    }
+    .btn-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+
+    .screen{display:none}
+    .screen.active{display:block}
+
+    .quiz-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .mini{
+      background:#fff7ed;
+      border:1px solid #fdba74;
+      color:#9a3412;
+      border-radius:16px;
+      padding:12px 16px;
+      min-width:140px;
+    }
+    .mini .label{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.6px;
+      color:#c2410c;
+      margin-bottom:4px;
+    }
+    .mini .value{
+      font-size:22px;
+      font-weight:800;
+    }
+
+    .progress-wrap{
+      margin:14px 0 22px;
+    }
+    .progress-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:8px;
+      font-size:14px;
+      color:#6b7280;
+    }
+    .progress{
+      width:100%;
+      height:12px;
+      border-radius:999px;
+      background:#fde7d5;
+      overflow:hidden;
+    }
+    .progress-bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      transition:width .3s ease;
+    }
+
+    .q-tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .q-tag{
+      font-size:13px;
+      font-weight:700;
+      padding:8px 12px;
+      border-radius:999px;
+    }
+    .tag-diff-easy{background:#dcfce7;color:#166534}
+    .tag-diff-medium{background:#fef3c7;color:#92400e}
+    .tag-diff-hard{background:#fee2e2;color:#991b1b}
+    .tag-type{background:#ede9fe;color:#5b21b6}
+
+    .question-text{
+      font-size:28px;
+      line-height:1.35;
+      font-weight:800;
+      margin:12px 0 18px;
+    }
+
+    .options{
+      display:grid;
+      gap:12px;
+    }
+    .option{
+      border:1px solid #e5e7eb;
+      background:#fff;
+      border-radius:18px;
+      padding:15px 16px;
+      cursor:pointer;
+      transition:.2s ease;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .option:hover{
+      border-color:#fdba74;
+      transform:translateY(-1px);
+      box-shadow:0 12px 22px rgba(249,115,22,.10);
+    }
+    .option.selected{
+      border-color:var(--primary);
+      background:#fff7ed;
+      box-shadow:0 0 0 4px rgba(249,115,22,.10);
+    }
+    .opt-key{
+      width:30px;height:30px;min-width:30px;
+      border-radius:50%;
+      background:#fff1f2;
+      color:#be185d;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;
+      font-size:14px;
+    }
+    .option.selected .opt-key{
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      color:#fff;
+    }
+
+    .result-badge{
+      display:inline-flex;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:14px;
+      margin-bottom:14px;
+    }
+    .badge-ready{background:#dcfce7;color:#166534}
+    .badge-coach{background:#fef3c7;color:#92400e}
+    .badge-intensive{background:#fee2e2;color:#991b1b}
+
+    .score-box{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin:18px 0 20px;
+    }
+    .score-tile{
+      border-radius:18px;
+      padding:18px;
+      background:linear-gradient(135deg,#fff7ed,#fff);
+      border:1px solid rgba(249,115,22,.15);
+      text-align:center;
+    }
+    .score-tile .big{
+      font-size:30px;
+      font-weight:800;
+      color:#9a3412;
+    }
+    .score-tile .small{
+      margin-top:4px;
+      color:#6b7280;
+      font-size:13px;
+    }
+
+    .advice{
+      margin-top:12px;
+      padding:16px 18px;
+      border-radius:18px;
+      background:#faf5ff;
+      border:1px solid #ddd6fe;
+      line-height:1.7;
+    }
+
+    .contact-box{
+      margin-top:18px;
+      padding:18px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#111827,#1f2937);
+      color:#fff;
+    }
+    .contact-box a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    .footer-note{
+      text-align:center;
+      color:#6b7280;
+      font-size:13px;
+      margin-top:20px;
+    }
+
+    .small-note{
+      font-size:13px;
+      color:#6b7280;
+      margin-top:10px;
+    }
+
+    .hidden{display:none !important}
+
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+      .score-box{grid-template-columns:1fr}
+      .question-text{font-size:23px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="brand">
+        <div class="brand-badge">GJIMT SkillX</div>
+        <div class="brand-badge">Zero to Hero Workshops</div>
+        <div class="brand-badge">Maths Readiness Assessment</div>
+      </div>
+      <h1>BCA Maths Readiness Quiz</h1>
+      <p class="sub">
+        Screening quiz for students interested in BCA, especially those who may not have studied Mathematics in Class 12th.
+        The quiz uses Vedic Maths-oriented questions on rapid multiplication, squaring, fast addition/subtraction, division tricks, and number patterns.
+      </p>
+    </div>
+
+    <!-- Intro / Form Screen -->
+    <section id="screen-intro" class="screen active">
+      <div class="grid">
+        <div class="card">
+          <h2>Student Details</h2>
+
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="Enter student's full name" />
+
+          <label for="phone">WhatsApp / Phone Number</label>
+          <input type="tel" id="phone" placeholder="Enter phone number" />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter email address" />
+
+          <label for="program">Program Applied</label>
+          <select id="program">
+            <option value="">Select Program</option>
+            <option value="BCA">BCA</option>
+            <option value="BBA">BBA</option>
+            <option value="BCom(Hons.)">BCom(Hons.)</option>
+          </select>
+
+          <div class="help-box">
+            <h3>How this quiz works</h3>
+            <ul>
+              <li>10 questions are picked randomly from a pool of 30 questions.</li>
+              <li>Difficulty split: 3 Easy, 4 Medium, 3 Hard.</li>
+              <li>Each question has a 60-second timer.</li>
+              <li>If time runs out, the quiz auto-moves to the next question.</li>
+              <li>Final recommendation is based on your percentage score.</li>
+            </ul>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="startQuiz()">Start Maths Quiz</button>
+          </div>
+          <div class="small-note">
+            Tip: This test is designed to check maths readiness for BCA and identify whether a student needs extra coaching support.
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Topics Covered</h2>
+          <p class="muted">
+            This quiz is inspired by the SkillX Vedic Maths workshop offering and checks practical mental-maths readiness for students entering professional programs.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Rapid Multiplication</span>
+            <span class="pill">Fast Squaring</span>
+            <span class="pill">Quick Addition</span>
+            <span class="pill">Quick Subtraction</span>
+            <span class="pill">Division Tricks</span>
+            <span class="pill">Number Patterns</span>
+            <span class="pill">MCQ + True/False</span>
+            <span class="pill">SkillX Recommendation</span>
+          </div>
+
+          <div class="help-box" style="margin-top:22px;">
+            <h3>Outcome Bands</h3>
+            <ul>
+              <li><strong>70% and above:</strong> Ready for BCA</li>
+              <li><strong>40% to 69%:</strong> Needs Level 1 Coaching</li>
+              <li><strong>Below 40%:</strong> Needs Intensive Coaching / Re-attend Vedic Maths Workshop</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz Screen -->
+    <section id="screen-quiz" class="screen">
+      <div class="card">
+        <div class="quiz-top">
+          <div class="mini">
+            <div class="label">Question</div>
+            <div class="value"><span id="qNum">1</span> / 10</div>
+          </div>
+          <div class="mini">
+            <div class="label">Time Left</div>
+            <div class="value"><span id="timeLeft">60</span>s</div>
+          </div>
+          <div class="mini">
+            <div class="label">Current Score</div>
+            <div class="value"><span id="liveScore">0</span></div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span>Progress</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+
+        <div class="q-tag-row">
+          <span class="q-tag" id="difficultyTag">Difficulty</span>
+          <span class="q-tag tag-type" id="typeTag">Question Type</span>
+        </div>
+
+        <div class="question-text" id="questionText"></div>
+        <div class="options" id="optionsWrap"></div>
+
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="skipQuestion()">Skip Question</button>
+          <button class="btn btn-primary" onclick="nextQuestion()">Save & Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Result Screen -->
+    <section id="screen-result" class="screen">
+      <div class="card">
+        <div id="resultBadge" class="result-badge">Result</div>
+        <h2 id="resultTitle">Your Result</h2>
+        <p class="muted" id="studentSummary"></p>
+
+        <div class="score-box">
+          <div class="score-tile">
+            <div class="big" id="scoreMarks">0 / 10</div>
+            <div class="small">Correct Answers</div>
+          </div>
+          <div class="score-tile">
+            <div class="big" id="scorePercent">0%</div>
+            <div class="small">Final Percentage</div>
+          </div>
+          <div class="score-tile">
+            <div class="big" id="scoreOutcome">-</div>
+            <div class="small">Recommendation</div>
+          </div>
+        </div>
+
+        <div class="advice" id="adviceBox"></div>
+
+        <div class="contact-box">
+          <h3 style="margin-top:0;">Next Step</h3>
+          <p style="line-height:1.7; margin-bottom:14px;">
+            For counselling, coaching support, or workshop guidance, contact GJIMT SkillX.
+          </p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="tel:9914433199">Contact Us: 9914433199</a>
+            <button class="btn btn-secondary" onclick="shareOnWhatsApp()">Copy / Share Result on WhatsApp</button>
+            <button class="btn btn-dark" onclick="window.print()">Print / Download</button>
+            <button class="btn btn-secondary" onclick="restartQuiz()">Take Quiz Again</button>
+          </div>
+          <p style="margin-top:14px; margin-bottom:0;">
+            <a href="https://wa.me/919914433199" target="_blank">WhatsApp GJIMT: +91 99144 33199</a>
+          </p>
+        </div>
+
+        <div class="footer-note">
+          GJIMT SkillX Maths Readiness Quiz • Built for admission screening and coaching guidance
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const GOOGLE_SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+    const questionBank = {
+      easy: [
+        {
+          id: "E1",
+          type: "MCQ",
+          question: "Using the quick ×11 trick, what is 32 × 11?",
+          options: ["352", "342", "362", "322"],
+          answer: "352",
+          explanation: "32 × 11 = 352"
+        },
+        {
+          id: "E2",
+          type: "MCQ",
+          question: "What is 25 × 4?",
+          options: ["90", "100", "110", "120"],
+          answer: "100",
+          explanation: "25 × 4 = 100"
+        },
+        {
+          id: "E3",
+          type: "TF",
+          question: "True or False: 45² = 2025",
+          options: ["True", "False"],
+          answer: "True",
+          explanation: "45 × 45 = 2025"
+        },
+        {
+          id: "E4",
+          type: "MCQ",
+          question: "What is 99 + 38 using quick addition?",
+          options: ["137", "127", "147", "136"],
+          answer: "137",
+          explanation: "99 + 38 = 137"
+        },
+        {
+          id: "E5",
+          type: "TF",
+          question: "True or False: 100 - 47 = 53",
+          options: ["True", "False"],
+          answer: "True",
+          explanation: "100 - 47 = 53"
+        },
+        {
+          id: "E6",
+          type: "MCQ",
+          question: "What is half of 86?",
+          options: ["42", "43", "44", "46"],
+          answer: "43",
+          explanation: "86 ÷ 2 = 43"
+        },
+        {
+          id: "E7",
+          type: "MCQ",
+          question: "Which number comes next: 5, 10, 15, 20, ?",
+          options: ["22", "24", "25", "30"],
+          answer: "25",
+          explanation: "Pattern adds 5 each time"
+        },
+        {
+          id: "E8",
+          type: "TF",
+          question: "True or False: 12 × 12 = 144",
+          options: ["True", "False"],
+          answer: "True",
+          explanation: "12 squared is 144"
+        },
+        {
+          id: "E9",
+          type: "MCQ",
+          question: "What is 250 + 250?",
+          options: ["450", "500", "550", "600"],
+          answer: "500",
+          explanation: "250 + 250 = 500"
+        },
+        {
+          id: "E10",
+          type: "MCQ",
+          question: "What is 81 ÷ 9?",
+          options: ["7", "8", "9", "10"],
+          answer: "9",
+          explanation: "81 ÷ 9 = 9"
+        }
+      ],
+      medium: [
+        {
+          id: "M1",
+          type: "MCQ",
+          question: "Using a near-base idea, what is 97 × 98?",
+          options: ["9506", "9606", "9706", "9406"],
+          answer: "9506",
+          explanation: "97×98 = (100-3)(100-2) = 9506"
+        },
+        {
+          id: "M2",
+          type: "MCQ",
+          question: "What is 48²?",
+          options: ["2204", "2304", "2404", "2504"],
+          answer: "2304",
+          explanation: "48 × 48 = 2304"
+        },
+        {
+          id: "M3",
+          type: "TF",
+          question: "True or False: 125 × 8 = 1000",
+          options: ["True", "False"],
+          answer: "True",
+          explanation: "125 × 8 = 1000"
+        },
+        {
+          id: "M4",
+          type: "MCQ",
+          question: "What is 1000 - 468?",
+          options: ["522", "532", "542", "552"],
+          answer: "532",
+          explanation: "1000 - 468 = 532"
+        },
+        {
+          id: "M5",
+          type: "MCQ",
+          question: "What is 84 ÷ 7?",
+          options: ["11", "12", "13", "14"],
+          answer: "12",
+          explanation: "84 ÷ 7 = 12"
+        },
+        {
+          id: "M6",
+          type: "TF",
+          question: "True or False: 35 × 11 = 385",
+          options: ["True", "False"],
+          answer: "True",
+          explanation: "35 × 11 = 385"
+        },
+        {
+          id: "M7",
+          type: "MCQ",
+          question: "Find the next number: 2, 6, 12, 20, 30, ?",
+          options: ["36", "40", "42", "44"],
+          answer: "42",
+          explanation: "Differences are +4, +6, +8, +10, so next is +12"
+        },
+        {
+          id: "M8",
+          type: "MCQ",
+          question: "What is 76 + 89?",
+          options: ["155", "165", "175", "185"],
+          answer: "165",
+          explanation: "76 + 89 = 165"
+        },
+        {
+          id: "M9",
+          type: "TF",
+          question: "True or False: 64 is a perfect square",
+          options: ["True", "False"],
+          answer: "True",
+          explanation: "64 = 8²"
+        },
+        {
+          id: "M10",
+          type: "MCQ",
+          question: "What is 15²?",
+          options: ["205", "215", "225", "235"],
+          answer: "225",
+          explanation: "15 × 15 = 225"
+        }
+      ],
+      hard: [
+        {
+          id: "H1",
+          type: "MCQ",
+          question: "Using near-base multiplication, what is 104 × 107?",
+          options: ["11028", "11128", "11228", "11328"],
+          answer: "11128",
+          explanation: "104×107 = (100+4)(100+7) = 11128"
+        },
+        {
+          id: "H2",
+          type: "MCQ",
+          question: "What is 95²?",
+          options: ["8925", "9025", "9125", "9225"],
+          answer: "9025",
+          explanation: "95² = 9025"
+        },
+        {
+          id: "H3",
+          type: "TF",
+          question: "True or False: 999 + 999 = 1998",
+          options: ["True", "False"],
+          answer: "True",
+          explanation: "999 + 999 = 1998"
+        },
+        {
+          id: "H4",
+          type: "MCQ",
+          question: "What is 144 ÷ 12?",
+          options: ["10", "11", "12", "13"],
+          answer: "12",
+          explanation: "144 ÷ 12 = 12"
+        },
+        {
+          id: "H5",
+          type: "MCQ",
+          question: "Find the next number: 3, 9, 27, 81, ?",
+          options: ["162", "243", "324", "729"],
+          answer: "243",
+          explanation: "Each term is multiplied by 3"
+        },
+        {
+          id: "H6",
+          type: "TF",
+          question: "True or False: 112 × 11 = 1232",
+          options: ["True", "False"],
+          answer: "True",
+          explanation: "112 × 11 = 1232"
+        },
+        {
+          id: "H7",
+          type: "MCQ",
+          question: "What is 999 - 487?",
+          options: ["502", "512", "522", "532"],
+          answer: "512",
+          explanation: "999 - 487 = 512"
+        },
+        {
+          id: "H8",
+          type: "MCQ",
+          question: "What is 88²?",
+          options: ["7644", "7744", "7844", "7944"],
+          answer: "7744",
+          explanation: "88 × 88 = 7744"
+        },
+        {
+          id: "H9",
+          type: "TF",
+          question: "True or False: Every multiple of 10 ends in zero",
+          options: ["True", "False"],
+          answer: "True",
+          explanation: "Any multiple of 10 ends in 0"
+        },
+        {
+          id: "H10",
+          type: "MCQ",
+          question: "If 48 ÷ 6 = 8, then 480 ÷ 6 = ?",
+          options: ["8", "80", "800", "60"],
+          answer: "80",
+          explanation: "480 ÷ 6 = 80"
+        }
+      ]
+    };
+
+    let quizQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let selectedOption = null;
+    let answersLog = [];
+    let timer = null;
+    let timeLeft = 60;
+    let student = {};
+
+    function shuffle(arr){
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function pickQuestions(){
+      const easy = shuffle(questionBank.easy).slice(0,3);
+      const medium = shuffle(questionBank.medium).slice(0,4);
+      const hard = shuffle(questionBank.hard).slice(0,3);
+      return shuffle([...easy, ...medium, ...hard]);
+    }
+
+    function showScreen(id){
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function startQuiz(){
+      const fullName = document.getElementById('fullName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const program = document.getElementById('program').value;
+
+      if(!fullName || !phone || !email || !program){
+        alert("Please fill all student details before starting the quiz.");
+        return;
+      }
+
+      student = { fullName, phone, email, program };
+      quizQuestions = pickQuestions();
+      currentIndex = 0;
+      score = 0;
+      selectedOption = null;
+      answersLog = [];
+      showScreen('screen-quiz');
+      renderQuestion();
+    }
+
+    function getDifficulty(id){
+      if(id.startsWith("E")) return "Easy";
+      if(id.startsWith("M")) return "Medium";
+      return "Hard";
+    }
+
+    function renderQuestion(){
+      clearInterval(timer);
+      selectedOption = null;
+      timeLeft = 60;
+      document.getElementById('timeLeft').textContent = timeLeft;
+
+      const q = quizQuestions[currentIndex];
+      document.getElementById('qNum').textContent = currentIndex + 1;
+      document.getElementById('liveScore').textContent = score;
+      document.getElementById('questionText').textContent = q.question;
+
+      const diff = getDifficulty(q.id);
+      const diffTag = document.getElementById('difficultyTag');
+      diffTag.textContent = diff;
+      diffTag.className = 'q-tag ' + (
+        diff === 'Easy' ? 'tag-diff-easy' :
+        diff === 'Medium' ? 'tag-diff-medium' :
+        'tag-diff-hard'
+      );
+
+      document.getElementById('typeTag').textContent = q.type === 'TF' ? 'True / False' : 'Multiple Choice';
+
+      const optionsWrap = document.getElementById('optionsWrap');
+      optionsWrap.innerHTML = '';
+      q.options.forEach((opt, index) => {
+        const optionEl = document.createElement('div');
+        optionEl.className = 'option';
+        optionEl.innerHTML = `
+          <div class="opt-key">${String.fromCharCode(65 + index)}</div>
+          <div>${opt}</div>
+        `;
+        optionEl.onclick = () => selectOption(optionEl, opt);
+        optionsWrap.appendChild(optionEl);
+      });
+
+      const progress = ((currentIndex) / quizQuestions.length) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+      document.getElementById('progressText').textContent = Math.round(progress) + '%';
+
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timeLeft').textContent = timeLeft;
+        if(timeLeft <= 0){
+          clearInterval(timer);
+          autoMoveNext();
+        }
+      }, 1000);
+    }
+
+    function selectOption(el, value){
+      document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedOption = value;
+    }
+
+    function saveCurrentAnswer(status){
+      const q = quizQuestions[currentIndex];
+      const isCorrect = selectedOption === q.answer;
+      if(status === 'answered' && isCorrect){
+        score++;
+      }
+
+      answersLog.push({
+        qid: q.id,
+        difficulty: getDifficulty(q.id),
+        type: q.type,
+        question: q.question,
+        selected: selectedOption || "",
+        correctAnswer: q.answer,
+        result: status === 'timeout' ? 'Timed Out' : status === 'skipped' ? 'Skipped' : isCorrect ? 'Correct' : 'Incorrect'
+      });
+    }
+
+    function nextQuestion(){
+      clearInterval(timer);
+      saveCurrentAnswer('answered');
+      moveAhead();
+    }
+
+    function skipQuestion(){
+      clearInterval(timer);
+      saveCurrentAnswer('skipped');
+      moveAhead();
+    }
+
+    function autoMoveNext(){
+      saveCurrentAnswer('timeout');
+      moveAhead();
+    }
+
+    function moveAhead(){
+      currentIndex++;
+      if(currentIndex < quizQuestions.length){
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults(){
+      const percent = Math.round((score / quizQuestions.length) * 100);
+      let outcome = "";
+      let badgeClass = "";
+      let title = "";
+      let advice = "";
+
+      if(percent >= 70){
+        outcome = "Ready for BCA";
+        badgeClass = "badge-ready";
+        title = "Good Maths Readiness";
+        advice = `
+          <strong>Recommendation:</strong> This student appears ready to pursue BCA with the current level of maths readiness.
+          The student demonstrates workable comfort with basic number operations, patterns, and Vedic Maths-style thinking.
+          Continued practice in mental maths and logic-building will still be useful for programming and problem-solving subjects.
+        `;
+      } else if(percent >= 40){
+        outcome = "Needs Level 1 Coaching";
+        badgeClass = "badge-coach";
+        title = "Moderate Readiness";
+        advice = `
+          <strong>Recommendation:</strong> This student can join BCA, but should first receive Level 1 bridge coaching in maths.
+          Focus areas should include faster calculation, basic division, squares, and pattern recognition.
+          A short SkillX Vedic Maths support module is advisable before or during the first semester.
+        `;
+      } else {
+        outcome = "Needs Intensive Coaching";
+        badgeClass = "badge-intensive";
+        title = "Coaching Strongly Recommended";
+        advice = `
+          <strong>Recommendation:</strong> This student currently needs additional maths support before being considered fully ready for BCA.
+          Intensive bridge coaching is recommended in number sense, mental arithmetic, multiplication, division, and quick pattern handling.
+          Re-attending or completing a SkillX Vedic Maths workshop is strongly advised.
+        `;
+      }
+
+      document.getElementById('resultBadge').className = 'result-badge ' + badgeClass;
+      document.getElementById('resultBadge').textContent = outcome;
+      document.getElementById('resultTitle').textContent = title;
+      document.getElementById('studentSummary').textContent =
+        `${student.fullName} | ${student.program} | ${student.phone} | ${student.email}`;
+
+      document.getElementById('scoreMarks').textContent = `${score} / ${quizQuestions.length}`;
+      document.getElementById('scorePercent').textContent = `${percent}%`;
+      document.getElementById('scoreOutcome').textContent = outcome;
+      document.getElementById('adviceBox').innerHTML = advice;
+
+      document.getElementById('progressBar').style.width = '100%';
+      document.getElementById('progressText').textContent = '100%';
+
+      showScreen('screen-result');
+      submitToGoogleSheet(percent, outcome);
+      saveLocalResult(percent, outcome);
+    }
+
+    function buildWhatsAppMessage(){
+      const percent = Math.round((score / quizQuestions.length) * 100);
+      let outcome = percent >= 70 ? "Ready for BCA" : percent >= 40 ? "Needs Level 1 Coaching" : "Needs Intensive Coaching";
+
+      return `GJIMT SkillX Maths Readiness Quiz Result
+Name: ${student.fullName}
+Phone: ${student.phone}
+Email: ${student.email}
+Program Applied: ${student.program}
+Score: ${score}/${quizQuestions.length}
+Percentage: ${percent}%
+Recommendation: ${outcome}
+
+For guidance contact GJIMT SkillX: 9914433199`;
+    }
+
+    function shareOnWhatsApp(){
+      const message = buildWhatsAppMessage();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(message).then(() => {
+          const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+          window.open(url, '_blank');
+        }).catch(() => {
+          prompt("Copy this result message:", message);
+        });
+      } else {
+        prompt("Copy this result message:", message);
+      }
+    }
+
+    function saveLocalResult(percent, outcome){
+      const payload = {
+        timestamp: new Date().toISOString(),
+        student,
+        score,
+        total: quizQuestions.length,
+        percent,
+        outcome,
+        answersLog
+      };
+      localStorage.setItem('gjimtSkillxMathQuizLastResult', JSON.stringify(payload));
+    }
+
+    async function submitToGoogleSheet(percent, outcome){
+      if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE")){
+        console.log("Google Script URL not set. Skipping remote submit.");
+        return;
+      }
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        fullName: student.fullName,
+        phone: student.phone,
+        email: student.email,
+        program: student.program,
+        score: score,
+        total: quizQuestions.length,
+        percent: percent,
+        outcome: outcome,
+        answers: answersLog
+      };
+
+      try{
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      }catch(err){
+        console.error("Google Sheet submit failed:", err);
+      }
+    }
+
+    function restartQuiz(){
+      clearInterval(timer);
+      document.getElementById('fullName').value = "";
+      document.getElementById('phone').value = "";
+      document.getElementById('email').value = "";
+      document.getElementById('program').value = "";
+      showScreen('screen-intro');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

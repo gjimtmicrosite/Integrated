@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GJIMT Python Logic Readiness Quiz</title>
+  <style>
+    :root{
+      --bg1:#0f172a;
+      --bg2:#020617;
+      --card:#020617;
+      --border:#1e293b;
+      --primary:#22c55e;
+      --primary-soft:#bbf7d0;
+      --primary-dark:#16a34a;
+      --accent:#38bdf8;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --shadow:0 24px 60px rgba(15,23,42,.75);
+      --radius-xl:22px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;}
+
+    body{
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top, rgba(56,189,248,.18), transparent 55%),
+        radial-gradient(circle at bottom, rgba(34,197,94,.18), transparent 55%),
+        linear-gradient(145deg,var(--bg1),var(--bg2));
+      color:var(--text);
+    }
+
+    .wrap{
+      max-width:1040px;
+      margin:0 auto;
+      padding:28px 16px 40px;
+    }
+
+    .hero{
+      border-radius:28px;
+      padding:24px 22px 26px;
+      border:1px solid rgba(148,163,184,.6);
+      background:
+        radial-gradient(circle at top left,rgba(15,23,42,.8),transparent 60%),
+        radial-gradient(circle at top right,rgba(34,197,94,.1),transparent 65%),
+        linear-gradient(135deg,rgba(15,23,42,.96),rgba(15,23,42,.98));
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-60px;
+      top:-40px;
+      width:220px;
+      height:220px;
+      background:radial-gradient(circle,rgba(34,197,94,.25),transparent 70%);
+      opacity:.9;
+    }
+
+    .brand-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:12px;
+      position:relative;
+      z-index:1;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 14px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.8);
+      background-color:rgba(15,23,42,.85);
+      font-size:13px;
+      font-weight:600;
+      color:var(--muted);
+    }
+    .badge-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--primary);
+      box-shadow:0 0 0 4px rgba(34,197,94,.35);
+    }
+
+    h1{
+      font-size:clamp(30px,5vw,40px);
+      letter-spacing:-0.03em;
+      margin-bottom:6px;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-sub{
+      font-size:15px;
+      color:var(--muted);
+      max-width:740px;
+      line-height:1.7;
+      position:relative;
+      z-index:1;
+    }
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+      position:relative;
+      z-index:1;
+    }
+    .small-tag{
+      padding:6px 11px;
+      border-radius:999px;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      border:1px solid rgba(148,163,184,.7);
+      color:var(--muted);
+    }
+    .small-tag.green{
+      border-color:rgba(34,197,94,.65);
+      color:#bbf7d0;
+      background:rgba(21,128,61,.28);
+    }
+
+    .screen{display:none;margin-top:22px;}
+    .screen.active{display:block;}
+
+    .grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+    }
+
+    .card{
+      border-radius:var(--radius-xl);
+      border:1px solid var(--border);
+      background:radial-gradient(circle at top left,rgba(15,23,42,.95),rgba(15,23,42,.98));
+      padding:22px 20px 20px;
+    }
+
+    .card h2{
+      font-size:20px;
+      margin-bottom:10px;
+      letter-spacing:-0.02em;
+    }
+
+    .muted{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    label{
+      display:block;
+      margin:14px 0 6px;
+      font-size:13px;
+      font-weight:600;
+      color:#e5e7eb;
+    }
+
+    input, select{
+      width:100%;
+      padding:11px 12px;
+      border-radius:14px;
+      border:1px solid #1f2937;
+      background:#020617;
+      color:var(--text);
+      font-size:14px;
+      outline:none;
+      transition:.2s ease;
+    }
+
+    input::placeholder{color:#6b7280;}
+
+    input:focus, select:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 1px rgba(34,197,94,.7);
+    }
+
+    .hint-box{
+      margin-top:14px;
+      padding:14px 14px 13px;
+      border-radius:18px;
+      border:1px solid #1f2937;
+      background:radial-gradient(circle at top left,rgba(15,23,42,.96),rgba(15,23,42,.98));
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+    .hint-box ul{margin:8px 0 0 18px;}
+    .hint-box li{margin-bottom:4px;}
+
+    .pill-row{
+      margin-top:14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .pill{
+      padding:7px 11px;
+      border-radius:999px;
+      border:1px solid #1f2937;
+      background:#020617;
+      color:#9ca3af;
+      font-size:12px;
+    }
+
+    .level-row{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:14px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .level-chip{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      padding:9px 11px;
+      border-radius:14px;
+      border:1px solid #1f2937;
+      background:#020617;
+    }
+    .level-chip strong{
+      color:#e5e7eb;
+      font-size:13px;
+    }
+
+    .quiz-top{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .mini{
+      flex:1 1 120px;
+      border-radius:16px;
+      border:1px solid #1e293b;
+      padding:10px 12px;
+      background:radial-gradient(circle at top left,rgba(15,23,42,.94),rgba(15,23,42,.98));
+    }
+    .mini-label{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:#9ca3af;
+      margin-bottom:3px;
+    }
+    .mini-value{
+      font-size:20px;
+      font-weight:700;
+    }
+
+    .progress-wrap{margin:6px 0 16px;}
+    .progress-meta{
+      display:flex;
+      justify-content:space-between;
+      font-size:12px;
+      color:#9ca3af;
+      margin-bottom:5px;
+    }
+    .progress{
+      width:100%;
+      height:9px;
+      border-radius:999px;
+      background:#020617;
+      border:1px solid #1e293b;
+      overflow:hidden;
+    }
+    .progress-bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--primary),var(--accent));
+      transition:width .28s ease;
+    }
+
+    .q-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-bottom:10px;
+      margin-top:6px;
+    }
+    .q-tag{
+      padding:5px 10px;
+      font-size:11px;
+      border-radius:999px;
+      border:1px solid #1e293b;
+      color:#9ca3af;
+    }
+    .q-tag.easy{border-color:#22c55e;color:#bbf7d0;}
+    .q-tag.medium{border-color:#facc15;color:#fee58a;}
+    .q-tag.hard{border-color:#fb7185;color:#fecaca;}
+
+    .question-text{
+      font-size:19px;
+      font-weight:600;
+      line-height:1.5;
+      margin-bottom:12px;
+    }
+
+    .options{
+      display:grid;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .option{
+      border-radius:18px;
+      border:1px solid #1f2937;
+      padding:10px 12px;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      cursor:pointer;
+      background:#020617;
+      transition:.18s ease;
+    }
+    .option:hover{
+      border-color:var(--accent);
+      box-shadow:0 0 0 1px rgba(56,189,248,.5);
+    }
+    .option.selected{
+      border-color:var(--primary);
+      box-shadow:0 0 0 1px rgba(34,197,94,.8);
+      background:radial-gradient(circle at top left,rgba(22,163,74,.2),rgba(15,23,42,.96));
+    }
+    .opt-key{
+      width:26px;height:26px;min-width:26px;
+      border-radius:50%;
+      border:1px solid #1e293b;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:600;
+      color:#cbd5f5;
+      background:#020617;
+    }
+    .option.selected .opt-key{
+      background:var(--primary);
+      color:#052e16;
+      border-color:transparent;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:10px 16px;
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+      transition:.18s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+      white-space:nowrap;
+    }
+    .btn-primary{
+      background:linear-gradient(90deg,#22c55e,#16a34a);
+      color:#022c22;
+      box-shadow:0 14px 34px rgba(22,163,74,.45);
+    }
+    .btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px);}
+    .btn-ghost{
+      background:rgba(15,23,42,.2);
+      border:1px solid #1e293b;
+      color:#e5e7eb;
+    }
+    .btn-ghost:hover{
+      border-color:#38bdf8;
+      color:#bae6fd;
+    }
+    .btn-dark{
+      background:#020617;
+      border:1px solid #1e293b;
+      color:#e5e7eb;
+    }
+
+    .small-note{
+      margin-top:10px;
+      font-size:12px;
+      color:#9ca3af;
+    }
+
+    .result-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 13px;
+      border-radius:999px;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      margin-bottom:12px;
+    }
+    .badge-l1{
+      border:1px solid #f97316;
+      background:rgba(248,154,72,.18);
+      color:#fed7aa;
+    }
+    .badge-l2{
+      border:1px solid #22c55e;
+      background:rgba(22,163,74,.18);
+      color:#bbf7d0;
+    }
+    .badge-l3{
+      border:1px solid #38bdf8;
+      background:rgba(56,189,248,.18);
+      color:#bae6fd;
+    }
+
+    .score-box{
+      display:grid;
+      gap:10px;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      margin:16px 0 16px;
+    }
+    .score-tile{
+      border-radius:18px;
+      border:1px solid #1f2937;
+      background:radial-gradient(circle at top,rgba(15,23,42,.96),rgba(15,23,42,.98));
+      padding:14px 12px;
+      text-align:center;
+    }
+    .score-big{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:3px;
+    }
+    .score-label{
+      font-size:11px;
+      color:#9ca3af;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+    }
+
+    .advice{
+      margin-top:10px;
+      padding:14px 14px 13px;
+      border-radius:18px;
+      border:1px solid #1e293b;
+      background:radial-gradient(circle at top left,rgba(15,23,42,.96),rgba(15,23,42,.99));
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .legend-box{
+      margin-top:14px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid #1e293b;
+      background:#020617;
+      font-size:12px;
+      color:#9ca3af;
+      line-height:1.6;
+    }
+
+    .contact-card{
+      margin-top:18px;
+      border-radius:20px;
+      border:1px solid #1e293b;
+      background:linear-gradient(135deg,#020617,#020617);
+      padding:16px 14px 15px;
+      font-size:13px;
+    }
+    .contact-card h3{
+      margin-bottom:6px;
+      font-size:15px;
+    }
+    .contact-card a{
+      color:#a5b4fc;
+      text-decoration:none;
+    }
+
+    .footer-note{
+      text-align:center;
+      margin-top:14px;
+      font-size:11px;
+      color:#6b7280;
+    }
+
+    @media (max-width:860px){
+      .grid{grid-template-columns:1fr;}
+      .score-box{grid-template-columns:1fr 1fr;}
+      .hero{padding:20px 16px;}
+      .card{padding:18px 16px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- HERO -->
+    <header class="hero">
+      <div class="brand-row">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          GJIMT AI Lab • Mohali
+        </div>
+        <div class="badge">Python Boot Camp Readiness</div>
+        <div class="badge">For 2026 BCA / MCA Intake</div>
+      </div>
+      <h1>Python Logic Readiness Quiz</h1>
+      <p class="hero-sub">
+        Screening quiz for students who have cleared the Maths criteria and want to check
+        their programming logic readiness for the GJIMT Python Boot Camp pathway.
+        Your score will map you to the right starting level.
+      </p>
+      <div class="tag-row">
+        <div class="small-tag green">Code‑First • Logic‑Focused</div>
+        <div class="small-tag">Approx. 10–12 mins • 12 Questions</div>
+      </div>
+    </header>
+
+    <!-- INTRO -->
+    <section id="screen-intro" class="screen active">
+      <div class="grid">
+        <div class="card">
+          <h2>Student Details</h2>
+          <p class="muted" style="margin-bottom:8px;">
+            Please enter your details so that the result can be shared with the admissions and AI Lab team.
+          </p>
+
+          <label for="name">Full Name</label>
+          <input id="name" type="text" placeholder="Enter student's full name" />
+
+          <label for="phone">WhatsApp Number</label>
+          <input id="phone" type="tel" placeholder="10‑digit WhatsApp number" />
+
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="Email for sharing detailed guidance" />
+
+          <label for="program">Preferred Program</label>
+          <select id="program">
+            <option value="">Select Program</option>
+            <option value="BCA 2026">BCA (2026 Session)</option>
+            <option value="MCA 2026">MCA (2026 Session)</option>
+            <option value="Other UG/PG">Other UG/PG</option>
+          </select>
+
+          <div class="hint-box">
+            <strong>How this quiz works</strong>
+            <ul>
+              <li>12 questions on patterns, pseudo-code, loops, and real-life logic scenarios.</li>
+              <li>Mix of easy, medium, and challenge questions; no prior Python coding needed.</li>
+              <li>Each question has a 60-second timer; unanswered questions auto-skip.</li>
+              <li>Score maps you to Python Level 1, 2, or 3 and shows the fee for that level and the full bundle.</li>
+            </ul>
+          </div>
+
+          <div class="btn-row" style="margin-top:16px;">
+            <button class="btn btn-primary" onclick="startQuiz()">
+              Start Logic Quiz
+            </button>
+          </div>
+          <p class="small-note">
+            This is not a rejection test. It helps us place you at the right starting point so you succeed in coding from day one.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>Python Boot Camp Levels</h2>
+          <p class="muted">
+            Based on your score, we’ll suggest a personalised entry point into the
+            GJIMT AI Lab Python Boot Camp pathway. [file:2]
+          </p>
+
+          <div class="pill-row">
+            <span class="pill">Logic & Patterns</span>
+            <span class="pill">Pseudo-code</span>
+            <span class="pill">Loops Thinking</span>
+            <span class="pill">Condition Flows</span>
+            <span class="pill">Debug Mindset</span>
+          </div>
+
+          <div class="level-row">
+            <div class="level-chip">
+              <div>
+                <strong>Level 1 – Beginner Foundation</strong><br/>
+                <span>15 Hours • ₹2,500 • Live coding and core Python basics.</span>
+              </div>
+            </div>
+            <div class="level-chip">
+              <div>
+                <strong>Level 2 – Intermediate Application</strong><br/>
+                <span>18 Hours • ₹4,000 • File handling, OOP, MySQL, and GUI apps.</span>
+              </div>
+            </div>
+            <div class="level-chip">
+              <div>
+                <strong>Level 3 – Advanced Specialisation</strong><br/>
+                <span>24 Hours • ₹6,000 • Data science, Pandas, NumPy, ML workflows.</span>
+              </div>
+            </div>
+            <div class="level-chip">
+              <div>
+                <strong>Full Pathway – All 3 Levels</strong><br/>
+                <span>57 Hours • ₹10,000 • Beginner to industry-ready Python practitioner.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hint-box" style="margin-top:16px;">
+            <strong>Score Bands (Recommended Entry Level)</strong>
+            <ul>
+              <li><strong>0–4 correct:</strong> Start with Level 1, then move to 2 and 3.</li>
+              <li><strong>5–8 correct:</strong> Begin at Level 2; Level 1 is optional bridge.</li>
+              <li><strong>9–12 correct:</strong> Directly eligible for Level 3; can still do full bundle.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="screen-quiz" class="screen">
+      <div class="card">
+        <div class="quiz-top">
+          <div class="mini">
+            <div class="mini-label">Question</div>
+            <div class="mini-value"><span id="qNum">1</span> / <span id="qTotal">12</span></div>
+          </div>
+          <div class="mini">
+            <div class="mini-label">Time Left</div>
+            <div class="mini-value"><span id="timeLeft">60</span>s</div>
+          </div>
+          <div class="mini">
+            <div class="mini-label">Current Score</div>
+            <div class="mini-value"><span id="liveScore">0</span></div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span>Progress</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+
+        <div class="q-tags">
+          <span id="difficultyTag" class="q-tag">Difficulty</span>
+          <span id="categoryTag" class="q-tag">Topic</span>
+        </div>
+
+        <div id="questionText" class="question-text"></div>
+        <div id="optionsWrap" class="options"></div>
+
+        <div class="btn-row">
+          <button class="btn btn-ghost" onclick="skipQuestion()">Skip</button>
+          <button class="btn btn-primary" onclick="nextQuestion()">Save & Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="screen-result" class="screen">
+      <div class="card">
+        <div id="resultBadge" class="result-badge badge-l1">
+          Recommended Level
+        </div>
+        <h2 id="resultTitle">Your Python Readiness Result</h2>
+        <p id="studentSummary" class="muted" style="margin-top:4px;"></p>
+
+        <div class="score-box">
+          <div class="score-tile">
+            <div id="scoreMarks" class="score-big">0 / 12</div>
+            <div class="score-label">Correct Answers</div>
+          </div>
+          <div class="score-tile">
+            <div id="scorePercent" class="score-big">0%</div>
+            <div class="score-label">Percentage</div>
+          </div>
+          <div class="score-tile">
+            <div id="scoreOutcome" class="score-big">Level 1</div>
+            <div class="score-label">Suggested Entry Level</div>
+          </div>
+          <div class="score-tile">
+            <div id="scoreFee" class="score-big">₹0</div>
+            <div class="score-label">Fee (Level • Full Pathway)</div>
+            <div style="margin-top:4px;font-size:11px;color:#9ca3af;">
+              Pay per level or choose the full bundle for maximum value.
+            </div>
+          </div>
+        </div>
+
+        <div id="adviceBox" class="advice"></div>
+
+        <div class="legend-box">
+          <strong>How your level was decided:</strong><br/>
+          • 0–4 correct → Level 1 – Beginner Foundation (strong logic support + basics).<br/>
+          • 5–8 correct → Level 2 – Intermediate Application (ready for real projects).<br/>
+          • 9–12 correct → Level 3 – Advanced Specialisation (data science & ML focused).<br/>
+          You can always opt for the full 3-level pathway for deeper mastery.
+        </div>
+
+        <div class="contact-card">
+          <h3>Next Step: Connect with GJIMT AI Lab</h3>
+          <p style="margin-bottom:10px;">
+            Share this result with our team on WhatsApp, download a copy for your records,
+            or call the admissions helpline for counselling on the Python Boot Camp pathway.
+          </p>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="copyWhatsAppMessage()">
+              Copy Result for WhatsApp
+            </button>
+            <button class="btn btn-dark" onclick="window.print()">
+              Download / Print Result
+            </button>
+            <a class="btn btn-ghost" href="tel:+919914433199">
+              Call GJIMT Admissions
+            </a>
+            <button class="btn btn-ghost" onclick="restartQuiz()">
+              Take Quiz Again
+            </button>
+          </div>
+          <p class="small-note">
+            You can also open WhatsApp and paste the copied message in a chat with
+            <strong>+91 99144 33199</strong> to reach the GJIMT AI Lab team.
+          </p>
+        </div>
+
+        <div class="footer-note">
+          GJIMT Python Logic Readiness Quiz • Designed for BCA / MCA 2026 intake
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Fees from boot camp brochure [file:2]
+    const FEES = {
+      level1: 2500,
+      level2: 4000,
+      level3: 6000,
+      fullPath: 10000
+    };
+
+    // 48-question pool – quiz will randomly pick 12
+    const QUESTION_BANK = [
+      // EASY (E1–E16)
+      {
+        id: "E1",
+        difficulty: "Easy",
+        category: "Patterns",
+        question: "What is the next number in the pattern: 2, 4, 6, 8, ?",
+        options: ["9", "10", "11", "12"],
+        answer: "10"
+      },
+      {
+        id: "E2",
+        difficulty: "Easy",
+        category: "Trace the Code",
+        question: "A variable x starts with value 5. First we add 3, then subtract 2. What is the final value of x?",
+        options: ["5", "6", "7", "8"],
+        answer: "6"
+      },
+      {
+        id: "E3",
+        difficulty: "Easy",
+        category: "Fee Discount Scenario",
+        question: "GJIMT offers a ₹500 early-bird discount on a course that normally costs ₹2,500. What fee will the student finally pay?",
+        options: ["₹2,000", "₹2,100", "₹2,200", "₹2,500"],
+        answer: "₹2,000"
+      },
+      {
+        id: "E4",
+        difficulty: "Easy",
+        category: "Loops",
+        question: "A loop prints numbers 1, 2, 3, 4, 5. How many times does the loop run?",
+        options: ["3", "4", "5", "6"],
+        answer: "5"
+      },
+      {
+        id: "E5",
+        difficulty: "Easy",
+        category: "Conditions",
+        question: "Rule: if marks ≥ 40 print PASS else print FAIL. For marks = 33, what will the program print?",
+        options: ["PASS", "FAIL", "ERROR", "NOTHING"],
+        answer: "FAIL"
+      },
+      {
+        id: "E6",
+        difficulty: "Easy",
+        category: "Real-Life Time",
+        question: "A lab session starts at 10:00 and runs for 2 hours. At what time does it end?",
+        options: ["11:00", "11:30", "12:00", "12:30"],
+        answer: "12:00"
+      },
+      {
+        id: "E7",
+        difficulty: "Easy",
+        category: "Counting",
+        question: "A list has 5 student names. You add 2 more. How many names are there now?",
+        options: ["5", "6", "7", "8"],
+        answer: "7"
+      },
+      {
+        id: "E8",
+        difficulty: "Easy",
+        category: "Boolean Logic",
+        question: "In a program, isHostel = true means the student is a hostel student. For a day scholar, what should isHostel be?",
+        options: ["true", "false", "1", "0"],
+        answer: "false"
+      },
+      {
+        id: "E9",
+        difficulty: "Easy",
+        category: "Comparison",
+        question: "Which comparison is true?",
+        options: ["10 > 20", "15 == 15", "5 < 1", "30 != 30"],
+        answer: "15 == 15"
+      },
+      {
+        id: "E10",
+        difficulty: "Easy",
+        category: "Admission Seats",
+        question: "Total BCA seats are 60. 45 are already filled. How many seats are left?",
+        options: ["10", "12", "15", "20"],
+        answer: "15"
+      },
+      {
+        id: "E11",
+        difficulty: "Easy",
+        category: "Simple Average",
+        question: "Internal test scores are 6, 8, and 10. What is the average?",
+        options: ["7", "8", "9", "10"],
+        answer: "8"
+      },
+      {
+        id: "E12",
+        difficulty: "Easy",
+        category: "Odd/Even",
+        question: "Which of these roll numbers is odd?",
+        options: ["120", "234", "311", "400"],
+        answer: "311"
+      },
+      {
+        id: "E13",
+        difficulty: "Easy",
+        category: "Attendance Flag",
+        question: "If attendedClasses = 0 on day one, what should the program store after marking the first day present?",
+        options: ["0", "1", "2", "10"],
+        answer: "1"
+      },
+      {
+        id: "E14",
+        difficulty: "Easy",
+        category: "Fee Sum",
+        question: "Level 1 fee is ₹2,500 and Level 2 fee is ₹4,000. What is the total of both?",
+        options: ["₹5,000", "₹6,000", "₹6,500", "₹7,000"],
+        answer: "₹6,500"
+      },
+      {
+        id: "E15",
+        difficulty: "Easy",
+        category: "String Idea",
+        question: "A variable name holds the text \"Gurpreet\". What type of data is this?",
+        options: ["Number", "String", "Boolean", "List"],
+        answer: "String"
+      },
+      {
+        id: "E16",
+        difficulty: "Easy",
+        category: "Seats Logic",
+        question: "A program checks: if seatsLeft > 0 print \"Admission Open\" else print \"Closed\". For seatsLeft = 0, what will it print?",
+        options: ["Admission Open", "Closed", "Error", "Waitlist"],
+        answer: "Closed"
+      },
+
+      // MEDIUM (M1–M16)
+      {
+        id: "M1",
+        difficulty: "Medium",
+        category: "Attendance Scenario",
+        question: "A program starts with attendance = 0. For each of 4 days, it adds present students: 30, 28, 29, 31. What is the final attendance value?",
+        options: ["116", "118", "120", "122"],
+        answer: "118"
+      },
+      {
+        id: "M2",
+        difficulty: "Medium",
+        category: "Trace the Code",
+        question: "Pseudo-code: total = 0; for day in [1,2,3]: total = total + 2. What is the value of total after the loop finishes?",
+        options: ["2", "4", "6", "8"],
+        answer: "6"
+      },
+      {
+        id: "M3",
+        difficulty: "Medium",
+        category: "Grading Scenario",
+        question: "Rule: if marks ≥ 75 → \"A\", else if marks ≥ 60 → \"B\", else \"C\". A student scores 72. Which grade will the program print?",
+        options: ["A", "B", "C", "No grade"],
+        answer: "B"
+      },
+      {
+        id: "M4",
+        difficulty: "Medium",
+        category: "Even/Odd Logic",
+        question: "You are writing logic to check if a roll number is even. Which simple rule is correct?",
+        options: [
+          "If roll number is bigger than 2 it is even",
+          "If roll number ÷ 2 has no remainder it is even",
+          "If roll number ends in 1 it is even",
+          "If roll number is between 0 and 9 it is even"
+        ],
+        answer: "If roll number ÷ 2 has no remainder it is even"
+      },
+      {
+        id: "M5",
+        difficulty: "Medium",
+        category: "Fee Logic",
+        question: "Pseudo-code: fee = 4000; if hasScholarship is true then fee = fee - 1000. For hasScholarship = true, what is fee?",
+        options: ["₹3,000", "₹4,000", "₹5,000", "₹6,000"],
+        answer: "₹3,000"
+      },
+      {
+        id: "M6",
+        difficulty: "Medium",
+        category: "List Length",
+        question: "A list of subjects is [\"Python\", \"DBMS\", \"OS\", \"Maths\"]. The loop runs once for each subject. How many times will it run?",
+        options: ["2", "3", "4", "5"],
+        answer: "4"
+      },
+      {
+        id: "M7",
+        difficulty: "Medium",
+        category: "Counters",
+        question: "Pseudo-code: count = 0; For each student in class of 50: if marks ≥ 50 then count = count + 1. What does 'count' represent at the end?",
+        options: [
+          "Total students in class",
+          "Number of students who passed",
+          "Sum of all marks",
+          "Number of absentees"
+        ],
+        answer: "Number of students who passed"
+      },
+      {
+        id: "M8",
+        difficulty: "Medium",
+        category: "Loop Sum",
+        question: "A loop adds all integers from 1 to 4 (1 + 2 + 3 + 4). What total will it calculate?",
+        options: ["8", "9", "10", "11"],
+        answer: "10"
+      },
+      {
+        id: "M9",
+        difficulty: "Medium",
+        category: "Fee Split",
+        question: "Level 1 costs ₹2,500. A student pays ₹1,000 now and the rest later. How much is left to pay?",
+        options: ["₹1,000", "₹1,500", "₹2,000", "₹2,500"],
+        answer: "₹1,500"
+      },
+      {
+        id: "M10",
+        difficulty: "Medium",
+        category: "Library Scenario",
+        question: "Borrow limit is 3 books. A student already has 2 books issued. The program checks: if currentBooks < 3 allowIssue. Can the student issue 1 more book?",
+        options: ["Yes", "No", "Only on Monday", "Only with fine"],
+        answer: "Yes"
+      },
+      {
+        id: "M11",
+        difficulty: "Medium",
+        category: "Nested Condition Idea",
+        question: "A rule: if program is \"BCA\" AND mathsCleared is true then print \"Eligible\" else print \"Check with counsellor\". For BCA and mathsCleared = false, what prints?",
+        options: ["Eligible", "Check with counsellor", "Error", "Nothing"],
+        answer: "Check with counsellor"
+      },
+      {
+        id: "M12",
+        difficulty: "Medium",
+        category: "Exam Weightage",
+        question: "Internal carries 40 marks and external 60 marks. A student scores 30 internally and 45 externally. What is the total?",
+        options: ["65", "70", "75", "80"],
+        answer: "75"
+      },
+      {
+        id: "M13",
+        difficulty: "Medium",
+        category: "Pseudo-code Steps",
+        question: "Which is the correct logical order for solving any coding problem?",
+        options: [
+          "Code → Think → Test",
+          "Think → Plan → Code → Test",
+          "Test → Code → Plan",
+          "Guess → Code → Submit"
+        ],
+        answer: "Think → Plan → Code → Test"
+      },
+      {
+        id: "M14",
+        difficulty: "Medium",
+        category: "Loop Condition",
+        question: "A while-loop continues while x < 5. Starting with x = 0 and increasing x by 1 each time, how many times will the loop run?",
+        options: ["3", "4", "5", "6"],
+        answer: "5"
+      },
+      {
+        id: "M15",
+        difficulty: "Medium",
+        category: "String Length Idea",
+        question: "The string \"Python\" has how many characters?",
+        options: ["4", "5", "6", "7"],
+        answer: "6"
+      },
+      {
+        id: "M16",
+        difficulty: "Medium",
+        category: "Bus Capacity",
+        question: "A college bus can carry 40 students. Your program checks: if students > 40 print \"Extra bus needed\". For 38 students, what should it print?",
+        options: [
+          "\"Extra bus needed\"",
+          "\"Seats available\"",
+          "\"Overloaded\"",
+          "Nothing"
+        ],
+        answer: "\"Seats available\""
+      },
+
+      // HARD (H1–H16)
+      {
+        id: "H1",
+        difficulty: "Hard",
+        category: "Installment Fee Scenario",
+        question: "Total fee for the full Python pathway is ₹10,000. A student pays in 4 equal installments. How much is each installment?",
+        options: ["₹2,000", "₹2,500", "₹3,000", "₹4,000"],
+        answer: "₹2,500"
+      },
+      {
+        id: "H2",
+        difficulty: "Hard",
+        category: "Patterns",
+        question: "Pattern: 3, 6, 12, 24, ?. Which number comes next if the same logic continues?",
+        options: ["30", "36", "42", "48"],
+        answer: "48"
+      },
+      {
+        id: "H3",
+        difficulty: "Hard",
+        category: "Trace the Code",
+        question: "Pseudo-code: total = 0; for each number in [2, 4, 6]: total = total + number. What is the final value of total?",
+        options: ["6", "8", "10", "12"],
+        answer: "12"
+      },
+      {
+        id: "H4",
+        difficulty: "Hard",
+        category: "Scholarship Scenario",
+        question: "Eligibility rule: if percentage ≥ 85 AND attendance ≥ 90%, scholarship = \"YES\", else \"NO\". A student has 88% marks and 82% attendance. What will the program store?",
+        options: ["YES", "NO", "ERROR", "HALF SCHOLARSHIP"],
+        answer: "NO"
+      },
+      {
+        id: "H5",
+        difficulty: "Hard",
+        category: "Loop Count",
+        question: "A loop prints 5, 10, 15, ..., up to 50. How many numbers will it print?",
+        options: ["5", "8", "10", "12"],
+        answer: "10"
+      },
+      {
+        id: "H6",
+        difficulty: "Hard",
+        category: "Minimum Logic",
+        question: "You want to find the smallest of three marks: 78, 65, 80. What should the program output?",
+        options: ["65", "78", "80", "All equal"],
+        answer: "65"
+      },
+      {
+        id: "H7",
+        difficulty: "Hard",
+        category: "Nested Loop Idea",
+        question: "A nested loop prints a 3 × 4 table (3 rows, 4 columns). How many times will the inner print statement run?",
+        options: ["3", "4", "7", "12"],
+        answer: "12"
+      },
+      {
+        id: "H8",
+        difficulty: "Hard",
+        category: "Fee Comparison",
+        question: "Level 3 alone costs ₹6,000. The full pathway (all three levels) costs ₹10,000. How much extra does a student pay to do the full pathway instead of only Level 3?",
+        options: ["₹2,000", "₹3,000", "₹4,000", "₹6,000"],
+        answer: "₹4,000"
+      },
+      {
+        id: "H9",
+        difficulty: "Hard",
+        category: "Multi-condition",
+        question: "A function returns \"Ready for ML\" only if student has completed Level 2 and Level 3. Which condition is correct?",
+        options: [
+          "completedL2 OR completedL3",
+          "completedL2 AND completedL3",
+          "only completedL1",
+          "completedL1 AND completedL2"
+        ],
+        answer: "completedL2 AND completedL3"
+      },
+      {
+        id: "H10",
+        difficulty: "Hard",
+        category: "Error Thinking",
+        question: "If a program divides by zero, what usually happens?",
+        options: [
+          "It prints 0",
+          "It prints 1",
+          "It shows an error / crashes",
+          "Nothing happens"
+        ],
+        answer: "It shows an error / crashes"
+      },
+      {
+        id: "H11",
+        difficulty: "Hard",
+        category: "API Request Idea",
+        question: "In a weather app, which action is closest to what an API call does?",
+        options: [
+          "Changes mobile wallpaper",
+          "Sends a request to a server and gets data back",
+          "Opens the calculator",
+          "Turns off Wi‑Fi"
+        ],
+        answer: "Sends a request to a server and gets data back"
+      },
+      {
+        id: "H12",
+        difficulty: "Hard",
+        category: "Data Cleaning Mindset",
+        question: "Before training a machine learning model, which step is most important?",
+        options: [
+          "Randomly deleting data",
+          "Cleaning and organising data properly",
+          "Ignoring missing values",
+          "Skipping directly to prediction"
+        ],
+        answer: "Cleaning and organising data properly"
+      },
+      {
+        id: "H13",
+        difficulty: "Hard",
+        category: "Loop Exit",
+        question: "A loop keeps running while attempts < 3. attempts starts at 0 and increases by 1 each time. After the loop stops, what value will attempts have?",
+        options: ["1", "2", "3", "4"],
+        answer: "3"
+      },
+      {
+        id: "H14",
+        difficulty: "Hard",
+        category: "Combined Fee Logic",
+        question: "A student wants Level 1 (₹2,500) and Level 3 (₹6,000). The counsellor suggests the full pathway instead at ₹10,000. How much does the student save by choosing the full pathway instead of buying only Level 1 and 3 separately?",
+        options: ["₹2,500", "₹500", "₹1,000", "₹1,500"],
+        answer: "₹1,500"
+      },
+      {
+        id: "H15",
+        difficulty: "Hard",
+        category: "Result Classification",
+        question: "If a program labels scores ≥ 80 as \"High\", 50–79 as \"Medium\", and below 50 as \"Low\", which label should a score of 79.5 get (rounded to nearest integer 80)?",
+        options: ["High", "Medium", "Low", "Error"],
+        answer: "High"
+      },
+      {
+        id: "H16",
+        difficulty: "Hard",
+        category: "Thinking Like a Developer",
+        question: "You discover your code works, but sometimes gives wrong results for certain inputs. What is the most professional next step?",
+        options: [
+          "Ignore it if it works most of the time",
+          "Add more test cases and debug the logic",
+          "Delete the code and start degree again",
+          "Only change the output message"
+        ],
+        answer: "Add more test cases and debug the logic"
+      }
+    ];
+
+    const TOTAL_QUESTIONS = 12;
+
+    let questions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let timer = null;
+    let timeLeft = 60;
+    let selectedOption = null;
+
+    const student = { name:"", phone:"", email:"", program:"" };
+
+    function shuffle(array){
+      return [...array].sort(() => Math.random() - 0.5);
+    }
+
+    function showScreen(id){
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    function startQuiz(){
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const program = document.getElementById("program").value;
+
+      if(!name || !phone || !email || !program){
+        alert("Please fill all student details before starting the quiz.");
+        return;
+      }
+
+      student.name = name;
+      student.phone = phone;
+      student.email = email;
+      student.program = program;
+
+      questions = shuffle(QUESTION_BANK).slice(0, TOTAL_QUESTIONS);
+      currentIndex = 0;
+      score = 0;
+      selectedOption = null;
+
+      document.getElementById("qTotal").textContent = TOTAL_QUESTIONS.toString();
+      showScreen("screen-quiz");
+      renderQuestion();
+    }
+
+    function renderQuestion(){
+      clearInterval(timer);
+      timeLeft = 60;
+      selectedOption = null;
+
+      const q = questions[currentIndex];
+
+      document.getElementById("qNum").textContent = (currentIndex + 1).toString();
+      document.getElementById("timeLeft").textContent = timeLeft.toString();
+      document.getElementById("liveScore").textContent = score.toString();
+
+      const prog = (currentIndex / TOTAL_QUESTIONS) * 100;
+      document.getElementById("progressBar").style.width = prog + "%";
+      document.getElementById("progressText").textContent = Math.round(prog) + "%";
+
+      const diffTag = document.getElementById("difficultyTag");
+      diffTag.textContent = q.difficulty;
+      diffTag.className = "q-tag " + (q.difficulty === "Easy" ? "easy" : q.difficulty === "Medium" ? "medium" : "hard");
+
+      const catTag = document.getElementById("categoryTag");
+      catTag.textContent = q.category;
+
+      document.getElementById("questionText").textContent = q.question;
+
+      const optionsWrap = document.getElementById("optionsWrap");
+      optionsWrap.innerHTML = "";
+      q.options.forEach((opt, idx) => {
+        const div = document.createElement("div");
+        div.className = "option";
+        div.innerHTML = `
+          <div class="opt-key">${String.fromCharCode(65 + idx)}</div>
+          <div>${opt}</div>
+        `;
+        div.onclick = () => {
+          document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+          div.classList.add("selected");
+          selectedOption = opt;
+        };
+        optionsWrap.appendChild(div);
+      });
+
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timeLeft").textContent = timeLeft.toString();
+        if(timeLeft <= 0){
+          clearInterval(timer);
+          moveNext(false);
+        }
+      }, 1000);
+    }
+
+    function nextQuestion(){ moveNext(true); }
+    function skipQuestion(){ moveNext(false); }
+
+    function moveNext(countAnswer){
+      clearInterval(timer);
+
+      const current = questions[currentIndex];
+      if(countAnswer && selectedOption && selectedOption === current.answer){
+        score++;
+      }
+
+      currentIndex++;
+      if(currentIndex < TOTAL_QUESTIONS){
+        renderQuestion();
+      }else{
+        showResults();
+      }
+    }
+
+    function showResults(){
+      const percent = Math.round((score / TOTAL_QUESTIONS) * 100);
+      let level = "";
+      let badgeClass = "";
+      let title = "";
+      let advice = "";
+      let levelFee = 0;
+
+      if(score <= 4){
+        level = "Level 1 – Beginner Foundation";
+        badgeClass = "badge-l1";
+        title = "Start with Level 1 (Beginner Foundation)";
+        levelFee = FEES.level1;
+        advice = `
+          You have basic logical thinking but need a comfortable start with coding.
+          We recommend beginning with <strong>Level 1 – Beginner Foundation</strong>,
+          which focuses on Python syntax, variables, decisions, loops, and hands‑on
+          logic building before moving to projects. You can then progress to Level 2
+          and Level 3 for full-stack Python and data science exposure.
+        `;
+      }else if(score <= 8){
+        level = "Level 2 – Intermediate Application";
+        badgeClass = "badge-l2";
+        title = "Good Logic – Ready for Level 2";
+        levelFee = FEES.level2;
+        advice = `
+          Your answers show a good grasp of patterns, conditional thinking, and
+          real‑life pseudo‑code style scenarios. You are a strong fit for
+          <strong>Level 2 – Intermediate Application</strong>, where you will build
+          real-world Python applications using file handling, OOP, MySQL, and basic
+          GUI projects. You may optionally revise core concepts from Level 1.
+        `;
+      }else{
+        level = "Level 3 – Advanced Specialisation";
+        badgeClass = "badge-l3";
+        title = "Strong Logic – Ready for Advanced Level";
+        levelFee = FEES.level3;
+        advice = `
+          You have excellent logical thinking and can comfortably handle
+          multi‑step conditions and numeric patterns. We recommend you enroll
+          directly into <strong>Level 3 – Advanced Specialisation</strong>,
+          focusing on data analysis, Pandas, NumPy, visualisation, and
+          machine learning style projects. You may still complete Levels 1 and 2
+          if you want the full pathway.
+        `;
+      }
+
+      document.getElementById("resultBadge").className = "result-badge " + badgeClass;
+      document.getElementById("resultBadge").textContent = level;
+      document.getElementById("resultTitle").textContent = title;
+
+      document.getElementById("studentSummary").textContent =
+        `${student.name} • ${student.program} • ${student.phone} • ${student.email}`;
+
+      document.getElementById("scoreMarks").textContent = `${score} / ${TOTAL_QUESTIONS}`;
+      document.getElementById("scorePercent").textContent = `${percent}%`;
+      document.getElementById("scoreOutcome").textContent = level;
+      document.getElementById("scoreFee").textContent =
+        `₹${levelFee.toLocaleString("en-IN")} • Full Pathway ₹${FEES.fullPath.toLocaleString("en-IN")}`;
+
+      document.getElementById("adviceBox").innerHTML = advice;
+
+      document.getElementById("progressBar").style.width = "100%";
+      document.getElementById("progressText").textContent = "100%";
+
+      showScreen("screen-result");
+    }
+
+    function buildWhatsAppMessage(){
+      const percent = Math.round((score / TOTAL_QUESTIONS) * 100);
+      let level = "";
+      let levelFee = 0;
+
+      if(score <= 4){
+        level = "Level 1 – Beginner Foundation";
+        levelFee = FEES.level1;
+      }else if(score <= 8){
+        level = "Level 2 – Intermediate Application";
+        levelFee = FEES.level2;
+      }else{
+        level = "Level 3 – Advanced Specialisation";
+        levelFee = FEES.level3;
+      }
+
+      return [
+        "GJIMT Python Logic Readiness Quiz Result",
+        "",
+        `Name: ${student.name}`,
+        `Program: ${student.program}`,
+        `WhatsApp: ${student.phone}`,
+        `Email: ${student.email}`,
+        "",
+        `Score: ${score}/${TOTAL_QUESTIONS} (${percent}%)`,
+        `Suggested Python Entry Level: ${level}`,
+        `Level Fee: ₹${levelFee.toLocaleString("en-IN")}`,
+        `Full Pathway Fee (All 3 Levels): ₹${FEES.fullPath.toLocaleString("en-IN")}`,
+        "",
+        "For counselling and boot camp details, contact GJIMT AI Lab:",
+        "WhatsApp / Call: +91 99144 33199"
+      ].join("\n");
+    }
+
+    function copyWhatsAppMessage(){
+      const message = buildWhatsAppMessage();
+      if(navigator.clipboard){
+        navigator.clipboard.writeText(message).then(() => {
+          alert("Result copied. Open WhatsApp and paste in your chat with GJIMT.");
+        }).catch(() => {
+          prompt("Copy this result and share on WhatsApp:", message);
+        });
+      }else{
+        prompt("Copy this result and share on WhatsApp:", message);
+      }
+    }
+
+    function restartQuiz(){
+      clearInterval(timer);
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("program").value = "";
+      showScreen("screen-intro");
+    }
+  </script>
+</body>
+</html>
