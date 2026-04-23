@@ -400,11 +400,22 @@ footer{
     </div>
 
     <!-- other cards -->
-    <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/new_gjimt-integrated-programs/index.html','_self')">
-      <img src="zerotohero.jpg">
-      <h2>Integrated Programs</h2>
-      <p>Integrating AI into Every Career Path</p>
-    </div>
+ 
+
+	  <!-- ✅ INTEGRATED PROGRAMS CARD (UPDATED) -->
+<div class="card">
+  <img src="zerotohero.jpg">
+ <h2>Integrated Programs</h2>
+  <h2 class="multi-line">
+    <span><a href="https://gjimtmicrosite.github.io/BCA-AI/">BCA with AI</a></span>
+    <span><a href="https://gjimtmicrosite.github.io/BBA-AI/">BBA with AI</a></span>
+    <span><a href="https://gjimtmicrosite.github.io/BCOM-AI/">B.Com with AI</a></span>
+    <span><a href="https://gjimtmicrosite.github.io/MBA-AI/">MBA with AI</a></span>
+    <span><a href="#" onclick="openMcaPopup()">MCA</a></span>
+  </h2>
+
+  <p>Integrating AI into Every Career Path</p>
+</div>
 
     <div class="card" onclick="window.open('https://gjimtmicrosite.github.io/SkillXworkshops/','_self')">
       <img src="skillx.jpg">
@@ -444,6 +455,18 @@ footer{
     <h2>Select Your Path</h2>
     <button onclick="goUG()">Under Graduate</button>
     <button onclick="goGrad()">Graduate</button>
+  </div>
+</div>
+
+	<!-- ✅ MCA POPUP -->
+<div id="mcaPopup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closeMcaPopup()">×</span>
+    <h2>Select MCA Specialization</h2>
+
+    <button onclick="goMcaAI()">MCA with AI</button>
+    <button onclick="goMcaFullStack()">MCA Full Stack</button>
+    <button onclick="goMcaSecurity()">MCA Information Security</button>
   </div>
 </div>
 
@@ -501,6 +524,27 @@ function goGrad(){
 }
   function openQR(url){
   window.open(url,'_blank');
+}
+	// MCA POPUP FUNCTIONS
+function openMcaPopup(){
+  document.getElementById("mcaPopup").style.display="flex";
+}
+
+function closeMcaPopup(){
+  document.getElementById("mcaPopup").style.display="none";
+}
+
+// REDIRECT LINKS (UPDATE URLs IF NEEDED)
+function goMcaAI(){
+  window.location.href="https://gjimtmicrosite.github.io/MCA-AI/";
+}
+
+function goMcaFullStack(){
+  window.location.href="https://gjimtmicrosite.github.io/MCA-FullStack/";
+}
+
+function goMcaSecurity(){
+  window.location.href="https://gjimtmicrosite.github.io/MCA-Security/";
 }
 </script>
 
