@@ -1,270 +1,237 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Advanced Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Analytics Dashboard</title>
 
-  <!-- Chart -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- DataTables -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
+body{
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+}
 
-    body {
-      background: linear-gradient(135deg, #0a3663, #1e5aa8);
-      color: #fff;
-    }
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:240px;
+  height:100vh;
+  position:fixed;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+  padding:20px;
+  border-right:1px solid rgba(255,255,255,0.1);
+}
 
-    /* LOGIN */
-    #login {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.sidebar h2{
+  color:#ffd700;
+  margin-bottom:20px;
+}
 
-    .login-box {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(15px);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      text-align: center;
-    }
+.sidebar button{
+  width:100%;
+  margin:10px 0;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-    .login-box input {
-      padding: 10px;
-      width: 200px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: none;
-    }
+.sidebar button:hover{
+  background:#ffd700;
+  color:#000;
+  transform:scale(1.05);
+}
 
-    .login-box button {
-      padding: 10px 20px;
-      border: none;
-      background: #d4af37;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+/* ===== MAIN ===== */
+.main{
+  margin-left:260px;
+  padding:30px;
+}
 
-    /* SIDEBAR */
-    .sidebar {
-      width: 240px;
-      height: 100vh;
-      position: fixed;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(20px);
-      padding: 20px;
-    }
+/* HEADER */
+.header{
+  font-size:28px;
+  margin-bottom:20px;
+}
 
-    .sidebar h2 {
-      color: #d4af37;
-      margin-bottom: 20px;
-    }
+/* CARDS */
+.cards{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
 
-    .sidebar button {
-      width: 100%;
-      margin: 10px 0;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+.card{
+  flex:1;
+  min-width:250px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  transform:perspective(1000px) rotateX(5deg);
+  transition:0.3s;
+}
 
-    .sidebar button:hover {
-      background: #d4af37;
-      color: #000;
-      transform: scale(1.05);
-    }
+.card:hover{
+  transform:perspective(1000px) rotateX(0deg) scale(1.05);
+}
 
-    .main {
-      margin-left: 260px;
-      padding: 30px;
-    }
+.card h3{
+  margin-bottom:10px;
+  color:#ffd700;
+}
 
-    .card {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(15px);
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
+.value{
+  font-size:28px;
+  font-weight:bold;
+}
 
-    /* TABLE */
-    table.dataTable {
-      color: white !important;
-    }
+/* CHART GRID */
+.charts{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;
+}
 
-    .dataTables_wrapper {
-      color: white;
-    }
-
-    .dataTables_wrapper input,
-    .dataTables_wrapper select {
-      background: rgba(255,255,255,0.1);
-      color: white;
-      border: 1px solid #ccc;
-    }
-
-  </style>
+.chart-box{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+</style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="login">
-  <div class="login-box">
-    <h2>🔐 Secure Dashboards</h2>
-    <input type="password" id="pass" placeholder="Enter Password">
-    <br>
-    <button onclick="checkLogin()">Login</button>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>📊 Dashboard</h2>
+  <a href="Career-result.html">   <button>🎓 Career Quiz</button></a>
+        <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
+  <button onclick="location.reload()">🔄 Refresh</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<div class="header">🚀 Smart Analytics Dashboard</div>
+
+<div class="cards">
+  <div class="card">
+    <h3>Career Students</h3>
+    <div class="value" id="careerCount">0</div>
+  </div>
+
+  <div class="card">
+    <h3>SkillX Students</h3>
+    <div class="value" id="skillCount">0</div>
+  </div>
+
+  <div class="card">
+    <h3>Total Students</h3>
+    <div class="value" id="totalCount">0</div>
   </div>
 </div>
 
-<!-- APP -->
-<div id="app" style="display:none;">
-
-  <div class="sidebar">
-    <h2>📊 Dashboards</h2>
-   <a href="Career-result.html">   <button>🎓 Career Quiz</button></a>
-        <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
-          <button onclick="goHome()">🏠 Back to Home</button>
-<button onclick="showHome()">🔓 Logout</button>
+<div class="charts">
+  <div class="chart-box">
+    <canvas id="careerChart"></canvas>
   </div>
 
-  <div class="main">
-
-    <!-- HOME -->
-    <div id="dashboard">
-      <h2>📈 Analytics</h2>
-
-      <div class="card"><canvas id="aiChart"></canvas></div>
-      <div class="card"><canvas id="careerChart"></canvas></div>
-      <div class="card"><canvas id="skillChart"></canvas></div>
-    </div>
-
-    <!-- TABLE -->
-    <div id="tableView" style="display:none;">
-      <h2 id="tableTitle"></h2>
-      <table id="dataTable" class="display" style="width:100%"></table>
-    </div>
-
+  <div class="chart-box">
+    <canvas id="skillChart"></canvas>
   </div>
+
+  <div class="chart-box">
+    <canvas id="comparisonChart"></canvas>
+  </div>
+</div>
+
 </div>
 
 <script>
 
-let allData = {};
+// ✅ GOOGLE SHEET LINKS
+const careerURL = "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
+const skillURL  = "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
 
-// 🔐 LOGIN
-function checkLogin() {
-  if (document.getElementById("pass").value === "admin123") {
-    login.style.display = "none";
-    app.style.display = "block";
-    loadData();
-  } else {
-    alert("Wrong Password");
-  }
-}
+// LOAD DATA
+Promise.all([
+  fetch(careerURL).then(res=>res.json()),
+  fetch(skillURL).then(res=>res.json())
+])
+.then(([careerData, skillData])=>{
 
-// 📊 LOAD DATA
-function loadData() {
-  google.script.run.withSuccessHandler(res => {
-    console.log("FULL RESPONSE:", res);
+  // COUNTS
+  document.getElementById("careerCount").innerText = careerData.length;
+  document.getElementById("skillCount").innerText = skillData.length;
+  document.getElementById("totalCount").innerText = careerData.length + skillData.length;
 
-    if (!res) {
-      alert("No response from server");
-      return;
-    }
+  // ===== CAREER DOMAIN CHART =====
+  let careerMap = {};
 
-    if (res.error) {
-      alert("ERROR: " + res.error);
-      return;
-    }
+  careerData.forEach(r=>{
+    let c = r["Top Career"] || "Unknown";
+    careerMap[c] = (careerMap[c] || 0) + 1;
+  });
 
-    allData = res;
-
-    createChart("aiChart", res.ai.length, "AI Quiz");
-    createChart("careerChart", res.career.length, "Career Quiz");
-    createChart("skillChart", res.skillx.length, "SkillX Quiz");
-
-  }).getAllData();
-}
-
-// 📊 CHART
-function createChart(id, value, label) {
-  new Chart(document.getElementById(id), {
-    type: 'bar',
-    data: {
-      labels: [label],
-      datasets: [{
-        label: "Students",
-        data: [value],
-        backgroundColor: "#d4af37"
+  new Chart(document.getElementById("careerChart"),{
+    type:'doughnut',
+    data:{
+      labels:Object.keys(careerMap),
+      datasets:[{
+        data:Object.values(careerMap)
       }]
-    },
-    options: {
-      plugins: { legend: { display: false } }
     }
   });
-}
 
-// 📋 DATATABLE
-function showSection(type) {
-  dashboard.style.display = "none";
-  tableView.style.display = "block";
+  // ===== SKILLX DOMAIN =====
+  let skillMap = {};
 
-  let data = allData[type];
-  let table = $("#dataTable");
-
-  // destroy old
-  if ($.fn.DataTable.isDataTable("#dataTable")) {
-    table.DataTable().destroy();
-    table.empty();
-  }
-
-  if (!data || data.length === 0) {
-    table.html("<tr><td>No Data Found</td></tr>");
-    return;
-  }
-
-  let columns = Object.keys(data[0]).map(key => ({
-    title: key,
-    data: key
-  }));
-
-  table.DataTable({
-    data: data,
-    columns: columns,
-    pageLength: 10,
-    responsive: true
+  skillData.forEach(r=>{
+    let d = r["Bundle Domain"] || "Unknown";
+    skillMap[d] = (skillMap[d] || 0) + 1;
   });
 
-  document.getElementById("tableTitle").innerText = type.toUpperCase() + " DATA";
-}
+  new Chart(document.getElementById("skillChart"),{
+    type:'pie',
+    data:{
+      labels:Object.keys(skillMap),
+      datasets:[{
+        data:Object.values(skillMap)
+      }]
+    }
+  });
 
-// 🏠 HOME
-function showHome() {
-  window.location.href = "https://gjimtmicrosite.github.io/Integrated/dashboard.html";
-}
-  function goHome() {
-  window.location.href = "https://gjimtmicrosite.github.io/Integrated/";
-}
+  // ===== COMPARISON =====
+  new Chart(document.getElementById("comparisonChart"),{
+    type:'bar',
+    data:{
+      labels:["Career","SkillX"],
+      datasets:[{
+        label:"Students",
+        data:[careerData.length, skillData.length]
+      }]
+    }
+  });
 
+});
 </script>
 
 </body>
