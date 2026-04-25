@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 230px;
+    height: 100vh;
+    background: #0b2c4a;
+    color: white;
+    padding: 20px;
+    position: fixed;
+}
+
+.sidebar h2 { margin-bottom: 20px; }
+
+.menu { display: flex; flex-direction: column; gap: 12px; }
+
+.menu button {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.menu button:hover { background: rgba(255,255,255,0.25); }
+
+/* MAIN */
+.main-content {
+    margin-left: 230px;
+    width: 100%;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+/* STATS */
+.stats {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 150px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+}
+
+.stat-title { font-size: 12px; color: #555; }
+.stat-value { font-size: 20px; font-weight: 600; }
+
+/* CARD */
+.card {
+    margin: 15px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 15px;
+    padding: 15px;
+}
+
+/* SEARCH */
+.search-box input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 8px;
+    border: none;
+}
+
+/* TABLE */
+.table-container { overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #667eea;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+tr:nth-child(even) { background: #f8f9ff; }
+
+/* BADGE */
+.badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: white;
+}
+
+.blue { background: #2196f3; }
+
+/* POPUP */
+.modal {
+    display:none;
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background:white;
+    margin:8% auto;
+    padding:20px;
+    width:90%;
+    max-width:400px;
+    border-radius:15px;
+}
+.green { background: #28a745; }
+.orange { background: #ff9800; }
+
+.close { float:right; cursor:pointer; }
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>📊 Dashboards</h2>
+    <div class="menu">
+        <button>🏠 Home</button>
+        <button>🎓 Career Quiz</button>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-content">
+
+<div class="header">🎓 Career Test Dashboard</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <div>Total Students</div>
+        <div id="total">0</div>
+    </div>
+    <div class="stat-card">
+        <div>Top Career</div>
+        <div id="domain">-</div>
+    </div>
+    <div class="stat-card">
+        <div>Avg Score</div>
+        <div id="avg">0</div>
+    </div>
+</div>
+
+<div class="card">
+    <input type="text" id="search" placeholder="Search..." onkeyup="searchTable()">
+
+    <div class="table-container">
+        <div id="loader">Loading...</div>
+
+        <table id="dataTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Stream</th>
+                    <th>R</th>
+                    <th>I</th>
+                    <th>A</th>
+                    <th>S</th>
+                    <th>E</th>
+                    <th>C</th>
+                        <th>Top Career</th>
+						<th>Second</th>
+						<th>Third</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePopup()">×</span>
+        <h3 id="pName"></h3>
+        <p id="pMust"></p>
+        <p id="pP2"></p>
+        <p id="pP3"></p>
+        <p id="pDomain"></p>
+        <p id="pPrice"></p>
+    </div>
+</div>
+<script>
+const sheetURL = "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
+
+fetch(sheetURL)
+.then(res => res.json())
+.then(data => {
+
+    document.getElementById("loader").style.display = "none";
+
+    if (!data || data.length === 0) {
+        document.getElementById("loader").innerText = "No Data Found";
+        return;
+    }
+
+    document.getElementById("dataTable").style.display = "table";
+
+    let total = data.length;
+    let careerCount = {};
+    let totalScore = 0;
+    let bodyHTML = "";
+
+    data.forEach(row => {
+console.log(row);
+        // ✅ Correct field mapping
+        let R = Number(row["R"]) || 0;
+        let I = Number(row["I"]) || 0;
+        let A = Number(row["A"]) || 0;
+        let S = Number(row["S"]) || 0;
+        let E = Number(row["E"]) || 0;
+        let C = Number(row["C"]) || 0;
+
+        let avgScore = (R+I+A+S+E+C)/6;
+        totalScore += avgScore;
+
+        // ✅ FIXED COLUMN NAMES (IMPORTANT)
+       let top = row["Top Career"] || row["TopCareer"] || "-";
+let second = row["Second"] || row[" Second"] || row["Second "] || "-";
+let third = row["Third"] || row[" Third"] || row["Third "] || "-";
+
+        careerCount[top] = (careerCount[top] || 0) + 1;
+
+       bodyHTML += `<tr>
+    <td class="name-link" onclick='showPopup(${JSON.stringify(row)})'>${row["Name"] || "-"}</td>
+    <td>${row["phone"] || "-"}</td>
+    <td>${row["stream"] || "-"}</td>
+    <td>${R}</td>
+    <td>${I}</td>
+    <td>${A}</td>
+    <td>${S}</td>
+    <td>${E}</td>
+    <td>${C}</td>
+    <td><span class="badge blue">${top}</span></td>
+    <td><span class="badge green">${second}</span></td>
+    <td><span class="badge orange">${third}</span></td>
+</tr>`;
+    });
+
+    document.getElementById("tableBody").innerHTML = bodyHTML;
+
+    // Stats
+    document.getElementById("total").innerText = total;
+
+    let topCareer = Object.keys(careerCount)
+        .reduce((a,b)=> careerCount[a]>careerCount[b]?a:b);
+
+    document.getElementById("domain").innerText = topCareer;
+
+    document.getElementById("avg").innerText = (totalScore / total).toFixed(1);
+
+});
+
+
+// ===== POPUP UPDATED =====
+function showPopup(row){
+    let modal = document.getElementById("popup");
+    modal.style.display = "block";
+    setTimeout(()=> modal.classList.add("show"),10);
+
+    document.getElementById("pName").innerText = row["Name"];
+
+    document.getElementById("pMust").innerText = "Top Career: " + (row["Top Career"] || "-");
+    document.getElementById("pP2").innerText = "Second: " + (row["Second"] || "-");
+    document.getElementById("pP3").innerText = "Third: " + (row["Third"] || "-");
+
+    document.getElementById("pDomain").innerText = "Stream: " + (row["stream"] || "-");
+
+    document.getElementById("pPrice").innerText =
+        `R:${row["R"]} I:${row["I"]} A:${row["A"]} S:${row["S"]} E:${row["E"]} C:${row["C"]}`;
+}
+
+function closePopup(){
+    let modal = document.getElementById("popup");
+    modal.classList.remove("show");
+    setTimeout(()=> modal.style.display="none",300);
+}
+
+function searchTable() {
+    let input = document.getElementById("search").value.toLowerCase();
+    let rows = document.querySelectorAll("#tableBody tr");
+
+    rows.forEach(row => {
+        let text = row.innerText.toLowerCase();
+        row.style.display = text.includes(input) ? "" : "none";
+    });
+}
+</script> 	
+
+</body>
+</html>
