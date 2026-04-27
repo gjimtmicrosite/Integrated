@@ -103,6 +103,41 @@ header p{
   border:1px solid rgba(255,255,255,0.25);
   transition:0.4s;
 }
+	/* 🔥 FLOATING RIGHT SIDE BUTTON */
+.floating-counselling-btn{
+  position:fixed;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  
+  padding:14px 18px;
+  font-size:14px;
+  font-weight:600;
+  border-radius:30px;
+  background:linear-gradient(45deg,#00c9ff,#92fe9d);
+  color:#000;
+  text-decoration:none;
+
+  box-shadow:0 0 10px rgba(0,255,200,0.6);
+  animation:blinkGlow 1.2s infinite;
+
+  z-index:9999;
+  writing-mode: unset;   /* vertical text */
+  text-orientation: mixed;
+}
+
+/* hover effect */
+.floating-counselling-btn:hover{
+  transform:translateY(-50%) scale(1.1);
+  box-shadow:0 0 25px rgba(0,255,200,1);
+}
+
+/* blinking glow */
+@keyframes blinkGlow{
+  0%{ box-shadow:0 0 5px #00c9ff; }
+  50%{ box-shadow:0 0 25px #92fe9d; }
+  100%{ box-shadow:0 0 5px #00c9ff; }
+}
 
 .card:hover{
   transform:translateY(-10px) scale(1.04);
@@ -556,6 +591,8 @@ function goMcaSecurity(){
   window.location.href="https://gjimtmicrosite.github.io/new_gjimt-integrated-programs/MCA%20with%20IS.html";
 }
 </script>
-
+<a href="FREE COUNSELLING.html" class="floating-counselling-btn">
+  🎓 Free Counselling
+</a>
 </body>
 </html>
