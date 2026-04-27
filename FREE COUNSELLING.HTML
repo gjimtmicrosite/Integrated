@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Counselling Registration</title>
+
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #5a67d8;
+}
+
+.success {
+  text-align: center;
+  color: green;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>🎓 Free Counselling Registration</h2>
+
+  <form id="form">
+
+    <input type="text" name="name" placeholder="Full Name" required>
+
+    <input type="email" name="email" placeholder="Email" required>
+
+    <input type="tel" name="phone" placeholder="Phone Number" required>
+
+    <select name="course" required>
+      <option value="">Select Course</option>
+      <option>BBA</option>
+      <option>BCA</option>
+      <option>B.Com</option>
+    </select>
+
+    <select name="day" required>
+      <option value="">Select Day</option>
+      <option>Friday</option>
+      <option>Saturday</option>
+    </select>
+
+    <select name="time" required>
+      <option value="">Select Time Slot</option>
+      <option>11 AM - 1 PM</option>
+      <option>3 PM - 5 PM</option>
+    </select>
+
+    <button type="submit">Register Now</button>
+
+    <div class="success" id="msg"></div>
+
+  </form>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmt8e_D3Ynr0A8HkVJwHNY1X5paW5zjIqnCpNq-4h9FtJjOSZDJmXjNH_4-vEH62lb-w/exec";
+
+document.getElementById("form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData);
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(data)
+  });
+
+  document.getElementById("msg").innerHTML = "✅ Registration Successful!";
+  this.reset();
+});
+</script>
+
+</body>
+</html>
