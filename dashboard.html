@@ -579,7 +579,15 @@ function closeWorkshopModal(){
 
 function filterWorkshopData(){
   const selectedWorkshop = workshopSelect.value;
+
+  if(selectedWorkshop === "AI for Business Decision-Making"){
+    // OPEN TEST PAGE
+    window.open("https://gjimtmicrosite.github.io/workshop-tests/AI-Business-Decision-test.html", "_blank");
+    workshopSelect.value = ""; // Reset select
+    return; // Stop filtering
+  }
   
+  // NORMAL FILTERING 
   if(!selectedWorkshop){
     currentFilteredData = skillDataGlobal;
   } else {
