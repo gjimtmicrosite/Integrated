@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Smart Dashboard</title>
+<title>AI Smart Workshop Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -145,6 +145,7 @@ body::after{
   display:flex;
   gap:20px;
   flex-wrap:wrap;
+  margin-bottom:20px;
 }
 
 .card{
@@ -169,7 +170,7 @@ body::after{
 }
 
 .value{
-  font-size:30px;
+  font-size:40px;
   font-weight:bold;
 }
 
@@ -187,6 +188,24 @@ body::after{
   padding:20px;
   border-radius:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  min-height:300px;
+}
+
+/* STATS SECTION */
+.stats-section{
+  margin-top:20px;
+  padding:20px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+  margin-top:15px;
 }
 
 /* STUDENT TABLE */
@@ -228,10 +247,13 @@ tr:hover{
 /* SEARCH */
 .search-box{
   margin-bottom:15px;
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
 .search-box input{
-  width:100%;
+  flex:1;
   padding:12px;
   border-radius:10px;
   border:none;
@@ -357,9 +379,76 @@ tr:hover{
   box-shadow: 0 0 20px gold;
 }
 
+/* WORKSHOP DASHBOARD HEADER */
+.workshop-header {
+  position: relative;
+  padding: 25px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin-bottom: 30px;
+  border-left: 4px solid #ffd700;
+}
+
+.workshop-header h2 {
+  margin: 0 0 10px 0;
+  color: #ffd700;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.workshop-header span {
+  font-size: 16px;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.1);
+  color: #ffd700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.back-btn:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.05);
+}
+
+/* NO DATA */
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #a0a0a0;
+  font-size: 18px;
+}
+
+/* RESPONSIVE */
 @media(max-width:768px){
   .main{ margin-left:0; padding:20px; }
   .sidebar{ transform:translateX(-100%); }
+  .cards {
+    flex-direction: column;
+  }
+  .card {
+    min-width: 100%;
+  }
+  .workshop-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 }
 </style>
 </head>
@@ -383,35 +472,71 @@ tr:hover{
 <div id="dashboard">
 <div class="sidebar">
   <h2>📊 Dashboard</h2>
-  <a href="Career-result.html"><button>🎓 Career Quiz</button></a>
-  <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
+  <a href="career-results.html"><button>🎓 Career Quiz</button></a>
+  <a href="Skillx-result.html"><button>💼 SkillX Quiz</button></a>
   <button onclick="openWorkshopFilter()">📊 Student Workshop Filter</button>
   <button onclick="location.reload()">🔄 Refresh</button>
   <button onclick="logout()">🚪 Logout</button>
 </div>
 
 <div class="main">
-<div class="header">🚀 Smart Analytics Dashboard</div>
+<div class="header">🚀 Smart Workshop Analytics Dashboard</div>
 
 <div class="cards">
-  <div class="card"><h3>Career Students</h3><div class="value" id="careerCount">0</div></div>
-  <div class="card"><h3>SkillX Students</h3><div class="value" id="skillCount">0</div></div>
-  <div class="card"><h3>Total Students</h3><div class="value" id="totalCount">0</div></div>
+  <div class="card"><h3>Workshop Students</h3><div class="value" id="workshopCount">0</div></div>
+  <div class="card"><h3>Average Score</h3><div class="value" id="workshopAvg">0</div></div>
+  <div class="card"><h3>Top Score</h3><div class="value" id="workshopTop">0</div></div>
+  <div class="card"><h3>Top Student</h3><div class="value" id="workshopTopName">-</div></div>
 </div>
 
-<div class="loading" id="loading">⏳ Loading data...</div>
+<div class="loading" id="workshopLoading">⏳ Loading workshop data...</div>
 
-<div class="charts">
-  <div class="chart-box"><canvas id="careerChart"></canvas></div>
-  <div class="chart-box"><canvas id="skillChart"></canvas></div>
+<!-- WORKSHOP DASHBOARD HEADER -->
+<div class="workshop-header" id="workshopHeader" style="display:none;">
+  <h2 id="workshopTitle"></h2>
+  <span id="workshopTag"></span>
+  <button class="back-btn" onclick="hideWorkshopDashboard()">🔙 Back to Workshops</button>
+</div>
+
+<!-- STATS SECTION -->
+<div class="stats-section" id="workshopStats" style="display:none;">
+  <h3 style="color:#ffd700;margin-bottom:15px;">📊 Workshop Performance</h3>
+  <div class="stats-grid">
+    <div class="card">
+      <h3>Total Students</h3>
+      <div class="value" id="workshopTotal">0</div>
+    </div>
+    <div class="card">
+      <h3>Average Score</h3>
+      <div class="value" id="workshopAvgCard">0</div>
+    </div>
+    <div class="card">
+      <h3>Top Score</h3>
+      <div class="value" id="workshopTopCard">0</div>
+    </div>
+    <div class="card">
+      <h3>Pass Rate</h3>
+      <div class="value" id="workshopPassRate">0%</div>
+    </div>
+  </div>
+</div>
+
+<div class="charts" id="workshopCharts" style="display:none;">
+  <div class="chart-box"><canvas id="workshopChart"></canvas></div>
+  <div class="chart-box"><canvas id="performanceChart"></canvas></div>
   <div class="chart-box"><canvas id="comparisonChart"></canvas></div>
 </div>
 
-<!-- STUDENT WORKSHOP TABLE -->
-<div class="student-table" id="studentTable">
-  <h3 style="margin-bottom:15px;color:#ffd700;">📋 SkillX Student Workshop Data</h3>
+<!-- STUDENT TABLE -->
+<div class="student-table" id="workshopTableContainer" style="display:none;">
+  <h3 style="margin-bottom:15px;color:#ffd700;">📋 Student Performance</h3>
   <div class="search-box">
     <input type="text" id="workshopSearch" placeholder="🔍 Search students..." onkeyup="searchWorkshopTable()">
+    <select id="sortSelect" onchange="sortWorkshopTable()">
+      <option value="name">Sort by Name</option>
+      <option value="score">Sort by Score</option>
+      <option value="percentage">Sort by Percentage</option>
+    </select>
   </div>
   <div class="table-container">
     <table>
@@ -420,220 +545,5 @@ tr:hover{
           <th>Name</th>
           <th>Phone</th>
           <th>Program</th>
-          <th>Digital</th>
-          <th>Comm</th>
-          <th>Business</th>
-          <th>Domain</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody id="workshopTableBody"></tbody>
-    </table>
-  </div>
-</div>
-
-</div>
-</div>
-
-<!-- WORKSHOP FILTER MODAL -->
-<div id="workshopModal" class="workshop-modal">
-  <div class="workshop-modal-content">
-    <div class="close-workshop" onclick="closeWorkshopModal()">&times;</div>
-    
-    <h2 class="modal-title">📊 Student Workshop Filter</h2>
-    <p class="modal-subtitle">Select workshop to filter student performance data</p>
-    
-    <select id="workshopSelect" onchange="filterWorkshopData()">
-      <option value="">-- All Workshops --</option>
-      <optgroup label="Digital Skills">
-        <option value="Prompt Engineering">🤖 Prompt Engineering</option>
-        <option value="Excel Basics">📊 Excel Basics</option>
-        <option value="Power BI">📈 Power BI</option>
-        <option value="AI-Enabled Documentation">📝 AI Documentation</option>
-        <option value="Web Development">🌐 Web Development</option>
-      </optgroup>
-      <optgroup label="Communication">
-        <option value="Functional English">🗣️ Functional English</option>
-        <option value="Presentation Skills">🎤 Presentation Skills</option>
-        <option value="Public Speaking">📢 Public Speaking</option>
-      </optgroup>
-      <optgroup label="Business & Creative">
-        <option value="AI for Business Decision-Making">💼 AI in Business Decision Making</option>
-        <option value="Tally Accounting Basics">💰 Tally Accounting</option>
-        <option value="Vedic Maths">🧮 Vedic Maths</option>
-        <option value="Canva Editing">✂️ Canva Editing</option>
-        <option value="Resume & LinkedIn">📄 Resume Building</option>
-      </optgroup>
-    </select>
-    
-    <button class="modal-btn" onclick="closeWorkshopModal()">Close</button>
-  </div>
-</div>
-
-<script>
-// LOGIN
-const validUser = "admin";
-const validPass = "12345";
-
-function login(){
-  let user = username.value;
-  let pass = password.value;
-  if(user === validUser && pass === validPass){
-    loginBox.style.display="none";
-    dashboard.style.display="block";
-    loadDashboard();
-  } else {
-    error.innerText="Invalid Login!";
-  }
-}
-
-function logout(){location.reload();}
-
-// GLOBAL DATA STORAGE
-let skillDataGlobal = [];
-let currentFilteredData = [];
-
-// LOAD DASHBOARD
-function loadDashboard(){
-  const careerURL = "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
-  const skillURL  = "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
-
-  Promise.all([
-    fetch(careerURL).then(res=>res.json()),
-    fetch(skillURL).then(res=>res.json())
-  ])
-  .then(([careerData, skillData])=>{
-    loading.style.display="none";
-    
-    // Store skill data globally
-    skillDataGlobal = skillData;
-    currentFilteredData = skillData;
-    
-    // Update cards
-    careerCount.innerText = careerData.length;
-    skillCount.innerText = skillData.length;
-    totalCount.innerText = careerData.length + skillData.length;
-
-    // Career chart
-    let careerMap = {};
-    careerData.forEach(r=>{
-      let c = r["Top Career"] || "Unknown";
-      careerMap[c] = (careerMap[c] || 0) + 1;
-    });
-    new Chart(careerChart,{
-      type:'doughnut',
-      data:{
-        labels:Object.keys(careerMap),
-        datasets:[{data:Object.values(careerMap), backgroundColor:['#ffd700','#ff9800','#00f2ff','#ff00c8']}
-        ]
-      }
-    });
-
-    // Skill chart
-    let skillMap = {};
-    skillData.forEach(r=>{
-      let d = r["Bundle Domain"] || "Unknown";
-      skillMap[d] = (skillMap[d] || 0) + 1;
-    });
-    new Chart(skillChart,{
-      type:'pie',
-      data:{
-        labels:Object.keys(skillMap),
-        datasets:[{data:Object.values(skillMap), backgroundColor:['#ffd700','#ff9800','#00f2ff','#00c6ff','#ff4b4b']}
-        ]
-      }
-    });
-
-    // Comparison chart
-    new Chart(comparisonChart,{
-      type:'bar',
-      data:{
-        labels:["Career Quiz","SkillX Quiz"],
-        datasets:[{
-          label:"Students",
-          data:[careerData.length, skillData.length],
-          backgroundColor:['#ffd700','#ff9800']
-        }]
-      },
-      options:{
-        scales:{y:{beginAtZero:true}}
-      }
-    });
-
-    // Render initial workshop table
-    renderWorkshopTable(skillData);
-    studentTable.classList.add('show');
-  });
-}
-
-// WORKSHOP MODAL FUNCTIONS
-function openWorkshopFilter(){
-  workshopModal.style.display = "block";
-  setTimeout(()=> workshopModal.classList.add("show"), 10);
-}
-
-function closeWorkshopModal(){
-  workshopModal.classList.remove("show");
-  setTimeout(()=> workshopModal.style.display = "none", 400);
-}
-
-function filterWorkshopData(){
-  const selectedWorkshop = workshopSelect.value;
-
-  if(selectedWorkshop === "AI for Business Decision-Making"){
-    // OPEN TEST PAGE
-    window.open("https://gjimtmicrosite.github.io/Integrated/ai-business.html", "_blank");
-    workshopSelect.value = ""; // Reset select
-    return; // Stop filtering
-  }
-  
-  // NORMAL FILTERING 
-  if(!selectedWorkshop){
-    currentFilteredData = skillDataGlobal;
-  } else {
-    currentFilteredData = skillDataGlobal.filter(row => 
-      (row["Workshop"] || "").toLowerCase().includes(selectedWorkshop.toLowerCase())
-    );
-  }
-  
-  renderWorkshopTable(currentFilteredData);
-}
-
-function renderWorkshopTable(data){
-  let bodyHTML = "";
-  data.forEach(row => {
-    bodyHTML += `
-      <tr>
-        <td>${row["Name"] || "-"}</td>
-        <td>${row["Phone"] || "-"}</td>
-        <td>${row["Program"] || "-"}</td>
-        <td>${Number(row["Digital Score"]) || 0}</td>
-        <td>${Number(row["Communication Score"]) || 0}</td>
-        <td>${Number(row["Business Score"]) || 0}</td>
-        <td>${row["Bundle Domain"] || "-"}</td>
-        <td>₹${row["Bundle Price"] || "-"}</td>
-      </tr>`;
-  });
-  workshopTableBody.innerHTML = bodyHTML || '<tr><td colspan="8" style="text-align:center;color:#ffd700;">No students found</td></tr>';
-}
-
-function searchWorkshopTable(){
-  let input = workshopSearch.value.toLowerCase();
-  let rows = document.querySelectorAll("#workshopTableBody tr");
-  
-  rows.forEach(row => {
-    let text = row.innerText.toLowerCase();
-    row.style.display = text.includes(input) ? "" : "none";
-  });
-}
-
-// Close modal when clicking outside
-window.onclick = function(event){
-  if(event.target == workshopModal){
-    closeWorkshopModal();
-  }
-}
-</script>
-
-</body>
-</html>
+          <th>Score</th>
+         
