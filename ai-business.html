@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GJIMT SkillX AI for Business Decision-Making Quiz</title>
+  <style>
+    :root {
+      --bg1: #fff7ed;
+      --bg2: #fff1f2;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --secondary: #ec4899;
+      --accent: #7c3aed;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --border: #fed7aa;
+      --shadow: 0 20px 45px rgba(249, 115, 22, 0.15);
+      --radius: 22px;
+      box-sizing: border-box;
+    }
+    * {
+      box-sizing: inherit;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top left, #fff7ed 0, #fff1f2 35, #fdf2f8 65, #ffffff 100);
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 26px 18px 40px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #fff7ed 0, #ffedd5 35, #ffe4e6 100);
+      border: 1px solid rgba(249, 115, 22, 0.18);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: 50px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.18) 0, rgba(236, 72, 153, 0) 70%);
+      border-radius: 50%;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 8px 0 8px;
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.08;
+    }
+    .sub {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.6;
+      color: #374151;
+      max-width: 820px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(249, 115, 22, 0.12);
+      padding: 24px;
+    }
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+    }
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+    .muted {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff7ed;
+      color: #9a3412;
+      border: 1px solid #fdba74;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    label {
+      display: block;
+      margin: 14px 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+    }
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid #d1d5db;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s ease;
+      background: #fff;
+    }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .help-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #fff7ed, #fff1f2);
+      border: 1px solid rgba(249, 115, 22, 0.15);
+    }
+    .help-box ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+      line-height: 1.7;
+    }
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(236, 72, 153, 0.22);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: #fff7ed;
+      color: #9a3412;
+      border: 1px solid #fdba74;
+    }
+    .btn-secondary:hover {
+      background: #ffedd5;
+    }
+    .btn-dark {
+      background: #111827;
+      color: #fff;
+    }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .screen {
+      display: none;
+      margin-top: 24px;
+    }
+    .screen.active {
+      display: block;
+    }
+    .quiz-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .mini {
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      color: #9a3412;
+      border-radius: 16px;
+      padding: 12px 16px;
+      min-width: 140px;
+    }
+    .mini .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #c2410c;
+      margin-bottom: 4px;
+    }
+    .mini .value {
+      font-size: 22px;
+      font-weight: 800;
+    }
+    .progress-wrap {
+      margin: 14px 0 22px;
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+    .progress {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #fde7d5;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+    .q-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .q-tag {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+    .tag-diff-easy {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .tag-diff-medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .tag-type {
+      background: #ede9fe;
+      color: #5b21b6;
+    }
+    .question-text {
+      font-size: 24px;
+      line-height: 1.35;
+      font-weight: 800;
+      margin: 12px 0 18px;
+    }
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+    .option {
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 18px;
+      padding: 15px 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .option:hover {
+      border-color: #fdba74;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(249, 115, 22, 0.1);
+    }
+    .option.selected {
+      border-color: var(--primary);
+      background: #fff7ed;
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+    }
+    .opt-key {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      border-radius: 50%;
+      background: #fff1f2;
+      color: #be185d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .option.selected .opt-key {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+    }
+    .result-badge {
+      display: inline-flex;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+    .badge-excellent {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .badge-good {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .badge-fair {
+      background: #e0f2fe;
+      color: #075985;
+    }
+    .badge-repeat {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .score-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 18px 0 20px;
+    }
+    .score-tile {
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(135deg, #fff7ed, #fff);
+      border: 1px solid rgba(249, 115, 22, 0.15);
+      text-align: center;
+    }
+    .score-tile .big {
+      font-size: 30px;
+      font-weight: 800;
+      color: #9a3412;
+    }
+    .score-tile .small {
+      margin-top: 4px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+    .advice {
+      margin-top: 12px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: #faf5ff;
+      border: 1px solid #ddd6fe;
+      line-height: 1.7;
+    }
+    .next-skillx {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .contact-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: #fff;
+    }
+    .contact-box a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .footer-note {
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+    .small-note {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 10px;
+    }
+
+    /* Certificate layout (landscape) */
+    .certificate-wrapper {
+      margin-top: 24px;
+    }
+    .certificate-card {
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(209, 213, 219, 0.8);
+      padding: 20px;
+    }
+    .certificate-inner {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 2px solid #e5e7eb;
+      background: #f9fafb;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 32px;
+    }
+    .cert-header-logos {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .cert-header-logos img {
+      max-height: 60px;
+      object-fit: contain;
+    }
+    .cert-title-area {
+      text-align: center;
+      margin-top: 8px;
+    }
+    .cert-title {
+      font-size: 30px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4b5563;
+    }
+    .cert-subtitle {
+      margin-top: 6px;
+      font-size: 16px;
+      color: #6b7280;
+    }
+    .cert-body {
+      margin-top: 12px;
+      text-align: center;
+      padding: 0 30px;
+    }
+    .cert-name-label {
+      font-size: 14px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+    .cert-name {
+      margin-top: 6px;
+      font-size: 34px;
+      font-weight: 800;
+      color: #111827;
+    }
+    .cert-text {
+      margin-top: 8px;
+      font-size: 16px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+    .cert-text strong {
+      font-weight: 700;
+    }
+    .cert-footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+    }
+    .sig-block {
+      text-align: center;
+      flex: 1;
+    }
+    .sig-img {
+      height: 50px;
+      object-fit: contain;
+    }
+    .sig-name {
+      margin-top: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      color: #111827;
+      border-top: 1px solid #9ca3af;
+      padding-top: 4px;
+    }
+    .sig-role {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    /* Feedback styles */
+    .likert-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .likert-row label {
+      margin: 0;
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .score-box {
+        grid-template-columns: 1fr;
+      }
+      .question-text {
+        font-size: 21px;
+      }
+      .certificate-inner {
+        padding: 16px 16px;
+      }
+      .cert-footer {
+        flex-direction: column;
+      }
+      .cert-header-logos {
+        flex-direction: column;
+      }
+    }
+  </style>
+
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="brand">
+        <div class="brand-badge">GJIMT SkillX</div>
+        <div class="brand-badge">Zero to Hero Workshops</div>
+        <div class="brand-badge">AI for Business Decision-Making Assessment</div>
+      </div>
+      <h1>SkillX AI for Business Decision-Making Quiz</h1>
+      <p class="sub">
+        End-of-workshop quiz to check how confidently you can use AI tools for data-driven decision-making, business analysis, customer insights, and strategic problem-solving.
+     <br>Your score and feedback will guide your next SkillX business and AI pathway.
+      </p>
+    </div>
+
+    <!-- Intro Screen -->
+    <section id="screen-intro" class="screen active">
+      <div class="grid">
+        <div class="card">
+          <h2>Participant & Workshop Details</h2>
+
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="Enter student's full name" />
+
+          <label for="phone">WhatsApp Phone Number</label>
+          <input type="tel" id="phone" placeholder="Enter WhatsApp number" />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter email address" />
+
+          <label for="program">Program</label>
+          <select id="program">
+            <option value="">Select Program</option>
+            <option value="BCA">BCA</option>
+            <option value="BBA">BBA</option>
+            <option value="BCom(Hons)">BCom(Hons)</option>
+            <option value="MBA">MBA</option>
+            <option value="MCA">MCA</option>
+            <option value="AI Integrated Program">AI Integrated Program</option>
+          </select>
+
+          <label for="startDate">5-Day Workshop Start Date</label>
+<input type="date" id="startDate" />
+
+<label for="endDate">5-Day Workshop End Date</label>
+<input type="date" id="endDate" />
+
+          <div class="help-box">
+            <h3>How this quiz works</h3>
+            <ul>
+              <li>10 questions are picked randomly from a pool of 50 AI for Business Decision-Making questions.</li>
+              <li>Mix of basic and medium-difficulty questions about using AI tools ethically and effectively.</li>
+              <li>Each question has a 60-second timer; if time runs out, it auto-moves ahead.</li>
+              <li>Scores of 50% and above receive a downloadable Certificate of Completion for this 5-day workshop.</li>
+            </ul>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="startQuiz()">Start AI for Business Decision-Making Quiz</button>
+          </div>
+          <div class="small-note">
+            This is not a rejection test. It helps the SkillX team understand how confidently you can use AI tools for learning and where guided support is needed.
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>What this quiz checks</h2>
+          <p class="muted">
+            The quiz is aligned with the SkillX AI for Business Decision-Making module and checks how responsibly and effectively you use AI tools in your Business.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Data Analysis using AI</span>
+            <span class="pill">Customer Insights</span>
+            <span class="pill">Sales & Demand Forecasting</span>
+            <span class="pill">Pricing Strategy</span>
+            <span class="pill">Risk Analysis</span>
+            <span class="pill">Decision-Making with AI</span>
+            <span class="pill">Ethical Use of AI in Business</span>
+            <span class="pill">Automation in Business Tasks</span>
+          </div>
+
+          <div class="help-box" style="margin-top:22px;">
+            <h3>Outcome Bands &amp; Next Step</h3>
+            <ul>
+             <li><strong>9–10 correct</strong>: Excellent – Data-Driven Decision Maker. Able to use AI insights effectively for business strategy, analysis, and smart decision-making.</li>
+
+<li><strong>7–8 correct</strong>: Good – Strong Business AI Understanding. Can apply AI in decision-making with minor guidance and improvement.</li>
+
+<li><strong>5–6 correct</strong>: Fair – Needs Practical Application. Recommended: more practice in using AI for real business scenarios and data interpretation.</li>
+
+<li><strong>0–4 correct</strong>: Support Recommended. Repeat AI for Business Decision-Making module and focus on basics of data-driven thinking and AI usage.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz Screen -->
+    <section id="screen-quiz" class="screen">
+      <div class="card">
+        <div class="quiz-top">
+          <div class="mini">
+            <div class="label">Question</div>
+            <div class="value"><span id="qNum">1</span> / <span id="qTotal">10</span></div>
+          </div>
+          <div class="mini">
+            <div class="label">Time Left</div>
+            <div class="value"><span id="timeLeft">60</span>s</div>
+          </div>
+          <div class="mini">
+            <div class="label">Current Score</div>
+            <div class="value"><span id="liveScore">0</span></div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span>Progress</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+
+        <div class="q-tag-row">
+          <span class="q-tag tag-diff-easy" id="difficultyTag">Difficulty</span>
+          <span class="q-tag tag-type" id="typeTag">Question Type</span>
+        </div>
+
+        <div class="question-text" id="questionText"></div>
+
+        <div class="options" id="optionsWrap"></div>
+
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="skipQuestion()">Skip Question</button>
+          <button class="btn btn-primary" onclick="nextQuestion()">Save &amp; Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Result + Certificate Screen -->
+    <section id="screen-result" class="screen">
+      <div class="card">
+        <div id="resultBadge" class="result-badge">Result</div>
+        <h2 id="resultTitle">Your Result</h2>
+        <p class="muted" id="studentSummary"></p>
+
+        <div class="score-box">
+          <div class="score-tile">
+            <div class="big" id="scoreMarks">0 / 10</div>
+            <div class="small">Correct Answers</div>
+          </div>
+          <div class="score-tile">
+            <div class="big" id="scorePercent">0%</div>
+            <div class="small">Final Percentage</div>
+          </div>
+          <div class="score-tile">
+            <div class="big" id="scoreOutcome">Band</div>
+            <div class="small">Performance Band</div>
+          </div>
+        </div>
+
+        <div class="advice" id="adviceBox"></div>
+        <div class="next-skillx" id="nextSkillxBox"></div>
+
+        <div class="certificate-wrapper" id="certificateSection">
+          <h2>Certificate of Completion (for scores 50% and above)</h2>
+          <div class="certificate-card">
+            <div class="certificate-inner" id="certificateInner">
+              <div class="cert-header-logos">
+                <img src="skillX-LOGO-final.png" alt="GJIMT SkillX Zero to Hero Workshops" crossorigin="anonymous" />
+                <img src="gjimt-logo.png"  alt="Gian Jyoti Institute of Management and Technology"  crossorigin="anonymous"/>
+              </div>
+              <div class="cert-title-area">
+                <div class="cert-title">Certificate of Completion</div>
+                <div class="cert-subtitle">SkillX AI for Business Decision-Making Workshop (5 Days)</div>
+              </div>
+              <div class="cert-body">
+                <div class="cert-name-label">This is to certify that</div>
+                <div class="cert-name" id="certName">Student Name</div>
+                <div class="cert-text" id="certText">
+                  has successfully completed the 5-day SkillX <strong>AI for Business Decision-Making</strong> workshop and assessment
+                  held from <strong><span id="certStartDate">dd-mm-yyyy</span></strong> to
+                  <strong><span id="certEndDate">dd-mm-yyyy</span></strong> with an aggregate of
+                  <strong><span id="certScore">0%</span></strong>.
+                </div>
+              </div>
+              <div class="cert-footer">
+                <div class="sig-block">
+                  <!-- Replace src with final signature PNG when available -->
+                  <img src="sign-aneet.png" alt="Dr Aneet Signature" class="sig-img" crossorigin="anonymous"/>
+                  <div class="sig-name">Dr. Aneet</div>
+                  <div class="sig-role">Director, GJIMT</div>
+                </div>
+                <div class="sig-block">
+                  <img src="sunita_sign.png" alt="Ms Sunita Signature" class="sig-img" crossorigin="anonymous"/>
+                  <div class="sig-name">Ms. Sunita</div>
+                  <div class="sig-role">SkillX Workshop Incharge</div>
+                </div>
+                <div class="sig-block">
+                  <img src="shikhasign.png"  alt="Ms Shikha Signature" class="sig-img" crossorigin="anonymous"/>
+                  <div class="sig-name">Ms. Shikha</div>
+                  <div class="sig-role">SkillX Workshop Incharge</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="small-note" id="certNote">
+            Note: Certificate is available when you score at least 50% in this assessment.
+          </p>
+        </div>
+
+        <div class="contact-box">
+          <h3 style="margin-top:0;">Next Step with SkillX</h3>
+          <p style="line-height:1.7; margin-bottom:14px;">
+            For guidance on AI for Business Decision-Making practice, advanced SkillX modules, or counselling, contact the SkillX team.
+          </p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnDownloadCert" onclick="downloadCertificate()">Download Certificate (PDF)</button>
+            <button class="btn btn-dark" onclick="shareCertificateWhatsApp()">Share Certificate Summary on WhatsApp</button>
+            <button class="btn btn-secondary" onclick="goToFeedback()">Continue to Feedback Form</button>
+            <button class="btn btn-secondary" onclick="restartQuiz()">Retake Quiz</button>
+          </div>
+          <p class="small-note">
+            Tip: After downloading, attach the PDF when you share your certificate on WhatsApp or email.
+          </p>
+        </div>
+      </div>
+      <div class="footer-note">
+        GJIMT SkillX AI for Business Decision-Making Quiz – Designed for end-of-workshop reflection, certification, and next-step SkillX guidance.
+      </div>
+    </section>
+
+    <!-- Feedback Screen -->
+    <section id="screen-feedback" class="screen">
+      <div class="card">
+        <h2>Workshop Feedback – AI for Business Decision-Making</h2>
+        <p class="muted" id="feedbackIntro"></p>
+
+        <div class="help-box">
+          <h3>Rate the following (1 = Very Dissatisfied, 5 = Very Satisfied)</h3>
+        </div>
+
+        <div style="margin-top:16px;">
+          <div class="likert-row">
+            <label for="fbTiming">1. Class start time &amp; punctuality</label>
+            <select id="fbTiming">
+              <option value="">Select rating</option>
+              <option value="1">1 – Very Dissatisfied</option>
+              <option value="2">2 – Dissatisfied</option>
+              <option value="3">3 – Neutral</option>
+              <option value="4">4 – Satisfied</option>
+              <option value="5">5 – Very Satisfied</option>
+            </select>
+          </div>
+          <div class="likert-row">
+            <label for="fbCoverage">2. Content coverage and depth</label>
+            <select id="fbCoverage">
+              <option value="">Select rating</option>
+              <option value="1">1 – Very Dissatisfied</option>
+              <option value="2">2 – Dissatisfied</option>
+              <option value="3">3 – Neutral</option>
+              <option value="4">4 – Satisfied</option>
+              <option value="5">5 – Very Satisfied</option>
+            </select>
+          </div>
+          <div class="likert-row">
+            <label for="fbSpeed">3. Speed / pace of teaching</label>
+            <select id="fbSpeed">
+              <option value="">Select rating</option>
+              <option value="1">1 – Very Dissatisfied</option>
+              <option value="2">2 – Dissatisfied</option>
+              <option value="3">3 – Neutral</option>
+              <option value="4">4 – Satisfied</option>
+              <option value="5">5 – Very Satisfied</option>
+            </select>
+          </div>
+          <div class="likert-row">
+            <label for="fbFaculty">4. Faculty teaching &amp; interaction level</label>
+            <select id="fbFaculty">
+              <option value="">Select rating</option>
+              <option value="1">1 – Very Dissatisfied</option>
+              <option value="2">2 – Dissatisfied</option>
+              <option value="3">3 – Neutral</option>
+              <option value="4">4 – Satisfied</option>
+              <option value="5">5 – Very Satisfied</option>
+            </select>
+          </div>
+          <div class="likert-row">
+            <label for="fbUnderstanding">5. Your understanding &amp; confidence after workshop</label>
+            <select id="fbUnderstanding">
+              <option value="">Select rating</option>
+              <option value="1">1 – Very Dissatisfied</option>
+              <option value="2">2 – Dissatisfied</option>
+              <option value="3">3 – Neutral</option>
+              <option value="4">4 – Satisfied</option>
+              <option value="5">5 – Very Satisfied</option>
+            </select>
+          </div>
+          <div class="likert-row">
+            <label for="fbAmbience">6. Ambience &amp; facilities (lab, projector, seating, internet)</label>
+            <select id="fbAmbience">
+              <option value="">Select rating</option>
+              <option value="1">1 – Very Dissatisfied</option>
+              <option value="2">2 – Dissatisfied</option>
+              <option value="3">3 – Neutral</option>
+              <option value="4">4 – Satisfied</option>
+              <option value="5">5 – Very Satisfied</option>
+            </select>
+          </div>
+        </div>
+
+        <h3 style="margin-top:22px;">Next SkillX Workshop Interested In</h3>
+        <label for="fbMainTrack">7. Main SkillX track</label>
+        <select id="fbMainTrack" onchange="updateWorkshopDropdown()">
+          <option value="">Select main track</option>
+          <option value="digital">Digital Power Skills</option>
+          <option value="communication">Communication &amp; Personal Branding</option>
+          <option value="business">Business &amp; Financial Smart Skills</option>
+        </select>
+
+        <label for="fbWorkshop">8. Specific workshop</label>
+        <select id="fbWorkshop">
+          <option value="">Select workshop</option>
+        </select>
+
+        <label for="fbUseful">9. What was the most useful part of this workshop?</label>
+        <textarea id="fbUseful" placeholder="Write your response here"></textarea>
+
+        <label for="fbSuggestions">10. Any suggestions to improve this SkillX workshop?</label>
+        <textarea id="fbSuggestions" placeholder="Write your response here"></textarea>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="finishFeedback()">Submit Feedback &amp; View Summary</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Summary Screen -->
+    <section id="screen-feedback-summary" class="screen">
+      <div class="card">
+        <h2>Thank You for Your Feedback</h2>
+        <p class="muted" id="fbSummaryIntro"></p>
+
+        <div class="help-box" id="fbSummaryBox" style="margin-top:16px;"></div>
+
+        <div class="contact-box" style="margin-top:18px;">
+          <h3 style="margin-top:0;">Share Feedback with SkillX Team</h3>
+          <p style="line-height:1.7; margin-bottom:14px;">
+            You can send this feedback summary directly to the SkillX coordination numbers on WhatsApp.
+          </p>
+          <div class="btn-row">
+            <button class="btn btn-dark" onclick="copyFeedbackSummary()">Copy Feedback Summary</button>
+            <button class="btn btn-primary" onclick="sendFeedbackWhatsApp('7973241456')">Send to 79732 41456</button>
+            <button class="btn btn-primary" onclick="sendFeedbackWhatsApp('8988368113')">Send to 89883 68113</button>
+            <button class="btn btn-secondary" onclick="restartQuiz()">Back to Start</button>
+          </div>
+          <p class="small-note">
+            Tip: If the WhatsApp window does not open automatically, paste the copied summary into your SkillX coordinator chat.
+          </p>
+        </div>
+      </div>
+      <div class="footer-note">
+        GJIMT SkillX – From Zero to Hero: Your skills, your journey, your future.
+      </div>
+    </section>
+  </div>
+
+  <!-- html2canvas and jsPDF for PDF generation -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    const TOTAL_QUESTIONS = 10;
+
+    const student = {
+      fullName: "",
+      phone: "",
+      email: "",
+      program: "",
+      startDate: "",
+      endDate: ""
+    };
+
+   const questionBank = [
+
+/* ================= EASY ================= */
+
+{
+id:"E1",
+difficulty:"Easy",
+type:"MCQ",
+question:"Which is the best use of AI in business decision-making?",
+options:[
+"Let AI take final decisions without checking",
+"Use AI insights and combine them with human judgment",
+"Ignore AI completely",
+"Copy competitors blindly"
+],
+answer:"Use AI insights and combine them with human judgment"
+},
+
+{
+id:"E2",
+difficulty:"Easy",
+type:"MCQ",
+question:"AI helps businesses mainly by:",
+options:[
+"Replacing all employees",
+"Providing data-driven insights",
+"Only designing logos",
+"Increasing confusion"
+],
+answer:"Providing data-driven insights"
+},
+
+{
+id:"E3",
+difficulty:"Easy",
+type:"TF",
+question:"True or False: AI can analyze large amounts of business data quickly.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"E4",
+difficulty:"Easy",
+type:"MCQ",
+question:"Which prompt is better for business analysis?",
+options:[
+"Tell me something",
+"Analyze last 6 months sales data and suggest improvements",
+"Do everything",
+"Write anything"
+],
+answer:"Analyze last 6 months sales data and suggest improvements"
+},
+
+{
+id:"E5",
+difficulty:"Easy",
+type:"MCQ",
+question:"Which is a risky behavior while using AI?",
+options:[
+"Cross-checking results",
+"Blindly trusting AI output",
+"Using verified data",
+"Reviewing insights"
+],
+answer:"Blindly trusting AI output"
+},
+
+{
+id:"E6",
+difficulty:"Easy",
+type:"TF",
+question:"True or False: AI can help in predicting customer trends.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"E7",
+difficulty:"Easy",
+type:"MCQ",
+question:"AI in business is mainly used for:",
+options:[
+"Entertainment only",
+"Better decision-making",
+"Replacing exams",
+"Ignoring customers"
+],
+answer:"Better decision-making"
+},
+
+{
+id:"E8",
+difficulty:"Easy",
+type:"MCQ",
+question:"Which is a good use of AI in marketing?",
+options:[
+"Spamming customers",
+"Analyzing customer preferences",
+"Ignoring data",
+"Sending random ads"
+],
+answer:"Analyzing customer preferences"
+},
+
+{
+id:"E9",
+difficulty:"Easy",
+type:"TF",
+question:"True or False: AI decisions should always be verified by humans.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"E10",
+difficulty:"Easy",
+type:"MCQ",
+question:"AI tools help businesses save:",
+options:[
+"Time and effort",
+"Only money",
+"Only energy",
+"Nothing"
+],
+answer:"Time and effort"
+},
+
+{
+id:"E11",
+difficulty:"Easy",
+type:"MCQ",
+question:"Which is an example of AI helping in sales?",
+options:[
+"Guessing customer needs",
+"Analyzing past sales data",
+"Ignoring trends",
+"Deleting records"
+],
+answer:"Analyzing past sales data"
+},
+
+{
+id:"E12",
+difficulty:"Easy",
+type:"TF",
+question:"True or False: AI can help generate business reports.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"E13",
+difficulty:"Easy",
+type:"MCQ",
+question:"Which is NOT a good AI practice?",
+options:[
+"Using real data",
+"Checking outputs",
+"Ignoring errors",
+"Reviewing insights"
+],
+answer:"Ignoring errors"
+},
+
+{
+id:"E14",
+difficulty:"Easy",
+type:"MCQ",
+question:"AI helps in decision-making by:",
+options:[
+"Providing guesses",
+"Providing insights from data",
+"Ignoring patterns",
+"Deleting data"
+],
+answer:"Providing insights from data"
+},
+
+{
+id:"E15",
+difficulty:"Easy",
+type:"TF",
+question:"True or False: AI can help reduce human errors in business.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"E16",
+difficulty:"Easy",
+type:"MCQ",
+question:"Which is a correct use of AI in finance?",
+options:[
+"Guessing profits",
+"Analyzing financial data",
+"Ignoring expenses",
+"Random calculations"
+],
+answer:"Analyzing financial data"
+},
+
+{
+id:"E17",
+difficulty:"Easy",
+type:"MCQ",
+question:"AI tools are useful for:",
+options:[
+"Only students",
+"Only teachers",
+"Businesses and students",
+"Nobody"
+],
+answer:"Businesses and students"
+},
+
+{
+id:"E18",
+difficulty:"Easy",
+type:"TF",
+question:"True or False: AI can help businesses understand customers better.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"E19",
+difficulty:"Easy",
+type:"MCQ",
+question:"Which is a simple AI task in business?",
+options:[
+"Predict sales",
+"Cook food",
+"Drive cars manually",
+"Clean office"
+],
+answer:"Predict sales"
+},
+
+{
+id:"E20",
+difficulty:"Easy",
+type:"MCQ",
+question:"Best way to use AI output is:",
+options:[
+"Use directly",
+"Verify and improve",
+"Ignore",
+"Delete"
+],
+answer:"Verify and improve"
+},
+
+/* ================= MEDIUM ================= */
+
+{
+id:"M1",
+difficulty:"Medium",
+type:"MCQ",
+question:"A business uses AI to forecast demand. What is the benefit?",
+options:[
+"Random decisions",
+"Better inventory planning",
+"No planning needed",
+"Loss increase"
+],
+answer:"Better inventory planning"
+},
+
+{
+id:"M2",
+difficulty:"Medium",
+type:"TF",
+question:"True or False: AI predictions are always 100% accurate.",
+options:["True","False"],
+answer:"False"
+},
+
+{
+id:"M3",
+difficulty:"Medium",
+type:"MCQ",
+question:"Best prompt for pricing strategy?",
+options:[
+"Set price",
+"Suggest optimal pricing based on demand and competition",
+"Random price",
+"Copy competitors"
+],
+answer:"Suggest optimal pricing based on demand and competition"
+},
+
+{
+id:"M4",
+difficulty:"Medium",
+type:"MCQ",
+question:"Responsible AI usage means:",
+options:[
+"Sharing confidential data",
+"Combining AI insights with business logic",
+"Ignoring risks",
+"Automating blindly"
+],
+answer:"Combining AI insights with business logic"
+},
+
+{
+id:"M5",
+difficulty:"Medium",
+type:"MCQ",
+question:"AI helps customer analysis by:",
+options:[
+"Ignoring feedback",
+"Analyzing behavior patterns",
+"Deleting data",
+"Guessing"
+],
+answer:"Analyzing behavior patterns"
+},
+
+{
+id:"M6",
+difficulty:"Medium",
+type:"TF",
+question:"True or False: AI can sometimes give biased results.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"M7",
+difficulty:"Medium",
+type:"MCQ",
+question:"A company uses AI chatbot. What is the benefit?",
+options:[
+"More confusion",
+"24/7 customer support",
+"Less interaction",
+"Higher errors"
+],
+answer:"24/7 customer support"
+},
+
+{
+id:"M8",
+difficulty:"Medium",
+type:"MCQ",
+question:"Which is a practical use of AI in HR?",
+options:[
+"Firing employees",
+"Screening resumes",
+"Ignoring candidates",
+"Deleting profiles"
+],
+answer:"Screening resumes"
+},
+
+{
+id:"M9",
+difficulty:"Medium",
+type:"TF",
+question:"True or False: AI can automate repetitive business tasks.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"M10",
+difficulty:"Medium",
+type:"MCQ",
+question:"Which decision is best supported by AI?",
+options:[
+"Random hiring",
+"Data-based marketing strategy",
+"Guesswork",
+"Emotional decisions"
+],
+answer:"Data-based marketing strategy"
+},
+
+{
+id:"M11",
+difficulty:"Medium",
+type:"MCQ",
+question:"AI helps reduce risk by:",
+options:[
+"Ignoring data",
+"Predicting future trends",
+"Deleting history",
+"Guessing"
+],
+answer:"Predicting future trends"
+},
+
+{
+id:"M12",
+difficulty:"Medium",
+type:"TF",
+question:"True or False: AI can help in fraud detection.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"M13",
+difficulty:"Medium",
+type:"MCQ",
+question:"Best way to use AI in decision-making?",
+options:[
+"Fully depend on AI",
+"Use AI + human thinking",
+"Ignore AI",
+"Use random data"
+],
+answer:"Use AI + human thinking"
+},
+
+{
+id:"M14",
+difficulty:"Medium",
+type:"MCQ",
+question:"Which is a limitation of AI?",
+options:[
+"Speed",
+"Lack of human judgment",
+"Data processing",
+"Automation"
+],
+answer:"Lack of human judgment"
+},
+
+{
+id:"M15",
+difficulty:"Medium",
+type:"TF",
+question:"True or False: AI needs quality data to give good results.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"M16",
+difficulty:"Medium",
+type:"MCQ",
+question:"A wrong AI output can happen due to:",
+options:[
+"Good data",
+"Poor data quality",
+"Correct input",
+"Verified data"
+],
+answer:"Poor data quality"
+},
+
+{
+id:"M17",
+difficulty:"Medium",
+type:"MCQ",
+question:"Which is a smart business decision?",
+options:[
+"Ignoring AI insights",
+"Using AI for analysis and deciding logically",
+"Copying others",
+"Guessing"
+],
+answer:"Using AI for analysis and deciding logically"
+},
+
+{
+id:"M18",
+difficulty:"Medium",
+type:"TF",
+question:"True or False: AI can help optimize supply chain.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"M19",
+difficulty:"Medium",
+type:"MCQ",
+question:"AI in marketing helps in:",
+options:[
+"Random ads",
+"Targeted campaigns",
+"Ignoring customers",
+"Deleting data"
+],
+answer:"Targeted campaigns"
+},
+
+{
+id:"M20",
+difficulty:"Medium",
+type:"MCQ",
+question:"Which is a real-life AI decision example?",
+options:[
+"Guessing profit",
+"Predicting sales using past data",
+"Random hiring",
+"Manual calculations"
+],
+answer:"Predicting sales using past data"
+},
+
+{
+id:"M21",
+difficulty:"Medium",
+type:"TF",
+question:"True or False: AI can support strategic decisions.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"M22",
+difficulty:"Medium",
+type:"MCQ",
+question:"AI improves productivity by:",
+options:[
+"Adding confusion",
+"Automating tasks",
+"Deleting work",
+"Ignoring data"
+],
+answer:"Automating tasks"
+},
+
+{
+id:"M23",
+difficulty:"Medium",
+type:"MCQ",
+question:"Which is NOT a benefit of AI?",
+options:[
+"Faster decisions",
+"Better insights",
+"Human judgment",
+"Automation"
+],
+answer:"Human judgment"
+},
+
+{
+id:"M24",
+difficulty:"Medium",
+type:"TF",
+question:"True or False: AI can help in financial forecasting.",
+options:["True","False"],
+answer:"True"
+},
+
+{
+id:"M25",
+difficulty:"Medium",
+type:"MCQ",
+question:"Best example of AI decision-making?",
+options:[
+"Random guess",
+"Data-driven strategy planning",
+"Ignoring trends",
+"Manual guesswork"
+],
+answer:"Data-driven strategy planning"
+}
+
+];
+    let quizQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let selectedOption = null;
+    let timer = null;
+    let timeLeft = 60;
+
+    const feedback = {
+      timing: "",
+      coverage: "",
+      speed: "",
+      faculty: "",
+      understanding: "",
+      ambience: "",
+      mainTrack: "",
+      workshop: "",
+      useful: "",
+      suggestions: ""
+    };
+
+    const workshopOptionsByTrack = {
+      digital: [
+        "AI for Business Decision-Making (Advanced)",
+        "Excel Essentials",
+        "Power BI Analytics",
+        "Web Development (HTML & JavaScript Basics)",
+        "Information Security Basics",
+        "Cloud Computing Fundamentals"
+      ],
+      communication: [
+        "Functional English",
+        "Public Speaking",
+        "Presentation Confidence",
+        "Canva-Based Photo & Video Editing"
+      ],
+      business: [
+        "AI for Business Decision-Making",
+        "Professional Resume & LinkedIn Optimization",
+        "Tally Accounting Basics",
+        "Prompt Engineering",
+        "Vedic Maths"
+      ]
+    };
+
+    function shuffle(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function pickQuestions() {
+      const shuffled = shuffle(questionBank);
+      return shuffled.slice(0, TOTAL_QUESTIONS);
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function getDifficultyTag(d) {
+      return d === "Easy" ? "tag-diff-easy" : "tag-diff-medium";
+    }
+
+    function startQuiz() {
+      const fullName = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const program = document.getElementById("program").value;
+      const startDate = document.getElementById("startDate").value.trim();
+      const endDate = document.getElementById("endDate").value.trim();
+
+      if (!fullName || !phone || !email || !program || !startDate || !endDate) {
+        alert("Please fill all participant and workshop details before starting the quiz.");
+        return;
+      }
+
+      student.fullName = fullName;
+      student.phone = phone;
+      student.email = email;
+      student.program = program;
+      student.startDate = startDate;
+      student.endDate = endDate;
+
+      quizQuestions = pickQuestions();
+      currentIndex = 0;
+      score = 0;
+      selectedOption = null;
+
+      document.getElementById("qTotal").textContent = TOTAL_QUESTIONS.toString();
+
+      showScreen("screen-quiz");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      clearInterval(timer);
+      selectedOption = null;
+      timeLeft = 60;
+      document.getElementById("timeLeft").textContent = timeLeft.toString();
+
+      const q = quizQuestions[currentIndex];
+
+      document.getElementById("qNum").textContent = (currentIndex + 1).toString();
+      document.getElementById("liveScore").textContent = score.toString();
+      document.getElementById("questionText").textContent = q.question;
+
+      const diffTag = document.getElementById("difficultyTag");
+      diffTag.textContent = q.difficulty;
+      diffTag.className = "q-tag " + getDifficultyTag(q.difficulty);
+
+      document.getElementById("typeTag").textContent = q.type === "TF" ? "True / False" : "Multiple Choice";
+
+      const optionsWrap = document.getElementById("optionsWrap");
+      optionsWrap.innerHTML = "";
+      q.options.forEach((opt, index) => {
+        const optionEl = document.createElement("div");
+        optionEl.className = "option";
+        optionEl.innerHTML = `
+          <div class="opt-key">${String.fromCharCode(65 + index)}</div>
+          <div>${opt}</div>
+        `;
+        optionEl.onclick = () => selectOption(optionEl, opt);
+        optionsWrap.appendChild(optionEl);
+      });
+
+      const progress = (currentIndex / quizQuestions.length) * 100;
+      document.getElementById("progressBar").style.width = progress + "%";
+      document.getElementById("progressText").textContent = Math.round(progress) + "%";
+
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timeLeft").textContent = timeLeft.toString();
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          autoMoveNext();
+        }
+      }, 1000);
+    }
+
+    function selectOption(el, value) {
+      document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+      el.classList.add("selected");
+      selectedOption = value;
+    }
+
+    function saveCurrentAnswer() {
+      const q = quizQuestions[currentIndex];
+      if (selectedOption && selectedOption === q.answer) {
+        score++;
+      }
+    }
+
+    function nextQuestion() {
+      clearInterval(timer);
+      if (selectedOption) {
+        saveCurrentAnswer();
+      }
+      moveAhead();
+    }
+
+    function skipQuestion() {
+      clearInterval(timer);
+      moveAhead();
+    }
+
+    function autoMoveNext() {
+      moveAhead();
+    }
+
+    function moveAhead() {
+      currentIndex++;
+      if (currentIndex < quizQuestions.length) {
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      const percent = Math.round((score / quizQuestions.length) * 100);
+
+      let band = "";
+      let badgeClass = "";
+      let title = "";
+      let advice = "";
+      let nextWorkshop = "";
+
+      if (score >= 9) {
+    
+  band = "Excellent – Data-Driven Decision Maker";
+  badgeClass = "badge-excellent";
+  title = "Excellent – Confident AI Business Decision Maker";
+  advice = `
+    <strong>Summary:</strong> You have demonstrated excellent ability to use AI tools for data-driven decision-making, business analysis, and strategic thinking.
+    You can confidently apply AI in real business scenarios.
+    <br/><br/>
+    <strong>Guidance:</strong> You are ready to move towards advanced tools and specialization areas.
+  `;
+  nextWorkshop = `
+    <strong>Next SkillX Journey:</strong>
+    <ul>
+      <li><strong>Business & Financial Smart Skills:</strong> Move to advanced modules like Tally Accounting Basics and Prompt Engineering.</li>
+      <li><strong>Digital Power Skills (Advanced):</strong> Learn Excel, Power BI, and business analytics tools.</li>
+    </ul>
+  `;
+
+} else if (score >= 7) {
+  band = "Good – Strong Business AI Understanding";
+  badgeClass = "badge-good";
+  title = "Good – Growing AI Decision-Making Confidence";
+  advice = `
+    <strong>Summary:</strong> You have a good understanding of AI in business and can apply it with some confidence.
+    <br/><br/>
+    <strong>Guidance:</strong> Now focus on improving how you present and communicate your ideas using AI.
+  `;
+  nextWorkshop = `
+    <strong>Next SkillX Journey:</strong>
+    <ul>
+      <li><strong>Communication & Personal Branding:</strong> Functional English, Presentation Confidence, and Canva-based content.</li>
+      <li><strong>Professional Skills:</strong> Resume Building and LinkedIn Optimisation.</li>
+    </ul>
+  `;
+
+} else if (score >= 5) {
+  band = "Fair – Needs Practical Application";
+  badgeClass = "badge-fair";
+  title = "Fair – Build Business AI Practice";
+  advice = `
+    <strong>Summary:</strong> You understand the basics but need more hands-on practice to apply AI effectively in business situations.
+    <br/><br/>
+    <strong>Guidance:</strong> Strengthen your practical skills and repeat key concepts with guidance.
+  `;
+  nextWorkshop = `
+    <strong>Next SkillX Journey:</strong>
+    <ul>
+      <li><strong>AI for Business Decision-Making – Practice Batch:</strong> Focus on real case-based learning.</li>
+      <li><strong>Digital Power Skills:</strong> Improve Excel basics, AI usage, and structured thinking.</li>
+    </ul>
+  `;
+
+} else {
+  band = "Support Recommended – Foundation Required";
+  badgeClass = "badge-repeat";
+  title = "Support & Repeat Workshop Recommended";
+  advice = `
+    <strong>Summary:</strong> You need to build a stronger foundation in using AI tools and understanding business concepts.
+    <br/><br/>
+    <strong>Guidance:</strong> Start from basics and rebuild confidence step-by-step.
+  `;
+  nextWorkshop = `
+    <strong>Next SkillX Journey:</strong>
+    <ul>
+      <li><strong>Digital Power Skills – Foundation:</strong> Learn AI basics, web tools, and safe digital practices.</li>
+      <li><strong>AI for Business Decision-Making (Repeat):</strong> Revisit concepts with guided support.</li>
+    </ul>
+  `;
+}
+      document.getElementById("resultBadge").className = "result-badge " + badgeClass;
+      document.getElementById("resultBadge").textContent = band;
+      document.getElementById("resultTitle").textContent = title;
+
+      document.getElementById("studentSummary").textContent =
+        student.fullName + " | " + student.program + " | " + student.phone + " | " + student.email;
+
+      document.getElementById("scoreMarks").textContent = score + " / " + quizQuestions.length;
+      document.getElementById("scorePercent").textContent = percent + "%";
+      document.getElementById("scoreOutcome").textContent = band;
+      document.getElementById("adviceBox").innerHTML = advice;
+      document.getElementById("nextSkillxBox").innerHTML = nextWorkshop;
+
+      const certNote = document.getElementById("certNote");
+      const btnDownloadCert = document.getElementById("btnDownloadCert");
+
+      if (percent >= 50) {
+        document.getElementById("certName").textContent = student.fullName;
+        document.getElementById("certStartDate").textContent = student.startDate;
+        document.getElementById("certEndDate").textContent = student.endDate;
+        document.getElementById("certScore").textContent = percent + "%";
+        certNote.textContent = "You have scored 50% or above. Download and share this certificate as needed.";
+        btnDownloadCert.disabled = false;
+      } else {
+        certNote.textContent =
+          "You have scored below 50%. We recommend a practice/support batch before issuing a completion certificate. Please attend the support session and retake the assessment.";
+        btnDownloadCert.disabled = false;
+      }
+
+      document.getElementById("progressBar").style.width = "100%";
+      document.getElementById("progressText").textContent = "100%";
+
+      showScreen("screen-result");
+      sendDataToSheet(score, percent);
+      
+    }
+
+    async function downloadCertificate() {
+  const percentText = document.getElementById("scorePercent").textContent;
+  const percent = parseInt(percentText, 10) || 0;
+
+  if (percent < 50) {
+    alert("Certificate is available only for scores 50% and above.");
+    return;
+  }
+
+  const certElement = document.getElementById("certificateInner");
+
+  const canvas = await html2canvas(certElement, {
+    scale: 2,
+    useCORS: true
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("landscape", "pt", "a4");
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  const imgWidth = pageWidth;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  const yOffset = (pageHeight - imgHeight) / 2;
+
+  pdf.addImage(imgData, "PNG", 0, yOffset, imgWidth, imgHeight);
+
+  const filename = "SkillX-AI-Certificate-" + (student.fullName || "Participant") + ".pdf";
+  pdf.save(filename);
+}
+
+    function buildCertificateSummary() {
+      const percentText = document.getElementById("scorePercent").textContent;
+      const band = document.getElementById("scoreOutcome").textContent;
+      return [
+        "GJIMT SkillX AI for Business Decision-Making – Certificate Summary",
+        "",
+        "Name: " + student.fullName,
+        "Program: " + student.program,
+        "WhatsApp: " + student.phone,
+        "Email: " + student.email,
+        "",
+        "Workshop: SkillX AI for Business Decision-Making (5-Day)",
+        "Dates: " + student.startDate + " to " + student.endDate,
+        "Score: " + percentText,
+        "Performance Band: " + band,
+        "",
+        "Note: PDF certificate downloaded from the SkillX quiz page.",
+        "For guidance, please contact SkillX at +91 79732 41456 or +91 89883 68113."
+      ].join("\n");
+    }
+
+    function shareCertificateWhatsApp() {
+      const message = buildCertificateSummary();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(message).then(() => {
+          alert("Certificate summary copied. Paste it in WhatsApp along with your PDF certificate.");
+        }).catch(() => {
+          prompt("Copy this certificate summary and share on WhatsApp:", message);
+        });
+      } else {
+        prompt("Copy this certificate summary and share on WhatsApp:", message);
+      }
+    }
+
+    function goToFeedback() {
+      document.getElementById("feedbackIntro").textContent =
+        student.fullName +
+        ", please share your feedback on the AI for Business Decision-Making workshop held from " +
+        student.startDate +
+        " to " +
+        student.endDate +
+        ".";
+      showScreen("screen-feedback");
+    }
+
+    function updateWorkshopDropdown() {
+  const mainTrack = document.getElementById("fbMainTrack").value;
+  const workshopSelect = document.getElementById("fbWorkshop");
+
+  workshopSelect.innerHTML = '<option value="">Select workshop</option>';
+
+  if (!mainTrack) return;
+
+  const currentWorkshop = "AI for Business Decision-Making";
+
+  let options = workshopOptionsByTrack[mainTrack] || [];
+
+  options = options.filter(
+    o => o.toLowerCase() !== currentWorkshop.toLowerCase()
+  );
+
+  options.forEach(w => {
+    const op = document.createElement("option");
+    op.value = w;
+    op.textContent = w;
+    workshopSelect.appendChild(op);
+  });
+}
+
+    function finishFeedback() {
+      feedback.timing = document.getElementById("fbTiming").value;
+      feedback.coverage = document.getElementById("fbCoverage").value;
+      feedback.speed = document.getElementById("fbSpeed").value;
+      feedback.faculty = document.getElementById("fbFaculty").value;
+      feedback.understanding = document.getElementById("fbUnderstanding").value;
+      feedback.ambience = document.getElementById("fbAmbience").value;
+      feedback.mainTrack = document.getElementById("fbMainTrack").value;
+      feedback.workshop = document.getElementById("fbWorkshop").value;
+      feedback.useful = document.getElementById("fbUseful").value.trim();
+      feedback.suggestions = document.getElementById("fbSuggestions").value.trim();
+
+      const fbSummaryIntro = document.getElementById("fbSummaryIntro");
+      fbSummaryIntro.textContent =
+        student.fullName +
+        ", thank you for sharing your feedback on the AI for Business Decision-Making workshop.";
+
+      const fbBox = document.getElementById("fbSummaryBox");
+      const trackLabel =
+        feedback.mainTrack === "digital"
+          ? "Digital Power Skills"
+          : feedback.mainTrack === "communication"
+          ? "Communication & Personal Branding"
+          : feedback.mainTrack === "business"
+          ? "Business & Financial Smart Skills"
+          : "Not selected";
+
+      fbBox.innerHTML = `
+        <strong>Participant:</strong> ${student.fullName} (${student.program})<br/>
+        <strong>Workshop:</strong> SkillX AI for Business Decision-Making (5-Day) | ${student.startDate} to ${student.endDate}<br/><br/>
+        <strong>Ratings (1–5):</strong><br/>
+        • Class timing & punctuality: ${feedback.timing || "-"}<br/>
+        • Content coverage & depth: ${feedback.coverage || "-"}<br/>
+        • Speed / pace of teaching: ${feedback.speed || "-"}<br/>
+        • Faculty teaching & interaction: ${feedback.faculty || "-"}<br/>
+        • Understanding & confidence: ${feedback.understanding || "-"}<br/>
+        • Ambience & facilities: ${feedback.ambience || "-"}<br/><br/>
+        <strong>Next SkillX Interest:</strong><br/>
+        • Track: ${trackLabel}<br/>
+        • Workshop: ${feedback.workshop || "-"}<br/><br/>
+        <strong>Most useful part:</strong><br/>
+        ${feedback.useful ? feedback.useful.replace(/\n/g, "<br/>") : "-"}<br/><br/>
+        <strong>Suggestions:</strong><br/>
+        ${feedback.suggestions ? feedback.suggestions.replace(/\n/g, "<br/>") : "-"}
+      `;
+
+      showScreen("screen-feedback-summary");
+    }
+
+    function buildFeedbackSummaryText() {
+      const trackLabel =
+        feedback.mainTrack === "digital"
+          ? "Digital Power Skills"
+          : feedback.mainTrack === "communication"
+          ? "Communication & Personal Branding"
+          : feedback.mainTrack === "business"
+          ? "Business & Financial Smart Skills"
+          : "Not selected";
+
+      return [
+        "GJIMT SkillX – AI for Business Decision-Making Workshop Feedback",
+        "",
+        "Name: " + student.fullName,
+        "Program: " + student.program,
+        "WhatsApp: " + student.phone,
+        "Email: " + student.email,
+        "",
+        "Workshop: SkillX AI for Business Decision-Making (5-Day)",
+        "Dates: " + student.startDate + " to " + student.endDate,
+        "",
+        "Ratings (1–5):",
+        "• Class timing & punctuality: " + (feedback.timing || "-"),
+        "• Content coverage & depth: " + (feedback.coverage || "-"),
+        "• Speed / pace of teaching: " + (feedback.speed || "-"),
+        "• Faculty teaching & interaction: " + (feedback.faculty || "-"),
+        "• Understanding & confidence: " + (feedback.understanding || "-"),
+        "• Ambience & facilities: " + (feedback.ambience || "-"),
+        "",
+        "Next SkillX interest:",
+        "• Track: " + trackLabel,
+        "• Workshop: " + (feedback.workshop || "-"),
+        "",
+        "Most useful part:",
+        feedback.useful || "-",
+        "",
+        "Suggestions:",
+        feedback.suggestions || "-",
+        "",
+        "Sent from the SkillX AI for Business Decision-Making quiz & feedback page."
+      ].join("\n");
+    }
+
+    function copyFeedbackSummary() {
+      const message = buildFeedbackSummaryText();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(message).then(() => {
+          alert("Feedback summary copied. Paste it into WhatsApp for the SkillX team.");
+        }).catch(() => {
+          prompt("Copy this feedback summary:", message);
+        });
+      } else {
+        prompt("Copy this feedback summary:", message);
+      }
+    }
+
+    function sendFeedbackWhatsApp(phone) {
+      const message = buildFeedbackSummaryText();
+      const encoded = encodeURIComponent(message);
+      const url = "https://wa.me/91" + phone + "?text=" + encoded;
+      window.open(url, "_blank");
+    }
+
+    function restartQuiz() {
+      clearInterval(timer);
+      document.getElementById("fullName").value = "";
+      document.getElementById("phone").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("program").value = "";
+      document.getElementById("startDate").value = "";
+      document.getElementById("endDate").value = "";
+      showScreen("screen-intro");
+    }
+    async function sendDataToSheet(score, percent) {
+  const url = "https://script.google.com/macros/s/AKfycbzpPsYmMF6PlcB9CMF1vv0XM0_alcJ_yMIwExla6E3w5Q36kmwcEZY_cIJd3fPu8ur_rA/exec";
+
+  const data = {
+    name: student.fullName,
+    phone: student.phone,
+    email: student.email,
+    program: student.program,
+    startDate: student.startDate,
+    endDate: student.endDate,
+    score: score,
+    percent: percent
+  };
+
+  try {
+   await fetch(url, {
+  method: "POST",
+  mode: "no-cors",
+  body: JSON.stringify(data),
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
+    console.log("Data saved to Google Sheet ✅");
+  } catch (err) {
+    console.error("Error saving data:", err);
+  }
+}
+  </script>
+</body>
+</html>
