@@ -189,12 +189,177 @@ body::after{
   box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
+/* STUDENT TABLE */
+.student-table{
+  margin-top:30px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  border-radius:20px;
+  padding:20px;
+  display:none;
+}
+
+.student-table.show{ display:block; }
+
+.table-container{ overflow-x:auto; margin-top:15px; }
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:linear-gradient(45deg,#ffd700,#ff9800);
+  color:#000;
+  padding:12px;
+  font-weight:600;
+}
+
+td{
+  padding:12px;
+  text-align:center;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+tr:hover{
+  background:rgba(255,255,255,0.1);
+}
+
+/* SEARCH */
+.search-box{
+  margin-bottom:15px;
+}
+
+.search-box input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  font-size:14px;
+}
+
+.search-box input::placeholder{
+  color:rgba(255,255,255,0.7);
+}
+
 /* LOADING */
 .loading{
   text-align:center;
   margin-top:20px;
   font-size:18px;
   color:#ffd700;
+}
+
+/* ===== WORKSHOP MODAL ===== */
+.workshop-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+}
+
+.workshop-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,255,0.9));
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  padding: 40px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.workshop-modal.show .workshop-modal-content {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.close-workshop {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 28px;
+  color: #666;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.close-workshop:hover {
+  background: rgba(0,0,0,0.1);
+  color: #333;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #ffd700, #ff9800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+#workshopSelect {
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  margin-bottom: 25px;
+  font-size: 14px;
+  background: rgba(255,255,255,0.9);
+  color: #333;
+}
+
+.modal-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #ffd700, #ff9800);
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px gold;
+}
+
+@media(max-width:768px){
+  .main{ margin-left:0; padding:20px; }
+  .sidebar{ transform:translateX(-100%); }
 }
 </style>
 </head>
@@ -203,29 +368,24 @@ body::after{
 
 <div class="login-box" id="loginBox">
   <h2>🔐 Secure Login</h2>
-
   <input type="text" id="username" placeholder="Username">
   <input type="password" id="password" placeholder="Password">
-
   <button onclick="login()">Login</button>
-
-  <!-- NEW BUTTON -->
   <a href="https://gjimtmicrosite.github.io/Integrated/">
     <button style="margin-top:10px;background:linear-gradient(45deg,#00f2ff,#00c6ff);">
       🏠 Back to Main Page
     </button>
   </a>
-
   <p class="error" id="error"></p>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashboard">
-
 <div class="sidebar">
   <h2>📊 Dashboard</h2>
   <a href="Career-result.html"><button>🎓 Career Quiz</button></a>
   <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
+  <button onclick="openWorkshopFilter()">📊 Student Workshop Filter</button>
   <button onclick="location.reload()">🔄 Refresh</button>
   <button onclick="logout()">🚪 Logout</button>
 </div>
@@ -247,11 +407,70 @@ body::after{
   <div class="chart-box"><canvas id="comparisonChart"></canvas></div>
 </div>
 
+<!-- STUDENT WORKSHOP TABLE -->
+<div class="student-table" id="studentTable">
+  <h3 style="margin-bottom:15px;color:#ffd700;">📋 SkillX Student Workshop Data</h3>
+  <div class="search-box">
+    <input type="text" id="workshopSearch" placeholder="🔍 Search students..." onkeyup="searchWorkshopTable()">
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Program</th>
+          <th>Digital</th>
+          <th>Comm</th>
+          <th>Business</th>
+          <th>Domain</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody id="workshopTableBody"></tbody>
+    </table>
+  </div>
 </div>
+
+</div>
+</div>
+
+<!-- WORKSHOP FILTER MODAL -->
+<div id="workshopModal" class="workshop-modal">
+  <div class="workshop-modal-content">
+    <div class="close-workshop" onclick="closeWorkshopModal()">&times;</div>
+    
+    <h2 class="modal-title">📊 Student Workshop Filter</h2>
+    <p class="modal-subtitle">Select workshop to filter student performance data</p>
+    
+    <select id="workshopSelect" onchange="filterWorkshopData()">
+      <option value="">-- All Workshops --</option>
+      <optgroup label="Digital Skills">
+        <option value="Prompt Engineering">🤖 Prompt Engineering</option>
+        <option value="Excel Basics">📊 Excel Basics</option>
+        <option value="Power BI">📈 Power BI</option>
+        <option value="AI-Enabled Documentation">📝 AI Documentation</option>
+        <option value="Web Development">🌐 Web Development</option>
+      </optgroup>
+      <optgroup label="Communication">
+        <option value="Functional English">🗣️ Functional English</option>
+        <option value="Presentation Skills">🎤 Presentation Skills</option>
+        <option value="Public Speaking">📢 Public Speaking</option>
+      </optgroup>
+      <optgroup label="Business & Creative">
+        <option value="AI for Business Decision-Making">💼 AI Business</option>
+        <option value="Tally Accounting Basics">💰 Tally Accounting</option>
+        <option value="Vedic Maths">🧮 Vedic Maths</option>
+        <option value="Canva Editing">✂️ Canva Editing</option>
+        <option value="Resume & LinkedIn">📄 Resume Building</option>
+      </optgroup>
+    </select>
+    
+    <button class="modal-btn" onclick="closeWorkshopModal()">Close</button>
+  </div>
 </div>
 
 <script>
-
 // LOGIN
 const validUser = "admin";
 const validPass = "12345";
@@ -259,7 +478,6 @@ const validPass = "12345";
 function login(){
   let user = username.value;
   let pass = password.value;
-
   if(user === validUser && pass === validPass){
     loginBox.style.display="none";
     dashboard.style.display="block";
@@ -271,55 +489,141 @@ function login(){
 
 function logout(){location.reload();}
 
-// LOAD DATA
+// GLOBAL DATA STORAGE
+let skillDataGlobal = [];
+let currentFilteredData = [];
+
+// LOAD DASHBOARD
 function loadDashboard(){
+  const careerURL = "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
+  const skillURL  = "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
 
-const careerURL = "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
-const skillURL  = "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
+  Promise.all([
+    fetch(careerURL).then(res=>res.json()),
+    fetch(skillURL).then(res=>res.json())
+  ])
+  .then(([careerData, skillData])=>{
+    loading.style.display="none";
+    
+    // Store skill data globally
+    skillDataGlobal = skillData;
+    currentFilteredData = skillData;
+    
+    // Update cards
+    careerCount.innerText = careerData.length;
+    skillCount.innerText = skillData.length;
+    totalCount.innerText = careerData.length + skillData.length;
 
-Promise.all([
-  fetch(careerURL).then(res=>res.json()),
-  fetch(skillURL).then(res=>res.json())
-])
-.then(([careerData, skillData])=>{
+    // Career chart
+    let careerMap = {};
+    careerData.forEach(r=>{
+      let c = r["Top Career"] || "Unknown";
+      careerMap[c] = (careerMap[c] || 0) + 1;
+    });
+    new Chart(careerChart,{
+      type:'doughnut',
+      data:{
+        labels:Object.keys(careerMap),
+        datasets:[{data:Object.values(careerMap), backgroundColor:['#ffd700','#ff9800','#00f2ff','#ff00c8']}
+        ]
+      }
+    });
 
-  loading.style.display="none";
+    // Skill chart
+    let skillMap = {};
+    skillData.forEach(r=>{
+      let d = r["Bundle Domain"] || "Unknown";
+      skillMap[d] = (skillMap[d] || 0) + 1;
+    });
+    new Chart(skillChart,{
+      type:'pie',
+      data:{
+        labels:Object.keys(skillMap),
+        datasets:[{data:Object.values(skillMap), backgroundColor:['#ffd700','#ff9800','#00f2ff','#00c6ff','#ff4b4b']}
+        ]
+      }
+    });
 
-  careerCount.innerText = careerData.length;
-  skillCount.innerText = skillData.length;
-  totalCount.innerText = careerData.length + skillData.length;
+    // Comparison chart
+    new Chart(comparisonChart,{
+      type:'bar',
+      data:{
+        labels:["Career Quiz","SkillX Quiz"],
+        datasets:[{
+          label:"Students",
+          data:[careerData.length, skillData.length],
+          backgroundColor:['#ffd700','#ff9800']
+        }]
+      },
+      options:{
+        scales:{y:{beginAtZero:true}}
+      }
+    });
 
-  let careerMap = {};
-  careerData.forEach(r=>{
-    let c = r["Top Career"] || "Unknown";
-    careerMap[c] = (careerMap[c] || 0) + 1;
+    // Render initial workshop table
+    renderWorkshopTable(skillData);
+    studentTable.classList.add('show');
   });
+}
 
-  new Chart(careerChart,{
-    type:'doughnut',
-    data:{labels:Object.keys(careerMap),datasets:[{data:Object.values(careerMap)}]}
+// WORKSHOP MODAL FUNCTIONS
+function openWorkshopFilter(){
+  workshopModal.style.display = "block";
+  setTimeout(()=> workshopModal.classList.add("show"), 10);
+}
+
+function closeWorkshopModal(){
+  workshopModal.classList.remove("show");
+  setTimeout(()=> workshopModal.style.display = "none", 400);
+}
+
+function filterWorkshopData(){
+  const selectedWorkshop = workshopSelect.value;
+  
+  if(!selectedWorkshop){
+    currentFilteredData = skillDataGlobal;
+  } else {
+    currentFilteredData = skillDataGlobal.filter(row => 
+      (row["Workshop"] || "").toLowerCase().includes(selectedWorkshop.toLowerCase())
+    );
+  }
+  
+  renderWorkshopTable(currentFilteredData);
+}
+
+function renderWorkshopTable(data){
+  let bodyHTML = "";
+  data.forEach(row => {
+    bodyHTML += `
+      <tr>
+        <td>${row["Name"] || "-"}</td>
+        <td>${row["Phone"] || "-"}</td>
+        <td>${row["Program"] || "-"}</td>
+        <td>${Number(row["Digital Score"]) || 0}</td>
+        <td>${Number(row["Communication Score"]) || 0}</td>
+        <td>${Number(row["Business Score"]) || 0}</td>
+        <td>${row["Bundle Domain"] || "-"}</td>
+        <td>₹${row["Bundle Price"] || "-"}</td>
+      </tr>`;
   });
+  workshopTableBody.innerHTML = bodyHTML || '<tr><td colspan="8" style="text-align:center;color:#ffd700;">No students found</td></tr>';
+}
 
-  let skillMap = {};
-  skillData.forEach(r=>{
-    let d = r["Bundle Domain"] || "Unknown";
-    skillMap[d] = (skillMap[d] || 0) + 1;
+function searchWorkshopTable(){
+  let input = workshopSearch.value.toLowerCase();
+  let rows = document.querySelectorAll("#workshopTableBody tr");
+  
+  rows.forEach(row => {
+    let text = row.innerText.toLowerCase();
+    row.style.display = text.includes(input) ? "" : "none";
   });
+}
 
-  new Chart(skillChart,{
-    type:'pie',
-    data:{labels:Object.keys(skillMap),datasets:[{data:Object.values(skillMap)}]}
-  });
-
-  new Chart(comparisonChart,{
-    type:'bar',
-    data:{
-      labels:["Career","SkillX"],
-      datasets:[{label:"Students",data:[careerData.length, skillData.length]}]
-    }
-  });
-
-});
+// Close modal when clicking outside
+window.onclick = function(event){
+  if(event.target == workshopModal){
+    closeWorkshopModal();
+  }
 }
 </script>
 
