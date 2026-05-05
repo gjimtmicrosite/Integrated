@@ -52,24 +52,6 @@ body::after{
 .workshop-modal.show .workshop-modal-content {
   transform: translate(-50%, -50%) scale(1);
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">F
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Smart Dashboard</title>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-
-body{
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
-  overflow-x:hidden;
-}
-
 /* ===== BACKGROUND GLOW ===== */
 body::before{
   content:"";
@@ -110,7 +92,9 @@ body::after{
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.7);  /* ADD opacity: 0; transition */
+  opacity: 0;
+  transition: all 0.3s ease;  /* ADD YE LINE */
   background: #fff;
   color: #000;
   padding: 30px;
@@ -479,6 +463,8 @@ Promise.all([
   },10);
 }
 
+// DELETE sab workshop functions aur ye daalein:
+
 function openWorkshopModal() {
   document.getElementById('workshopModal').style.display = 'block';
   setTimeout(() => {
@@ -492,6 +478,7 @@ function closeWorkshopModal() {
     document.getElementById('workshopModal').style.display = 'none';
   }, 300);
 }
+
 function goToWorkshop() {
   const workshop = document.getElementById('workshopSelect').value;
   if (workshop) {
