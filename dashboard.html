@@ -457,7 +457,6 @@ Promise.all([
 });
 }
 
-// DELETE sab workshop functions aur ye daalein:
 
 function openWorkshopModal() {
   document.getElementById('workshopModal').style.display = 'block';
@@ -477,19 +476,16 @@ function goToWorkshop() {
   const workshop = document.getElementById('workshopSelect').value;
   if (workshop) {
     alert('🚀 ' + workshop + ' selected!');
+    
+    // Optional: Specific redirects
+    if (workshop === "AI for Business Decision-Making") {
+      window.open("ai-business.html", "_blank");
+    }
+    
     closeWorkshopModal();
   } else {
     alert('⚠️ Workshop select karein!');
   }
-}
-  // Example redirect logic
-  if(selectedWorkshop === "AI for Business Decision-Making"){
-    window.open("ai-business.html","_blank");
-  } else {
-    alert(selectedWorkshop + " selected!");
-  }
-
-  closeWorkshopModal();
 }
 
 // Close when clicking outside
