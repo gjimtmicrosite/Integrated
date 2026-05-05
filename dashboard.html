@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8">F
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Smart Dashboard</title>
 
@@ -37,6 +37,47 @@ body::after{
   bottom:-100px;
   right:-100px;
   filter:blur(150px);
+}
+  /* WORKSHOP MODAL */
+.workshop-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+}
+
+.workshop-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: #000;
+  padding: 30px;
+  border-radius: 15px;
+  width: 320px;
+}
+
+.close-workshop {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.modal-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background: #ff9800;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 /* ===== LOGIN ===== */
@@ -226,7 +267,7 @@ body::after{
   <h2>📊 Dashboard</h2>
   <a href="Career-result.html"><button>🎓 Careerr Quiz</button></a>
   <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
-  <a href=""></a><button onclick="openWorkshopFilter()">📊 SkillX-Quiz-Result</button></a>
+  <a href=""></a><button onclick="goToWorkshop()">📊 SkillX-Quiz-Result</button></a>
   <button onclick="location.reload()">🔄 Refresh</button>
   <button onclick="logout()">🚪 Logout</button>
 </div>
@@ -322,25 +363,22 @@ Promise.all([
 
 });
 }
-  function openWorkshopFilter(){
-  workshopModal.style.display = "block";
-  setTimeout(()=> workshopModal.classList.add("show"), 10);
-}
+  function goToWorkshop(){
+  const selectedWorkshop = document.getElementById("workshopSelect").value;
 
-function closeWorkshopModal(){
-  workshopModal.classList.remove("show");
-  setTimeout(()=> workshopModal.style.display = "none", 400);
-}
-
-function filterWorkshopData(){
-  const selectedWorkshop = workshopSelect.value;
+  if(!selectedWorkshop){
+    alert("Please select a workshop!");
+    return;
+  }
 
   if(selectedWorkshop === "AI for Business Decision-Making"){
-    // OPEN TEST PAGE
-    window.open("https://gjimtmicrosite.github.io/Integrated/ai-business-result.html", "_blank");
-    workshopSelect.value = ""; // Reset select
-    return; // Stop filtering
+    window.open("https://gjimtmicrosite.github.io/Integrated/ai-business.html", "_blank");
+  } else {
+    alert("Dashboard not created yet for this workshop");
   }
+
+  closeWorkshopModal();
+}
 }
 </script>
 
