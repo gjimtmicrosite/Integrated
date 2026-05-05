@@ -14,6 +14,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     display: flex;
+    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
 }
 
 /* Sidebar */
@@ -61,11 +62,7 @@ body {
     width: 100%;
 }
 
-/* ===== YOUR ORIGINAL CSS (UNCHANGED) ===== */
 
-body {
-    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
-}
 
 /* HEADER */
 .header {
@@ -244,9 +241,11 @@ tr:hover { background: #eef1ff; }
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-    <h2>📊 Dashboards</h2>
+    <h2 onclick="location.href='dashboard.html'" style="cursor:pointer;">
+  📊 Dashboards
+</h2>
    <div class="menu">
-         <a href="Career-result.html">   <button>🎓 Career Quiz</button></a>
+         <a href="Career-result.html">   <button>🎓 Career Quiza</button></a>
         <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
         
           <button onclick="goHome()">🏠 Back to Home</button>
