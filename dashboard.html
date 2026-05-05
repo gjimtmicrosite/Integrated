@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8">F
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Smart Dashboard</title>
 
@@ -13,169 +13,439 @@
 body{
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   color:#fff;
+  overflow-x:hidden;
 }
 
-/* LOGIN */
+/* ===== BACKGROUND GLOW ===== */
+body::before{
+  content:"";
+  position:fixed;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle,#00f2ff,transparent);
+  top:-100px;
+  left:-100px;
+  filter:blur(150px);
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle,#ff00c8,transparent);
+  bottom:-100px;
+  right:-100px;
+  filter:blur(150px);
+}
+  /* WORKSHOP MODAL */
+.workshop-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+}
+.workshop-modal.show .workshop-modal-content {
+  transform: translate(-50%, -50%) scale(1);
+}
+.workshop-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: #000;
+  padding: 30px;
+  border-radius: 15px;
+  width: 320px;
+}
+
+.close-workshop {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.modal-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background: #ff9800;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+  #workshopSelect {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+/* ===== LOGIN ===== */
 .login-box{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
   background:rgba(255,255,255,0.08);
-  padding:30px;
+  backdrop-filter:blur(25px);
+  padding:35px;
   border-radius:20px;
   text-align:center;
+  width:320px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translate(-50%,-60%);}
+  to{opacity:1; transform:translate(-50%,-50%);}
+}
+
+.login-box h2{
+  margin-bottom:15px;
 }
 
 .login-box input{
   width:100%;
-  padding:10px;
+  padding:12px;
   margin:10px 0;
+  border-radius:10px;
+  border:none;
+  outline:none;
 }
 
-button{
-  padding:10px;
+.login-box button{
+  width:100%;
+  padding:12px;
   border:none;
+  border-radius:12px;
+  background:linear-gradient(45deg,#ffd700,#ff9800);
+  font-weight:bold;
   cursor:pointer;
+  transition:0.3s;
 }
+
+.login-box button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px gold;
+}
+
+.error{color:#ff4b4b;font-size:13px}
 
 /* DASHBOARD */
 #dashboard{display:none;}
 
+/* SIDEBAR */
 .sidebar{
   width:250px;
+  height:100vh;
   position:fixed;
-}
-
-.main{
-  margin-left:260px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
   padding:20px;
+  border-right:1px solid rgba(255,255,255,0.1);
 }
 
-/* MODAL */
-.workshop-modal{
-  display:none;
-  position:fixed;
+.sidebar h2{
+  color:#ffd700;
+  margin-bottom:20px;
+}
+
+.sidebar button{
   width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.8);
-}
-
-.workshop-modal-content{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) scale(0.7);
-  background:#fff;
-  color:#000;
-  padding:30px;
-  border-radius:15px;
+  margin:10px 0;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  cursor:pointer;
   transition:0.3s;
 }
 
-.workshop-modal.show .workshop-modal-content{
-  transform:translate(-50%,-50%) scale(1);
+.sidebar button:hover{
+  background:#ffd700;
+  color:#000;
+  transform:scale(1.05);
+}
+
+/* MAIN */
+.main{
+  margin-left:260px;
+  padding:30px;
+}
+
+/* HEADER */
+.header{
+  font-size:28px;
+  margin-bottom:25px;
+}
+
+/* CARDS */
+.cards{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.card{
+  flex:1;
+  min-width:250px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  transition:0.4s;
+  transform:perspective(1000px) rotateX(5deg);
+}
+
+.card:hover{
+  transform:perspective(1000px) rotateX(0deg) scale(1.05);
+}
+
+.card h3{
+  margin-bottom:10px;
+  color:#ffd700;
+}
+
+.value{
+  font-size:30px;
+  font-weight:bold;
+}
+
+/* CHARTS */
+.charts{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;
+}
+
+.chart-box{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* LOADING */
+.loading{
+  text-align:center;
+  margin-top:20px;
+  font-size:18px;
+  color:#ffd700;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
 <div class="login-box" id="loginBox">
-  <h2>Login</h2>
-  <input type="text" id="username">
-  <input type="password" id="password">
+  <h2>🔐 Secure Login</h2>
+
+  <input type="text" id="username" placeholder="Usernamea">
+  <input type="password" id="password" placeholder="Password">
+
   <button onclick="login()">Login</button>
-  <p id="error"></p>
+
+  <!-- NEW BUTTON -->
+  <a href="https://gjimtmicrosite.github.io/Integrated/">
+    <button style="margin-top:10px;background:linear-gradient(45deg,#00f2ff,#00c6ff);">
+      🏠 Back to Main Page
+    </button>
+  </a>
+
+  <p class="error" id="error"></p>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashboard">
 
 <div class="sidebar">
-  <button onclick="openWorkshopFilter()">📊 SkillX-Quiz-Result</button>
-  <button onclick="logout()">Logout</button>
+  <h2>📊 Dashboard</h2>
+  <a href="Career-result.html"><button>🎓 Careerr Quiz</button></a>
+  <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
+  <a href=""></a><button onclick="goToWorkshop()">📊 SkillX-Quiz-Result</button></a>
+  <button onclick="location.reload()">🔄 Refresh</button>
+  <button onclick="logout()">🚪 Logout</button>
 </div>
 
 <div class="main">
-  <h2>Dashboard</h2>
+<div class="header">🚀 Smart Analytics Dashboard</div>
+
+<div class="cards">
+  <div class="card"><h3>Career Students</h3><div class="value" id="careerCount">0</div></div>
+  <div class="card"><h3>SkillX Students</h3><div class="value" id="skillCount">0</div></div>
+  <div class="card"><h3>Total Students</h3><div class="value" id="totalCount">0</div></div>
+</div>
+
+<div class="loading" id="loading">⏳ Loading data...</div>
+
+<div class="charts">
+  <div class="chart-box"><canvas id="careerChart"></canvas></div>
+  <div class="chart-box"><canvas id="skillChart"></canvas></div>
+  <div class="chart-box"><canvas id="comparisonChart"></canvas></div>
 </div>
 
 </div>
-
-<!-- MODAL -->
+</div>
+<!-- WORKSHOP FILTER MODAL -->
 <div id="workshopModal" class="workshop-modal">
   <div class="workshop-modal-content">
-    <span onclick="closeWorkshopModal()">❌</span>
-
+    <div class="close-workshop" onclick="closeWorkshopModal()">&times;</div>
+    
+    <h2 class="modal-title">📊 Student Workshop Filter</h2>
+    <p class="modal-subtitle">Select workshop</p>
+    
     <select id="workshopSelect">
-      <option value="">Select Workshop</option>
-      <option value="AI for Business Decision-Making">AI Business</option>
-      <option value="Web Development">Web Dev</option>
+      <option value="">-- All Workshops --</option>
+
+      <optgroup label="Digital Skills">
+        <option value="Prompt Engineering">🤖 Prompt Engineering</option>
+        <option value="Excel Basics">📊 Excel Basics</option>
+        <option value="Power BI">📈 Power BI</option>
+        <option value="AI-Enabled Documentation">📝 AI Documentation</option>
+        <option value="Web Development">🌐 Web Development</option>
+      </optgroup>
+
+      <optgroup label="Communication">
+        <option value="Functional English">🗣️ Functional English</option>
+        <option value="Presentation Skills">🎤 Presentation Skills</option>
+        <option value="Public Speaking">📢 Public Speaking</option>
+      </optgroup>
+
+      <optgroup label="Business & Creative">
+        <option value="AI for Business Decision-Making">💼 AI in Business</option>
+        <option value="Tally Accounting Basics">💰 Tally</option>
+        <option value="Vedic Maths">🧮 Vedic Maths</option>
+        <option value="Canva Editing">✂️ Canva</option>
+        <option value="Resume & LinkedIn">📄 Resume</option>
+      </optgroup>
     </select>
 
-    <button onclick="goToWorkshop()">Go</button>
+    <button class="modal-btn" onclick="goToWorkshop()">🚀 Go</button>
   </div>
 </div>
-
 <script>
 
 // LOGIN
+const validUser = "admin";
+const validPass = "12345";
+
 function login(){
   let user = document.getElementById("username").value;
   let pass = document.getElementById("password").value;
 
-  if(user==="admin" && pass==="12345"){
+  if(user === validUser && pass === validPass){
     document.getElementById("loginBox").style.display="none";
     document.getElementById("dashboard").style.display="block";
+    loadDashboard();
   } else {
-    document.getElementById("error").innerText="Invalid Login";
+    document.getElementById("error").innerText="Invalid Login!";
   }
 }
 
 function logout(){location.reload();}
 
-// OPEN MODAL
-function openWorkshopFilter(){
-  let modal = document.getElementById("workshopModal");
-  modal.style.display="block";
-  setTimeout(()=>modal.classList.add("show"),10);
+// LOAD DATA
+function loadDashboard(){
+
+const careerURL = "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
+const skillURL  = "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
+
+Promise.all([
+  fetch(careerURL).then(res=>res.json()),
+  fetch(skillURL).then(res=>res.json())
+])
+.then(([careerData, skillData])=>{
+
+  loading.style.display="none";
+
+  careerCount.innerText = careerData.length;
+  skillCount.innerText = skillData.length;
+  totalCount.innerText = careerData.length + skillData.length;
+
+  let careerMap = {};
+  careerData.forEach(r=>{
+    let c = r["Top Career"] || "Unknown";
+    careerMap[c] = (careerMap[c] || 0) + 1;
+  });
+
+  new Chart(careerChart,{
+    type:'doughnut',
+    data:{labels:Object.keys(careerMap),datasets:[{data:Object.values(careerMap)}]}
+  });
+
+  let skillMap = {};
+  skillData.forEach(r=>{
+    let d = r["Bundle Domain"] || "Unknown";
+    skillMap[d] = (skillMap[d] || 0) + 1;
+  });
+
+  new Chart(skillChart,{
+    type:'pie',
+    data:{labels:Object.keys(skillMap),datasets:[{data:Object.values(skillMap)}]}
+  });
+
+  new Chart(comparisonChart,{
+    type:'bar',
+    data:{
+      labels:["Career","SkillX"],
+      datasets:[{label:"Students",data:[careerData.length, skillData.length]}]
+    }
+  });
+
+});
+}
+ function openWorkshopFilter(){
+  document.getElementById("workshopModal").style.display = "block";
+  setTimeout(()=>{
+    document.getElementById("workshopModal").classList.add("show");
+  },10);
 }
 
-// CLOSE MODAL
 function closeWorkshopModal(){
-  let modal = document.getElementById("workshopModal");
-  modal.classList.remove("show");
-  setTimeout(()=>modal.style.display="none",300);
+  document.getElementById("workshopModal").classList.remove("show");
+  setTimeout(()=>{
+    document.getElementById("workshopModal").style.display = "none";
+  },300);
 }
 
-// GO BUTTON
 function goToWorkshop(){
-  let val = document.getElementById("workshopSelect").value;
+  const selectedWorkshop = document.getElementById("workshopSelect").value;
 
-  if(!val){
-    alert("Select workshop");
+  if(!selectedWorkshop){
+    alert("Please select a workshop!");
     return;
   }
 
-  if(val==="AI for Business Decision-Making"){
+  // Example redirect logic
+  if(selectedWorkshop === "AI for Business Decision-Making"){
     window.open("ai-business.html","_blank");
-  }else{
-    alert(val + " selected");
+  } else {
+    alert(selectedWorkshop + " selected!");
   }
 
   closeWorkshopModal();
 }
 
-// CLICK OUTSIDE CLOSE
+// Close when clicking outside
 window.onclick = function(e){
   let modal = document.getElementById("workshopModal");
   if(e.target === modal){
     closeWorkshopModal();
   }
 }
-
 </script>
 
 </body>
