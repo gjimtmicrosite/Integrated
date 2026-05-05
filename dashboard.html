@@ -258,15 +258,15 @@ const validUser = "admin";
 const validPass = "12345";
 
 function login(){
-  let user = username.value;
-  let pass = password.value;
+  let user = document.getElementById("username").value;
+  let pass = document.getElementById("password").value;
 
   if(user === validUser && pass === validPass){
-    loginBox.style.display="none";
-    dashboard.style.display="block";
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("dashboard").style.display="block";
     loadDashboard();
   } else {
-    error.innerText="Invalid Login!";
+    document.getElementById("error").innerText="Invalid Login!";
   }
 }
 
@@ -341,7 +341,7 @@ function filterWorkshopData(){
     workshopSelect.value = ""; // Reset select
     return; // Stop filtering
   }
- 
+}
 </script>
 
 </body>
