@@ -226,7 +226,7 @@ body::after{
   <h2>📊 Dashboard</h2>
   <a href="Career-result.html"><button>🎓 Careerr Quiz</button></a>
   <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
-  <a href=""></a><button onclick="openWorkshopFilter()">📊 Student Workshop Filter</button></a>
+  <a href=""></a><button onclick="openWorkshopFilter()">📊 SkillX-Quiz-Result</button></a>
   <button onclick="location.reload()">🔄 Refresh</button>
   <button onclick="logout()">🚪 Logout</button>
 </div>
@@ -322,6 +322,26 @@ Promise.all([
 
 });
 }
+  function openWorkshopFilter(){
+  workshopModal.style.display = "block";
+  setTimeout(()=> workshopModal.classList.add("show"), 10);
+}
+
+function closeWorkshopModal(){
+  workshopModal.classList.remove("show");
+  setTimeout(()=> workshopModal.style.display = "none", 400);
+}
+
+function filterWorkshopData(){
+  const selectedWorkshop = workshopSelect.value;
+
+  if(selectedWorkshop === "AI for Business Decision-Making"){
+    // OPEN TEST PAGE
+    window.open("https://gjimtmicrosite.github.io/Integrated/ai-business-result.html", "_blank");
+    workshopSelect.value = ""; // Reset select
+    return; // Stop filtering
+  }
+ 
 </script>
 
 </body>
