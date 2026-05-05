@@ -49,7 +49,9 @@ body::after{
   height: 100%;
   background: rgba(0,0,0,0.8);
 }
-
+.workshop-modal.show .workshop-modal-content {
+  transform: translate(-50%, -50%) scale(1);
+}
 .workshop-modal-content {
   position: absolute;
   top: 50%;
@@ -78,6 +80,12 @@ body::after{
   border: none;
   border-radius: 10px;
   cursor: pointer;
+}
+  #workshopSelect {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 15px;
 }
 
 /* ===== LOGIN ===== */
@@ -291,7 +299,43 @@ body::after{
 
 </div>
 </div>
+<!-- WORKSHOP FILTER MODAL -->
+<div id="workshopModal" class="workshop-modal">
+  <div class="workshop-modal-content">
+    <div class="close-workshop" onclick="closeWorkshopModal()">&times;</div>
+    
+    <h2 class="modal-title">📊 Student Workshop Filter</h2>
+    <p class="modal-subtitle">Select workshop</p>
+    
+    <select id="workshopSelect">
+      <option value="">-- All Workshops --</option>
 
+      <optgroup label="Digital Skills">
+        <option value="Prompt Engineering">🤖 Prompt Engineering</option>
+        <option value="Excel Basics">📊 Excel Basics</option>
+        <option value="Power BI">📈 Power BI</option>
+        <option value="AI-Enabled Documentation">📝 AI Documentation</option>
+        <option value="Web Development">🌐 Web Development</option>
+      </optgroup>
+
+      <optgroup label="Communication">
+        <option value="Functional English">🗣️ Functional English</option>
+        <option value="Presentation Skills">🎤 Presentation Skills</option>
+        <option value="Public Speaking">📢 Public Speaking</option>
+      </optgroup>
+
+      <optgroup label="Business & Creative">
+        <option value="AI for Business Decision-Making">💼 AI in Business</option>
+        <option value="Tally Accounting Basics">💰 Tally</option>
+        <option value="Vedic Maths">🧮 Vedic Maths</option>
+        <option value="Canva Editing">✂️ Canva</option>
+        <option value="Resume & LinkedIn">📄 Resume</option>
+      </optgroup>
+    </select>
+
+    <button class="modal-btn" onclick="goToWorkshop()">🚀 Go</button>
+  </div>
+</div>
 <script>
 
 // LOGIN
@@ -363,7 +407,21 @@ Promise.all([
 
 });
 }
-  function goToWorkshop(){
+ function openWorkshopFilter(){
+  document.getElementById("workshopModal").style.display = "block";
+  setTimeout(()=>{
+    document.getElementById("workshopModal").classList.add("show");
+  },10);
+}
+
+function closeWorkshopModal(){
+  document.getElementById("workshopModal").classList.remove("show");
+  setTimeout(()=>{
+    document.getElementById("workshopModal").style.display = "none";
+  },300);
+}
+
+function goToWorkshop(){
   const selectedWorkshop = document.getElementById("workshopSelect").value;
 
   if(!selectedWorkshop){
@@ -371,14 +429,22 @@ Promise.all([
     return;
   }
 
+  // Example redirect logic
   if(selectedWorkshop === "AI for Business Decision-Making"){
-    window.open("https://gjimtmicrosite.github.io/Integrated/ai-business.html", "_blank");
+    window.open("ai-business.html","_blank");
   } else {
-    alert("Dashboard not created yet for this workshop");
+    alert(selectedWorkshop + " selected!");
   }
 
   closeWorkshopModal();
 }
+
+// Close when clicking outside
+window.onclick = function(e){
+  let modal = document.getElementById("workshopModal");
+  if(e.target === modal){
+    closeWorkshopModal();
+  }
 }
 </script>
 
