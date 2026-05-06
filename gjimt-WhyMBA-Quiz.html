@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why MBA at GJIMT – Career Fit Quiz</title>
+  <style>
+    :root {
+      --bg1: #fff7ed;
+      --bg2: #fff1f2;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --secondary: #ec4899;
+      --accent: #7c3aed;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --border: #fed7aa;
+      --shadow: 0 20px 45px rgba(249, 115, 22, 0.15);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top left, #fff7ed 0, #fff1f2 35%, #fdf2f8 65%, #ffffff 100%);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 26px 18px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #fff7ed 0, #ffedd5 35%, #ffe4e6 100%);
+      border: 1px solid rgba(249, 115, 22, 0.18);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: 50px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.18) 0, rgba(236, 72, 153, 0) 70%);
+      border-radius: 50%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    h1 {
+      margin: 8px 0 8px;
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.08;
+    }
+
+    .sub {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.6;
+      color: #374151;
+      max-width: 820px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(249, 115, 22, 0.12);
+      padding: 24px;
+    }
+
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .muted {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid #d1d5db;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s ease;
+      background: #fff;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
+    }
+
+    .help-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #fff7ed, #fff1f2);
+      border: 1px solid rgba(249, 115, 22, 0.15);
+    }
+
+    .help-box ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+      line-height: 1.7;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #fff7ed;
+      color: #9a3412;
+      border: 1px solid #fdba74;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(236, 72, 153, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #fff7ed;
+      color: #9a3412;
+      border: 1px solid #fdba74;
+    }
+
+    .btn-dark {
+      background: #111827;
+      color: #fff;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .small-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .screen {
+      display: none;
+      margin-top: 24px;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .quiz-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .mini {
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      color: #9a3412;
+      border-radius: 16px;
+      padding: 12px 16px;
+      min-width: 150px;
+    }
+
+    .mini .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #c2410c;
+      margin-bottom: 4px;
+    }
+
+    .mini .value {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .progress-wrap {
+      margin: 14px 0 18px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .progress {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #fde7d5;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    .q-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .q-tag {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #ede9fe;
+      color: #5b21b6;
+    }
+
+    .tag-theme {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .question-text {
+      font-size: 22px;
+      line-height: 1.4;
+      font-weight: 800;
+      margin: 8px 0 16px;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option {
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 18px;
+      padding: 13px 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .option:hover {
+      border-color: #fdba74;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(249, 115, 22, 0.1);
+    }
+
+    .option.selected {
+      border-color: var(--primary);
+      background: #fff7ed;
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+    }
+
+    .opt-key {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      border-radius: 50%;
+      background: #fff1f2;
+      color: #be185d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .option.selected .opt-key {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .badge-strong {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-good {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-guided {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .score-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 18px 0 18px;
+    }
+
+    .score-tile {
+      border-radius: 18px;
+      padding: 14px;
+      background: linear-gradient(135deg, #fff7ed, #fff);
+      border: 1px solid rgba(249, 115, 22, 0.15);
+      text-align: center;
+    }
+
+    .score-tile .big {
+      font-size: 22px;
+      font-weight: 800;
+      color: #9a3412;
+    }
+
+    .score-tile .small {
+      margin-top: 4px;
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .tag-special {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #92400e;
+      font-weight: 700;
+      font-size: 13px;
+      margin-right: 8px;
+      margin-bottom: 6px;
+    }
+
+    .ai-card {
+      margin-top: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      line-height: 1.7;
+    }
+
+    .contact-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: #fff;
+    }
+
+    .contact-box a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .question-text {
+        font-size: 20px;
+      }
+
+      .score-box {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="brand">
+        <div class="brand-badge">GJIMT MBA</div>
+        <div class="brand-badge">Career Psychometric Test</div>
+        <div class="brand-badge">Dual Specialisation &amp; AI Path</div>
+      </div>
+      <h1>Why MBA at GJIMT – Career Fit Quiz</h1>
+      <p class="sub">
+        This psychometric quiz helps you understand how an MBA at GJIMT, including dual specialisations and the MBA with AI Integration track, can shape your career based on your background, interests, and future goals.
+      </p>
+
+      <!-- INTRO / PROFILE SCREEN -->
+      <section id="screen-intro" class="screen active">
+        <div class="grid">
+          <div class="card">
+            <h2>Student Details &amp; Background</h2>
+
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="Enter your full name" />
+
+            <label for="phone">Phone / WhatsApp Number</label>
+            <input type="tel" id="phone" placeholder="Enter phone or WhatsApp number" />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter email address" />
+
+            <label for="city">Current City</label>
+            <input type="text" id="city" placeholder="City / Town" />
+
+            <label for="board">Class 12 Board</label>
+            <select id="board">
+              <option value="">Select Board</option>
+              <option value="CBSE">CBSE</option>
+              <option value="PSEB">PSEB</option>
+              <option value="ICSE">ICSE</option>
+              <option value="Other">Other State Board</option>
+            </select>
+
+            <label for="stream12">Class 12 Stream</label>
+            <select id="stream12">
+              <option value="">Select Class 12 Stream</option>
+              <option value="Non-Medical">Non-Medical</option>
+              <option value="Medical">Medical</option>
+              <option value="Commerce">Commerce</option>
+              <option value="Arts">Arts</option>
+              <option value="Others">Others</option>
+            </select>
+
+            <label for="gradDiscipline">Graduation Discipline</label>
+            <select id="gradDiscipline">
+              <option value="">Select Graduation Discipline</option>
+              <option value="Commerce">Commerce</option>
+              <option value="Arts">Arts</option>
+              <option value="Business Administration">Business Administration</option>
+              <option value="Computer Applications">Computer Applications</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Others">Others</option>
+            </select>
+
+            <label for="gradStatus">Graduation Status</label>
+            <select id="gradStatus">
+              <option value="">Select Status</option>
+              <option value="Completed">Completed</option>
+              <option value="Appearing">Final Year Appearing</option>
+            </select>
+
+            <label for="gradPercent">Graduation Percentage Range</label>
+            <select id="gradPercent">
+              <option value="">Select Percentage Range</option>
+              <option value="<50">Below 50</option>
+              <option value="50-59">50–59</option>
+              <option value="60-69">60–69</option>
+              <option value="70-79">70–79</option>
+              <option value="80+">80 and above</option>
+            </select>
+
+            <label for="workExp">Work Experience</label>
+            <select id="workExp">
+              <option value="">Select Work Experience</option>
+              <option value="None">No work experience</option>
+              <option value="Internship">Internship only</option>
+              <option value="Part-time">Part-time experience</option>
+              <option value="Full-time">Full-time experience</option>
+            </select>
+
+            <label for="expYears">Total Experience (if any)</label>
+            <select id="expYears">
+              <option value="">Select Total Experience</option>
+              <option value="<1">Less than 1 year</option>
+              <option value="1-2">1–2 years</option>
+              <option value="2-4">2–4 years</option>
+              <option value="4+">More than 4 years</option>
+            </select>
+
+            <label for="expArea">Area(s) of Work (if any)</label>
+            <select id="expArea">
+              <option value="">Select Closest Area</option>
+              <option value="Sales & Marketing">Sales &amp; Marketing</option>
+              <option value="Finance & Accounts">Finance &amp; Accounts</option>
+              <option value="HR & Talent">HR &amp; Talent Management</option>
+              <option value="Operations & Supply Chain">Operations &amp; Supply Chain</option>
+              <option value="Customer Support / BPO">Customer Support / BPO</option>
+              <option value="IT & Software / Data">IT &amp; Software / Data</option>
+              <option value="Family Business">Family Business</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="card">
+            <h2>How this MBA Quiz Helps You</h2>
+            <p class="muted">
+              This psychometric quiz is designed to understand:
+            </p>
+            <div class="help-box">
+              <ul>
+                <li>Your academic background and comfort with numbers, people, and processes.</li>
+                <li>Your interest in AI, analytics, and technology-driven decision making.</li>
+                <li>Your future goals – job, startup, or family business – and preferred domains and companies.</li>
+                <li>The best MBA dual specialisations at GJIMT for your profile.</li>
+              </ul>
+            </div>
+
+            <h3 style="margin-top:18px;">AI Readiness &amp; Future of Work</h3>
+            <p class="muted">
+              GJIMT offers a unique 4-semester MBA with AI Integration that uses AI as a managerial assistant – for analytics, decisions, and communication – not as a shortcut. Seats are limited and selective.
+            </p>
+            <div class="pill-row">
+              <span class="pill">Dual Specialisations: Marketing, Finance, HR, BA, Operations</span>
+              <span class="pill">AI-Ready Managers</span>
+              <span class="pill">Industry Projects &amp; Certifications</span>
+            </div>
+
+            <div class="help-box" style="margin-top:18px;">
+              <h3 style="margin-top:0;">AI Interest &amp; Experience</h3>
+              <label for="aiInterest">How interested are you in AI &amp; data-driven decisions?</label>
+              <select id="aiInterest">
+                <option value="">Select Interest Level</option>
+                <option value="No interest">Not interested</option>
+                <option value="Curious beginner">Curious but beginner</option>
+                <option value="Interested exploring">Interested and exploring AI tools</option>
+                <option value="Highly interested">Highly interested and already using AI</option>
+              </select>
+
+              <label for="aiUsage">Have you used AI tools (ChatGPT, Gemini, Excel AI, etc.)?</label>
+              <select id="aiUsage">
+                <option value="">Select Usage</option>
+                <option value="Frequent">Yes, frequently</option>
+                <option value="Sometimes">Yes, sometimes</option>
+                <option value="Heard only">Heard about them but never used</option>
+                <option value="Not yet">Not yet</option>
+              </select>
+
+              <label for="aiExample">Share one example where you used or would like to use AI (optional)</label>
+              <textarea id="aiExample" rows="3" placeholder="e.g., analysing data, preparing a presentation, marketing content, research support"></textarea>
+            </div>
+
+            <div class="btn-row">
+              <button class="btn btn-primary" onclick="startQuiz()">Start My MBA Career Quiz</button>
+            </div>
+            <p class="small-note">
+              This is not a right-or-wrong test. Answer honestly so that the recommendation is accurate for you.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUIZ SCREEN -->
+      <section id="screen-quiz" class="screen">
+        <div class="card">
+          <div class="quiz-top">
+            <div class="mini">
+              <div class="label">Question</div>
+              <div class="value"><span id="qNum">1</span> / <span id="qTotal">20</span></div>
+            </div>
+            <div class="mini">
+              <div class="label">Clarity Meter</div>
+              <div class="value" id="clarityLevel">Building</div>
+            </div>
+            <div class="mini">
+              <div class="label">MBA Fit Signal</div>
+              <div class="value" id="fitSignal">Analysing</div>
+            </div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-meta">
+              <span>Progress</span>
+              <span id="progressText">0%</span>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+          </div>
+
+          <div class="q-tag-row">
+            <span class="q-tag tag-theme" id="themeTag">Background</span>
+            <span class="q-tag" id="typeTag">Preference</span>
+          </div>
+
+          <div class="question-text" id="questionText"></div>
+
+          <div class="options" id="optionsWrap"></div>
+
+          <div class="btn-row" style="margin-top:18px;">
+            <button class="btn btn-secondary" onclick="skipQuestion()">Skip Question</button>
+            <button class="btn btn-primary" onclick="nextQuestion()">Save &amp; Next</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULT SCREEN -->
+      <section id="screen-result" class="screen">
+        <div class="card">
+          <div id="resultBadge" class="result-badge badge-good">MBA Fit Summary</div>
+          <h2 id="resultTitle">Your MBA Pathway at GJIMT</h2>
+          <p class="muted" id="studentSummary" style="margin-top:4px;"></p>
+
+          <div class="score-box">
+            <div class="score-tile">
+              <div class="big" id="scoreMarketing">0</div>
+              <div class="small">Marketing Orientation</div>
+            </div>
+            <div class="score-tile">
+              <div class="big" id="scoreFinance">0</div>
+              <div class="small">Finance Orientation</div>
+            </div>
+            <div class="score-tile">
+              <div class="big" id="scoreHR">0</div>
+              <div class="small">HR Orientation</div>
+            </div>
+            <div class="score-tile">
+              <div class="big" id="scoreBA">0</div>
+              <div class="small">Business Analytics Orientation</div>
+            </div>
+            <div class="score-tile">
+              <div class="big" id="scoreOps">0</div>
+              <div class="small">Operations Orientation</div>
+            </div>
+            <div class="score-tile">
+              <div class="big" id="scoreOverall">0</div>
+              <div class="small">Overall MBA Fit Index</div>
+            </div>
+          </div>
+
+          <h3>Why MBA at GJIMT makes sense for you</h3>
+          <p class="muted" id="whyMBA"></p>
+
+          <h3 style="margin-top:18px;">Recommended Dual Specialisations</h3>
+          <div id="specialTags" style="margin-top:6px;"></div>
+          <p class="muted" id="whyCombo" style="margin-top:6px;"></p>
+
+          <div id="aiCard" class="ai-card" style="display:none;">
+            <strong>MBA with AI Integration – Limited Seats, High Impact</strong>
+            <p style="margin-top:6px;">
+              Based on your strong interest in AI and data-driven decision making, you are a great fit for the MBA with AI Integration at GJIMT. Across 4 semesters, you will use tools like ChatGPT / Gemini, Excel AI / Sheets AI, Power BI / Looker Studio, Grammarly AI, Notion AI, and more for case discussions, dashboards, strategic analysis, and business communication – becoming an AI-augmented manager for your chosen domain.
+            </p>
+            <p style="margin-top:6px;">
+              Please note: <strong>only 10 seats</strong> are available in the MBA with AI Integration track and admission is through a screening process. If this aligns with your dream role and specialisations, you should act immediately to discuss your profile with the admissions team and secure your chance before seats are filled.
+            </p>
+          </div>
+
+          <div class="contact-box">
+            <h3 style="margin-top:0;">Next Step – Talk to GJIMT</h3>
+            <p style="line-height:1.7;margin-bottom:12px;">
+              Share this result with your parents and then connect with the GJIMT admissions team to discuss how the recommended MBA pathway and dual specialisations can be aligned with your long-term goals, placements, and projects.
+            </p>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="tel:+919876543210">Call GJIMT Admissions</a>
+              <button class="btn btn-secondary" onclick="shareOnWhatsApp()">Copy &amp; Share Result on WhatsApp</button>
+              <button class="btn btn-dark" onclick="window.print()">Print / Download</button>
+            </div>
+            <p class="small-note" style="margin-top:12px;">
+              Counselling can help you understand how GJIMT’s MBA, dual specialisations, and AI-embedded curriculum map to your career dream and target companies.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Why MBA at GJIMT – Career Psychometric Test | Built for MBA &amp; MBA with AI Integration admissions guidance
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // ----- QUESTION BANK -----
+    const questions = [
+      {
+        id: "Q1",
+        theme: "Future Goal",
+        type: "Preference",
+        text: "After your post-graduation, what is your primary goal?",
+        options: [
+          { key: "A", text: "Get a good job in India", weights: { M: 1, F: 1, H: 1, BA: 1, O: 1 } },
+          { key: "B", text: "Get an international job", weights: { M: 2, F: 2, H: 1, BA: 2, O: 1 } },
+          { key: "C", text: "Start or scale my own business", weights: { M: 2, F: 2, H: 1, BA: 1, O: 1 } },
+          { key: "D", text: "Join / grow my family business", weights: { M: 2, F: 1, H: 1, BA: 1, O: 2 } },
+          { key: "E", text: "Prepare for government / competitive exams", weights: { M: 0, F: 1, H: 0, BA: 0, O: 0 } }
+        ]
+      },
+      {
+        id: "Q2",
+        theme: "Interest Area",
+        type: "Preference",
+        text: "What kind of work excites you the most?",
+        options: [
+          { key: "A", text: "Convincing customers, building brands, driving sales", weights: { M: 3, F: 0, H: 1, BA: 1, O: 0 } },
+          { key: "B", text: "Working with numbers, money, investments, costs", weights: { M: 0, F: 3, H: 0, BA: 1, O: 0 } },
+          { key: "C", text: "Working with people – hiring, training, motivating", weights: { M: 1, F: 0, H: 3, BA: 0, O: 0 } },
+          { key: "D", text: "Managing processes, operations, and efficiency", weights: { M: 0, F: 0, H: 1, BA: 0, O: 3 } },
+          { key: "E", text: "Analysing data, dashboards, and insights for decisions", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } }
+        ]
+      },
+      {
+        id: "Q3",
+        theme: "Leadership",
+        type: "Preference",
+        text: "How important is a leadership role (manager/head) for you in the next 5–7 years?",
+        options: [
+          { key: "A", text: "Very important – I want to lead teams", weights: { M: 2, F: 2, H: 2, BA: 1, O: 1 } },
+          { key: "B", text: "Important – I am comfortable leading small teams", weights: { M: 1, F: 1, H: 2, BA: 1, O: 1 } },
+          { key: "C", text: "Somewhat important – depends on situation", weights: { M: 1, F: 1, H: 1, BA: 1, O: 1 } },
+          { key: "D", text: "Not a priority – I prefer individual contributor roles", weights: { M: 0, F: 0, H: 0, BA: 1, O: 0 } }
+        ]
+      },
+      {
+        id: "Q4",
+        theme: "Work Environment",
+        type: "Preference",
+        text: "Where would you ideally like to work?",
+        options: [
+          { key: "A", text: "Large MNC / corporate", weights: { M: 1, F: 1, H: 1, BA: 1, O: 1 } },
+          { key: "B", text: "Startup or growing company", weights: { M: 2, F: 1, H: 1, BA: 2, O: 2 } },
+          { key: "C", text: "Own / family business", weights: { M: 2, F: 2, H: 1, BA: 1, O: 2 } },
+          { key: "D", text: "Consulting / advisory", weights: { M: 1, F: 2, H: 1, BA: 2, O: 1 } },
+          { key: "E", text: "Social / development sector", weights: { M: 0, F: 0, H: 2, BA: 0, O: 0 } }
+        ]
+      },
+      {
+        id: "Q5",
+        theme: "Academic Interests",
+        type: "Preference",
+        text: "During graduation, which subjects did you enjoy the most?",
+        options: [
+          { key: "A", text: "Marketing / Consumer Behaviour / Branding", weights: { M: 3, F: 0, H: 1, BA: 1, O: 0 } },
+          { key: "B", text: "Accounting / Finance / Taxation / Economics", weights: { M: 0, F: 3, H: 0, BA: 1, O: 0 } },
+          { key: "C", text: "HRM / OB / Psychology / Sociology", weights: { M: 0, F: 0, H: 3, BA: 0, O: 0 } },
+          { key: "D", text: "Operations / Production / Supply Chain / Quality", weights: { M: 0, F: 0, H: 0, BA: 1, O: 3 } },
+          { key: "E", text: "IT / Programming / Databases / Analytics", weights: { M: 1, F: 0, H: 0, BA: 3, O: 1 } }
+        ]
+      },
+      {
+        id: "Q6",
+        theme: "Task Strengths",
+        type: "Preference",
+        text: "Which types of tasks do you naturally perform well in?",
+        options: [
+          { key: "A", text: "Talking to people, presentations, negotiations", weights: { M: 3, F: 0, H: 2, BA: 0, O: 0 } },
+          { key: "B", text: "Analysing financial statements, budgets, numbers", weights: { M: 0, F: 3, H: 0, BA: 1, O: 0 } },
+          { key: "C", text: "Understanding people, resolving conflicts, mentoring", weights: { M: 1, F: 0, H: 3, BA: 0, O: 0 } },
+          { key: "D", text: "Planning processes, logistics, resource allocation", weights: { M: 1, F: 1, H: 0, BA: 1, O: 3 } },
+          { key: "E", text: "Working on Excel, dashboards, data visualisation", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } }
+        ]
+      },
+      {
+        id: "Q7",
+        theme: "Study Preference",
+        type: "Preference",
+        text: "When studying, what do you enjoy more?",
+        options: [
+          { key: "A", text: "Real-life case studies and marketing campaigns", weights: { M: 3, F: 0, H: 1, BA: 1, O: 0 } },
+          { key: "B", text: "Financial problems, balance sheets, costing", weights: { M: 0, F: 3, H: 0, BA: 1, O: 0 } },
+          { key: "C", text: "Role plays, group discussions, people-oriented topics", weights: { M: 1, F: 0, H: 3, BA: 0, O: 0 } },
+          { key: "D", text: "Process maps, operations cases, supply chain examples", weights: { M: 0, F: 0, H: 0, BA: 1, O: 3 } },
+          { key: "E", text: "Analytics caselets, datasets, research-driven problems", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } }
+        ]
+      },
+      {
+        id: "Q8",
+        theme: "Team Role",
+        type: "Psychometric",
+        text: "In a team project, which role do you naturally take?",
+        options: [
+          { key: "A", text: "Presenter / front-face with client", weights: { M: 3, F: 0, H: 2, BA: 0, O: 0 } },
+          { key: "B", text: "Planner who sets timelines and tracks progress", weights: { M: 1, F: 1, H: 1, BA: 1, O: 2 } },
+          { key: "C", text: "Analyst who works on data and insights", weights: { M: 0, F: 1, H: 0, BA: 3, O: 1 } },
+          { key: "D", text: "Coordinator who manages people and conflicts", weights: { M: 1, F: 0, H: 3, BA: 0, O: 0 } },
+          { key: "E", text: "Executor who ensures things get done on ground", weights: { M: 1, F: 0, H: 1, BA: 0, O: 3 } }
+        ]
+      },
+      {
+        id: "Q9",
+        theme: "Decision Style",
+        type: "Psychometric",
+        text: "What describes your decision-making style?",
+        options: [
+          { key: "A", text: "Quick, based on gut feel and opportunity", weights: { M: 2, F: 1, H: 1, BA: 0, O: 0 } },
+          { key: "B", text: "Balanced – mix of data and intuition", weights: { M: 1, F: 1, H: 1, BA: 2, O: 1 } },
+          { key: "C", text: "Data-driven – I like analysing facts first", weights: { M: 0, F: 1, H: 0, BA: 3, O: 1 } },
+          { key: "D", text: "Consensus-based – I involve others", weights: { M: 0, F: 0, H: 2, BA: 0, O: 1 } },
+          { key: "E", text: "Risk-cautious – I prefer safer routes", weights: { M: 0, F: 1, H: 1, BA: 0, O: 1 } }
+        ]
+      },
+      {
+        id: "Q10",
+        theme: "Comfort with Numbers",
+        type: "Psychometric",
+        text: "How comfortable are you with numbers and data?",
+        options: [
+          { key: "A", text: "Very comfortable – I enjoy it", weights: { M: 1, F: 2, H: 0, BA: 3, O: 1 } },
+          { key: "B", text: "Comfortable – I can manage with some effort", weights: { M: 1, F: 1, H: 0, BA: 2, O: 1 } },
+          { key: "C", text: "Neutral – I manage but don’t enjoy much", weights: { M: 1, F: 0, H: 1, BA: 1, O: 0 } },
+          { key: "D", text: "Uncomfortable – I avoid number-heavy tasks", weights: { M: 0, F: 0, H: 1, BA: 0, O: 0 } }
+        ]
+      },
+      {
+        id: "Q11",
+        theme: "Technology",
+        type: "Psychometric",
+        text: "How do you feel about technology in business (Excel, BI tools, CRM, etc.)?",
+        options: [
+          { key: "A", text: "I love using tech tools and exploring new ones", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } },
+          { key: "B", text: "I am comfortable and can learn quickly", weights: { M: 1, F: 1, H: 1, BA: 2, O: 1 } },
+          { key: "C", text: "I use only what is necessary", weights: { M: 1, F: 1, H: 1, BA: 1, O: 1 } },
+          { key: "D", text: "I feel hesitant and need support", weights: { M: 0, F: 0, H: 1, BA: 0, O: 0 } }
+        ]
+      },
+      {
+        id: "Q12",
+        theme: "Job Focus",
+        type: "Future Focus",
+        text: "What would you MOST like your job to focus on after MBA?",
+        options: [
+          { key: "A", text: "Marketing, branding, and sales growth", weights: { M: 3, F: 0, H: 1, BA: 1, O: 0 } },
+          { key: "B", text: "Investment, banking, finance, or accounts", weights: { M: 0, F: 3, H: 0, BA: 1, O: 0 } },
+          { key: "C", text: "HR, talent acquisition, L&D, people development", weights: { M: 1, F: 0, H: 3, BA: 0, O: 0 } },
+          { key: "D", text: "Operations, logistics, supply chain, projects", weights: { M: 0, F: 0, H: 0, BA: 1, O: 3 } },
+          { key: "E", text: "Data analytics, dashboards, and insights", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } }
+        ]
+      },
+      {
+        id: "Q13",
+        theme: "Entrepreneurship",
+        type: "Future Focus",
+        text: "If you want to start or scale a business, what domain interests you most?",
+        options: [
+          { key: "A", text: "Retail / FMCG / e-commerce", weights: { M: 3, F: 1, H: 0, BA: 1, O: 2 } },
+          { key: "B", text: "Finance / Fintech / Ed-Fin", weights: { M: 1, F: 3, H: 0, BA: 2, O: 1 } },
+          { key: "C", text: "HR services / training / staffing", weights: { M: 1, F: 0, H: 3, BA: 0, O: 1 } },
+          { key: "D", text: "Manufacturing / logistics / operations", weights: { M: 0, F: 1, H: 0, BA: 1, O: 3 } },
+          { key: "E", text: "Tech / digital / analytics / SaaS", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } }
+        ]
+      },
+      {
+        id: "Q14",
+        theme: "Location",
+        type: "Future Focus",
+        text: "Where would you prefer to build your career after MBA?",
+        options: [
+          { key: "A", text: "Tricity / Punjab region", weights: { M: 1, F: 1, H: 1, BA: 1, O: 1 } },
+          { key: "B", text: "North India", weights: { M: 1, F: 1, H: 1, BA: 1, O: 1 } },
+          { key: "C", text: "Pan India", weights: { M: 2, F: 2, H: 1, BA: 2, O: 1 } },
+          { key: "D", text: "International exposure", weights: { M: 2, F: 2, H: 1, BA: 2, O: 1 } }
+        ]
+      },
+      {
+        id: "Q15",
+        theme: "Domain & Companies",
+        type: "Future Focus",
+        text: "Which domain do your top dream companies belong to?",
+        options: [
+          { key: "A", text: "Banking & Financial Services (e.g., HDFC, ICICI, Axis)", weights: { M: 0, F: 3, H: 0, BA: 2, O: 0 } },
+          { key: "B", text: "IT & ITES / Consulting (e.g., TCS, Infosys, Wipro)", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } },
+          { key: "C", text: "FMCG / Consumer / Retail (e.g., ITC, Berger, Philips)", weights: { M: 3, F: 1, H: 0, BA: 1, O: 1 } },
+          { key: "D", text: "EdTech / Education / Services", weights: { M: 1, F: 0, H: 2, BA: 1, O: 1 } },
+          { key: "E", text: "Open / exploring multiple domains", weights: { M: 1, F: 1, H: 1, BA: 1, O: 1 } }
+        ]
+      },
+      {
+        id: "Q16",
+        theme: "People vs Data",
+        type: "Psychometric",
+        text: "What gives you more satisfaction at the end of the day?",
+        options: [
+          { key: "A", text: "Closing a deal or convincing a client", weights: { M: 3, F: 0, H: 1, BA: 0, O: 0 } },
+          { key: "B", text: "Balancing accounts or improving profits", weights: { M: 0, F: 3, H: 0, BA: 1, O: 0 } },
+          { key: "C", text: "Helping team members and solving people issues", weights: { M: 1, F: 0, H: 3, BA: 0, O: 0 } },
+          { key: "D", text: "Making a process faster or more efficient", weights: { M: 0, F: 0, H: 0, BA: 1, O: 3 } },
+          { key: "E", text: "Finding patterns in data and presenting insights", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } }
+        ]
+      },
+      {
+        id: "Q17",
+        theme: "Stress Preference",
+        type: "Psychometric",
+        text: "Which kind of challenge do you handle better?",
+        options: [
+          { key: "A", text: "Tough sales targets and client rejections", weights: { M: 3, F: 0, H: 1, BA: 0, O: 0 } },
+          { key: "B", text: "Complex financial analysis or reporting deadlines", weights: { M: 0, F: 3, H: 0, BA: 1, O: 0 } },
+          { key: "C", text: "Team conflicts or motivation issues", weights: { M: 1, F: 0, H: 3, BA: 0, O: 0 } },
+          { key: "D", text: "Operational breakdowns, delays, logistics issues", weights: { M: 0, F: 0, H: 0, BA: 1, O: 3 } },
+          { key: "E", text: "Big data sets, tight timelines for analysis", weights: { M: 0, F: 1, H: 0, BA: 3, O: 1 } }
+        ]
+      },
+      {
+        id: "Q18",
+        theme: "AI & Analytics",
+        type: "AI",
+        text: "How excited are you about using AI and analytics in your future role?",
+        options: [
+          { key: "A", text: "Very excited – I want AI to be a key part of my work", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } },
+          { key: "B", text: "Interested – I definitely want to learn and use it", weights: { M: 1, F: 1, H: 1, BA: 2, O: 1 } },
+          { key: "C", text: "Neutral – I will use it if needed", weights: { M: 1, F: 1, H: 1, BA: 1, O: 1 } },
+          { key: "D", text: "Not very interested – prefer traditional ways", weights: { M: 0, F: 0, H: 1, BA: 0, O: 0 } }
+        ]
+      },
+      {
+        id: "Q19",
+        theme: "Projects",
+        type: "Future Focus",
+        text: "Which type of MBA project sounds most interesting to you?",
+        options: [
+          { key: "A", text: "Launching a new product and marketing campaign", weights: { M: 3, F: 0, H: 1, BA: 1, O: 1 } },
+          { key: "B", text: "Financial performance and profitability analysis", weights: { M: 0, F: 3, H: 0, BA: 1, O: 0 } },
+          { key: "C", text: "Employee engagement or HR analytics project", weights: { M: 1, F: 0, H: 3, BA: 1, O: 0 } },
+          { key: "D", text: "Operations efficiency or supply chain study", weights: { M: 0, F: 0, H: 0, BA: 1, O: 3 } },
+          { key: "E", text: "Business analytics / dashboarding for decisions", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } }
+        ]
+      },
+      {
+        id: "Q20",
+        theme: "Self-View",
+        type: "Psychometric",
+        text: "Which sentence sounds MOST like you?",
+        options: [
+          { key: "A", text: "I am a marketing & communication person at heart", weights: { M: 3, F: 0, H: 1, BA: 0, O: 0 } },
+          { key: "B", text: "I am a finance & numbers person at heart", weights: { M: 0, F: 3, H: 0, BA: 1, O: 0 } },
+          { key: "C", text: "I am a people & HR person at heart", weights: { M: 0, F: 0, H: 3, BA: 0, O: 0 } },
+          { key: "D", text: "I am an operations & execution person at heart", weights: { M: 0, F: 0, H: 1, BA: 0, O: 3 } },
+          { key: "E", text: "I am an analytics & strategy person at heart", weights: { M: 1, F: 1, H: 0, BA: 3, O: 1 } }
+        ]
+      }
+    ];
+
+    // ----- STATE -----
+    let currentIndex = 0;
+    let answers = {};
+    let student = null;
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function startQuiz() {
+      const fullName = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const stream12 = document.getElementById("stream12").value;
+      const gradDiscipline = document.getElementById("gradDiscipline").value;
+      const aiInterest = document.getElementById("aiInterest").value;
+
+      if (!fullName || !phone || !email || !stream12 || !gradDiscipline) {
+        alert("Please fill in at least your name, phone, email, Class 12 stream, and graduation discipline to start the quiz.");
+        return;
+      }
+
+      student = {
+        fullName,
+        phone,
+        email,
+        city: document.getElementById("city").value.trim(),
+        board: document.getElementById("board").value,
+        stream12,
+        gradDiscipline,
+        gradStatus: document.getElementById("gradStatus").value,
+        gradPercent: document.getElementById("gradPercent").value,
+        workExp: document.getElementById("workExp").value,
+        expYears: document.getElementById("expYears").value,
+        expArea: document.getElementById("expArea").value,
+        aiInterest,
+        aiUsage: document.getElementById("aiUsage").value,
+        aiExample: document.getElementById("aiExample").value.trim()
+      };
+
+      currentIndex = 0;
+      answers = {};
+      document.getElementById("qTotal").textContent = questions.length;
+      renderQuestion();
+      showScreen("screen-quiz");
+    }
+
+    function renderQuestion() {
+      const q = questions[currentIndex];
+      document.getElementById("qNum").textContent = currentIndex + 1;
+      document.getElementById("themeTag").textContent = q.theme;
+      document.getElementById("typeTag").textContent = q.type;
+      document.getElementById("questionText").textContent = q.text;
+
+      const optionsWrap = document.getElementById("optionsWrap");
+      optionsWrap.innerHTML = "";
+
+      q.options.forEach((opt, idx) => {
+        const optionEl = document.createElement("div");
+        optionEl.className = "option";
+        if (answers[q.id] && answers[q.id].key === opt.key) {
+          optionEl.classList.add("selected");
+        }
+        optionEl.innerHTML = `
+          <div class="opt-key">${opt.key}</div>
+          <div>${opt.text}</div>
+        `;
+        optionEl.onclick = () => selectOption(q.id, opt.key);
+        optionsWrap.appendChild(optionEl);
+      });
+
+      const progress = ((currentIndex) / questions.length) * 100;
+      document.getElementById("progressBar").style.width = progress + "%";
+      document.getElementById("progressText").textContent = Math.round(progress) + "%";
+      updateFitSignals();
+    }
+
+    function selectOption(qid, key) {
+      answers[qid] = { key };
+      document.querySelectorAll(".option").forEach((o) => o.classList.remove("selected"));
+      const opts = document.querySelectorAll(".option");
+      const q = questions[currentIndex];
+      const idx = q.options.findIndex((o) => o.key === key);
+      if (opts[idx]) opts[idx].classList.add("selected");
+    }
+
+    function nextQuestion() {
+      if (!answers[questions[currentIndex].id]) {
+        if (!confirm("You have not selected an answer for this question. Do you want to skip it and move ahead?")) {
+          return;
+        }
+      }
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function skipQuestion() {
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function computeScores() {
+      let scores = { M: 0, F: 0, H: 0, BA: 0, O: 0 };
+
+      questions.forEach((q) => {
+        const ans = answers[q.id];
+        if (!ans) return;
+        const opt = q.options.find((o) => o.key === ans.key);
+        if (!opt) return;
+        scores.M += opt.weights.M;
+        scores.F += opt.weights.F;
+        scores.H += opt.weights.H;
+        scores.BA += opt.weights.BA;
+        scores.O += opt.weights.O;
+      });
+
+      // Stream & graduation boosts (simple version)
+      if (student.stream12 === "Commerce" || student.gradDiscipline === "Commerce") {
+        scores.F += 3;
+        scores.BA += 1;
+      }
+      if (student.gradDiscipline === "Business Administration") {
+        scores.M += 3;
+        scores.H += 1;
+      }
+      if (student.gradDiscipline === "Computer Applications" || student.gradDiscipline === "Engineering") {
+        scores.BA += 3;
+        scores.O += 1;
+        scores.M += 1;
+      }
+      if (student.stream12 === "Non-Medical" || student.stream12 === "Medical") {
+        scores.BA += 1;
+        scores.F += 1;
+      }
+
+      // Work experience boosts
+      if (student.expArea === "Sales & Marketing") scores.M += 3;
+      if (student.expArea === "Finance & Accounts") scores.F += 3;
+      if (student.expArea === "HR & Talent") scores.H += 3;
+      if (student.expArea === "Operations & Supply Chain") scores.O += 3;
+      if (student.expArea === "IT & Software / Data") scores.BA += 3;
+
+      // AI interest boosts for BA
+      if (student.aiInterest === "Interested exploring" || student.aiInterest === "Highly interested") {
+        scores.BA += 3;
+      }
+
+      return scores;
+    }
+
+    function pickDualSpecialisation(scores) {
+      const arr = [
+        { code: "Marketing", value: scores.M },
+        { code: "Finance", value: scores.F },
+        { code: "HR", value: scores.H },
+        { code: "Business Analytics", value: scores.BA },
+        { code: "Operations", value: scores.O }
+      ];
+      arr.sort((a, b) => b.value - a.value);
+      const top = arr[0];
+      const second = arr[1];
+      return { top, second, ordered: arr };
+    }
+
+    function shouldRecommendAI(scores) {
+      const aiHighInterest =
+        student.aiInterest === "Interested exploring" ||
+        student.aiInterest === "Highly interested";
+      const aiUsagePositive =
+        student.aiUsage === "Frequent" || student.aiUsage === "Sometimes";
+      const strongBA = scores.BA >= scores.M && scores.BA >= scores.F && scores.BA >= scores.H && scores.BA >= scores.O;
+
+      return aiHighInterest && (aiUsagePositive || strongBA);
+    }
+
+    function showResults() {
+      const scores = computeScores();
+      const dual = pickDualSpecialisation(scores);
+      const overallFit = scores.M + scores.F + scores.H + scores.BA + scores.O;
+
+      document.getElementById("scoreMarketing").textContent = scores.M;
+      document.getElementById("scoreFinance").textContent = scores.F;
+      document.getElementById("scoreHR").textContent = scores.H;
+      document.getElementById("scoreBA").textContent = scores.BA;
+      document.getElementById("scoreOps").textContent = scores.O;
+      document.getElementById("scoreOverall").textContent = overallFit;
+
+      const summaryEl = document.getElementById("studentSummary");
+      const parts = [];
+      parts.push(`${student.fullName}, with a Class 12 background in ${student.stream12}`);
+      if (student.gradDiscipline) parts.push(`and graduation in ${student.gradDiscipline}`);
+      if (student.workExp && student.workExp !== "None") {
+        parts.push(`, having ${student.workExp.toLowerCase()} experience`);
+        if (student.expArea) parts.push(`in ${student.expArea}`);
+      }
+      summaryEl.textContent = parts.join(" ") + ".";
+
+      const resultBadge = document.getElementById("resultBadge");
+      const resultTitle = document.getElementById("resultTitle");
+      if (overallFit >= 80) {
+        resultBadge.className = "result-badge badge-strong";
+        resultBadge.textContent = "Strong MBA Fit";
+        resultTitle.textContent = "You are highly suited for an MBA at GJIMT";
+      } else if (overallFit >= 55) {
+        resultBadge.className = "result-badge badge-good";
+        resultBadge.textContent = "Good MBA Fit";
+        resultTitle.textContent = "MBA at GJIMT can strongly support your growth";
+      } else {
+        resultBadge.className = "result-badge badge-guided";
+        resultBadge.textContent = "MBA with Guidance";
+        resultTitle.textContent = "MBA at GJIMT can work for you with the right mentoring";
+      }
+
+      const whyMBAEl = document.getElementById("whyMBA");
+      const lines = [];
+      lines.push(
+        `Your responses show interest across ${dual.ordered[0].code} and ${dual.ordered[1].code}, with a clear inclination towards structured management learning.`
+      );
+      lines.push(
+        `An MBA at GJIMT will help you build functional depth, sharpen decision-making, and gain exposure to live projects and recruiters in your preferred domains.`
+      );
+      lines.push(
+        `With dual specialisations and strong mentoring, you can move from your current academic and work background to targeted roles in companies that match your aspirations.`
+      );
+      whyMBAEl.textContent = lines.join(" ");
+
+      const specialTags = document.getElementById("specialTags");
+      specialTags.innerHTML = `
+        <span class="tag-special">${dual.top.code}</span>
+        <span class="tag-special">${dual.second.code}</span>
+      `;
+
+      const whyComboEl = document.getElementById("whyCombo");
+      let comboText = "";
+      comboText += `The combination of ${dual.top.code} and ${dual.second.code} works well for you because it aligns with your natural strengths and career goals identified in the quiz. `;
+      if (dual.top.code === "Marketing" && dual.second.code === "Business Analytics") {
+        comboText += "You can build a strong profile in digital marketing, brand management, and marketing analytics – using data to design campaigns and measure impact.";
+      } else if (dual.top.code === "Finance" && dual.second.code === "Business Analytics") {
+        comboText += "You can target roles in financial analysis, banking, and fintech where data-driven insights and dashboards are key.";
+      } else if (dual.top.code === "HR" && dual.second.code === "Business Analytics") {
+        comboText += "You can combine people understanding with HR analytics – focusing on talent decisions, engagement, and productivity metrics.";
+      } else if (dual.top.code === "Operations" && dual.second.code === "Business Analytics") {
+        comboText += "You can specialise in supply chain, operations, and performance dashboards – ideal for manufacturing, logistics, and process-driven industries.";
+      } else {
+        comboText += "This dual specialisation will allow you to keep one core area as your strength while using the second specialisation to add strategic and analytical depth.";
+      }
+      whyComboEl.textContent = comboText;
+
+      const aiCard = document.getElementById("aiCard");
+      if (shouldRecommendAI(scores)) {
+        aiCard.style.display = "block";
+      } else {
+        aiCard.style.display = "none";
+      }
+
+      showScreen("screen-result");
+    }
+
+    function updateFitSignals() {
+      const answeredCount = Object.keys(answers).length;
+      const progress = (answeredCount / questions.length) * 100;
+      const clarityEl = document.getElementById("clarityLevel");
+      const fitSignalEl = document.getElementById("fitSignal");
+
+      if (progress < 30) {
+        clarityEl.textContent = "Building";
+        fitSignalEl.textContent = "Analysing";
+      } else if (progress < 70) {
+        clarityEl.textContent = "Emerging";
+        fitSignalEl.textContent = "Getting Clear";
+      } else {
+        clarityEl.textContent = "High";
+        fitSignalEl.textContent = "Almost Ready";
+      }
+    }
+
+    function buildWhatsAppMessage() {
+      if (!student) return "";
+      const top = document.getElementById("specialTags").innerText || "";
+      const overall = document.getElementById("scoreOverall").textContent;
+      const aiRecommended = document.getElementById("aiCard").style.display !== "none";
+
+      let msg = "Why MBA at GJIMT – Career Fit Quiz Result\n";
+      msg += "Name: " + student.fullName + "\n";
+      msg += "Class 12 Stream: " + student.stream12 + "\n";
+      msg += "Graduation: " + student.gradDiscipline + "\n";
+      msg += "Overall MBA Fit Index: " + overall + "\n";
+      msg += "Recommended Dual Specialisations: " + top + "\n";
+      if (aiRecommended) {
+        msg += "AI Path: Recommended for MBA with AI Integration (only 10 seats, screening based)\n";
+      } else {
+        msg += "AI Path: General MBA with AI awareness and tools as part of curriculum\n";
+      }
+      msg += "For detailed counselling, connect with GJIMT Admissions.\n";
+      return msg;
+    }
+
+    function shareOnWhatsApp() {
+      const message = buildWhatsAppMessage();
+      if (!message) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(message).then(() => {
+          alert("Result copied. You can now paste it in WhatsApp to share.");
+        }).catch(() => {
+          prompt("Copy this result message and paste it in WhatsApp:", message);
+        });
+      } else {
+        prompt("Copy this result message and paste it in WhatsApp:", message);
+      }
+    }
+  </script>
+</body>
+</html>
