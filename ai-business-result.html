@@ -7,6 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
+  .no-underline {
+    text-decoration: none;
+    color: inherit; /* keeps normal text color */
+}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:linear-gradient(135deg,#eef2f3,#dfe9f3);display:flex;}
 .sidebar{width:240px;height:100vh;background:#0b2c4a;color:#fff;padding:20px;position:fixed;left:0;top:0;}
@@ -50,7 +54,7 @@ tr:hover{background:#eef1ff;cursor:pointer;}
 <body>
 
 <div class="sidebar">
-  <a href="dashboard.html"><h2>📊 Dashboards</h2></a>
+  <h2><a href="dashboard.html" class="no-underline">📊 Dashboards</a></h2>
   <div class="menu">
     <button onclick="goHome()">🏠 Back to Home</button>
     <button onclick="goDashboard()">🔓 Logout</button>
