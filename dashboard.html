@@ -62,7 +62,7 @@ body::after{
   filter:blur(150px);
 }
 .workshop-modal {
-  display: flex;
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -78,8 +78,6 @@ body::after{
 
 .workshop-modal-content {
   position: relative;
-  transform: scale(1);
-  opacity: 1;
   background: #fff;
   color: #000;
   padding: 30px;
@@ -87,6 +85,14 @@ body::after{
   width: 320px;
   max-height: 80vh;
   overflow-y: auto;
+  transform: scale(0.7);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.workshop-modal.show .workshop-modal-content {
+  transform: scale(1);
+  opacity: 1;
 }
 .close-workshop {
   position: absolute;
@@ -436,17 +442,12 @@ Promise.all([
 
 
 function openWorkshopModal() {
-  document.getElementById('workshopModal').style.display = 'block';
-  setTimeout(() => {
-    document.getElementById('workshopModal').classList.add('show');
-  }, 10);
+  const modal = document.getElementById('workshopModal');
+  modal.classList.add('show');
 }
 
 function closeWorkshopModal() {
   document.getElementById('workshopModal').classList.remove('show');
-  setTimeout(() => {
-    document.getElementById('workshopModal').style.display = 'none';
-  }, 300);
 }
 
 function goToWorkshop() {
