@@ -152,17 +152,38 @@ tr:nth-child(even) { background: #f8f9ff; }
 
 <body>
 
-<!-- SIDEBAR -->
+<!-- DASHBOARD -->
+<div id="dashboard">
+
 <div class="sidebar">
-  <h2>
-  <a href="dashboard.html" style="text-decoration:none;color:#ffd700;">
-    📊 Dashboards
-  </a>
-</h2>
-    <a href="Career-result.html"><button>🎓 Career Quiz</button></a>
-    <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
-  <button onclick="goHome()">🏠 Back to Home</button>
-<button onclick="showHome()">🔓 Logout</button>
+  <h2>📊 Dashboard</h2>
+  <a href="Career-result.html"><button>🎓 Careerr Quiz</button></a>
+  <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
+<button type="button" onclick="openWorkshopModal()" class="workshop-trigger-btn">
+  📊 SkillX-Result
+</button>
+  <button onclick="location.reload()">🔄 Refresh</button>
+  <button onclick="logout()">🚪 Logout</button>
+</div>
+
+<div class="main">
+<div class="header">🚀 Smart Analytics Dashboard</div>
+
+<div class="cards">
+  <div class="card"><h3>Career Students</h3><div class="value" id="careerCount">0</div></div>
+  <div class="card"><h3>SkillX Students</h3><div class="value" id="skillCount">0</div></div>
+  <div class="card"><h3>Total Students</h3><div class="value" id="totalCount">0</div></div>
+</div>
+
+<div class="loading" id="loading">⏳ Loading data...</div>
+
+<div class="charts">
+  <div class="chart-box"><canvas id="careerChart"></canvas></div>
+  <div class="chart-box"><canvas id="skillChart"></canvas></div>
+  <div class="chart-box"><canvas id="comparisonChart"></canvas></div>
+</div>
+
+</div>
 </div>
 
 <!-- MAIN -->
