@@ -9,6 +9,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+  /* ===== BACKGROUND GLOW ===== */
+body::before{
+  content:"";
+  position:fixed;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle,#00f2ff,transparent);
+  top:-100px;
+  left:-100px;
+  filter:blur(150px);
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle,#ff00c8,transparent);
+  bottom:-100px;
+  right:-100px;
+  filter:blur(150px);
+}
+
   .no-underline {
     text-decoration: none;
     color: inherit; /* keeps normal text color */
