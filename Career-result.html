@@ -5,292 +5,514 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Career Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
-/* SIDEBAR */
-.sidebar {
-    width: 240px;
-    height: 100vh;
-    position: fixed;
-    background: rgba(2, 44, 112);
-    backdrop-filter: blur(20px);
-    padding: 20px;
-    color: white;
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    overflow-x:hidden;
 }
 
-.sidebar h2 {
-    color: #d4af37;
-    margin-bottom: 20px;
+/* =========================
+   BACKGROUND GLOW
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:450px;
+    height:450px;
+    background:radial-gradient(circle,#00f2ff,transparent);
+    top:-120px;
+    left:-120px;
+    filter:blur(140px);
+    z-index:-1;
 }
 
-.sidebar button {
-    width: 100%;
-    margin: 10px 0;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    cursor: pointer;
+body::after{
+    content:"";
+    position:fixed;
+    width:450px;
+    height:450px;
+    background:radial-gradient(circle,#ff00c8,transparent);
+    bottom:-120px;
+    right:-120px;
+    filter:blur(140px);
+    z-index:-1;
 }
 
-.sidebar button:hover {
-    background: #d4af37;
-    color: #000;
-}
-/* DASHBOARD */
-#dashboard{display:none;}
+/* =========================
+   SIDEBAR
+========================= */
 
-/* SIDEBAR */
 .sidebar{
-  width:250px;
-  height:100vh;
-  position:fixed;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(20px);
-  padding:20px;
-  border-right:1px solid rgba(255,255,255,0.1);
+    width:250px;
+    height:100vh;
+    position:fixed;
+    top:0;
+    left:0;
+
+    background:rgba(255,255,255,0.06);
+
+    backdrop-filter:blur(18px);
+
+    border-right:1px solid rgba(255,255,255,0.1);
+
+    padding:25px 18px;
+
+    z-index:1000;
 }
 
 .sidebar h2{
-  color:#ffd700;
-  margin-bottom:20px;
+    color:#ffd700;
+    margin-bottom:25px;
+    font-size:24px;
 }
 
 .sidebar button{
-  width:100%;
-  margin:10px 0;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  background:rgba(255,255,255,0.1);
-  color:#fff;
-  cursor:pointer;
-  transition:0.3s;
+    width:100%;
+    margin:10px 0;
+    padding:13px;
+
+    border:none;
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.1);
+
+    color:white;
+
+    font-size:15px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:0.3s;
 }
 
 .sidebar button:hover{
-  background:#ffd700;
-  color:#000;
-  transform:scale(1.05);
-}
-/* MAIN */
-.main-content {
-    margin-left: 260px;
-    width: 100%;
+    background:#ffd700;
+    color:#000;
+    transform:translateX(5px) scale(1.02);
 }
 
-/* HEADER */
-.header {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 20px;
-    text-align: center;
-    font-size: 22px;
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content{
+    margin-left:260px;
+    padding:25px;
 }
 
-/* STATS */
-.stats {
-    display: flex;
-    gap: 15px;
-    padding: 15px;
-    flex-wrap: wrap;
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:20px;
+
+    padding:22px;
+
+    text-align:center;
+
+    font-size:28px;
+    font-weight:700;
+
+    margin-bottom:25px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
-.stat-card {
-    flex: 1;
-    min-width: 150px;
-    background: rgba(255,255,255,0.7);
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+    margin-bottom:25px;
 }
 
-/* CARD */
-.card {
-    margin: 15px;
-    background: rgba(255,255,255,0.85);
-    border-radius: 15px;
-    padding: 15px;
+.stat-card{
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:20px;
+
+    padding:22px;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+
+    transition:0.3s;
 }
 
-/* SEARCH BOX */
-.search-box {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+.stat-card:hover{
+    transform:translateY(-6px) scale(1.02);
 }
 
-.search-box input {
-    padding: 10px;
-    width: 250px;
-    border-radius: 8px;
-    border: none;
+.stat-card div:first-child{
+    font-size:15px;
+    opacity:0.85;
+    margin-bottom:10px;
 }
 
-.search-box button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #667eea;
-    color: white;
+.stat-card div:last-child{
+    font-size:32px;
+    font-weight:700;
+    color:#ffd700;
 }
 
-.search-box button:hover {
-    background: #5a67d8;
+/* =========================
+   TABLE CARD
+========================= */
+
+.card{
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:22px;
+
+    padding:20px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
 }
 
-/* TABLE */
-.table-container { overflow-x: auto; }
+/* =========================
+   SEARCH BOX
+========================= */
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+.search-box{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+
+    margin-bottom:20px;
 }
 
-th {
-    background: #667eea;
-    color: white;
-    padding: 10px;
+.search-box input{
+    flex:1;
+    min-width:250px;
+
+    padding:12px;
+
+    border:none;
+    outline:none;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,0.12);
+
+    color:white;
 }
 
-td {
-    padding: 10px;
-    text-align: center;
+.search-box input::placeholder{
+    color:#ddd;
 }
 
-tr:nth-child(even) { background: #f8f9ff; }
+.search-box button{
+    padding:12px 18px;
 
-/* BADGE */
-.badge {
-    padding: 4px 8px;
-    border-radius: 6px;
-    color: white;
+    border:none;
+    border-radius:12px;
+
+    background:linear-gradient(45deg,#667eea,#764ba2);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:0.3s;
 }
 
-.blue { background: #2196f3; }
-.green { background: #28a745; }
-.orange { background: #ff9800; }
+.search-box button:hover{
+    transform:scale(1.05);
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1000px;
+}
+
+th{
+    background:rgba(255,255,255,0.15);
+
+    padding:14px;
+
+    color:#ffd700;
+
+    font-size:14px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+
+    border-bottom:1px solid rgba(255,255,255,0.08);
+
+    font-size:14px;
+}
+
+tr:hover{
+    background:rgba(255,255,255,0.05);
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badge{
+    padding:6px 10px;
+    border-radius:8px;
+    color:white;
+    font-size:12px;
+    font-weight:600;
+}
+
+.blue{
+    background:#2196f3;
+}
+
+.green{
+    background:#28a745;
+}
+
+.orange{
+    background:#ff9800;
+}
+
+/* =========================
+   LOADER
+========================= */
+
+#loader{
+    text-align:center;
+    padding:30px;
+    font-size:18px;
+    color:#ffd700;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:100%;
+        height:auto;
+        position:relative;
+    }
+
+    .main-content{
+        margin-left:0;
+        padding:15px;
+    }
+
+    .header{
+        font-size:22px;
+    }
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .search-box input{
+        min-width:100%;
+    }
+
+}
 
 </style>
 </head>
 
 <body>
 
-<!-- DASHBOARD -->
-<div id="dashboard">
+<!-- =========================
+     SIDEBAR
+========================= -->
 
 <div class="sidebar">
-  <h2>📊 Dashboard</h2>
-  <a href="Career-result.html"><button>🎓 Careerr Quiz</button></a>
-  <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
-<button type="button" onclick="openWorkshopModal()" class="workshop-trigger-btn">
-  📊 SkillX-Result
-</button>
-  <button onclick="location.reload()">🔄 Refresh</button>
-  <button onclick="logout()">🚪 Logout</button>
-</div>
 
-<div class="main">
-<div class="header">🚀 Smart Analytics Dashboard</div>
+    <h2>📊 Dashboard</h2>
 
-<div class="cards">
-  <div class="card"><h3>Career Students</h3><div class="value" id="careerCount">0</div></div>
-  <div class="card"><h3>SkillX Students</h3><div class="value" id="skillCount">0</div></div>
-  <div class="card"><h3>Total Students</h3><div class="value" id="totalCount">0</div></div>
-</div>
+    <a href="dashboard.html">
+        <button>🏠 Main Dashboard</button>
+    </a>
 
-<div class="loading" id="loading">⏳ Loading data...</div>
+    <a href="Career-result.html">
+        <button>🎓 Career Quiz</button>
+    </a>
 
-<div class="charts">
-  <div class="chart-box"><canvas id="careerChart"></canvas></div>
-  <div class="chart-box"><canvas id="skillChart"></canvas></div>
-  <div class="chart-box"><canvas id="comparisonChart"></canvas></div>
-</div>
+    <a href="skillx-result.html">
+        <button>💼 SkillX Quiz</button>
+    </a>
+
+    <button onclick="location.reload()">
+        🔄 Refresh
+    </button>
+
+    <button onclick="goHome()">
+        🚪 Logout
+    </button>
 
 </div>
-</div>
 
-<!-- MAIN -->
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
 <div class="main-content">
 
-<div class="header">🎓 Career Test Dashboard</div>
-
-<div class="stats">
-    <div class="stat-card">
-        <div>Total Students</div>
-        <div id="total">0</div>
-    </div>
-    <div class="stat-card">
-        <div>Top Career</div>
-        <div id="domain">-</div>
-    </div>
-    <div class="stat-card">
-        <div>Avg Score</div>
-        <div id="avg">0</div>
-    </div>
-</div>
-
-<div class="card">
-
-    <!-- 🔍 SEARCH UI -->
-    <div class="search-box">
-        <input type="text" id="search" placeholder="Search student...">
-        <button onclick="searchTable()">Search</button>
-        <button onclick="resetTable()">Clear</button>
+    <div class="header">
+        🚀 Career Test Analytics Dashboard
     </div>
 
-    <div class="table-container">
-        <div id="loader">Loading...</div>
+    <!-- STATS -->
 
-        <table id="dataTable" style="display:none;">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Stream</th>
-                    <th>R</th>
-                    <th>I</th>
-                    <th>A</th>
-                    <th>S</th>
-                    <th>E</th>
-                    <th>C</th>
-                    <th>Top Career</th>
-                    <th>Second</th>
-                    <th>Third</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+    <div class="stats">
+
+        <div class="stat-card">
+            <div>Total Students</div>
+            <div id="total">0</div>
+        </div>
+
+        <div class="stat-card">
+            <div>Top Career</div>
+            <div id="domain">-</div>
+        </div>
+
+        <div class="stat-card">
+            <div>Avg Score</div>
+            <div id="avg">0</div>
+        </div>
+
     </div>
-</div>
+
+    <!-- TABLE CARD -->
+
+    <div class="card">
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="🔍 Search student..."
+            >
+
+            <button onclick="searchTable()">
+                Search
+            </button>
+
+            <button onclick="resetTable()">
+                Clear
+            </button>
+
+        </div>
+
+        <!-- TABLE -->
+
+        <div class="table-container">
+
+            <div id="loader">
+                ⏳ Loading Student Data...
+            </div>
+
+            <table id="dataTable" style="display:none;">
+
+                <thead>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Stream</th>
+                        <th>R</th>
+                        <th>I</th>
+                        <th>A</th>
+                        <th>S</th>
+                        <th>E</th>
+                        <th>C</th>
+                        <th>Top Career</th>
+                        <th>Second</th>
+                        <th>Third</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="tableBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
 
 <script>
 
-const sheetURL = "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
+/* =========================
+   GOOGLE SHEET URL
+========================= */
+
+const sheetURL =
+"https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
+
+/* =========================
+   FETCH DATA
+========================= */
 
 fetch(sheetURL)
+
 .then(res => res.json())
+
 .then(data => {
 
     document.getElementById("loader").style.display = "none";
+
     document.getElementById("dataTable").style.display = "table";
 
     let total = data.length;
+
     let careerCount = {};
+
     let totalScore = 0;
+
     let bodyHTML = "";
 
     data.forEach(row => {
@@ -303,66 +525,134 @@ fetch(sheetURL)
         let C = Number(row["C"]) || 0;
 
         let avgScore = (R+I+A+S+E+C)/6;
+
         totalScore += avgScore;
 
         let top = row["Top Career"] || "-";
         let second = row["Second"] || "-";
         let third = row["Third"] || "-";
 
-        careerCount[top] = (careerCount[top] || 0) + 1;
+        careerCount[top] =
+        (careerCount[top] || 0) + 1;
 
-        bodyHTML += `<tr>
+        bodyHTML += `
+
+        <tr>
+
             <td>${row["Name"] || "-"}</td>
+
             <td>${row["phone"] || "-"}</td>
+
             <td>${row["stream"] || "-"}</td>
+
             <td>${R}</td>
             <td>${I}</td>
             <td>${A}</td>
             <td>${S}</td>
             <td>${E}</td>
             <td>${C}</td>
-            <td><span class="badge blue">${top}</span></td>
-            <td><span class="badge green">${second}</span></td>
-            <td><span class="badge orange">${third}</span></td>
-        </tr>`;
+
+            <td>
+              <span class="badge blue">
+                ${top}
+              </span>
+            </td>
+
+            <td>
+              <span class="badge green">
+                ${second}
+              </span>
+            </td>
+
+            <td>
+              <span class="badge orange">
+                ${third}
+              </span>
+            </td>
+
+        </tr>
+
+        `;
+
     });
 
-    document.getElementById("tableBody").innerHTML = bodyHTML;
+    document.getElementById("tableBody").innerHTML =
+    bodyHTML;
 
-    document.getElementById("total").innerText = total;
+    document.getElementById("total").innerText =
+    total;
 
-    let topCareer = Object.keys(careerCount)
-        .reduce((a,b)=> careerCount[a]>careerCount[b]?a:b);
+    let topCareer =
+    Object.keys(careerCount)
+    .reduce((a,b)=>
+      careerCount[a] > careerCount[b] ? a : b
+    );
 
-    document.getElementById("domain").innerText = topCareer;
+    document.getElementById("domain").innerText =
+    topCareer;
 
-    document.getElementById("avg").innerText = (totalScore / total).toFixed(1);
+    document.getElementById("avg").innerText =
+    (totalScore / total).toFixed(1);
+
+})
+
+.catch(error => {
+
+    document.getElementById("loader").innerHTML =
+    "❌ Failed to load data";
+
+    console.error(error);
 
 });
 
-// 🔍 SEARCH BUTTON FUNCTION
-function searchTable() {
-    let input = document.getElementById("search").value.toLowerCase();
-    let rows = document.querySelectorAll("#tableBody tr");
+/* =========================
+   SEARCH
+========================= */
+
+function searchTable(){
+
+    let input =
+    document.getElementById("search")
+    .value.toLowerCase();
+
+    let rows =
+    document.querySelectorAll("#tableBody tr");
 
     rows.forEach(row => {
-        let text = row.innerText.toLowerCase();
-        row.style.display = text.includes(input) ? "" : "none";
+
+        let text =
+        row.innerText.toLowerCase();
+
+        row.style.display =
+        text.includes(input)
+        ? ""
+        : "none";
+
     });
+
 }
 
-// 🔄 CLEAR SEARCH
-function resetTable() {
+/* =========================
+   RESET SEARCH
+========================= */
+
+function resetTable(){
+
     document.getElementById("search").value = "";
+
     searchTable();
+
 }
 
-// HOME
-function goHome() {
-    window.location.href = "https://gjimtmicrosite.github.io/Integrated/";
-}
-function showHome() {
-  window.location.href = "https://gjimtmicrosite.github.io/Integrated/dashboard.html";
+/* =========================
+   HOME
+========================= */
+
+function goHome(){
+
+    window.location.href =
+    "https://gjimtmicrosite.github.io/Integrated/";
+
 }
 
 </script>
