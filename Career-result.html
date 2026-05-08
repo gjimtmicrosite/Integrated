@@ -55,21 +55,22 @@ body::after{
 ========================= */
 
 .sidebar{
-    width:250px;
-    height:100vh;
-    position:fixed;
-    top:0;
-    left:0;
+  width:250px;
+  height:100vh;
+  position:fixed;
+  top:0;
+  left:0;
 
-    background:rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
 
-    backdrop-filter:blur(18px);
+  padding:18px 14px;
 
-    border-right:1px solid rgba(255,255,255,0.1);
+  border-right:1px solid rgba(255,255,255,0.1);
 
-    padding:25px 18px;
+  overflow-y:auto;
 
-    z-index:1000;
+  scrollbar-width:thin;
 }
 
 .sidebar h2{
@@ -388,14 +389,18 @@ SKILLX MENU
 
 .all-modules{
     display:none;
+    max-height:45vh;
+    overflow-y:auto;
+    padding-right:4px;
+    margin-top:6px;
     animation:fadeMenu 0.3s ease;
 }
 
 /* MODULE */
 
 .module{
-    margin-bottom:10px;
-    border-radius:14px;
+    margin-bottom:8px;
+    border-radius:12px;
     overflow:hidden;
 }
 
@@ -403,14 +408,15 @@ SKILLX MENU
 
 .module-btn{
     width:100%;
-    padding:11px;
+    padding:9px 12px;
     border:none;
     color:white;
-    font-size:11px;
-    font-weight:700;
+    font-size:10px;
+    font-weight:600;
     text-align:left;
     cursor:pointer;
     transition:0.3s;
+    border-radius:12px;
 }
 
 /* DIGITAL */
@@ -439,9 +445,10 @@ SKILLX MENU
 
 .submenu{
     display:none;
-    padding:8px;
+    padding:6px;
+    max-height:180px;
+    overflow-y:auto;
 }
-
 /* ACTIVE */
 
 .module.active .submenu{
@@ -468,10 +475,10 @@ SKILLX MENU
     display:block;
     text-decoration:none;
     color:white;
-    padding:9px;
-    margin:6px 0;
-    border-radius:10px;
-    font-size:11px;
+    padding:8px 10px;
+    margin:4px 0;
+    border-radius:8px;
+    font-size:10px;
     transition:0.3s;
     background:rgba(255,255,255,0.08);
 }
