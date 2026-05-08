@@ -72,50 +72,179 @@ body::after{
 }
 
 /* ✅ when modal open */
-.workshop-modal.show {
-  display: flex;
+/* =========================
+SKILLX MENU
+========================= */
+
+.skillx-menu{
+    width:100%;
+    margin-top:10px;
 }
 
-.workshop-modal-content {
-  position: relative;
-  background: #fff;
-  color: #000;
-  padding: 30px;
-  border-radius: 15px;
-  width: 320px;
-  max-height: 80vh;
-  overflow-y: auto;
-  transform: scale(0.7);
-  opacity: 0;
-  transition: all 0.3s ease;
+
+/* MAIN BUTTON */
+
+.main-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+    color:white;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+    margin-bottom:10px;
 }
 
-.workshop-modal.show .workshop-modal-content {
-  transform: scale(1);
-  opacity: 1;
-}
-.close-workshop {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  cursor: pointer;
-  font-size: 22px;
+.main-btn:hover{
+    background:linear-gradient(135deg,#ffd700,#ff9800);
+    color:black;
 }
 
-.modal-btn {
-  width: 100%;
-  padding: 10px;
-  margin-top: 15px;
-  background: #ff9800;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+/* HIDE MENU */
+
+.all-modules{
+    display:none;
+    max-height:75vh;
+    overflow-y:auto;
+    padding-right:5px;
+    animation:fadeMenu 0.3s ease;
 }
-  #workshopSelect {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 15px;
+.all-modules::-webkit-scrollbar{
+    width:6px;
+}
+/* MODULE */
+
+.module{
+    margin-bottom:10px;
+    border-radius:14px;
+    overflow:visible;
+}
+/* MODULE BUTTON */
+.module-btn{
+
+width:100%;
+
+padding:11px;
+
+border:none;
+
+background:rgba(255,255,255,0.08);
+
+color:#ffd700;
+
+font-size:11px;
+
+font-weight:700;
+
+text-align:left;
+
+cursor:pointer;
+
+transition:0.3s;
+}
+.module-btn{
+    width:100%;
+    padding:11px;
+    border:none;
+    color:white;
+    font-size:11px;
+    font-weight:700;
+    text-align:left;
+    cursor:pointer;
+    transition:0.3s;
+}
+.module:nth-child(1) .module-btn{
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+}
+
+/* COMMUNICATION */
+
+.module:nth-child(2) .module-btn{
+    background:linear-gradient(135deg,#ff9800,#ff5722);
+}
+
+/* BUSINESS */
+
+.module:nth-child(3) .module-btn{
+    background:linear-gradient(135deg,#8e2de2,#4a00e0);
+}
+.module-btn:hover{
+    transform:scale(1.02);
+}
+
+/* SUBMENU */
+.submenu{
+    display:none;
+    padding:8px;
+    max-height:none;
+    overflow:visible;
+}
+
+/* SUBMENU SCROLLBAR */
+
+.submenu::-webkit-scrollbar{
+    width:5px;
+}
+
+.submenu::-webkit-scrollbar-thumb{
+    background:#ffd700;
+    border-radius:10px;
+}
+
+/* ACTIVE */
+
+.module.active .submenu{
+    display:block;
+}
+.module:nth-child(1) .submenu{
+    background:rgba(0,114,255,0.15);
+}
+
+/* COMMUNICATION SUBMENU */
+
+.module:nth-child(2) .submenu{
+    background:rgba(255, 102, 0, 0.32);
+}
+
+/* BUSINESS SUBMENU */
+
+.module:nth-child(3) .submenu{
+    background:rgba(142,45,226,0.15);
+}
+
+/* LINKS */
+
+.submenu a{
+    display:block;
+    text-decoration:none;
+    color:white;
+    padding:9px;
+    margin:6px 0;
+    border-radius:10px;
+    font-size:11px;
+    transition:0.3s;
+    background:rgba(255,255,255,0.08);
+}
+
+.submenu a:hover{
+    background:white;
+    color:black;
+    transform:translateX(4px);
+}
+@keyframes fadeMenu{
+
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 /* ===== LOGIN ===== */
@@ -183,6 +312,7 @@ body::after{
   backdrop-filter:blur(20px);
   padding:20px;
   border-right:1px solid rgba(255,255,255,0.1);
+   overflow-y:auto;
 }
 
 .sidebar h2{
@@ -206,6 +336,9 @@ body::after{
   background:#ffd700;
   color:#000;
   transform:scale(1.05);
+}
+.sidebar::-webkit-scrollbar{
+  width:6px;
 }
 
 /* MAIN */
@@ -305,9 +438,116 @@ body::after{
   <h2>📊 Dashboard</h2>
   <a href="Career-result.html"><button>🎓 Careerr Quiz</button></a>
   <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
-<button type="button" onclick="openWorkshopModal()" class="workshop-trigger-btn">
-  📊 SkillX-Result
+   <div class="skillx-menu">
+
+<!-- MAIN BUTTON -->
+
+<button class="main-btn" id="skillxToggle">
+    💼 SkillX Result ▼
 </button>
+
+<!-- ALL MODULES -->
+
+<div class="all-modules" id="allModules">
+
+    <!-- DIGITAL -->
+
+    <div class="module">
+
+        <button class="module-btn">
+            ▶ Digital Power Skills
+        </button>
+
+        <div class="submenu">
+
+            <a href="digital-power-skills.html">
+                🤖 AI Documentation
+            </a>
+
+            <a href="excel-powerbi.html">
+                📊 Excel + Power BI
+            </a>
+
+            <a href="web-dev.html">
+                💻 Web Development
+            </a>
+
+            <a href="cyber-security.html">
+                🔐 Information Security
+            </a>
+
+            <a href="cloud-computing.html">
+                ☁️ Cloud Computing
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- COMMUNICATION -->
+
+    <div class="module">
+
+        <button class="module-btn">
+            ▶ Communication & Branding
+        </button>
+
+        <div class="submenu">
+
+            <a href="functional-english.html">
+                🗣 Functional English
+            </a>
+
+            <a href="public-speaking.html">
+                🎤 Public Speaking
+            </a>
+
+            <a href="canva-editing.html">
+                🎨 Canva Editing
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- BUSINESS -->
+
+    <div class="module">
+
+        <button class="module-btn">
+            ▶ Business & Finance
+        </button>
+
+        <div class="submenu">
+
+            <a href="resume-linkedin.html">
+                📄 Resume & LinkedIn
+            </a>
+
+            <a href="prompt-engineering.html">
+                ⚡ Prompt Engineering
+            </a>
+
+            <a href="ai-business.html">
+                🧠 AI for Business
+            </a>
+
+            <a href="vedic-maths.html">
+                ➗ Vedic Maths
+            </a>
+
+            <a href="tally.html">
+                💰 Tally Basics
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
   <button onclick="location.reload()">🔄 Refresh</button>
   <button onclick="logout()">🚪 Logout</button>
 </div>
@@ -332,42 +572,7 @@ body::after{
 </div>
 </div>
 <!-- WORKSHOP FILTER MODAL -->
-<div id="workshopModal" class="workshop-modal">
-  <div class="workshop-modal-content">
-    <div class="close-workshop" onclick="closeWorkshopModal()">&times;</div>
-    
-    <h2 class="modal-title">📊 Student Workshop </h2>
-    <p class="modal-subtitle">Select workshops</p>
-    
-    <select id="workshopSelect"  class="select2">
-      <option value="">-- All Workshops --</option>
 
-      <optgroup label="Digital Skills">
-        <option value="Prompt Engineering">🤖 Prompt Engineering</option>
-        <option value="Excel Basics">📊 Excel Basics</option>
-        <option value="Power BI">📈 Power BI</option>
-        <option value="AI-Enabled Documentation">📝 AI Documentation</option>
-        <option value="Web Development">🌐 Web Development</option>
-      </optgroup>
-
-      <optgroup label="Communication">
-        <option value="Functional English">🗣️ Functional English</option>
-        <option value="Presentation Skills">🎤 Presentation Skills</option>
-        <option value="Public Speaking">📢 Public Speaking</option>
-      </optgroup>
-
-      <optgroup label="Business & Creative">
-        <option value="AI for Business Decision-Making">💼 AI in Business</option>
-        <option value="Tally Accounting Basics">💰 Tally</option>
-        <option value="Vedic Maths">🧮 Vedic Maths</option>
-        <option value="Canva Editing">✂️ Canva</option>
-        <option value="Resume & LinkedIn">📄 Resume</option>
-      </optgroup>
-    </select>
-
-    <button class="modal-btn" onclick="goToWorkshop()">🚀 Go</button>
-  </div>
-</div>
 <script>
 
 // LOGIN
@@ -473,6 +678,40 @@ window.onclick = function(e){
     closeWorkshopModal();
   }
 }
+
+const skillxToggle =
+document.getElementById("skillxToggle");
+
+const allModules =
+document.getElementById("allModules");
+
+/* SHOW/HIDE MAIN MENU */
+
+skillxToggle.addEventListener("click", () => {
+
+if(allModules.style.display === "block"){
+
+    allModules.style.display = "none";
+
+}else{
+
+    allModules.style.display = "block";
+}
+
+});
+
+/* SUBMENU ACCORDION */
+
+const moduleButtons =
+document.querySelectorAll(".module-btn");
+
+moduleButtons.forEach(button => {
+
+button.addEventListener("click", () => {
+
+    button.parentElement.classList.toggle("active");
+});
+});
 </script>
 
 </body>
