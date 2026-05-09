@@ -700,8 +700,12 @@ tr:hover{
    GOOGLE SHEET
 ========================= */
 
+const params = new URLSearchParams(window.location.search);
+
+const sheetName = params.get("sheet") || "ai-business";
+
 const sheetURL =
-"https://opensheet.elk.sh/1sqijtNW-lNj7w5jfLw9ZZrIrDRNHJj76clRlRcN7CzU/ai-business";
+`https://opensheet.elk.sh/1sqijtNW-lNj7w5jfLw9ZZrIrDRNHJj76clRlRcN7CzU/${sheetName}`;
 
 /* =========================
    FETCH DATA
