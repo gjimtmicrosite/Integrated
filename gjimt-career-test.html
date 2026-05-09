@@ -495,7 +495,16 @@ function regSubmit(e){
 
 document.getElementById('regForm').addEventListener('submit', regSubmit);
 
-document.getElementById('submitBtn').addEventListener('click', async () => {
+document.getElementById('submitBtn').addEventListener('click', async (e) => {
+
+  const submitBtn = e.target;
+
+  // Stop double click
+  if(submitBtn.disabled) return;
+
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = "Submitting...";
+
   const scores = {R:0,I:0,A:0,S:0,E:0,C:0};
 
   questions.forEach(q => {
