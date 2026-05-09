@@ -55,28 +55,28 @@ body::after{
 ========================= */
 
 .sidebar{
-    width:250px;
-    height:100vh;
-    position:fixed;
-    top:0;
-    left:0;
+  width:250px;
+  height:100vh;
+  position:fixed;
+  top:0;
+  left:0;
 
-    background:rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
 
-    backdrop-filter:blur(18px);
+  padding:18px 14px;
 
-    border-right:1px solid rgba(255,255,255,0.1);
+  border-right:1px solid rgba(255,255,255,0.1);
 
-    padding:25px 18px;
+  overflow-y:auto;
 
-    z-index:1000;
+  scrollbar-width:thin;
 }
 
 .sidebar h2{
     color:#ffd700;
     margin-bottom:25px;
     font-size:24px;
-    cursor:pointer;
 }
 
 .sidebar button{
@@ -172,13 +172,13 @@ body::after{
     transform:translateY(-6px) scale(1.02);
 }
 
-.stat-title{
+.stat-card div:first-child{
     font-size:15px;
     opacity:0.85;
     margin-bottom:10px;
 }
 
-.stat-value{
+.stat-card div:last-child{
     font-size:32px;
     font-weight:700;
     color:#ffd700;
@@ -201,13 +201,14 @@ body::after{
 }
 
 /* =========================
-   SEARCH
+   SEARCH BOX
 ========================= */
 
 .search-box{
     display:flex;
     gap:12px;
     flex-wrap:wrap;
+
     margin-bottom:20px;
 }
 
@@ -231,6 +232,27 @@ body::after{
     color:#ddd;
 }
 
+.search-box button{
+    padding:12px 18px;
+
+    border:none;
+    border-radius:12px;
+
+    background:linear-gradient(45deg,#667eea,#764ba2);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.search-box button:hover{
+    transform:scale(1.05);
+}
+
 /* =========================
    TABLE
 ========================= */
@@ -246,44 +268,26 @@ table{
 }
 
 th{
-    position:sticky;
-    top:0;
-
     background:rgba(255,255,255,0.15);
-
-    color:#ffd700;
 
     padding:14px;
 
-    font-size:13px;
+    color:#ffd700;
+
+    font-size:14px;
 }
 
 td{
     padding:12px;
-
     text-align:center;
 
     border-bottom:1px solid rgba(255,255,255,0.08);
 
-    font-size:13px;
+    font-size:14px;
 }
 
 tr:hover{
     background:rgba(255,255,255,0.05);
-}
-
-/* =========================
-   NAME LINK
-========================= */
-
-.name-link{
-    color:#7dcfff;
-    cursor:pointer;
-    font-weight:600;
-}
-
-.name-link:hover{
-    text-decoration:underline;
 }
 
 /* =========================
@@ -293,9 +297,13 @@ tr:hover{
 .badge{
     padding:6px 10px;
     border-radius:8px;
-    font-size:12px;
     color:white;
+    font-size:12px;
     font-weight:600;
+}
+
+.blue{
+    background:#2196f3;
 }
 
 .green{
@@ -306,85 +314,15 @@ tr:hover{
     background:#ff9800;
 }
 
-.blue{
-    background:#2196f3;
-}
-
 /* =========================
    LOADER
 ========================= */
 
-.loader{
+#loader{
     text-align:center;
     padding:30px;
     font-size:18px;
     color:#ffd700;
-}
-
-/* =========================
-   POPUP
-========================= */
-
-.modal{
-    display:none;
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,0.7);
-
-    z-index:9999;
-
-    justify-content:center;
-    align-items:center;
-
-    padding:20px;
-}
-
-.modal.show{
-    display:flex;
-}
-
-.modal-content{
-    width:100%;
-    max-width:420px;
-
-    background:rgba(255,255,255,0.15);
-
-    backdrop-filter:blur(25px);
-
-    border-radius:25px;
-
-    padding:28px;
-
-    color:white;
-
-    transform:scale(0.8);
-
-    transition:0.3s;
-
-    box-shadow:0 15px 35px rgba(0,0,0,0.4);
-}
-
-.modal.show .modal-content{
-    transform:scale(1);
-}
-
-.close{
-    float:right;
-    font-size:24px;
-    cursor:pointer;
-}
-
-.modal-content h3{
-    margin-bottom:20px;
-    color:#ffd700;
-}
-
-.modal-content p{
-    margin:12px 0;
-    line-height:1.6;
 }
 
 /* =========================
@@ -417,6 +355,153 @@ tr:hover{
     }
 
 }
+    /* =========================
+SKILLX MENU
+========================= */
+
+.skillx-menu{
+    width:100%;
+    margin-top:10px;
+}
+
+/* MAIN BUTTON */
+
+.main-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+    color:white;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+    margin-bottom:10px;
+}
+
+.main-btn:hover{
+    background:linear-gradient(135deg,#ffd700,#ff9800);
+    color:black;
+}
+
+/* MODULE CONTAINER */
+
+.all-modules{
+    display:none;
+    padding-right:4px;
+    margin-top:6px;
+    animation:fadeMenu 0.3s ease;
+}
+
+/* MODULE */
+
+.module{
+    margin-bottom:8px;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+/* MODULE BUTTON */
+
+.module-btn{
+    width:100%;
+   height:60px;  
+    padding:9px 12px;
+    border:none;
+    color:white;
+    font-size:10px;
+    font-weight:600;
+    text-align:left;
+    cursor:pointer;
+    transition:0.3s;
+    border-radius:12px;
+}
+
+/* DIGITAL */
+
+.module:nth-child(1) .module-btn{
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+}
+
+/* COMMUNICATION */
+
+.module:nth-child(2) .module-btn{
+    background:linear-gradient(135deg,#ff9800,#ff5722);
+}
+
+/* BUSINESS */
+
+.module:nth-child(3) .module-btn{
+    background:linear-gradient(135deg,#8e2de2,#4a00e0);
+}
+
+.module-btn:hover{
+    transform:scale(1.02);
+}
+
+/* SUBMENU */
+
+.submenu{
+    display:none;
+    padding:6px;
+
+}
+/* ACTIVE */
+
+.module.active .submenu{
+    display:block;
+}
+
+/* SUBMENU BACKGROUNDS */
+
+.module:nth-child(1) .submenu{
+    background:rgba(0,114,255,0.15);
+}
+
+.module:nth-child(2) .submenu{
+    background:rgba(255,102,0,0.32);
+}
+
+.module:nth-child(3) .submenu{
+    background:rgba(142,45,226,0.15);
+}
+
+/* LINKS */
+
+.submenu a{
+    display:block;
+    text-decoration:none;
+    color:white;
+    padding:8px 10px;
+    margin:4px 0;
+    border-radius:8px;
+    font-size:10px;
+    transition:0.3s;
+    background:rgba(255,255,255,0.08);
+}
+
+.submenu a:hover{
+    background:white;
+    color:black;
+    transform:translateX(4px);
+}
+
+/* ANIMATION */
+
+@keyframes fadeMenu{
+
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
 
 </style>
 </head>
@@ -444,6 +529,118 @@ tr:hover{
     <a href="skillx-result.html">
         <button>💼 SkillX Quiz</button>
     </a>
+
+    <div class="skillx-menu">
+
+    <!-- MAIN BUTTON -->
+
+    <!-- MAIN BUTTON -->
+
+    <button class="main-btn" id="skillxToggle">
+        💼 SkillX Result ▼
+    </button>
+
+    <!-- ALL MODULES -->
+
+    <div class="all-modules" id="allModules">
+
+        <!-- DIGITAL POWER -->
+
+        <div class="module">
+
+            <button class="module-btn">
+                ▶ Digital Power Skills
+            </button>
+
+            <div class="submenu">
+
+                <a href="digital-power-skills.html">
+                    🤖 AI Documentation
+                </a>
+
+                <a href="excel-powerbi.html">
+                    📊 Excel + Power BI
+                </a>
+
+                <a href="web-dev.html">
+                    💻 Web Development
+                </a>
+
+                <a href="cyber-security.html">
+                    🔐 Information Security
+                </a>
+
+                <a href="cloud-computing.html">
+                    ☁️ Cloud Computing
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- COMMUNICATION -->
+
+        <div class="module">
+
+            <button class="module-btn">
+                ▶ Communication & Branding
+            </button>
+
+            <div class="submenu">
+
+                <a href="functional-english.html">
+                    🗣 Functional English
+                </a>
+
+                <a href="public-speaking.html">
+                    🎤 Public Speaking
+                </a>
+
+                <a href="canva-editing.html">
+                    🎨 Canva Editing
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- BUSINESS -->
+
+        <div class="module">
+
+            <button class="module-btn">
+                ▶ Business & Finance
+            </button>
+
+            <div class="submenu">
+
+                <a href="resume-linkedin.html">
+                    📄 Resume & LinkedIn
+                </a>
+
+                <a href="prompt-engineering.html">
+                    ⚡ Prompt Engineering
+                </a>
+
+                <a href="ai-business.html">
+                    🧠 AI for Business
+                </a>
+
+                <a href="vedic-maths.html">
+                    ➗ Vedic Maths
+                </a>
+
+                <a href="tally.html">
+                    💰 Tally Basics
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
     <button onclick="location.reload()">
         🔄 Refresh
@@ -813,6 +1010,43 @@ function goHome(){
     "https://gjimtmicrosite.github.io/Integrated/";
 
 }
+
+/* MAIN MENU TOGGLE */
+
+const skillxToggle =
+document.getElementById("skillxToggle");
+
+const allModules =
+document.getElementById("allModules");
+
+skillxToggle.addEventListener("click", () => {
+
+    if(allModules.style.display === "block"){
+
+        allModules.style.display = "none";
+
+    }else{
+
+        allModules.style.display = "block";
+    }
+});
+
+/* SUBMENU ACCORDION */
+
+const moduleButtons =
+document.querySelectorAll(".module-btn");
+
+moduleButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        button.parentElement.classList.toggle("active");
+
+    });
+
+});
+
+
 
 </script>
 
