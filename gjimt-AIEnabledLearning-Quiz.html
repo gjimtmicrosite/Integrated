@@ -1962,54 +1962,43 @@
         prompt("Copy this feedback summary:", message);
       }
     }
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmTZUh_QakBjTRUZBwp88co-6pyhDIcM9JDNvYMdjOZx5b1jgrRq68ppc7vR-_Vu55QA/exec";
-     const SHEET_NAME = "ai-enbled";
-    function saveQuizData(percent, band) {
+    
+   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmTZUh_QakBjTRUZBwp88co-6pyhDIcM9JDNvYMdjOZx5b1jgrRq68ppc7vR-_Vu55QA/exec";
+
+const SHEET_NAME = "ai-enbled";
+
+function saveQuizData(percent, band) {
+
+  const formData = new FormData();
+
+  formData.append("type", "skillxquiz");
+  formData.append("sheetName", SHEET_NAME);
+
+  formData.append("name", student.fullName);
+  formData.append("phone", student.phone);
+  formData.append("email", student.email);
+  formData.append("program", student.program);
+
+  formData.append("startDate", student.startDate);
+  formData.append("endDate", student.endDate);
+
+  formData.append("score", score);
+  formData.append("percent", percent);
+  formData.append("band", band);
 
   fetch(SCRIPT_URL, {
-
     method: "POST",
-
-    headers: {
-      "Content-Type": "application/json"
-    },
-
-    body: JSON.stringify({
-
-      type: "skillxquiz",
-
-      sheetName:SHEET_NAME,
-
-      name: student.fullName,
-      phone: student.phone,
-      email: student.email,
-      program: student.program,
-
-      startDate: student.startDate,
-      endDate: student.endDate,
-
-      score: score,
-      percent: percent,
-      band: band
-
-    })
-
+    body: formData
   })
-  .then(res => res.json())
+  .then(res => res.text())
   .then(data => {
-
     console.log("Quiz Data Saved:", data);
-
   })
   .catch(err => {
-
     console.error("SAVE ERROR:", err);
-
   });
 
-}
-
-    function sendFeedbackWhatsApp(phone) {
+}    function sendFeedbackWhatsApp(phone) {
       const message = buildFeedbackSummaryText();
       const encoded = encodeURIComponent(message);
       const url = "https://wa.me/91" + phone + "?text=" + encoded;
