@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillX Exam Portal</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI;}
+
+body{
+background:linear-gradient(135deg,#0f172a,#1e293b,#0f172a);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{width:100%;max-width:900px;}
+
+.card{
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(15px);
+padding:25px;
+border-radius:16px;
+}
+
+h1,h2{text-align:center;color:#38bdf8;margin-bottom:20px;}
+
+input,select{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:10px;
+border:none;
+background:rgba(255,255,255,0.1);
+color:black; /* ✅ FIXED */
+}
+
+button{
+width:100%;
+padding:12px;
+background:linear-gradient(90deg,#38bdf8,#2563eb);
+border:none;
+border-radius:10px;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.hide{display:none;}
+
+.option{
+padding:12px;
+margin:10px 0;
+background:rgba(255,255,255,0.08);
+border-radius:10px;
+cursor:pointer;
+}
+
+.option.active{background:#38bdf8;color:black;}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+font-size:14px;
+}
+
+.timer{color:#fbbf24;}
+
+.result{text-align:center;padding:30px;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card" id="formBox">
+
+<h1>🚀 SkillX Exam</h1>
+
+<input id="name" placeholder="Full Name">
+<input id="phone" placeholder="Phone">
+<input id="email" placeholder="Email">
+
+<select id="program">
+<option value="">Select Workshop</option>
+<option>Vedic Math</option>
+</select>
+
+<button onclick="startTest()">Start Test</button>
+
+</div>
+
+<div class="card hide" id="quizBox">
+
+<h2 id="title"></h2>
+
+<div class="topbar">
+<div>Q: <span id="qno"></span></div>
+<div>Score: <span id="score">0</span></div>
+<div class="timer">⏱ <span id="time">60</span>s</div>
+</div>
+
+<h3 id="question"></h3>
+
+<div id="options"></div>
+
+<button onclick="next()">Next</button>
+
+</div>
+
+</div>
+
+<script>
+
+let user={}, i=0, score=0, selected=-1, timer, t=60;
+
+const q = [
+
+{q:"65897 + 45896 + 14589 + 147896 = ?", 
+ o:["274278","273278","275278","276278"], a:0},
+
+{q:"12301 ÷ 9 = ?", 
+ o:["1365 R6","1366 R7","1367 R5","1368 R4"], a:1},
+
+{q:"10000 − 859 = ?", 
+ o:["9041","9141","9241","9341"], a:1},
+
+{q:"25² = ?", 
+ o:["525","625","725","825"], a:1},
+
+{q:"98² = ?", 
+ o:["9504","9604","9704","9804"], a:1},
+
+{q:"√144 = ?", 
+ o:["10","11","12","13"], a:2},
+
+{q:"∛729 = ?", 
+ o:["7","8","9","10"], a:2},
+
+{q:"1000 − 379 = ?", 
+ o:["611","621","631","641"], a:1},
+
+{q:"Subtract 1064 from 10000 = ?", o:["8936","8946","8956","8966"], a:0},
+
+{q:"14 × 17 = ?", o:["228","238","248","258"], a:1},
+
+// rest of your questions...
+
+];
+
+
+function startTest(){
+
+user.name = document.getElementById("name").value.trim();
+user.phone = document.getElementById("phone").value.trim();
+user.email = document.getElementById("email").value.trim();
+user.program = document.getElementById("program").value;
+
+if(!user.name || !user.phone || !user.email || !user.program){
+alert("Fill all details");
+return;
+}
+
+document.getElementById("formBox").classList.add("hide");
+document.getElementById("quizBox").classList.remove("hide");
+
+document.getElementById("title").innerText = "Workshop: " + user.program;
+
+i = 0;
+score = 0;
+
+load();
+}
+
+function load(){
+
+selected=-1;
+t=60;
+
+let data=q[i];
+
+qno.innerText=(i+1)+"/"+q.length;
+question.innerText=data.q;
+
+let html="";
+data.o.forEach((x,idx)=>{
+html+=`<div class="option" onclick="pick(this,${idx})">${x}</div>`;
+});
+
+options.innerHTML=html;
+
+startTimer();
+}
+
+function pick(el,idx){
+selected=idx;
+document.querySelectorAll(".option").forEach(o=>o.classList.remove("active"));
+el.classList.add("active");
+}
+
+function startTimer(){
+
+clearInterval(timer);
+
+time.innerText=t;
+
+timer=setInterval(()=>{
+t--;
+time.innerText=t;
+
+if(t<=0) next();
+
+},1000);
+}
+
+function next(){
+
+clearInterval(timer);
+
+if(selected===q[i].a){
+score++;
+scoreDisplay();
+}
+
+i++;
+
+if(i<q.length){
+load();
+}else{
+submit();
+}
+}
+
+function scoreDisplay(){
+document.getElementById("score").innerText=score;
+}
+
+function submit(){
+
+let data={
+name:user.name,
+phone:user.phone.replace(/\D/g,''),
+email:user.email,
+workshop:user.program,
+score:score
+};
+
+fetch("YOUR_GOOGLE_SCRIPT_URL",{
+method:"POST",
+body:JSON.stringify(data)
+});
+
+quizBox.innerHTML=`
+<div class="result">
+<h1>🎉 Test Completed</h1>
+<h2>Score: ${score}/${q.length}</h2>
+<p>${score>=3?"🏆 Passed":"📚 Try Again"}</p>
+<button onclick="location.reload()">Restart</button>
+</div>
+`;
+}
+
+</script>
+
+</body>
+</html>
