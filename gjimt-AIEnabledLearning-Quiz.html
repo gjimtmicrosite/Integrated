@@ -1961,6 +1961,52 @@
         prompt("Copy this feedback summary:", message);
       }
     }
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmTZUh_QakBjTRUZBwp88co-6pyhDIcM9JDNvYMdjOZx5b1jgrRq68ppc7vR-_Vu55QA/exec";
+     const SHEET_NAME = "ai-enbled";
+    function saveQuizData(percent, band) {
+
+  fetch(SCRIPT_URL, {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+
+      type: "skillxquiz",
+
+      sheetName: SHEET_NAME,
+
+      name: student.fullName,
+      phone: student.phone,
+      email: student.email,
+      program: student.program,
+
+      startDate: student.startDate,
+      endDate: student.endDate,
+
+      score: score,
+      percent: percent,
+      band: band
+
+    })
+
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    console.log("Quiz Data Saved:", data);
+
+  })
+  .catch(err => {
+
+    console.error("SAVE ERROR:", err);
+
+  });
+
+}
 
     function sendFeedbackWhatsApp(phone) {
       const message = buildFeedbackSummaryText();
