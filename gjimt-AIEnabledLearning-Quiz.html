@@ -1763,39 +1763,95 @@
       showScreen("screen-result");
     }
 
-    async function downloadCertificate() {
-      const percentText = document.getElementById("scorePercent").textContent;
-      const percent = parseInt(percentText, 10) || 0;
-      if (percent < 50) {
-        alert("Certificate is available only for scores 50% and above.");
-        return;
-      }
+  async function downloadCertificate() {
 
-      const { jsPDF } = window.jspdf;
-      const certElement = document.getElementById("certificateInner");
+  const percentText = document.getElementById("scorePercent").textContent;
+  const percent = parseInt(percentText, 10) || 0;
 
-      const scale = 2;
-      const canvas = await html2canvas(certElement, {
-        scale: scale,
-        useCORS: true
+  if (percent < 50) {
+    alert("Certificate is available only for scores 50% and above.");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const certElement = document.getElementById("certificateInner");
+
+  const canvas = await html2canvas(certElement, {
+    scale: 2,
+    useCORS: true
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("landscape", "pt", "a4");
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  const imgWidth = pageWidth;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  const yOffset = (pageHeight - imgHeight) / 2;
+
+  pdf.addImage(imgData, "PNG", 0, yOffset, imgWidth, imgHeight);
+
+  const fileName =
+    "SkillX-AI-Certificate-" +
+    (student.fullName || "Participant") +
+    ".pdf";
+
+  // DOWNLOAD PDF
+  pdf.save(fileName);
+
+  // CONVERT PDF TO BASE64
+  const pdfBlob = pdf.output("blob");
+
+  const reader = new FileReader();
+
+  reader.readAsDataURL(pdfBlob);
+
+  reader.onloadend = async function () {
+
+    const base64data = reader.result.split(",")[1];
+
+    const formData = new FormData();
+
+    formData.append("pdfBase64", base64data);
+    formData.append("fileName", fileName);
+
+    try {
+
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: formData
       });
 
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("landscape", "pt", "a4");
+      const result = await response.json();
 
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
+      if (result.success) {
 
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const yOffset = (pageHeight - imgHeight) / 2;
+        console.log("Saved to Drive:", result.fileUrl);
 
-      pdf.addImage(imgData, "PNG", 0, yOffset, imgWidth, imgHeight);
-      const filename = "SkillX-AI-Certificate-" + (student.fullName || "Participant") + ".pdf";
-      pdf.save(filename);
+        alert("Certificate saved to Google Drive successfully!");
+
+      } else {
+
+        alert("Drive Upload Failed");
+
+        console.log(result.error);
+
+      }
+
+    } catch(err) {
+
+      console.log(err);
+
+      alert("Error uploading certificate");
+
     }
 
-    function buildCertificateSummary() {
+  };
+}    function buildCertificateSummary() {
       const percentText = document.getElementById("scorePercent").textContent;
       const band = document.getElementById("scoreOutcome").textContent;
       return [
