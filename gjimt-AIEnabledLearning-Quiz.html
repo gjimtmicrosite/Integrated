@@ -1814,10 +1814,24 @@
 
     const base64data = reader.result.split(",")[1];
 
-    const formData = new FormData();
+   const formData = new FormData();
 
-    formData.append("pdfBase64", base64data);
-    formData.append("fileName", fileName);
+formData.append("sheetName", SHEET_NAME);
+
+formData.append("name", student.fullName);
+formData.append("phone", student.phone);
+formData.append("email", student.email);
+formData.append("program", student.program);
+
+formData.append("startDate", student.startDate);
+formData.append("endDate", student.endDate);
+
+formData.append("score", score);
+formData.append("percent", percent);
+formData.append("band", document.getElementById("scoreOutcome").textContent);
+
+formData.append("pdfBase64", base64data);
+formData.append("fileName", fileName);
 
     try {
 
