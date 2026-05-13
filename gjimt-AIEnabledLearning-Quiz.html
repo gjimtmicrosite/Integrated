@@ -1852,13 +1852,13 @@ const result = JSON.parse(text);
 
         alert("Certificate saved to Google Drive successfully!");
 
-      } else {
+      }  else {
 
-        alert("Drive Upload Failed");
+  console.log("SERVER ERROR:", result.error);
 
-        console.log(result.error);
+  alert("Drive Upload Failed:\n\n" + result.error);
 
-      }
+}
 
     } catch(err) {
 
