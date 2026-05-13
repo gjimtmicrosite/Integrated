@@ -1,58 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pay ₹10,000</title>
-
-<script>
-window.onload = function () {
-    window.location.href =
-    "upi://pay?pa=jaspreet18aug@okaxis&pn=Jaspreet%20Kaur&am=1&cu=INR";
-}
-</script>
-
-<style>
-body{
-margin:0;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-font-family:Arial;
-background:#f4f7fb;
-}
-
-.box{
-background:white;
-padding:40px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
-text-align:center;
-}
-
-button{
-padding:16px 35px;
-font-size:20px;
-border:none;
-border-radius:12px;
-background:#0f9d58;
-color:white;
-cursor:pointer;
-}
-</style>
+<title>Google Pay</title>
 </head>
 
-<body>
+<body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial;">
 
-<div class="box">
-<h2>Pay ₹1</h2>
-
-<button onclick="window.location.href='upi://pay?pa=jaspreet18aug@okaxis&pn=Jaspreet%20Kaur&am=1&cu=INR'">
-Pay Now
+<button onclick="openGPay()" 
+style="padding:16px 35px;font-size:20px;background:#0F9D58;color:white;border:none;border-radius:12px;">
+Pay ₹1
 </button>
 
-</div>
+<script>
+function openGPay(){
+
+window.location.href =
+"gpay://upi/pay?pa=jaspreet18aug@okaxis&pn=Jaspreet%20Kaur&am=1&cu=INR";
+
+}
+</script>
 
 </body>
 </html>
