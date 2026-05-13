@@ -1763,113 +1763,234 @@ saveQuizData(percent, band);
       showScreen("screen-result");
     }
 
-  async function downloadCertificate() {
+async function downloadCertificate() {
 
-  const percentText = document.getElementById("scorePercent").textContent;
+  const percentText =
+    document.getElementById("scorePercent").textContent;
+
   const percent = parseInt(percentText, 10) || 0;
 
   if (percent < 50) {
-    alert("Certificate is available only for scores 50% and above.");
+
+    alert(
+      "Certificate is available only for scores 50% and above."
+    );
+
     return;
   }
 
-  const { jsPDF } = window.jspdf;
-  const certElement = document.getElementById("certificateInner");
+  try {
 
-  const canvas = await html2canvas(certElement, {
-    scale: 2,
-    useCORS: true
-  });
+    const { jsPDF } = window.jspdf;
 
-  const imgData = canvas.toDataURL("image/png");
+    const certElement =
+      document.getElementById("certificateInner");
 
-  const pdf = new jsPDF("landscape", "pt", "a4");
+    // SMALLER + STABLE PDF
+    const canvas = await html2canvas(certElement, {
+      scale: 1,
+      useCORS: true
+    });
 
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
+    const imgData = canvas.toDataURL("image/png");
 
-  const imgWidth = pageWidth;
-  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const pdf = new jsPDF(
+      "landscape",
+      "pt",
+      "a4"
+    );
 
-  const yOffset = (pageHeight - imgHeight) / 2;
+    const pageWidth =
+      pdf.internal.pageSize.getWidth();
 
-  pdf.addImage(imgData, "PNG", 0, yOffset, imgWidth, imgHeight);
+    const pageHeight =
+      pdf.internal.pageSize.getHeight();
 
-  const fileName =
-    "SkillX-AI-Certificate-" +
-    (student.fullName || "Participant") +
-    ".pdf";
+    const imgWidth = pageWidth;
 
-  // DOWNLOAD PDF
-  pdf.save(fileName);
+    const imgHeight =
+      (canvas.height * imgWidth) / canvas.width;
 
-  // CONVERT PDF TO BASE64
-  const pdfBlob = pdf.output("blob");
+    const yOffset =
+      (pageHeight - imgHeight) / 2;
 
-  const reader = new FileReader();
+    pdf.addImage(
+      imgData,
+      "PNG",
+      0,
+      yOffset,
+      imgWidth,
+      imgHeight
+    );
 
-  reader.readAsDataURL(pdfBlob);
+    const fileName =
+      "SkillX-AI-Certificate-" +
+      (student.fullName || "Participant") +
+      ".pdf";
 
-  reader.onloadend = async function () {
+    // DOWNLOAD PDF
+    pdf.save(fileName);
 
-    const base64data = reader.result.split(",")[1];
+    // PDF BLOB
+    const pdfBlob = pdf.output("blob");
 
-   const formData = new FormData();
+    // BASE64 CONVERT
+    const reader = new FileReader();
 
-formData.append("sheetName", SHEET_NAME);
+    reader.readAsDataURL(pdfBlob);
 
-formData.append("name", student.fullName);
-formData.append("phone", student.phone);
-formData.append("email", student.email);
-formData.append("program", student.program);
+    reader.onloadend = async function () {
 
-formData.append("startDate", student.startDate);
-formData.append("endDate", student.endDate);
+      try {
 
-formData.append("score", score);
-formData.append("percent", percent);
-formData.append("band", document.getElementById("scoreOutcome").textContent);
+        const base64data =
+          reader.result.split(",")[1];
 
-formData.append("pdfBase64", base64data);
-formData.append("fileName", fileName);
+        // FORM DATA
+        const formData = new FormData();
 
-    try {
+        formData.append(
+          "sheetName",
+          SHEET_NAME
+        );
 
-      const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: formData
-      });
+        formData.append(
+          "name",
+          student.fullName
+        );
 
-      const text = await response.text();
+        formData.append(
+          "phone",
+          student.phone
+        );
 
-console.log("RAW RESPONSE:", text);
+        formData.append(
+          "email",
+          student.email
+        );
 
-const result = JSON.parse(text);
+        formData.append(
+          "program",
+          student.program
+        );
 
-      if (result.success) {
+        formData.append(
+          "startDate",
+          student.startDate
+        );
 
-        console.log("Saved to Drive:", result.fileUrl);
+        formData.append(
+          "endDate",
+          student.endDate
+        );
 
-        alert("Certificate saved to Google Drive successfully!");
+        formData.append(
+          "score",
+          score
+        );
 
-      }  else {
+        formData.append(
+          "percent",
+          percent
+        );
 
-  console.log("SERVER ERROR:", result.error);
+        formData.append(
+          "band",
+          document.getElementById("scoreOutcome")
+            .textContent
+        );
 
-  alert("Drive Upload Failed:\n\n" + result.error);
+        formData.append(
+          "pdfBase64",
+          base64data
+        );
 
+        formData.append(
+          "fileName",
+          fileName
+        );
+
+        // SEND TO APPS SCRIPT
+        const response = await fetch(
+          SCRIPT_URL,
+          {
+            method: "POST",
+            body: formData
+          }
+        );
+
+        const rawText =
+          await response.text();
+
+        console.log(
+          "RAW SERVER RESPONSE:",
+          rawText
+        );
+
+        let result;
+
+        try {
+
+          result = JSON.parse(rawText);
+
+        } catch(parseError) {
+
+          console.log(parseError);
+
+          alert(
+            "Apps Script returned invalid JSON.\nCheck deployment."
+          );
+
+          return;
+        }
+
+        // SUCCESS
+        if (result.success) {
+
+          console.log(
+            "Saved to Drive:",
+            result.fileUrl
+          );
+
+          alert(
+            "Certificate saved successfully to Google Drive and Google Sheet."
+          );
+
+        } else {
+
+          console.log(
+            "SERVER ERROR:",
+            result.error
+          );
+
+          alert(
+            "Drive Upload Failed:\n\n" +
+            result.error
+          );
+        }
+
+      } catch(err) {
+
+        console.log(err);
+
+        alert(
+          "Error uploading certificate:\n\n" +
+          err
+        );
+      }
+    };
+
+  } catch(err) {
+
+    console.log(err);
+
+    alert(
+      "Certificate generation failed:\n\n" +
+      err
+    );
+  }
 }
-
-    } catch(err) {
-
-      console.log(err);
-
-      alert("Error uploading certificate");
-
-    }
-
-  };
-}    function buildCertificateSummary() {
+function buildCertificateSummary() {
       const percentText = document.getElementById("scorePercent").textContent;
       const band = document.getElementById("scoreOutcome").textContent;
       return [
