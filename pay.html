@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Google Pay</title>
+<title>Pay ₹1</title>
 </head>
+<body style="font-family:Arial;text-align:center;padding-top:50px;">
 
-<body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial;">
+<h2>Pay ₹1 Using Google Pay</h2>
 
-<button onclick="openGPay()" 
-style="padding:16px 35px;font-size:20px;background:#0F9D58;color:white;border:none;border-radius:12px;">
-Pay ₹1
+<a href="upi://pay?pa=jaspreet18aug-1@okaxis&pn=Jaspreet%20Kaur&am=1&cu=INR">
+<button style="
+padding:15px 35px;
+font-size:18px;
+background:#0F9D58;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;">
+Pay Now
 </button>
-
-<script>
-function openGPay(){
-
-window.location.href =
-"gpay://upi/pay?pa=jaspreet18aug@okaxis&pn=Jaspreet%20Kaur&am=1&cu=INR";
-
-}
-</script>
+</a>
 
 </body>
 </html>
