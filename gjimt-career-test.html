@@ -98,6 +98,40 @@
   </style>
 </head>
 <body>
+  <script>
+(function () {
+
+  // Ask password before page loads
+  var password = prompt("Enter Password to Access the Quiz:");
+
+  // Correct password = Bingo
+  if (password !== "Bingo") {
+
+    alert("Incorrect Password!");
+
+    // Hide full page
+    document.body.innerHTML = `
+      <div style="
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        font-family:Arial,sans-serif;
+        background:#f5f7fb;
+        color:#b42318;
+        font-size:32px;
+        font-weight:bold;
+      ">
+        Access Denied
+      </div>
+    `;
+
+    // Stop further page loading
+    throw new Error("Access Denied");
+  }
+
+})();
+</script>
   <div class="wrap">
     <div id="registration" class="card hero">
       <h1 data-i18n="title">Whichs Career Pathway is right for you?</h1>
