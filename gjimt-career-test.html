@@ -100,36 +100,39 @@
 <body>
   <script>
 (function () {
-
-  // Ask password before page loads
   var password = prompt("Enter Password to Access the Quiz:");
 
-  // Correct password = Bingo
   if (password !== "Bingo") {
 
-    alert("Incorrect Password!");
-
-    // Hide full page
-    document.body.innerHTML = `
-      <div style="
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        height:100vh;
-        font-family:Arial,sans-serif;
-        background:#f5f7fb;
-        color:#b42318;
-        font-size:32px;
-        font-weight:bold;
-      ">
-        Access Denied
-      </div>
+    // Remove everything from page
+    document.documentElement.innerHTML = `
+      <head>
+        <title>Access Denied</title>
+        <style>
+          body{
+            margin:0;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-family:Arial,sans-serif;
+            background:#111;
+            color:white;
+          }
+          h2{
+            font-size:32px;
+            letter-spacing:1px;
+          }
+        </style>
+      </head>
+      <body>
+        <h2>❌ Access Denied</h2>
+      </body>
     `;
 
-    // Stop further page loading
+    // Stop further execution completely
     throw new Error("Access Denied");
   }
-
 })();
 </script>
   <div class="wrap">
