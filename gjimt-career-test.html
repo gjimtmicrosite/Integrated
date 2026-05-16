@@ -497,7 +497,9 @@ function regSubmit(e){
     name: document.getElementById('name').value.trim(),
     phone: document.getElementById('phone').value.trim(),
     board: document.getElementById('board').value,
-    stream: document.getElementById('stream').value
+    stream: document.getElementById('stream').value,
+     percentage: document.getElementById('percentage').value
+
   };
   document.getElementById('registration').classList.add('hidden');
   document.getElementById('testScreen').classList.remove('hidden');
@@ -545,6 +547,7 @@ document.getElementById('submitBtn').addEventListener('click', async (e) => {
     phone: student.phone,
     board: student.board,
     stream: student.stream,
+    percentage: student.percentage,
     R: scores.R,
     I: scores.I,
     A: scores.A,
