@@ -120,13 +120,39 @@ header { display:flex; justify-content:space-between; align-items:center; margin
 </style>
 </head>
 <body>
-  <script>
+<script>
 (function () {
   var password = prompt("Enter Password to Access the Quiz:");
 
   if (password !== "Bingo") {
-    alert("Incorrect Password!");
-    document.body.innerHTML = "<h2 style='font-family:sans-serif;text-align:center;margin-top:100px;'>Access Denied</h2>";
+
+    // Remove everything from page
+    document.documentElement.innerHTML = `
+      <head>
+        <title>Access Denied</title>
+        <style>
+          body{
+            margin:0;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-family:Arial,sans-serif;
+            background:#111;
+            color:white;
+          }
+          h2{
+            font-size:32px;
+            letter-spacing:1px;
+          }
+        </style>
+      </head>
+      <body>
+        <h2>❌ Access Denied</h2>
+      </body>
+    `;
+
+    // Stop further execution completely
     throw new Error("Access Denied");
   }
 })();
