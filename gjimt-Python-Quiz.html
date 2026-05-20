@@ -509,39 +509,88 @@
 <body>
  <script>
 (function () {
-  var password = prompt("Enter Password to Access the Quiz:");
+  document.addEventListener("DOMContentLoaded", function () {
+    var appContent = document.querySelector(".wrap");
+    if (appContent) {
+      appContent.style.display = "none";
+    }
 
-  if (password !== "Bingo") {
-
-    // Remove everything from page
-    document.documentElement.innerHTML = `
-      <head>
-        <title>Access Denied</title>
-        <style>
-          body{
-            margin:0;
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-family:Arial,sans-serif;
-            background:#111;
-            color:white;
-          }
-          h2{
-            font-size:32px;
-            letter-spacing:1px;
-          }
-        </style>
-      </head>
-      <body>
-        <h2>❌ Access Denied</h2>
-      </body>
+    var passwordBox = document.createElement("div");
+    passwordBox.id = "passwordScreen";
+    passwordBox.innerHTML = `
+      <div style="
+        position:fixed;
+        inset:0;
+        background:#111;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        z-index:999999;
+        font-family:Arial,sans-serif;
+      ">
+        <div style="
+          background:white;
+          padding:30px;
+          border-radius:14px;
+          width:320px;
+          max-width:90%;
+          text-align:center;
+          box-shadow:0 12px 35px rgba(0,0,0,.35);
+        ">
+          <h2 style="margin:0 0 18px;color:#020617;font-size:26px;">Enter Password</h2>
+          <input id="quizPasswordInput" type="password" placeholder="Enter Password" autocomplete="off" style="
+            width:100%;
+            padding:13px 14px;
+            font-size:16px;
+            border:1px solid #ddd;
+            border-radius:12px;
+            margin-bottom:14px;
+            box-sizing:border-box;
+            color:#111;
+            background:#fff;
+          ">
+          <button id="quizPasswordBtn" type="button" style="
+            width:100%;
+            padding:13px;
+            background:#22c55e;
+            color:#022c22;
+            border:none;
+            border-radius:12px;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+          ">Open Quiz</button>
+          <p id="quizPasswordError" style="display:none;color:red;font-weight:bold;margin:12px 0 0;">
+            Wrong Password
+          </p>
+        </div>
+      </div>
     `;
 
-    // Stop further execution completely
-    throw new Error("Access Denied");
-  }
+    document.body.appendChild(passwordBox);
+
+    function checkPassword() {
+      var password = document.getElementById("quizPasswordInput").value.trim();
+
+      if (password === "Bingo") {
+        passwordBox.remove();
+        if (appContent) {
+          appContent.style.display = "";
+        }
+      } else {
+        document.getElementById("quizPasswordError").style.display = "block";
+        document.getElementById("quizPasswordInput").value = "";
+        document.getElementById("quizPasswordInput").focus();
+      }
+    }
+
+    document.getElementById("quizPasswordBtn").addEventListener("click", checkPassword);
+    document.getElementById("quizPasswordInput").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        checkPassword();
+      }
+    });
+  });
 })();
 </script>
   <div class="wrap">
