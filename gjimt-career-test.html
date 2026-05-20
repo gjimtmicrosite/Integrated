@@ -98,41 +98,91 @@
   </style>
 </head>
 <body>
+  <style>
+    #passwordGate{
+      position:fixed;
+      inset:0;
+      background:#111;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:999999;
+      font-family:Arial,sans-serif;
+    }
+    #passwordGate .pass-box{
+      width:320px;
+      max-width:90%;
+      background:#fff;
+      padding:28px;
+      border-radius:14px;
+      text-align:center;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    #passwordGate h2{
+      margin:0 0 16px;
+      color:#111;
+      font-size:24px;
+    }
+    #passwordGate input{
+      width:100%;
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:16px;
+      margin-bottom:12px;
+    }
+    #passwordGate button{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      background:#0A3663;
+      color:#fff;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    #passwordGate .pass-error{
+      display:none;
+      margin-top:12px;
+      color:#b42318;
+      font-size:14px;
+      font-weight:700;
+    }
+  </style>
+  <div id="passwordGate">
+    <div class="pass-box">
+      <h2>Enter Password</h2>
+      <input type="password" id="quizPassword" placeholder="Enter Password" autocomplete="off">
+      <button type="button" id="passwordBtn">Access Quiz</button>
+      <div class="pass-error" id="passwordError">Wrong Password</div>
+    </div>
+  </div>
   <script>
 (function () {
-  var password = prompt("Enter Password to Access the Quiz:");
+  document.documentElement.classList.add("locked");
 
-  if (password !== "Bingo") {
+  function checkPassword() {
+    var password = document.getElementById("quizPassword").value;
+    var correctPassword = atob("QmluZ28=");
 
-    // Remove everything from page
-    document.documentElement.innerHTML = `
-      <head>
-        <title>Access Denied</title>
-        <style>
-          body{
-            margin:0;
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-family:Arial,sans-serif;
-            background:#111;
-            color:white;
-          }
-          h2{
-            font-size:32px;
-            letter-spacing:1px;
-          }
-        </style>
-      </head>
-      <body>
-        <h2>❌ Access Denied</h2>
-      </body>
-    `;
-
-    // Stop further execution completely
-    throw new Error("Access Denied");
+    if (password === correctPassword) {
+      document.getElementById("passwordGate").style.display = "none";
+      document.documentElement.classList.remove("locked");
+    } else {
+      document.getElementById("passwordError").style.display = "block";
+      document.getElementById("quizPassword").value = "";
+      document.getElementById("quizPassword").focus();
+    }
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("passwordBtn").addEventListener("click", checkPassword);
+    document.getElementById("quizPassword").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") checkPassword();
+    });
+    document.getElementById("quizPassword").focus();
+  });
 })();
 </script>
   <div class="wrap">
