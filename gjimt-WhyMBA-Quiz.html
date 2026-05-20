@@ -492,11 +492,9 @@
 <body>
  <script>
 (function () {
-  var password = prompt("Enter Password to Access the Quiz:");
+  var correctPassword = "Bingo";
 
-  if (password !== "Bingo") {
-
-    // Remove everything from page
+  function showDenied() {
     document.documentElement.innerHTML = `
       <head>
         <title>Access Denied</title>
@@ -521,10 +519,86 @@
         <h2>❌ Access Denied</h2>
       </body>
     `;
-
-    // Stop further execution completely
     throw new Error("Access Denied");
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.body.style.display = "none";
+
+    var overlay = document.createElement("div");
+    overlay.id = "passwordOverlay";
+    overlay.innerHTML = `
+      <div style="
+        position:fixed;
+        inset:0;
+        background:#111;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        z-index:999999;
+        font-family:Arial,sans-serif;
+      ">
+        <div style="
+          background:#fff;
+          padding:32px;
+          border-radius:14px;
+          width:320px;
+          max-width:90%;
+          text-align:center;
+          box-shadow:0 20px 40px rgba(0,0,0,.25);
+        ">
+          <h2 style="margin:0 0 18px;color:#111;">Enter Password</h2>
+          <input id="quizPasswordInput" type="password" placeholder="Enter Password" autocomplete="off" style="
+            width:100%;
+            padding:13px 14px;
+            font-size:16px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            margin-bottom:14px;
+            box-sizing:border-box;
+          ">
+          <button id="quizPasswordBtn" type="button" style="
+            width:100%;
+            padding:13px;
+            background:#f97316;
+            color:white;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+          ">Open Quiz</button>
+          <p id="quizPasswordError" style="color:red;margin:12px 0 0;display:none;font-weight:bold;">
+            Wrong Password
+          </p>
+        </div>
+      </div>
+    `;
+
+    document.body.parentNode.appendChild(overlay);
+
+    function checkPassword() {
+      var enteredPassword = document.getElementById("quizPasswordInput").value.trim();
+
+      if (enteredPassword === correctPassword) {
+        overlay.remove();
+        document.body.style.display = "";
+      } else {
+        document.getElementById("quizPasswordError").style.display = "block";
+        document.getElementById("quizPasswordInput").value = "";
+        document.getElementById("quizPasswordInput").focus();
+      }
+    }
+
+    document.getElementById("quizPasswordBtn").addEventListener("click", checkPassword);
+    document.getElementById("quizPasswordInput").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        checkPassword();
+      }
+    });
+
+    document.getElementById("quizPasswordInput").focus();
+  });
 })();
 </script>
   <div class="wrap">
