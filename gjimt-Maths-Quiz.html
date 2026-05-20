@@ -402,39 +402,88 @@
 <body>
 <script>
 (function () {
-  var password = prompt("Enter Password to Access the Quiz:");
+  var allowedHash = "9545747f2369aa3d787122e526d34ff5a08b7fd0bd9179a10b22a82138d98f3e";
 
-  if (password !== "Bingo") {
+  document.addEventListener("DOMContentLoaded", function () {
+    document.body.style.visibility = "hidden";
 
-    // Remove everything from page
-    document.documentElement.innerHTML = `
-      <head>
-        <title>Access Denied</title>
-        <style>
-          body{
-            margin:0;
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-family:Arial,sans-serif;
-            background:#111;
+    var passwordBox = document.createElement("div");
+    passwordBox.id = "passwordBox";
+    passwordBox.innerHTML = `
+      <div style="
+        position:fixed;
+        inset:0;
+        background:#111;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        z-index:999999;
+        font-family:Arial,sans-serif;
+      ">
+        <div style="
+          width:320px;
+          max-width:90%;
+          background:#ffffff;
+          padding:28px;
+          border-radius:16px;
+          text-align:center;
+          box-shadow:0 20px 45px rgba(0,0,0,.35);
+        ">
+          <h2 style="margin:0 0 18px;color:#111827;">Enter Password</h2>
+          <input id="quizPassword" type="password" placeholder="Enter Password" style="
+            width:100%;
+            padding:13px 14px;
+            border:1px solid #d1d5db;
+            border-radius:10px;
+            font-size:16px;
+            margin-bottom:14px;
+            box-sizing:border-box;
+          ">
+          <button id="unlockQuiz" type="button" style="
+            width:100%;
+            padding:13px 14px;
+            border:0;
+            border-radius:10px;
+            background:#f97316;
             color:white;
-          }
-          h2{
-            font-size:32px;
-            letter-spacing:1px;
-          }
-        </style>
-      </head>
-      <body>
-        <h2>❌ Access Denied</h2>
-      </body>
+            font-size:16px;
+            font-weight:700;
+            cursor:pointer;
+          ">Open Quiz</button>
+          <p id="passwordError" style="display:none;color:#dc2626;margin:12px 0 0;font-weight:700;">Wrong Password</p>
+        </div>
+      </div>
     `;
+    document.documentElement.appendChild(passwordBox);
 
-    // Stop further execution completely
-    throw new Error("Access Denied");
-  }
+    async function sha256(text) {
+      var data = new TextEncoder().encode(text);
+      var hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      var hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+    }
+
+    async function checkPassword() {
+      var password = document.getElementById("quizPassword").value.trim();
+      var enteredHash = await sha256(password);
+
+      if (enteredHash === allowedHash) {
+        passwordBox.remove();
+        document.body.style.visibility = "visible";
+      } else {
+        document.getElementById("passwordError").style.display = "block";
+        document.getElementById("quizPassword").value = "";
+        document.getElementById("quizPassword").focus();
+      }
+    }
+
+    document.getElementById("unlockQuiz").addEventListener("click", checkPassword);
+    document.getElementById("quizPassword").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") checkPassword();
+    });
+
+    document.getElementById("quizPassword").focus();
+  });
 })();
 </script>
   <div class="wrap">
