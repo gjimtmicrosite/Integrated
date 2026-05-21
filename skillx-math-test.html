@@ -1416,41 +1416,42 @@ function restartQuiz() {
   showScreen("screen-intro");
 }
 
-async function sendDataToSheet(score, percent) {
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwH2lf15ENm0V_iqJnSxLbG-qRB9lP_AZcp6wwQnTMlEIiPb97xJbV5zkMRmXM8_Hyxgw/exec";
 
-  const url = "https://script.google.com/macros/s/AKfycbzpPsYmMF6PlcB9CMF1vv0XM0_alcJ_yMIwExla6E3w5Q36kmwcEZY_cIJd3fPu8ur_rA/exec";
+const SHEET_NAME = "vedicmath";
 
-  const data = {
-    name: student.fullName,
-    phone: student.phone,
-    email: student.email,
-    program: student.program,
-    startDate: student.startDate,
-    endDate: student.endDate,
-    score: score,
-    percent: percent,
-    test: "Vedic Math"
-  };
+function saveQuizData(percent, band) {
 
-  try {
+  const formData = new FormData();
 
-    await fetch(url, {
-      method: "POST",
-      mode: "no-cors",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+  formData.append("type", "skillxquiz");
+  formData.append("sheetName", SHEET_NAME);
 
-    console.log("Data saved to Google Sheet ✅");
+  formData.append("name", student.fullName);
+  formData.append("phone", student.phone);
+  formData.append("email", student.email);
+  formData.append("program", student.program);
 
-  } catch (err) {
+  formData.append("startDate", student.startDate);
+  formData.append("endDate", student.endDate);
 
-    console.error("Error saving data:", err);
+  formData.append("score", score);
+  formData.append("percent", percent);
+  formData.append("band", band);
 
-  }
-}
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(data => {
+    console.log("Quiz Data Saved:", data);
+  })
+  .catch(err => {
+    console.error("SAVE ERROR:", err);
+  });
+
+}   
   </script>
 </body>
 </html>
