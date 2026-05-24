@@ -1416,13 +1416,15 @@ function restartQuiz() {
   showScreen("screen-intro");
 }
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwH2lf15ENm0V_iqJnSxLbG-qRB9lP_AZcp6wwQnTMlEIiPb97xJbV5zkMRmXM8_Hyxgw/exec";
+ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwH2lf15ENm0V_iqJnSxLbG-qRB9lP_AZcp6wwQnTMlEIiPb97xJbV5zkMRmXM8_Hyxgw/exec";
+
 const SHEET_NAME = "vedicmath";
 
-function saveQuizData(score, percent, band) {
+function saveQuizData(percent, band) {
 
   const formData = new FormData();
 
+  formData.append("type", "skillxquiz");
   formData.append("sheetName", SHEET_NAME);
 
   formData.append("name", student.fullName);
@@ -1439,17 +1441,17 @@ function saveQuizData(score, percent, band) {
 
   fetch(SCRIPT_URL, {
     method: "POST",
-    body: new URLSearchParams(formData)
+    body: formData
   })
-  .then(res => res.json())
+  .then(res => res.text())
   .then(data => {
-    console.log(data);
+    console.log("Quiz Data Saved:", data);
   })
   .catch(err => {
-    console.error(err);
+    console.error("SAVE ERROR:", err);
   });
 
-}
+} 
   </script>
 </body>
 </html>
