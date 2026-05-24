@@ -596,7 +596,7 @@
                                     <img src="aneet_mam_sign.jpeg" alt="Dr Aneet Signature" class="sig-img" crossorigin="anonymous">
                                     <div class="sig-name">Dr. Aneet</div>
                                     <div class="sig-role">Director, GJIMT</div>
-                                </div
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -956,8 +956,8 @@
   });
 
   // progress
-  const progress =
-    (currentIndex / quizQuestions.length) * 100;
+ const progress =
+((currentIndex + 1) / quizQuestions.length) * 100;
 
   document.getElementById("progressBar").style.width =
     progress + "%";
@@ -1138,7 +1138,7 @@ nextWorkshop = `
       document.getElementById("progressText").textContent = "100%";
 
       showScreen("screen-result");
-      sendDataToSheet(score, percent);
+     saveQuizData(score, percent, band);
       
     }
 
@@ -1173,7 +1173,7 @@ nextWorkshop = `
 
   pdf.addImage(imgData, "PNG", 0, yOffset, imgWidth, imgHeight);
 
-  const filename = "SkillX-AI-Certificate-" + (student.fullName || "Participant") + ".pdf";
+  const filename = "SkillX-VedicMath-Certificate-" + (student.fullName || "Participant") + ".pdf";
   pdf.save(filename);
 }
 
@@ -1420,7 +1420,7 @@ function restartQuiz() {
 
 const SHEET_NAME = "vedicmath";
 
-function saveQuizData(percent, band) {
+function saveQuizData(score, percent, band) {
 
   const formData = new FormData();
 
@@ -1441,9 +1441,9 @@ function saveQuizData(percent, band) {
 
   fetch(SCRIPT_URL, {
     method: "POST",
-    body: formData
+    body: new URLSearchParams(formData)
   })
-  .then(res => res.text())
+  .then(res => res.json())
   .then(data => {
     console.log("Quiz Data Saved:", data);
   })
@@ -1451,7 +1451,7 @@ function saveQuizData(percent, band) {
     console.error("SAVE ERROR:", err);
   });
 
-} 
+}
   </script>
 </body>
 </html>
