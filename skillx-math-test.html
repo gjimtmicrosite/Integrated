@@ -1423,7 +1423,6 @@ function saveQuizData(score, percent, band) {
 
   const formData = new FormData();
 
-  formData.append("type", "skillxquiz");
   formData.append("sheetName", SHEET_NAME);
 
   formData.append("name", student.fullName);
@@ -1440,14 +1439,14 @@ function saveQuizData(score, percent, band) {
 
   fetch(SCRIPT_URL, {
     method: "POST",
-    body: formData
+    body: new URLSearchParams(formData)
   })
-  .then(res => res.text())
+  .then(res => res.json())
   .then(data => {
-    console.log("Quiz Data Saved:", data);
+    console.log(data);
   })
   .catch(err => {
-    console.error("SAVE ERROR:", err);
+    console.error(err);
   });
 
 }
