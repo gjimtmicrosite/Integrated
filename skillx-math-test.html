@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0",maximum-scale=1">
+    
     <title>GJIMT SkillX Vedic Math Quiz</title>
     <style>
+        .certificate-inner {
+    width: 100%;
+    overflow: hidden;
+}
+
+.certificate-inner img {
+    max-width: 100%;
+    display: block;
+}
         :root {
             --bg1: #fff7ed;
             --bg2: #fff1f2;
@@ -610,7 +620,7 @@
                         For Vedic Math practice, advanced modules, or counselling, contact SkillX team.
                     </p>
                     <div class="btn-row">
-                        <button class="btn btn-primary" id="btnDownloadCert" onclick="downloadCertificate()">Download Certificate PDF</button>
+                        <button class="btn btn-primary" id="btnDownloadCert" onclick="c()">Download Certificate PDF</button>
                         <button class="btn btn-dark" onclick="shareCertificate()">WhatsApp Share Certificate</button>
                         <button class="btn btn-secondary" onclick="goToFeedback()">Continue to Feedback</button>
                         <button class="btn btn-secondary" onclick="restartQuiz()">Retake Quiz</button>
@@ -1143,7 +1153,10 @@ nextWorkshop = `
     }
 
     async function downloadCertificate() {
-  const percentText = document.getElementById("scorePercent").textContent;
+
+  const percentText =
+    document.getElementById("scorePercent").textContent;
+
   const percent = parseInt(percentText, 10) || 0;
 
   if (percent < 50) {
@@ -1151,29 +1164,73 @@ nextWorkshop = `
     return;
   }
 
-  const certElement = document.getElementById("certificateInner");
+  const certElement =
+    document.getElementById("certificateInner");
 
+  // ✅ wait for all images
+  const images = certElement.querySelectorAll("img");
+
+  await Promise.all(
+    Array.from(images).map(img => {
+
+      if (img.complete) return Promise.resolve();
+
+      return new Promise(resolve => {
+        img.onload = resolve;
+        img.onerror = resolve;
+      });
+
+    })
+  );
+
+  // ✅ extra delay for mobile rendering
+  await new Promise(resolve => setTimeout(resolve, 800));
+
+  // ✅ better mobile support
   const canvas = await html2canvas(certElement, {
-    scale: 2,
-    useCORS: true
+    scale: 1.5,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: "#ffffff",
+    logging: false,
+    scrollX: 0,
+    scrollY: -window.scrollY,
+    windowWidth: document.documentElement.scrollWidth
   });
 
-  const imgData = canvas.toDataURL("image/png");
+  const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
   const { jsPDF } = window.jspdf;
+
   const pdf = new jsPDF("landscape", "pt", "a4");
 
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
 
-  const imgWidth = pageWidth;
-  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  const margin = 20;
 
-  const yOffset = (pageHeight - imgHeight) / 2;
+  const usableWidth = pageWidth - margin * 2;
 
-  pdf.addImage(imgData, "PNG", 0, yOffset, imgWidth, imgHeight);
+  const imgHeight =
+    (canvas.height * usableWidth) / canvas.width;
 
-  const filename = "SkillX-VedicMath-Certificate-" + (student.fullName || "Participant") + ".pdf";
+  const y =
+    (pageHeight - imgHeight) / 2;
+
+  pdf.addImage(
+    imgData,
+    "JPEG",
+    margin,
+    y,
+    usableWidth,
+    imgHeight
+  );
+
+  const filename =
+    "SkillX-VedicMath-Certificate-" +
+    (student.fullName || "Participant") +
+    ".pdf";
+
   pdf.save(filename);
 }
 
