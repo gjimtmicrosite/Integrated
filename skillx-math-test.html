@@ -2,13 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0",maximum-scale=1">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     
     <title>GJIMT SkillX Vedic Math Quiz</title>
     <style>
+        @media(max-width:768px){
+
+    .certificate-card{
+        overflow-x:auto;
+    }
+
+    .certificate-inner{
+        min-width:800px;
+    }
+
+}
         .certificate-inner {
-    width: 100%;
-    overflow: hidden;
+    min-height: 540px;
+    height: auto;
 }
 
 .certificate-inner img {
@@ -386,15 +397,27 @@
             line-height: 1.6;
         }
         .cert-text strong { font-weight: 700; }
-        .cert-footer {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 16px;
-        }
-        .sig-block { text-align: center; flex: 1; }
-        .sig-img { height: 50px; object-fit: contain; }
+     .cert-footer {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.sig-block {
+    flex: 1;
+    text-align: center;
+}
+
+.sig-img {
+    height: 45px;
+    max-width: 120px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 8px;
+}
         .sig-name {
             margin-top: 6px;
             font-weight: 700;
@@ -620,7 +643,7 @@
                         For Vedic Math practice, advanced modules, or counselling, contact SkillX team.
                     </p>
                     <div class="btn-row">
-                        <button class="btn btn-primary" id="btnDownloadCert" onclick="c()">Download Certificate PDF</button>
+                        <button class="btn btn-primary" id="btnDownloadCert" onclick="downloadCertificate()">Download Certificate PDF</button>
                         <button class="btn btn-dark" onclick="shareCertificate()">WhatsApp Share Certificate</button>
                         <button class="btn btn-secondary" onclick="goToFeedback()">Continue to Feedback</button>
                         <button class="btn btn-secondary" onclick="restartQuiz()">Retake Quiz</button>
@@ -1154,84 +1177,103 @@ nextWorkshop = `
 
     async function downloadCertificate() {
 
-  const percentText =
-    document.getElementById("scorePercent").textContent;
+  try {
 
-  const percent = parseInt(percentText, 10) || 0;
+    const percentText =
+      document.getElementById("scorePercent").textContent;
 
-  if (percent < 50) {
-    alert("Certificate is available only for scores 50% and above.");
-    return;
+    const percent =
+      parseInt(percentText, 10) || 0;
+
+    if (percent < 50) {
+
+      alert(
+        "Certificate available only for 50%+ score."
+      );
+
+      return;
+    }
+
+    const cert =
+      document.getElementById("certificateInner");
+
+    // wait images
+    const images = cert.querySelectorAll("img");
+
+    await Promise.all(
+      Array.from(images).map(img => {
+
+        if (img.complete) return;
+
+        return new Promise(resolve => {
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
+
+      })
+    );
+
+    // mobile render delay
+    await new Promise(r => setTimeout(r, 1000));
+
+    const canvas = await html2canvas(cert, {
+
+      scale: 1,
+
+      useCORS: true,
+
+      allowTaint: true,
+
+      backgroundColor: "#ffffff",
+
+      logging: false
+
+    });
+
+    const imgData =
+      canvas.toDataURL("image/jpeg", 1.0);
+
+    const { jsPDF } = window.jspdf;
+
+    const pdf =
+      new jsPDF("landscape", "mm", "a4");
+
+    const pageWidth =
+      pdf.internal.pageSize.getWidth();
+
+    const pageHeight =
+      pdf.internal.pageSize.getHeight();
+
+    const imgWidth = pageWidth - 10;
+
+    const imgHeight =
+      (canvas.height * imgWidth) / canvas.width;
+
+    const y =
+      (pageHeight - imgHeight) / 2;
+
+    pdf.addImage(
+      imgData,
+      "JPEG",
+      5,
+      y,
+      imgWidth,
+      imgHeight
+    );
+
+    pdf.save(
+      "SkillX-Certificate.pdf"
+    );
+
+  } catch (err) {
+
+    console.error(err);
+
+    alert(
+      "PDF generation failed on this device. Please try Chrome browser."
+    );
+
   }
-
-  const certElement =
-    document.getElementById("certificateInner");
-
-  // ✅ wait for all images
-  const images = certElement.querySelectorAll("img");
-
-  await Promise.all(
-    Array.from(images).map(img => {
-
-      if (img.complete) return Promise.resolve();
-
-      return new Promise(resolve => {
-        img.onload = resolve;
-        img.onerror = resolve;
-      });
-
-    })
-  );
-
-  // ✅ extra delay for mobile rendering
-  await new Promise(resolve => setTimeout(resolve, 800));
-
-  // ✅ better mobile support
-  const canvas = await html2canvas(certElement, {
-    scale: 1.5,
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: "#ffffff",
-    logging: false,
-    scrollX: 0,
-    scrollY: -window.scrollY,
-    windowWidth: document.documentElement.scrollWidth
-  });
-
-  const imgData = canvas.toDataURL("image/jpeg", 1.0);
-
-  const { jsPDF } = window.jspdf;
-
-  const pdf = new jsPDF("landscape", "pt", "a4");
-
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
-
-  const margin = 20;
-
-  const usableWidth = pageWidth - margin * 2;
-
-  const imgHeight =
-    (canvas.height * usableWidth) / canvas.width;
-
-  const y =
-    (pageHeight - imgHeight) / 2;
-
-  pdf.addImage(
-    imgData,
-    "JPEG",
-    margin,
-    y,
-    usableWidth,
-    imgHeight
-  );
-
-  const filename =
-    "SkillX-VedicMath-Certificate-" +
-    (student.fullName || "Participant") +
-    ".pdf";
-
-  pdf.save(filename);
 }
 
     function buildCertificateSummary() {
