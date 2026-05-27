@@ -440,14 +440,48 @@
             margin-bottom: 10px;
         }
         .likert-row label { margin: 0; }
-        @media (max-width: 860px) {
-            .grid { grid-template-columns: 1fr; }
-            .score-box { grid-template-columns: 1fr; }
-            .question-text { font-size: 21px; }
-            .certificate-inner { padding: 16px 16px; }
-            .cert-footer { flex-direction: column; }
-            .cert-header-logos { flex-direction: column; }
-        }
+      @media (max-width: 860px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .score-box {
+        grid-template-columns: 1fr;
+    }
+
+    .question-text {
+        font-size: 21px;
+    }
+
+    .certificate-inner {
+        padding: 16px;
+    }
+
+    .cert-header-logos {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    /* KEEP BOTH SIGNATURES IN ONE LINE */
+    .cert-footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 10px;
+        flex-wrap: nowrap;
+    }
+
+    .sig-block {
+        width: 48%;
+    }
+
+    .sig-img {
+        width: 100px;
+        height: 45px;
+    }
+
+}
     </style>
 </head>
 <body>
