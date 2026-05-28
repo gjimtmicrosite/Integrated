@@ -1219,7 +1219,7 @@ nextWorkshop = `
       
     }
 
-    async function downloadCertificate() {
+ async function downloadCertificate() {
 
   try {
 
@@ -1231,9 +1231,7 @@ nextWorkshop = `
 
     if (percent < 50) {
 
-      alert(
-        "Certificate available only for 50%+ score."
-      );
+      alert("Certificate available only for 50%+ score.");
 
       return;
     }
@@ -1241,13 +1239,16 @@ nextWorkshop = `
     const cert =
       document.getElementById("certificateInner");
 
-    // wait images
+    // FORCE DESKTOP SIZE FOR MOBILE PDF
+    cert.style.width = "1000px";
+
+    // wait for images
     const images = cert.querySelectorAll("img");
 
     await Promise.all(
       Array.from(images).map(img => {
 
-        if (img.complete) return;
+        if (img.complete) return Promise.resolve();
 
         return new Promise(resolve => {
           img.onload = resolve;
@@ -1257,18 +1258,28 @@ nextWorkshop = `
       })
     );
 
-    // mobile render delay
-    await new Promise(r => setTimeout(r, 1000));
+    // wait render
+    await new Promise(r => setTimeout(r, 800));
+
+    window.scrollTo(0, 0);
 
     const canvas = await html2canvas(cert, {
 
-      scale: 1,
+      scale: 3,
 
       useCORS: true,
 
       allowTaint: true,
 
       backgroundColor: "#ffffff",
+
+      scrollX: 0,
+      scrollY: -window.scrollY,
+
+      width: cert.scrollWidth,
+      height: cert.scrollHeight,
+
+      windowWidth: 1200,
 
       logging: false
 
@@ -1305,9 +1316,10 @@ nextWorkshop = `
       imgHeight
     );
 
-    pdf.save(
-      "SkillX-Certificate.pdf"
-    );
+    pdf.save("SkillX-Certificate.pdf");
+
+    // reset width
+    cert.style.width = "";
 
   } catch (err) {
 
@@ -1318,9 +1330,7 @@ nextWorkshop = `
     );
 
   }
-}
-
-    function buildCertificateSummary() {
+}    function buildCertificateSummary() {
       const percentText = document.getElementById("scorePercent").textContent;
       const band = document.getElementById("scoreOutcome").textContent;
       return [
