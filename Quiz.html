@@ -1,750 +1,1404 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>GJIMT Quiz Zone</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
+/* =========================
+   GLOBAL SETTINGS
+========================= */
+
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
-  min-height:100vh;
-  overflow-x:hidden;
-  color:white;
 
-  background:
-  linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#4b0f0f);
+    min-height:100vh;
 
-  background-size:400% 400%;
+    overflow-x:hidden;
 
-  animation:bgMove 12s ease infinite;
+    color:white;
+
+    background:
+    linear-gradient(
+        -45deg,
+        #0f2027,
+        #203a43,
+        #2c5364,
+        #4b0f0f
+    );
+
+    background-size:400% 400%;
+
+    animation:bgMove 12s ease infinite;
 }
+
+
+/* =========================
+   BACKGROUND ANIMATION
+========================= */
 
 @keyframes bgMove{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
 }
 
+
+/* =========================
+   PARTICLE CANVAS
+========================= */
+
 canvas{
-  position:fixed;
-  inset:0;
-  z-index:0;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:0;
+
 }
+
 
 /* =========================
    NAVBAR
 ========================= */
 
 .navbar{
-  position:sticky;
-  top:0;
-  z-index:9999;
 
-  width:100%;
+    position:sticky;
 
-  background:rgba(0,0,0,0.35);
+    top:0;
 
-  backdrop-filter:blur(14px);
+    z-index:9999;
 
-  border-bottom:1px solid rgba(255,255,255,0.1);
+    width:100%;
+
+    background:rgba(0,0,0,0.35);
+
+    backdrop-filter:blur(14px);
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.1);
+
 }
+
 
 .nav-container{
-  max-width:1500px;
-  margin:auto;
 
-  padding:14px 25px;
+    max-width:1800px;
 
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+    margin:auto;
+
+    padding:12px 25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
 }
+
 
 .logo{
-  font-size:1.2rem;
-  font-weight:700;
 
-  background:linear-gradient(90deg,#fff,#ffb0b0);
+    font-size:1.15rem;
 
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+    font-weight:700;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ffffff,
+        #ffb0b0
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
 }
+
 
 .nav-links{
-  display:flex;
-  gap:22px;
+
+    display:flex;
+
+    gap:22px;
+
 }
+
 
 .nav-links a{
-  text-decoration:none;
-  color:white;
-  font-size:0.95rem;
-  transition:0.3s;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-size:0.9rem;
+
+    transition:0.3s;
+
 }
+
 
 .nav-links a:hover{
-  color:#ff8f8f;
+
+    color:#ff8f8f;
+
 }
 
-.footer-btn{
-  display:inline-block;
-  margin-top:12px;
-  padding:8px 18px;
-  font-size:13px;
-  border-radius:25px;
-  background:linear-gradient(45deg,#ff416c,#ff4b2b);
-  color:white;
-  text-decoration:none;
-  transition:0.3s;
-}
-
-.footer-btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 5px 12px rgba(0,0,0,0.3);
-}
 
 /* =========================
-   HERO
+   HERO SECTION
 ========================= */
 
 .hero{
-  position:relative;
-  z-index:2;
 
-  text-align:center;
+    position:relative;
 
-  padding:50px 20px 25px;
+    z-index:2;
+
+    text-align:center;
+
+    padding:30px 20px 15px;
+
 }
+
 
 .hero img{
-  height:75px;
 
-  background:white;
+    height:65px;
 
-  padding:12px;
+    background:white;
 
-  border-radius:18px;
+    padding:10px;
 
-  box-shadow:0 12px 25px rgba(0,0,0,0.35);
+    border-radius:16px;
 
-  margin-bottom:20px;
+    box-shadow:
+    0 10px 22px rgba(0,0,0,0.35);
+
+    margin-bottom:12px;
+
 }
+
 
 .hero h1{
-  font-size:2.4rem;
-  font-weight:800;
 
-  background:linear-gradient(90deg,#ffffff,#ffc0c0);
+    font-size:2.1rem;
 
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+    font-weight:800;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ffffff,
+        #ffc0c0
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
 }
+
 
 .hero p{
-  margin-top:10px;
 
-  font-size:0.95rem;
+    margin-top:6px;
 
-  opacity:0.9;
+    font-size:0.9rem;
+
+    opacity:0.9;
+
 }
 
+
 /* =========================
-   QUIZ GRID
+   QUIZ SECTION
 ========================= */
 
 .quiz-section{
-  position:relative;
-  z-index:2;
 
-  max-width:1600px;
+    position:relative;
 
-  margin:auto;
+    z-index:2;
 
-  padding:20px;
+    width:100%;
+
+    max-width:1900px;
+
+    margin:auto;
+
+    padding:15px 18px 20px;
+
 }
 
-.quiz-grid{
-  display:grid;
-
-  /* 7 CARDS IN ONE ROW */
-  grid-template-columns:repeat(7,1fr);
-
-  gap:16px;
-}
 
 /* =========================
-   QUIZ CARD
+   7 CARDS IN ONE ROW
+========================= */
+
+.quiz-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(7, minmax(0, 1fr));
+
+    gap:12px;
+
+    width:100%;
+
+}
+
+
+/* =========================
+   QUIZ CARDS
 ========================= */
 
 .quiz-card{
-  position:relative;
 
-  overflow:hidden;
+    position:relative;
 
-  background:rgba(255,255,255,0.12);
+    overflow:hidden;
 
-  backdrop-filter:blur(14px);
+    background:
+    rgba(255,255,255,0.12);
 
-  border-radius:22px;
+    backdrop-filter:blur(14px);
 
-  padding:18px 12px;
+    -webkit-backdrop-filter:blur(14px);
 
-  border:1px solid rgba(255,255,255,0.15);
+    border-radius:18px;
 
-  transition:0.45s;
+    padding:15px 8px;
 
-  transform-style:preserve-3d;
+    border:
+    1px solid rgba(255,255,255,0.15);
 
-  text-align:center;
+    transition:0.4s;
 
-  box-shadow:0 15px 30px rgba(0,0,0,0.35);
+    text-align:center;
 
-  min-height:330px;
+    box-shadow:
+    0 12px 25px rgba(0,0,0,0.32);
 
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
+    min-height:305px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
 }
+
 
 .quiz-card:hover{
-  transform:
-  rotateY(4deg)
-  rotateX(3deg)
-  translateY(-8px)
-  scale(1.02);
+
+    transform:
+    translateY(-7px)
+    scale(1.02);
+
+    background:
+    rgba(255,255,255,0.17);
+
+    box-shadow:
+    0 18px 35px rgba(0,0,0,0.42);
+
 }
+
 
 .quiz-card::before{
-  content:'';
 
-  position:absolute;
-  inset:0;
+    content:'';
 
-  background:
-  linear-gradient(
-    135deg,
-    rgba(255,255,255,0.15),
-    transparent
-  );
+    position:absolute;
 
-  pointer-events:none;
+    inset:0;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,0.15),
+        transparent
+    );
+
+    pointer-events:none;
+
 }
+
+
+/* =========================
+   QUIZ ICON
+========================= */
 
 .quiz-icon{
-  width:55px;
-  height:55px;
 
-  margin:auto;
+    width:50px;
 
-  border-radius:16px;
+    height:50px;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    margin:0 auto 10px;
 
-  font-size:1.5rem;
+    border-radius:14px;
 
-  background:
-  linear-gradient(135deg,#ff416c,#ff4b2b);
+    display:flex;
 
-  box-shadow:0 10px 22px rgba(0,0,0,0.3);
+    align-items:center;
 
-  margin-bottom:14px;
+    justify-content:center;
+
+    font-size:1.35rem;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff416c,
+        #ff4b2b
+    );
+
+    box-shadow:
+    0 8px 18px rgba(0,0,0,0.3);
+
 }
+
+
+/* =========================
+   CARD TITLE
+========================= */
 
 .quiz-card h2{
-  font-size:1rem;
-  margin-bottom:10px;
+
+    font-size:0.95rem;
+
+    font-weight:700;
+
+    margin-bottom:7px;
+
 }
+
+
+/* =========================
+   CARD DESCRIPTION
+========================= */
 
 .quiz-card p{
-  font-size:0.8rem;
 
-  opacity:0.9;
+    font-size:0.70rem;
 
-  line-height:1.5;
+    opacity:0.9;
+
+    line-height:1.45;
+
+    padding:0 2px;
+
 }
+
+
+/* =========================
+   QR CODE
+========================= */
 
 .qr-box{
-  margin-top:15px;
+
+    margin-top:10px;
+
 }
+
 
 .qr-box img{
-  width:95px;
-  height:95px;
 
-  object-fit:cover;
+    width:82px;
 
-  border-radius:14px;
+    height:82px;
 
-  background:white;
+    object-fit:cover;
 
-  padding:6px;
+    border-radius:11px;
 
-  box-shadow:0 10px 22px rgba(0,0,0,0.35);
+    background:white;
 
-  transition:0.3s;
+    padding:5px;
+
+    box-shadow:
+    0 8px 18px rgba(0,0,0,0.35);
+
+    transition:0.3s;
+
 }
+
 
 .qr-box img:hover{
-  transform:scale(1.08);
+
+    transform:scale(1.08);
+
 }
+
+
+/* =========================
+   BUTTON
+========================= */
 
 .quiz-btn{
-  display:inline-block;
 
-  margin-top:14px;
+    display:inline-block;
 
-  padding:9px 14px;
+    margin-top:10px;
 
-  border-radius:30px;
+    padding:7px 12px;
 
-  background:
-  linear-gradient(135deg,#ff416c,#ff4b2b);
+    border-radius:25px;
 
-  color:white;
+    background:
+    linear-gradient(
+        135deg,
+        #ff416c,
+        #ff4b2b
+    );
 
-  text-decoration:none;
+    color:white;
 
-  font-size:0.8rem;
-  font-weight:600;
+    text-decoration:none;
 
-  transition:0.3s;
+    font-size:0.70rem;
 
-  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    font-weight:600;
+
+    transition:0.3s;
+
+    box-shadow:
+    0 6px 15px rgba(0,0,0,0.3);
+
+    position:relative;
+
+    z-index:5;
+
 }
+
 
 .quiz-btn:hover{
-  transform:translateY(-3px) scale(1.04);
+
+    transform:
+    translateY(-2px)
+    scale(1.04);
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.4);
+
 }
+
 
 /* =========================
    FOOTER
 ========================= */
 
 footer{
-  position:relative;
-  z-index:2;
 
-  text-align:center;
+    position:relative;
 
-  padding:30px 20px;
+    z-index:2;
 
-  font-size:0.9rem;
+    text-align:center;
 
-  opacity:0.85;
+    padding:18px 20px 25px;
+
+    font-size:0.82rem;
+
+    opacity:0.9;
+
 }
+
+
+.footer-btn{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    padding:7px 17px;
+
+    font-size:12px;
+
+    border-radius:25px;
+
+    background:
+    linear-gradient(
+        45deg,
+        #ff416c,
+        #ff4b2b
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:0.3s;
+
+}
+
+
+.footer-btn:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 5px 12px rgba(0,0,0,0.3);
+
+}
+
 
 /* =========================
-   RESPONSIVE
+   RESPONSIVE DESIGN
 ========================= */
 
-@media(max-width:1450px){
+/*
+   Desktop:
+   Keep ALL 7 cards in ONE ROW
+*/
 
-  .quiz-grid{
-    grid-template-columns:repeat(4,1fr);
-  }
+@media(min-width:1101px){
+
+    .quiz-grid{
+
+        grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+    }
 
 }
+
+
+/*
+   Tablet
+*/
 
 @media(max-width:1100px){
 
-  .quiz-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
+    .quiz-grid{
+
+        grid-template-columns:
+        repeat(4,1fr);
+
+    }
 
 }
 
-@media(max-width:900px){
 
-  .quiz-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+/*
+   Small Tablet
+*/
+
+@media(max-width:800px){
+
+    .quiz-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+    }
 
 }
 
-@media(max-width:600px){
 
-  .quiz-grid{
-    grid-template-columns:1fr;
-  }
+/*
+   Mobile
+*/
 
-  .hero h1{
-    font-size:2rem;
-  }
+@media(max-width:500px){
 
-  .hero p{
-    font-size:0.9rem;
-  }
+    .quiz-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .hero h1{
+
+        font-size:1.7rem;
+
+    }
+
+
+    .hero p{
+
+        font-size:0.82rem;
+
+    }
+
+
+    .quiz-card{
+
+        min-height:300px;
+
+    }
 
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =========================
+     PARTICLE BACKGROUND
+========================= -->
+
 <canvas id="particles"></canvas>
 
-<!-- NAVBAR -->
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
 
 <nav class="navbar">
 
-  <div class="nav-container">
+    <div class="nav-container">
 
-    <div class="logo">
-      GJIMT Quiz Zone
+        <div class="logo">
+
+            GJIMT Quiz Zone
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="https://gjimtmicrosite.github.io/Integrated/">
+
+                Home
+
+            </a>
+
+        </div>
+
     </div>
-
-    <div class="nav-links">
-      <a href="https://gjimtmicrosite.github.io/Integrated/">Home</a>
-    </div>
-
-  </div>
 
 </nav>
 
-<!-- HERO -->
+
+
+<!-- =========================
+     HERO SECTION
+========================= -->
 
 <section class="hero">
 
-  <img src="https://www.gjimt.ac.in/wp-content/uploads/2025/09/gjimt-logo.png">
 
-  <h1>GJIMT Quiz Universe</h1>
+    <img
+    src="https://www.gjimt.ac.in/wp-content/uploads/2025/09/gjimt-logo.png"
+    alt="GJIMT Logo"
+    >
 
-  <p>
-    Scan • Learn • Compete • Grow
-  </p>
+
+    <h1>
+
+        GJIMT Quiz Universe
+
+    </h1>
+
+
+    <p>
+
+        Scan • Learn • Compete • Grow
+
+    </p>
+
 
 </section>
 
-<!-- QUIZ SECTION -->
+
+
+<!-- =========================
+     QUIZ SECTION
+========================= -->
 
 <section class="quiz-section">
 
-  <div class="quiz-grid">
 
-    <!-- AI -->
+<div class="quiz-grid">
 
-    <div class="quiz-card">
 
-      <div>
 
-        <div class="quiz-icon">🤖</div>
+<!-- =========================
+     1. AI QUIZ
+========================= -->
 
-        <h2>ArI Quiz</h2>
+<div class="quiz-card">
+
+
+    <div>
+
+
+        <div class="quiz-icon">
+
+            🤖
+
+        </div>
+
+
+        <h2>
+
+            AI Quiz
+
+        </h2>
+
 
         <p>
-          Explore Artificial Intelligence careers and concepts.
+
+            Explore Artificial Intelligence
+            careers and concepts.
+
         </p>
 
-      </div>
-
-      <div class="qr-box">
-
-        <img src="AI Quiz.jpeg">
-
-        <br>
-
-        <a href="ai-mastery-quiz.html" class="quiz-btn">
-          Start Quiz
-        </a>
-
-      </div>
 
     </div>
 
-    <!-- CAREER -->
 
-    <div class="quiz-card">
+    <div class="qr-box">
 
-      <div>
 
-        <div class="quiz-icon">🎯</div>
+        <img
+        src="AI Quiz.jpeg"
+        alt="AI Quiz QR Code"
+        >
 
-        <h2>Career Quiz</h2>
-
-        <p>
-          Find your ideal career path after +2.
-        </p>
-
-      </div>
-
-      <div class="qr-box">
-
-        <img src="careerquiz.jpeg">
 
         <br>
 
-        <a href="gjimt-career-test.html" class="quiz-btn">
-          Start Quiz
+
+        <a
+        href="ai-mastery-quiz.html"
+        class="quiz-btn"
+        >
+
+            Start Quiz
+
         </a>
 
-      </div>
 
     </div>
 
-    <!-- SKILLX -->
 
-    <div class="quiz-card">
+</div>
 
-      <div>
 
-        <div class="quiz-icon">⚡</div>
 
-        <h2>SkillX Quiz</h2>
+<!-- =========================
+     2. CAREER QUIZ
+========================= -->
+
+<div class="quiz-card">
+
+
+    <div>
+
+
+        <div class="quiz-icon">
+
+            🎯
+
+        </div>
+
+
+        <h2>
+
+            Career Quiz
+
+        </h2>
+
 
         <p>
-          Test digital and practical professional skills.
+
+            Find your ideal career
+            path after +2.
+
         </p>
 
-      </div>
 
-      <div class="qr-box">
+    </div>
 
-        <img src="SkillX.jpeg">
+
+    <div class="qr-box">
+
+
+        <img
+        src="careerquiz.jpeg"
+        alt="Career Quiz QR Code"
+        >
+
 
         <br>
 
-        <a href="https://gjimtmicrosite.github.io/SkillXworkshops/gjimt-SkillX-Quiz.html"
-        class="quiz-btn">
 
-          Start Quiz
+        <a
+        href="gjimt-career-test.html"
+        class="quiz-btn"
+        >
+
+            Start Quiz
 
         </a>
 
-      </div>
 
     </div>
 
-    <!-- MATHS -->
 
-    <div class="quiz-card">
+</div>
 
-      <div>
 
-        <div class="quiz-icon">📊</div>
 
-        <h2>Maths Quiz</h2>
+<!-- =========================
+     3. SKILLX QUIZ
+========================= -->
+
+<div class="quiz-card">
+
+
+    <div>
+
+
+        <div class="quiz-icon">
+
+            ⚡
+
+        </div>
+
+
+        <h2>
+
+            SkillX Quiz
+
+        </h2>
+
 
         <p>
-          Improve aptitude and logical thinking skills.
+
+            Test digital and practical
+            professional skills.
+
         </p>
 
-      </div>
 
-      <div class="qr-box">
+    </div>
 
-        <img src="maths.png">
+
+    <div class="qr-box">
+
+
+        <img
+        src="SkillX.jpeg"
+        alt="SkillX Quiz QR Code"
+        >
+
 
         <br>
 
-        <a href="gjimt-Maths-Quiz"
-        class="quiz-btn">
 
-          Start Quiz
+        <a
+        href="https://gjimtmicrosite.github.io/SkillXworkshops/gjimt-SkillX-Quiz.html"
+        class="quiz-btn"
+        >
+
+            Start Quiz
 
         </a>
 
-      </div>
 
     </div>
 
-    <!-- PYTHON -->
 
-    <div class="quiz-card">
+</div>
 
-      <div>
 
-        <div class="quiz-icon">💻</div>
 
-        <h2>Python Quiz</h2>
+<!-- =========================
+     4. MATHS QUIZ
+========================= -->
+
+<div class="quiz-card">
+
+
+    <div>
+
+
+        <div class="quiz-icon">
+
+            📊
+
+        </div>
+
+
+        <h2>
+
+            Maths Quiz
+
+        </h2>
+
 
         <p>
-          Evaluate programming and coding fundamentals.
+
+            Improve mathematical and
+            logical thinking skills.
+
         </p>
 
-      </div>
 
-      <div class="qr-box">
+    </div>
 
-        <img src="pthon.png">
+
+    <div class="qr-box">
+
+
+        <img
+        src="maths.png"
+        alt="Maths Quiz QR Code"
+        >
+
 
         <br>
 
-        <a href="gjimt-Python-Quiz"
-        class="quiz-btn">
 
-          Start Quiz
+        <a
+        href="gjimt-Maths-Quiz"
+        class="quiz-btn"
+        >
+
+            Start Quiz
 
         </a>
 
-      </div>
 
     </div>
 
-    <!-- MBA -->
 
-    <div class="quiz-card">
+</div>
 
-      <div>
 
-        <div class="quiz-icon">🎓</div>
 
-        <h2>Why MBA</h2>
+<!-- =========================
+     5. PYTHON QUIZ
+========================= -->
+
+<div class="quiz-card">
+
+
+    <div>
+
+
+        <div class="quiz-icon">
+
+            💻
+
+        </div>
+
+
+        <h2>
+
+            Python Quiz
+
+        </h2>
+
 
         <p>
-          Discover leadership and management opportunities.
+
+            Evaluate programming and
+            coding fundamentals.
+
         </p>
 
-      </div>
 
-      <div class="qr-box">
+    </div>
 
-        <img src="mba.png">
+
+    <div class="qr-box">
+
+
+        <img
+        src="pthon.png"
+        alt="Python Quiz QR Code"
+        >
+
 
         <br>
 
-        <a href="gjimt-WhyMBA-Quiz.html"
-        class="quiz-btn">
 
-          Start Quiz
+        <a
+        href="gjimt-Python-Quiz"
+        class="quiz-btn"
+        >
+
+            Start Quiz
 
         </a>
 
-      </div>
 
     </div>
 
-    <!-- APTITUDE TEST - NEW BOX -->
 
-    <div class="quiz-card">
+</div>
 
-      <div>
 
-        <div class="quiz-icon">🧠</div>
 
-        <h2>Aptitude Test</h2>
+<!-- =========================
+     6. WHY MBA
+========================= -->
+
+<div class="quiz-card">
+
+
+    <div>
+
+
+        <div class="quiz-icon">
+
+            🎓
+
+        </div>
+
+
+        <h2>
+
+            Why MBA
+
+        </h2>
+
 
         <p>
-          Test your quantitative aptitude, reasoning and problem-solving skills.
+
+            Discover leadership and
+            management opportunities.
+
         </p>
 
-      </div>
 
-      <div class="qr-box">
+    </div>
 
-        <img src="aptitude.png">
+
+    <div class="qr-box">
+
+
+        <img
+        src="mba.png"
+        alt="Why MBA QR Code"
+        >
+
 
         <br>
 
-        <a href="gjimt-Aptitude-Test.html"
-        class="quiz-btn">
 
-          Start Test
+        <a
+        href="gjimt-WhyMBA-Quiz.html"
+        class="quiz-btn"
+        >
+
+            Start Quiz
 
         </a>
 
-      </div>
 
     </div>
 
-    <!-- END APTITUDE TEST -->
 
-  </div>
+</div>
+
+
+
+<!-- =========================
+     7. APTITUDE TEST
+========================= -->
+
+<div class="quiz-card">
+
+
+    <div>
+
+
+        <div class="quiz-icon">
+
+            🧠
+
+        </div>
+
+
+        <h2>
+
+            Aptitude Test
+
+        </h2>
+
+
+        <p>
+
+            Test quantitative aptitude,
+            reasoning and problem-solving skills.
+
+        </p>
+
+
+    </div>
+
+
+    <div class="qr-box">
+
+
+        <img
+        src="aptitude.png"
+        alt="Aptitude Test QR Code"
+        >
+
+
+        <br>
+
+
+        <a
+        href="gjimt-Aptitude-Test.html"
+        class="quiz-btn"
+        >
+
+            Start Test
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+
+</div>
 
 </section>
 
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
 
-  © 2026 Gian Jyoti Institute of Management & Technology<br/>
 
-  <a href="dashboard.html" class="footer-btn">
-    📊 Result Dashboard
-  </a>
+    © 2026 Gian Jyoti Institute of Management & Technology
+
+
+    <br>
+
+
+    <a
+    href="dashboard.html"
+    class="footer-btn"
+    >
+
+        📊 Result Dashboard
+
+    </a>
+
 
 </footer>
 
+
+
+<!-- =========================
+     PARTICLE ANIMATION
+========================= -->
+
 <script>
 
-const canvas=document.getElementById("particles");
 
-const ctx=canvas.getContext("2d");
+const canvas =
+document.getElementById("particles");
 
-let w,h,particles=[];
+
+const ctx =
+canvas.getContext("2d");
+
+
+let w;
+
+let h;
+
+let particles = [];
+
+
+/* Resize Canvas */
 
 function resize(){
 
-  w=canvas.width=window.innerWidth;
-  h=canvas.height=window.innerHeight;
+
+    w =
+    canvas.width =
+    window.innerWidth;
+
+
+    h =
+    canvas.height =
+    window.innerHeight;
+
 
 }
 
-window.addEventListener("resize",resize);
+
+window.addEventListener(
+    "resize",
+    resize
+);
+
 
 resize();
 
+
+
+/* Create Particles */
+
 for(let i=0;i<60;i++){
 
-  particles.push({
 
-    x:Math.random()*w,
-    y:Math.random()*h,
+    particles.push({
 
-    r:Math.random()*2,
 
-    dx:(Math.random()-0.5)*0.5,
-    dy:(Math.random()-0.5)*0.5
+        x:
+        Math.random()*w,
 
-  });
+
+        y:
+        Math.random()*h,
+
+
+        r:
+        Math.random()*2,
+
+
+        dx:
+        (Math.random()-0.5)*0.5,
+
+
+        dy:
+        (Math.random()-0.5)*0.5
+
+
+    });
+
 
 }
+
+
+
+/* Animate Particles */
 
 function animate(){
 
-  ctx.clearRect(0,0,w,h);
 
-  ctx.fillStyle="rgba(255,255,255,0.45)";
-
-  particles.forEach(p=>{
-
-    p.x+=p.dx;
-    p.y+=p.dy;
-
-    if(p.x<0||p.x>w)p.dx*=-1;
-    if(p.y<0||p.y>h)p.dy*=-1;
-
-    ctx.beginPath();
-
-    ctx.arc(
-      p.x,
-      p.y,
-      p.r,
-      0,
-      Math.PI*2
+    ctx.clearRect(
+        0,
+        0,
+        w,
+        h
     );
 
-    ctx.fill();
 
-  });
+    ctx.fillStyle =
+    "rgba(255,255,255,0.45)";
 
-  requestAnimationFrame(animate);
+
+    particles.forEach(p=>{
+
+
+        p.x += p.dx;
+
+        p.y += p.dy;
+
+
+        if(
+            p.x < 0 ||
+            p.x > w
+        ){
+
+            p.dx *= -1;
+
+        }
+
+
+        if(
+            p.y < 0 ||
+            p.y > h
+        ){
+
+            p.dy *= -1;
+
+        }
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+
+            p.x,
+
+            p.y,
+
+            p.r,
+
+            0,
+
+            Math.PI*2
+
+        );
+
+
+        ctx.fill();
+
+
+    });
+
+
+    requestAnimationFrame(
+        animate
+    );
+
 
 }
 
+
 animate();
+
 
 </script>
 
+
 </body>
+
 </html>
