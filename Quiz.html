@@ -24,11 +24,8 @@
 }
 
 body{
-
     min-height:100vh;
-
     overflow-x:hidden;
-
     color:white;
 
     background:
@@ -41,7 +38,6 @@ body{
     );
 
     background-size:400% 400%;
-
     animation:bgMove 12s ease infinite;
 }
 
@@ -72,13 +68,9 @@ body{
 ========================= */
 
 canvas{
-
     position:fixed;
-
     inset:0;
-
     z-index:0;
-
 }
 
 
@@ -89,11 +81,8 @@ canvas{
 .navbar{
 
     position:sticky;
-
     top:0;
-
     z-index:9999;
-
     width:100%;
 
     background:rgba(0,0,0,0.35);
@@ -108,16 +97,13 @@ canvas{
 
 .nav-container{
 
-    max-width:1800px;
-
+    max-width:1900px;
     margin:auto;
 
     padding:12px 25px;
 
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 
 }
@@ -126,7 +112,6 @@ canvas{
 .logo{
 
     font-size:1.15rem;
-
     font-weight:700;
 
     background:
@@ -137,38 +122,29 @@ canvas{
     );
 
     -webkit-background-clip:text;
-
     -webkit-text-fill-color:transparent;
 
 }
 
 
 .nav-links{
-
     display:flex;
-
     gap:22px;
-
 }
 
 
 .nav-links a{
 
     text-decoration:none;
-
     color:white;
-
     font-size:0.9rem;
-
     transition:0.3s;
 
 }
 
 
 .nav-links a:hover{
-
     color:#ff8f8f;
-
 }
 
 
@@ -179,38 +155,36 @@ canvas{
 .hero{
 
     position:relative;
-
     z-index:2;
 
     text-align:center;
 
-    padding:30px 20px 15px;
+    padding:28px 20px 14px;
 
 }
 
 
 .hero img{
 
-    height:65px;
+    height:62px;
 
     background:white;
 
-    padding:10px;
+    padding:9px;
 
     border-radius:16px;
 
     box-shadow:
     0 10px 22px rgba(0,0,0,0.35);
 
-    margin-bottom:12px;
+    margin-bottom:11px;
 
 }
 
 
 .hero h1{
 
-    font-size:2.1rem;
-
+    font-size:2rem;
     font-weight:800;
 
     background:
@@ -221,7 +195,6 @@ canvas{
     );
 
     -webkit-background-clip:text;
-
     -webkit-text-fill-color:transparent;
 
 }
@@ -231,7 +204,7 @@ canvas{
 
     margin-top:6px;
 
-    font-size:0.9rem;
+    font-size:0.88rem;
 
     opacity:0.9;
 
@@ -245,22 +218,21 @@ canvas{
 .quiz-section{
 
     position:relative;
-
     z-index:2;
 
     width:100%;
 
-    max-width:1900px;
+    max-width:1920px;
 
     margin:auto;
 
-    padding:15px 18px 20px;
+    padding:15px 14px 20px;
 
 }
 
 
 /* =========================
-   7 CARDS IN ONE ROW
+   8 CARDS IN ONE ROW
 ========================= */
 
 .quiz-grid{
@@ -268,9 +240,9 @@ canvas{
     display:grid;
 
     grid-template-columns:
-    repeat(7, minmax(0, 1fr));
+    repeat(8, minmax(0, 1fr));
 
-    gap:12px;
+    gap:10px;
 
     width:100%;
 
@@ -294,9 +266,9 @@ canvas{
 
     -webkit-backdrop-filter:blur(14px);
 
-    border-radius:18px;
+    border-radius:17px;
 
-    padding:15px 8px;
+    padding:14px 7px;
 
     border:
     1px solid rgba(255,255,255,0.15);
@@ -308,7 +280,7 @@ canvas{
     box-shadow:
     0 12px 25px rgba(0,0,0,0.32);
 
-    min-height:305px;
+    min-height:300px;
 
     display:flex;
 
@@ -360,11 +332,11 @@ canvas{
 
 .quiz-icon{
 
-    width:50px;
+    width:48px;
 
-    height:50px;
+    height:48px;
 
-    margin:0 auto 10px;
+    margin:0 auto 9px;
 
     border-radius:14px;
 
@@ -374,7 +346,7 @@ canvas{
 
     justify-content:center;
 
-    font-size:1.35rem;
+    font-size:1.3rem;
 
     background:
     linear-gradient(
@@ -395,11 +367,11 @@ canvas{
 
 .quiz-card h2{
 
-    font-size:0.95rem;
+    font-size:0.88rem;
 
     font-weight:700;
 
-    margin-bottom:7px;
+    margin-bottom:6px;
 
 }
 
@@ -410,7 +382,7 @@ canvas{
 
 .quiz-card p{
 
-    font-size:0.70rem;
+    font-size:0.64rem;
 
     opacity:0.9;
 
@@ -427,20 +399,20 @@ canvas{
 
 .qr-box{
 
-    margin-top:10px;
+    margin-top:9px;
 
 }
 
 
 .qr-box img{
 
-    width:82px;
+    width:78px;
 
-    height:82px;
+    height:78px;
 
     object-fit:cover;
 
-    border-radius:11px;
+    border-radius:10px;
 
     background:white;
 
@@ -469,9 +441,9 @@ canvas{
 
     display:inline-block;
 
-    margin-top:10px;
+    margin-top:9px;
 
-    padding:7px 12px;
+    padding:7px 10px;
 
     border-radius:25px;
 
@@ -486,7 +458,7 @@ canvas{
 
     text-decoration:none;
 
-    font-size:0.70rem;
+    font-size:0.66rem;
 
     font-weight:600;
 
@@ -577,28 +549,23 @@ footer{
    RESPONSIVE DESIGN
 ========================= */
 
-/*
-   Desktop:
-   Keep ALL 7 cards in ONE ROW
-*/
+/* Desktop - all 8 in one row */
 
-@media(min-width:1101px){
+@media(min-width:1201px){
 
     .quiz-grid{
 
         grid-template-columns:
-        repeat(7, minmax(0, 1fr));
+        repeat(8, minmax(0, 1fr));
 
     }
 
 }
 
 
-/*
-   Tablet
-*/
+/* Medium Screens */
 
-@media(max-width:1100px){
+@media(max-width:1200px){
 
     .quiz-grid{
 
@@ -610,11 +577,9 @@ footer{
 }
 
 
-/*
-   Small Tablet
-*/
+/* Tablet */
 
-@media(max-width:800px){
+@media(max-width:850px){
 
     .quiz-grid{
 
@@ -626,9 +591,7 @@ footer{
 }
 
 
-/*
-   Mobile
-*/
+/* Mobile */
 
 @media(max-width:500px){
 
@@ -756,59 +719,41 @@ footer{
 
 <div class="quiz-card">
 
-
     <div>
 
-
         <div class="quiz-icon">
-
             🤖
-
         </div>
 
-
         <h2>
-
             AI Quiz
-
         </h2>
 
-
         <p>
-
             Explore Artificial Intelligence
             careers and concepts.
-
         </p>
-
 
     </div>
 
 
     <div class="qr-box">
 
-
         <img
         src="AI Quiz.jpeg"
         alt="AI Quiz QR Code"
         >
 
-
         <br>
-
 
         <a
         href="ai-mastery-quiz.html"
         class="quiz-btn"
         >
-
             Start Quiz
-
         </a>
 
-
     </div>
-
 
 </div>
 
@@ -820,59 +765,41 @@ footer{
 
 <div class="quiz-card">
 
-
     <div>
 
-
         <div class="quiz-icon">
-
             🎯
-
         </div>
 
-
         <h2>
-
             Career Quiz
-
         </h2>
 
-
         <p>
-
             Find your ideal career
             path after +2.
-
         </p>
-
 
     </div>
 
 
     <div class="qr-box">
 
-
         <img
         src="careerquiz.jpeg"
         alt="Career Quiz QR Code"
         >
 
-
         <br>
-
 
         <a
         href="gjimt-career-test.html"
         class="quiz-btn"
         >
-
             Start Quiz
-
         </a>
 
-
     </div>
-
 
 </div>
 
@@ -884,59 +811,41 @@ footer{
 
 <div class="quiz-card">
 
-
     <div>
 
-
         <div class="quiz-icon">
-
             ⚡
-
         </div>
 
-
         <h2>
-
             SkillX Quiz
-
         </h2>
 
-
         <p>
-
             Test digital and practical
             professional skills.
-
         </p>
-
 
     </div>
 
 
     <div class="qr-box">
 
-
         <img
         src="SkillX.jpeg"
         alt="SkillX Quiz QR Code"
         >
 
-
         <br>
-
 
         <a
         href="https://gjimtmicrosite.github.io/SkillXworkshops/gjimt-SkillX-Quiz.html"
         class="quiz-btn"
         >
-
             Start Quiz
-
         </a>
 
-
     </div>
-
 
 </div>
 
@@ -948,59 +857,41 @@ footer{
 
 <div class="quiz-card">
 
-
     <div>
 
-
         <div class="quiz-icon">
-
             📊
-
         </div>
 
-
         <h2>
-
             Maths Quiz
-
         </h2>
 
-
         <p>
-
             Improve mathematical and
             logical thinking skills.
-
         </p>
-
 
     </div>
 
 
     <div class="qr-box">
 
-
         <img
         src="maths.png"
         alt="Maths Quiz QR Code"
         >
 
-
         <br>
-
 
         <a
         href="gjimt-Maths-Quiz"
         class="quiz-btn"
         >
-
             Start Quiz
-
         </a>
 
-
     </div>
-
 
 </div>
 
@@ -1012,59 +903,41 @@ footer{
 
 <div class="quiz-card">
 
-
     <div>
 
-
         <div class="quiz-icon">
-
             💻
-
         </div>
 
-
         <h2>
-
             Python Quiz
-
         </h2>
 
-
         <p>
-
             Evaluate programming and
             coding fundamentals.
-
         </p>
-
 
     </div>
 
 
     <div class="qr-box">
 
-
         <img
         src="pthon.png"
         alt="Python Quiz QR Code"
         >
 
-
         <br>
-
 
         <a
         href="gjimt-Python-Quiz"
         class="quiz-btn"
         >
-
             Start Quiz
-
         </a>
 
-
     </div>
-
 
 </div>
 
@@ -1076,123 +949,133 @@ footer{
 
 <div class="quiz-card">
 
-
     <div>
 
-
         <div class="quiz-icon">
-
             🎓
-
         </div>
 
-
         <h2>
-
             Why MBA
-
         </h2>
 
-
         <p>
-
             Discover leadership and
             management opportunities.
-
         </p>
-
 
     </div>
 
 
     <div class="qr-box">
-
 
         <img
         src="mba.png"
         alt="Why MBA QR Code"
         >
 
-
         <br>
-
 
         <a
         href="gjimt-WhyMBA-Quiz.html"
         class="quiz-btn"
         >
-
             Start Quiz
-
         </a>
 
-
     </div>
-
 
 </div>
 
 
 
 <!-- =========================
-     7. APTITUDE TEST
+     7. TRAINING & PLACEMENT QUIZ
 ========================= -->
 
 <div class="quiz-card">
 
-
     <div>
 
-
         <div class="quiz-icon">
-
             🧠
-
         </div>
 
-
         <h2>
-
             Training & Placement Quiz
-
         </h2>
 
-
         <p>
-
             Test quantitative aptitude,
             reasoning and problem-solving skills.
-
         </p>
-
 
     </div>
 
 
     <div class="qr-box">
 
-
         <img
         src="qrcode_gjimtmicrosite.github.io.png"
-        alt="Aptitude Test QR Code"
+        alt="Training and Placement Quiz QR Code"
         >
 
-
         <br>
-
 
         <a
         href="GJIMT_Aptitude_Test_Portal (2).html"
         class="quiz-btn"
         >
-
             Start Quiz
-
         </a>
-
 
     </div>
 
+</div>
+
+
+
+<!-- =========================
+     8. STUDENT WELLBEING
+========================= -->
+
+<div class="quiz-card">
+
+    <div>
+
+        <div class="quiz-icon">
+            ❤️
+        </div>
+
+        <h2>
+            Student Wellbeing
+        </h2>
+
+        <p>
+            Explore your wellbeing, emotional balance,
+            healthy habits and student life awareness.
+        </p>
+
+    </div>
+
+
+    <div class="qr-box">
+
+        <img
+        src="student-wellbeing.png"
+        alt="Student Wellbeing QR Code"
+        >
+
+        <br>
+
+        <a
+        href="student-wellbeing.html"
+        class="quiz-btn"
+        >
+            Start Quiz
+        </a>
+
+    </div>
 
 </div>
 
