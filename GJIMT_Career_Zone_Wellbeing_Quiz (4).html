@@ -77,6 +77,7 @@
 
 </div>
 <script>
+  const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyVZShN9YB9wqs9nDeJCOgNZWhW0m3CDsshzmRBQRzbqPvA_xobKzE96XoQdFwlhLY3eg/exec";
 const domainMeta={AC:{label:"Academic",full:"Academic Wellbeing"},PS:{label:"Psychological",full:"Psychological / Emotional Wellbeing"},PH:{label:"Physical",full:"Physical Wellbeing"},SO:{label:"Social / Peer",full:"Relational & Peer Wellbeing"},FF:{label:"Family & Financial",full:"Family & Financial Wellbeing"},HS:{label:"Help-Seeking",full:"Help-Seeking Comfort"}};
 const likertQuestions=[{id:1,domain:'AC',positive:true,text:"I can manage my study workload without feeling constantly overloaded."},{id:2,domain:'AC',positive:false,text:"Exam and test pressure is difficult for me to handle."},{id:3,domain:'AC',positive:true,text:"I am clear about my academic goals and what I want to achieve in this program."},{id:4,domain:'AC',positive:false,text:"I often worry that I will not meet academic expectations (my own or others')."},{id:5,domain:'AC',positive:true,text:"I feel confident in my ability to understand and complete my coursework."},{id:6,domain:'AC',positive:false,text:"Academic stress is affecting my concentration or performance."},{id:7,domain:'PS',positive:false,text:"I frequently feel anxious or tense about my life or future."},{id:8,domain:'PS',positive:false,text:"I often feel sad, low, or demotivated."},{id:9,domain:'PS',positive:false,text:"I find it hard to relax, even when I have free time."},{id:10,domain:'PS',positive:false,text:"My sleep is disturbed because of worries or stress."},{id:11,domain:'PS',positive:true,text:"When I face difficulties, I am able to bounce back and keep going."},{id:12,domain:'PS',positive:false,text:"My emotional state is affecting my ability to focus on studies or activities."},{id:13,domain:'PH',positive:true,text:"I have enough energy during the day to attend classes and complete my work."},{id:14,domain:'PH',positive:false,text:"I often feel tired or exhausted, even without heavy physical activity."},{id:15,domain:'PH',positive:false,text:"Physical health problems disturb my studies."},{id:16,domain:'PH',positive:true,text:"My eating, sleep, and daily routine support my overall health."},{id:17,domain:'SO',positive:true,text:"I feel connected to my classmates and peers at the institute."},{id:18,domain:'SO',positive:true,text:"I have friends I can trust and talk to about my problems."},{id:19,domain:'SO',positive:true,text:"I feel comfortable participating in group activities or class discussions."},{id:20,domain:'SO',positive:true,text:"I feel supported by faculty or staff when I face difficulties."},{id:21,domain:'SO',positive:false,text:"I sometimes feel isolated or left out in the college environment."},{id:22,domain:'FF',positive:true,text:"My family understands and supports my educational and career choices."},{id:23,domain:'FF',positive:false,text:"Family expectations or conflicts are a source of stress for me."},{id:24,domain:'FF',positive:false,text:"Financial issues (fees, living expenses, etc.) are a source of worry for me."},{id:25,domain:'FF',positive:false,text:"Managing part-time work, family responsibilities, or other duties along with studies is difficult for me."},{id:26,domain:'FF',positive:false,text:"Family or financial stress affects my performance or attendance."},{id:27,domain:'HS',positive:true,text:"If I face a serious problem, I feel comfortable reaching out to someone at the institute for help."}];
 const likertLabels=["Strongly Disagree","Disagree","Neutral","Agree","Strongly Agree"];
@@ -91,7 +92,258 @@ function attachStepListeners(step){if(step.type==='likert'){document.querySelect
 function isStepAnswered(step){if(step.type==='likert')return answers['q'+step.q.id]!==undefined;if(step.type==='priority')return (answers.priority||[]).length>0;if(step.type==='comment')return true;if(step.type==='contact')return answers.contactWish!==undefined;return false}
 function updateNavAndProgress(step){const nextBtn=document.getElementById('nextBtn');const backBtn=document.getElementById('backBtn');nextBtn.disabled=!isStepAnswered(step);nextBtn.textContent=(currentStep===steps.length-1)?'See My Result':'Next';backBtn.style.visibility=currentStep===0?'hidden':'visible';document.getElementById('stepLabel').textContent='Question '+(currentStep+1)+' of '+steps.length;document.getElementById('answered').textContent=(currentStep+1);document.getElementById('totalReq').textContent=steps.length;document.getElementById('bar').style.width=((currentStep+1)/steps.length*100)+'%'}
 document.getElementById('nextBtn').addEventListener('click',()=>{if(currentStep<steps.length-1){currentStep++;renderStep();window.scrollTo({top:0,behavior:'smooth'})}else{finishTest()}});document.getElementById('backBtn').addEventListener('click',()=>{if(currentStep>0){currentStep--;renderStep();window.scrollTo({top:0,behavior:'smooth'})}});
-function finishTest(){const domainTotals={AC:[],PS:[],PH:[],SO:[],FF:[]};let hsScore=null;likertQuestions.forEach(q=>{const val=answers['q'+q.id];const score=q.positive?val:(6-val);if(q.domain==='HS'){hsScore=score}else{domainTotals[q.domain].push(score)}});const domainScores={};Object.keys(domainTotals).forEach(d=>{const arr=domainTotals[d];const avg=arr.reduce((a,b)=>a+b,0)/arr.length;domainScores[d]=Math.round(avg*2*10)/10});const overall=Math.round((Object.values(domainScores).reduce((a,b)=>a+b,0)/5)*10)/10;const payload={domainScores,overall,hsOut10:hsScore!==null?Math.round(hsScore*2*10)/10:null,priorities:answers.priority||[],comment:(answers.comment||'').trim(),contactWish:answers.contactWish};document.getElementById('testScreen').classList.add('hidden');document.getElementById('resultScreen').classList.remove('hidden');renderResults(payload);window.scrollTo({top:0,behavior:'smooth'})}
+function finishTest(){
+
+  // ==========================================
+  // CALCULATE DOMAIN SCORES
+  // ==========================================
+
+  const domainTotals = {
+    AC: [],
+    PS: [],
+    PH: [],
+    SO: [],
+    FF: []
+  };
+
+  let hsScore = null;
+
+
+  likertQuestions.forEach(q => {
+
+    const val = answers['q' + q.id];
+
+    const score = q.positive
+      ? val
+      : (6 - val);
+
+
+    if (q.domain === 'HS') {
+
+      hsScore = score;
+
+    } else {
+
+      domainTotals[q.domain].push(score);
+
+    }
+
+  });
+
+
+  // ==========================================
+  // CALCULATE EACH DOMAIN AVERAGE
+  // ==========================================
+
+  const domainScores = {};
+
+  Object.keys(domainTotals).forEach(d => {
+
+    const arr = domainTotals[d];
+
+    const avg =
+      arr.reduce((a, b) => a + b, 0) / arr.length;
+
+    domainScores[d] =
+      Math.round(avg * 2 * 10) / 10;
+
+  });
+
+
+  // ==========================================
+  // OVERALL WELLBEING SCORE
+  // ==========================================
+
+  const overall =
+    Math.round(
+      (
+        Object.values(domainScores)
+          .reduce((a, b) => a + b, 0) / 5
+      ) * 10
+    ) / 10;
+
+
+  // ==========================================
+  // DETERMINE OVERALL STATUS
+  // ==========================================
+
+  let status = "";
+
+  if (overall >= 7) {
+
+    status = "Strength";
+
+  } else if (overall >= 4) {
+
+    status = "Moderate";
+
+  } else {
+
+    status = "Needs Support";
+
+  }
+
+
+  // ==========================================
+  // HELP SEEKING SCORE
+  // ==========================================
+
+  const helpSeekingScore =
+    hsScore !== null
+      ? Math.round(hsScore * 2 * 10) / 10
+      : "";
+
+
+  // ==========================================
+  // PRIORITIES
+  // ==========================================
+
+  const priorities =
+    answers.priority || [];
+
+  const priorityText =
+    priorities
+      .map(p => priorityLabels[p] || p)
+      .join(", ");
+
+
+  // ==========================================
+  // COMMENT
+  // ==========================================
+
+  const comment =
+    (answers.comment || "").trim();
+
+
+  // ==========================================
+  // CONTACT REQUEST
+  // ==========================================
+
+  const contactWish =
+    answers.contactWish || "";
+
+
+  // ==========================================
+  // DATA TO GOOGLE SHEET
+  // ==========================================
+
+  const sheetData = {
+
+    // IMPORTANT
+    // This tells Apps Script to use GJIMT Career
+    quizType: "wellbeing",
+
+    name: student.name || "",
+
+    roll: student.roll || "",
+
+    year: student.year || "",
+
+    program: student.program || "",
+
+    phone: student.phone || "",
+
+    academic: domainScores.AC || 0,
+
+    psychological: domainScores.PS || 0,
+
+    physical: domainScores.PH || 0,
+
+    social: domainScores.SO || 0,
+
+    familyFinancial: domainScores.FF || 0,
+
+    helpSeeking: helpSeekingScore || 0,
+
+    overall: overall,
+
+    status: status,
+
+    priorities: priorityText,
+
+    comment: comment,
+
+    contactWish: contactWish
+
+  };
+
+
+  // ==========================================
+  // SEND DATA TO GOOGLE SHEET
+  // ==========================================
+
+  fetch(GOOGLE_SHEET_URL, {
+
+    method: "POST",
+
+    mode: "no-cors",
+
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+
+    body: JSON.stringify(sheetData)
+
+  })
+  .then(() => {
+
+    console.log(
+      "Wellbeing result sent to Google Sheet successfully."
+    );
+
+  })
+  .catch(error => {
+
+    console.error(
+      "Error saving wellbeing result:",
+      error
+    );
+
+  });
+
+
+  // ==========================================
+  // PREPARE RESULT PAYLOAD
+  // ==========================================
+
+  const payload = {
+
+    domainScores: domainScores,
+
+    overall: overall,
+
+    hsOut10: helpSeekingScore,
+
+    priorities: priorities,
+
+    comment: comment,
+
+    contactWish: contactWish
+
+  };
+
+
+  // ==========================================
+  // SHOW RESULT SCREEN
+  // ==========================================
+
+  document
+    .getElementById('testScreen')
+    .classList.add('hidden');
+
+  document
+    .getElementById('resultScreen')
+    .classList.remove('hidden');
+
+
+  renderResults(payload);
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+}
 function band(score){if(score>=7)return'strength';if(score>=4)return'moderate';return'support'}function bandTagClass(b){return b==='strength'?'tag-strength':(b==='moderate'?'tag-moderate':'tag-support')}function bandLabel(b){return b==='strength'?'Strength':(b==='moderate'?'Watch':'Needs Support')}
 function renderResults(data){document.getElementById('studentNameOut').textContent=student.name;document.getElementById('studentProgramOut').textContent=`${student.program} • Year ${student.year} • Roll No. ${student.roll}`;document.getElementById('overallVal').textContent=data.overall;const ob=band(data.overall);const overallLabelEl=document.getElementById('overallLabel');const overallDescEl=document.getElementById('overallDesc');if(ob==='strength'){overallLabelEl.textContent='Overall wellbeing looks strong';overallLabelEl.style.color='var(--success)';overallDescEl.textContent='Keep up your current habits and support systems.'}else if(ob==='moderate'){overallLabelEl.textContent='Moderate wellbeing — a few areas need attention';overallLabelEl.style.color='var(--warn)';overallDescEl.textContent='Some challenges are affecting you. Support from Career Zone can help.'}else{overallLabelEl.textContent='Significant challenges indicated';overallLabelEl.style.color='var(--danger)';overallDescEl.textContent='It looks like you are going through a difficult time. Please consider reaching out for support — you do not have to manage this alone.'}const domainGrid=document.getElementById('domainGrid');domainGrid.innerHTML=Object.keys(domainMeta).filter(d=>d!=='HS').map(d=>{const s=data.domainScores[d];const b=band(s);return `<div class="mini"><strong>${s}</strong>${domainMeta[d].label}<span class="tag ${bandTagClass(b)}">${bandLabel(b)}</span></div>`}).join('');const domainKeys=Object.keys(domainMeta).filter(d=>d!=='HS');const strengths=domainKeys.filter(d=>band(data.domainScores[d])==='strength');const supports=domainKeys.filter(d=>band(data.domainScores[d])!=='strength');document.getElementById('strengthList').innerHTML=strengths.length?strengths.map(d=>`<li>${domainMeta[d].full} (${data.domainScores[d]}/10)</li>`).join(''):'<li>No area scored strongly this time — that is okay, support is available.</li>';document.getElementById('supportList').innerHTML=supports.length?supports.map(d=>`<li>${domainMeta[d].full} (${data.domainScores[d]}/10)</li>`).join(''):'<li>No major concerns identified. Great job maintaining your wellbeing!</li>';document.getElementById('priorityChips').innerHTML=data.priorities.length?data.priorities.map(p=>`<span class="priority-chip">${priorityLabels[p]}</span>`).join(''):'<span class="muted">No specific area selected.</span>';if(data.comment){document.getElementById('commentBox').classList.remove('hidden');document.getElementById('commentText').textContent=data.comment}else{document.getElementById('commentBox').classList.add('hidden')}let resourceHTML='';const psychLow=data.domainScores.PS<5;if(ob!=='strength'||psychLow||data.contactWish==='yes'){resourceHTML+=`<div class="resource-box">`;if(data.contactWish==='yes'){resourceHTML+=`<div><strong>Request noted:</strong> You've asked for someone from GJIMT Career Zone to reach out. A faculty coordinator or counselor will contact you soon.</div><br>`}if(psychLow||ob==='support'){resourceHTML+=`<div><strong>Immediate support:</strong> If you ever feel overwhelmed, you can speak confidentially with the GJIMT Career Zone / counseling team.</div>`}else{resourceHTML+=`<div><strong>Support available:</strong> The GJIMT Career Zone team is here to help with academic, personal, or career-related challenges — feel free to reach out anytime.</div>`}resourceHTML+=`</div>`}document.getElementById('resourceSection').innerHTML=resourceHTML;renderChart(data.domainScores);lucide.createIcons()}
 function renderChart(domainScores){const ctx=document.getElementById('wbChart');if(chartInstance)chartInstance.destroy();const order=['AC','PS','PH','SO','FF'];chartInstance=new Chart(ctx,{type:'radar',data:{labels:order.map(d=>domainMeta[d].label),datasets:[{label:'Wellbeing Score',data:order.map(d=>domainScores[d]),fill:true,backgroundColor:'rgba(10,54,99,0.18)',borderColor:'#0A3663',pointBackgroundColor:'#D4AF37',pointBorderColor:'#0A3663',pointRadius:4,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>c.label+': '+c.raw+'/10'}}},scales:{r:{beginAtZero:true,min:0,max:10,ticks:{stepSize:2,display:true,backdropColor:'transparent',color:'#4b5563',font:{size:11,weight:600}},pointLabels:{color:'#0A3663',font:{size:13,weight:700,family:'Inter'}},grid:{color:'rgba(10,54,99,.15)'},angleLines:{color:'rgba(10,54,99,.15)'}}}}})}
