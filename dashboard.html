@@ -3,12 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AI Smart Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
 
 body{
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
@@ -16,7 +23,10 @@ body{
   overflow-x:hidden;
 }
 
-/* ===== BACKGROUND GLOW ===== */
+/* =========================
+BACKGROUND GLOW
+========================= */
+
 body::before{
   content:"";
   position:fixed;
@@ -26,6 +36,7 @@ body::before{
   top:-100px;
   left:-100px;
   filter:blur(150px);
+  z-index:-1;
 }
 
 body::after{
@@ -37,217 +48,140 @@ body::after{
   bottom:-100px;
   right:-100px;
   filter:blur(150px);
+  z-index:-1;
 }
 
-/* ===== BACKGROUND GLOW ===== */
-body::before{
-  content:"";
-  position:fixed;
-  width:500px;
-  height:500px;
-  background:radial-gradient(circle,#00f2ff,transparent);
-  top:-100px;
-  left:-100px;
-  filter:blur(150px);
-}
-
-body::after{
-  content:"";
-  position:fixed;
-  width:500px;
-  height:500px;
-  background:radial-gradient(circle,#ff00c8,transparent);
-  bottom:-100px;
-  right:-100px;
-  filter:blur(150px);
-}
-.workshop-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background: rgba(0,0,0,0.8);
-  align-items: center;
-  justify-content: center;
-}
-
-/* ✅ when modal open */
 /* =========================
 SKILLX MENU
 ========================= */
 
 .skillx-menu{
-    width:100%;
-    margin-top:10px;
+  width:100%;
+  margin-top:10px;
 }
 
-
-/* MAIN BUTTON */
-
 .main-btn{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(135deg,#00c6ff,#0072ff);
-    color:white;
-    font-size:13px;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.3s;
-    margin-bottom:10px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  color:white;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+  margin-bottom:10px;
 }
 
 .main-btn:hover{
-    background:linear-gradient(135deg,#ffd700,#ff9800);
-    color:black;
+  background:linear-gradient(135deg,#ffd700,#ff9800);
+  color:black;
 }
-
-/* HIDE MENU */
 
 .all-modules{
-    display:none;
-    max-height:75vh;
-    overflow-y:auto;
-    padding-right:5px;
-    animation:fadeMenu 0.3s ease;
+  display:none;
+  max-height:75vh;
+  overflow-y:auto;
+  padding-right:5px;
+  animation:fadeMenu 0.3s ease;
 }
+
 .all-modules::-webkit-scrollbar{
-    width:6px;
+  width:6px;
 }
-/* MODULE */
 
 .module{
-    margin-bottom:10px;
-    border-radius:14px;
-    overflow:visible;
+  margin-bottom:10px;
+  border-radius:14px;
+  overflow:visible;
 }
-/* MODULE BUTTON */
+
 .module-btn{
-
-width:100%;
-
-padding:11px;
-
-border:none;
-
-background:rgba(255,255,255,0.08);
-
-color:#ffd700;
-
-font-size:11px;
-
-font-weight:700;
-
-text-align:left;
-
-cursor:pointer;
-
-transition:0.3s;
+  width:100%;
+  padding:11px;
+  border:none;
+  color:white;
+  font-size:11px;
+  font-weight:700;
+  text-align:left;
+  cursor:pointer;
+  transition:0.3s;
 }
-.module-btn{
-    width:100%;
-    padding:11px;
-    border:none;
-    color:white;
-    font-size:11px;
-    font-weight:700;
-    text-align:left;
-    cursor:pointer;
-    transition:0.3s;
-}
+
 .module:nth-child(1) .module-btn{
-    background:linear-gradient(135deg,#00c6ff,#0072ff);
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
 }
-
-/* COMMUNICATION */
 
 .module:nth-child(2) .module-btn{
-    background:linear-gradient(135deg,#ff9800,#ff5722);
+  background:linear-gradient(135deg,#ff9800,#ff5722);
 }
-
-/* BUSINESS */
 
 .module:nth-child(3) .module-btn{
-    background:linear-gradient(135deg,#8e2de2,#4a00e0);
+  background:linear-gradient(135deg,#8e2de2,#4a00e0);
 }
+
 .module-btn:hover{
-    transform:scale(1.02);
+  transform:scale(1.02);
 }
 
-/* SUBMENU */
 .submenu{
-    display:none;
-    padding:8px;
-    max-height:none;
-    overflow:visible;
+  display:none;
+  padding:8px;
 }
-
-/* SUBMENU SCROLLBAR */
-
-.submenu::-webkit-scrollbar{
-    width:5px;
-}
-
-.submenu::-webkit-scrollbar-thumb{
-    background:#ffd700;
-    border-radius:10px;
-}
-
-/* ACTIVE */
 
 .module.active .submenu{
-    display:block;
-}
-.module:nth-child(1) .submenu{
-    background:rgba(0,114,255,0.15);
+  display:block;
 }
 
-/* COMMUNICATION SUBMENU */
+.module:nth-child(1) .submenu{
+  background:rgba(0,114,255,0.15);
+}
 
 .module:nth-child(2) .submenu{
-    background:rgba(255, 102, 0, 0.32);
+  background:rgba(255,102,0,0.32);
 }
-
-/* BUSINESS SUBMENU */
 
 .module:nth-child(3) .submenu{
-    background:rgba(142,45,226,0.15);
+  background:rgba(142,45,226,0.15);
 }
 
-/* LINKS */
-
 .submenu a{
-    display:block;
-    text-decoration:none;
-    color:white;
-    padding:9px;
-    margin:6px 0;
-    border-radius:10px;
-    font-size:11px;
-    transition:0.3s;
-    background:rgba(255,255,255,0.08);
+  display:block;
+  text-decoration:none;
+  color:white;
+  padding:9px;
+  margin:6px 0;
+  border-radius:10px;
+  font-size:11px;
+  transition:0.3s;
+  background:rgba(255,255,255,0.08);
 }
 
 .submenu a:hover{
-    background:white;
-    color:black;
-    transform:translateX(4px);
+  background:white;
+  color:black;
+  transform:translateX(4px);
 }
+
 @keyframes fadeMenu{
 
-    from{
-        opacity:0;
-        transform:translateY(-10px);
-    }
+  from{
+    opacity:0;
+    transform:translateY(-10px);
+  }
 
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
 }
 
-/* ===== LOGIN ===== */
+/* =========================
+LOGIN
+========================= */
+
 .login-box{
   position:absolute;
   top:50%;
@@ -260,17 +194,11 @@ transition:0.3s;
   text-align:center;
   width:320px;
   box-shadow:0 10px 40px rgba(0,0,0,0.5);
-  animation:fadeIn 1s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0; transform:translate(-50%,-60%);}
-  to{opacity:1; transform:translate(-50%,-50%);}
 }
 
 .login-box h2{
   margin-bottom:15px;
-  color: black;
+  color:black;
 }
 
 .login-box input{
@@ -298,12 +226,23 @@ transition:0.3s;
   box-shadow:0 0 20px gold;
 }
 
-.error{color:#ff4b4b;font-size:13px}
+.error{
+  color:#ff4b4b;
+  font-size:13px;
+}
 
-/* DASHBOARD */
-#dashboard{display:none;}
+/* =========================
+DASHBOARD
+========================= */
 
-/* SIDEBAR */
+#dashboard{
+  display:none;
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
 .sidebar{
   width:250px;
   height:100vh;
@@ -312,12 +251,16 @@ transition:0.3s;
   backdrop-filter:blur(20px);
   padding:20px;
   border-right:1px solid rgba(255,255,255,0.1);
-   overflow-y:auto;
+  overflow-y:auto;
 }
 
 .sidebar h2{
   color:#ffd700;
   margin-bottom:20px;
+}
+
+.sidebar a{
+  text-decoration:none;
 }
 
 .sidebar button{
@@ -337,23 +280,29 @@ transition:0.3s;
   color:#000;
   transform:scale(1.05);
 }
+
 .sidebar::-webkit-scrollbar{
   width:6px;
 }
 
-/* MAIN */
+/* =========================
+MAIN
+========================= */
+
 .main{
   margin-left:260px;
   padding:30px;
 }
 
-/* HEADER */
 .header{
   font-size:28px;
   margin-bottom:25px;
 }
 
-/* CARDS */
+/* =========================
+CARDS
+========================= */
+
 .cards{
   display:flex;
   gap:20px;
@@ -386,7 +335,10 @@ transition:0.3s;
   font-weight:bold;
 }
 
-/* CHARTS */
+/* =========================
+CHARTS
+========================= */
+
 .charts{
   margin-top:30px;
   display:grid;
@@ -401,322 +353,616 @@ transition:0.3s;
   border-radius:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
-/* LOADING */
+
+/* =========================
+LOADING
+========================= */
+
 .loading{
   text-align:center;
   margin-top:20px;
   font-size:18px;
   color:#ffd700;
 }
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:900px){
+
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+  }
+
+  .main{
+    margin-left:0;
+    padding:20px;
+  }
+
+}
+
 </style>
 </head>
 
 <body>
 
+
+<!-- =========================
+LOGIN
+========================= -->
+
 <div class="login-box" id="loginBox">
-  <h2>🔐 Securee Login</h2>
 
-  <input type="text" id="username" placeholder="Username">
-  <input type="password" id="password" placeholder="Password">
+  <h2>🔐 Secure Login</h2>
 
-  <button onclick="login()">Login</button>
+  <input
+    type="text"
+    id="username"
+    placeholder="Username"
+  >
 
-  <!-- NEW BUTTON -->
+  <input
+    type="password"
+    id="password"
+    placeholder="Password"
+  >
+
+  <button onclick="login()">
+    Login
+  </button>
+
   <a href="https://gjimtmicrosite.github.io/Integrated/">
-    <button style="margin-top:10px;background:linear-gradient(45deg,#00f2ff,#00c6ff);">
+    <button
+      style="
+      margin-top:10px;
+      background:linear-gradient(45deg,#00f2ff,#00c6ff);
+      "
+    >
       🏠 Back to Main Page
     </button>
   </a>
 
   <p class="error" id="error"></p>
+
 </div>
 
-<!-- DASHBOARD -->
+
+<!-- =========================
+DASHBOARD
+========================= -->
+
 <div id="dashboard">
 
+
+<!-- =========================
+SIDEBAR
+========================= -->
+
 <div class="sidebar">
+
   <h2>📊 Dashboard</h2>
-  <a href="Career-result.html"><button>🎓 Careerr Quiz</button></a>
-  <a href="skillx-result.html"><button>💼 SkillX Quiz</button></a>
-  <a href="Career-result.html"><button>🧠 Aptitude & Placement Quiz</button></a>
-   <a href="Career-result.html"><button>🎯 GJIMT Career Zone</button></a>
-   <div class="skillx-menu">
 
-<!-- MAIN BUTTON -->
 
-<button class="main-btn" id="skillxToggle">
-    💼 SkillX Result ▼
-</button>
+  <!-- CAREER QUIZ -->
 
-<!-- ALL MODULES -->
+  <a href="Career-result.html?sheet=Sheet1">
+    <button>
+      🎓 Career Quiz
+    </button>
+  </a>
 
-<div class="all-modules" id="allModules">
 
-    <!-- DIGITAL -->
+  <!-- SKILLX QUIZ -->
 
-    <div class="module">
+  <a href="skillx-result.html">
+    <button>
+      💼 SkillX Quiz
+    </button>
+  </a>
+
+
+  <!-- APTITUDE QUIZ -->
+
+  <a href="Career-result.html?sheet=Aptitude%20%26%20Placement%20Quiz">
+    <button>
+      🧠 Aptitude & Placement Quiz
+    </button>
+  </a>
+
+
+  <!-- GJIMT CAREER ZONE -->
+
+  <a href="Career-result.html?sheet=GJIMT%20Career%20Zone">
+    <button>
+      🎯 GJIMT Career Zone
+    </button>
+  </a>
+
+
+  <!-- =========================
+  SKILLX RESULT MENU
+  ========================= -->
+
+  <div class="skillx-menu">
+
+
+    <button class="main-btn" id="skillxToggle">
+      💼 SkillX Result ▼
+    </button>
+
+
+    <div class="all-modules" id="allModules">
+
+
+      <!-- DIGITAL POWER SKILLS -->
+
+      <div class="module">
 
         <button class="module-btn">
-            ▶ Digital Power Skills
+          ▶ Digital Power Skills
         </button>
 
         <div class="submenu">
 
-            <a href="skillx-result-final.html?sheet=ai-enbled">
-                🤖 AI Documentation
-            </a>
+          <a href="skillx-result-final.html?sheet=ai-enbled">
+            🤖 AI Documentation
+          </a>
 
-            <a href="excel-powerbi.html">
-                📊 Excel + Power BI
-            </a>
+          <a href="excel-powerbi.html">
+            📊 Excel + Power BI
+          </a>
 
-            <a href="web-dev.html">
-                💻 Web Development
-            </a>
+          <a href="web-dev.html">
+            💻 Web Development
+          </a>
 
-            <a href="cyber-security.html">
-                🔐 Information Security
-            </a>
+          <a href="cyber-security.html">
+            🔐 Information Security
+          </a>
 
-            <a href="cloud-computing.html">
-                ☁️ Cloud Computing
-            </a>
+          <a href="cloud-computing.html">
+            ☁️ Cloud Computing
+          </a>
 
         </div>
 
-    </div>
+      </div>
 
-    <!-- COMMUNICATION -->
 
-    <div class="module">
+      <!-- COMMUNICATION -->
+
+      <div class="module">
 
         <button class="module-btn">
-            ▶ Communication & Branding
+          ▶ Communication & Branding
         </button>
 
         <div class="submenu">
 
-            <a href="functional-english.html">
-                🗣 Functional English
-            </a>
+          <a href="functional-english.html">
+            🗣 Functional English
+          </a>
 
-            <a href="public-speaking.html">
-                🎤 Public Speaking
-            </a>
+          <a href="public-speaking.html">
+            🎤 Public Speaking
+          </a>
 
-            <a href="skillx-result-final.html?sheet=canva">
-                🎨 Canva Editing
-            </a>
+          <a href="skillx-result-final.html?sheet=canva">
+            🎨 Canva Editing
+          </a>
 
         </div>
 
-    </div>
+      </div>
 
-    <!-- BUSINESS -->
 
-    <div class="module">
+      <!-- BUSINESS -->
+
+      <div class="module">
 
         <button class="module-btn">
-            ▶ Business & Finance
+          ▶ Business & Finance
         </button>
 
         <div class="submenu">
 
-            <a href="resume-linkedin.html">
-                📄 Resume & LinkedIn
-            </a>
+          <a href="resume-linkedin.html">
+            📄 Resume & LinkedIn
+          </a>
 
-            <a href="prompt-engineering.html">
-                ⚡ Prompt Engineering
-            </a>
+          <a href="prompt-engineering.html">
+            ⚡ Prompt Engineering
+          </a>
 
-            <a href="skillx-result-final.html?sheet=ai-business">
-                🧠 AI for Business
-            </a>
+          <a href="skillx-result-final.html?sheet=ai-business">
+            🧠 AI for Business
+          </a>
 
-            <a href="skillx-result-final.html?sheet=vedicmath">
-                ➗ Vedic Maths
-            </a>
+          <a href="skillx-result-final.html?sheet=vedicmath">
+            ➗ Vedic Maths
+          </a>
 
-            <a href="skillx-result-final.html?sheet=Tally">
-                💰 Tally Basics
-            </a>
+          <a href="skillx-result-final.html?sheet=Tally">
+            💰 Tally Basics
+          </a>
 
         </div>
 
+      </div>
+
+
     </div>
 
-</div>
+  </div>
+
+
+  <!-- REFRESH -->
+
+  <button onclick="location.reload()">
+    🔄 Refresh
+  </button>
+
+
+  <!-- LOGOUT -->
+
+  <button onclick="logout()">
+    🚪 Logout
+  </button>
 
 
 </div>
-  <button onclick="location.reload()">🔄 Refresh</button>
-  <button onclick="logout()">🚪 Logout</button>
-</div>
+
+
+<!-- =========================
+MAIN CONTENT
+========================= -->
 
 <div class="main">
-<div class="header">🚀 Smart Analytics Dashboard</div>
 
-<div class="cards">
-  <div class="card"><h3>Career Students</h3><div class="value" id="careerCount">0</div></div>
-  <div class="card"><h3>SkillX Students</h3><div class="value" id="skillCount">0</div></div>
-  <div class="card"><h3>Total Students</h3><div class="value" id="totalCount">0</div></div>
+
+  <div class="header">
+    🚀 Smart Analytics Dashboard
+  </div>
+
+
+  <!-- CARDS -->
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>Career Students</h3>
+      <div class="value" id="careerCount">0</div>
+    </div>
+
+
+    <div class="card">
+      <h3>SkillX Students</h3>
+      <div class="value" id="skillCount">0</div>
+    </div>
+
+
+    <div class="card">
+      <h3>Total Students</h3>
+      <div class="value" id="totalCount">0</div>
+    </div>
+
+  </div>
+
+
+  <div class="loading" id="loading">
+    ⏳ Loading data...
+  </div>
+
+
+  <!-- CHARTS -->
+
+  <div class="charts">
+
+    <div class="chart-box">
+      <canvas id="careerChart"></canvas>
+    </div>
+
+
+    <div class="chart-box">
+      <canvas id="skillChart"></canvas>
+    </div>
+
+
+    <div class="chart-box">
+      <canvas id="comparisonChart"></canvas>
+    </div>
+
+  </div>
+
+
 </div>
 
-<div class="loading" id="loading">⏳ Loading data...</div>
-
-<div class="charts">
-  <div class="chart-box"><canvas id="careerChart"></canvas></div>
-  <div class="chart-box"><canvas id="skillChart"></canvas></div>
-  <div class="chart-box"><canvas id="comparisonChart"></canvas></div>
 </div>
 
-</div>
-</div>
-<!-- WORKSHOP FILTER MODAL -->
+
+<!-- =========================
+JAVASCRIPT
+========================= -->
 
 <script>
 
-// LOGIN
+
+/* =========================
+LOGIN
+========================= */
+
 const validUser = "admin";
 const validPass = "12345";
 
+
 function login(){
-  let user = document.getElementById("username").value;
-  let pass = document.getElementById("password").value;
+
+  let user =
+  document.getElementById("username").value;
+
+  let pass =
+  document.getElementById("password").value;
+
 
   if(user === validUser && pass === validPass){
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("dashboard").style.display="block";
+
+    document.getElementById("loginBox")
+    .style.display = "none";
+
+    document.getElementById("dashboard")
+    .style.display = "block";
+
     loadDashboard();
-  } else {
-    document.getElementById("error").innerText="Invalid Login!";
+
   }
+
+  else{
+
+    document.getElementById("error")
+    .innerText = "Invalid Login!";
+
+  }
+
 }
 
-function logout(){location.reload();}
 
-// LOAD DATA
+function logout(){
+
+  location.reload();
+
+}
+
+
+/* =========================
+LOAD DASHBOARD
+========================= */
+
 function loadDashboard(){
 
-const careerURL = "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
-const skillURL  = "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
 
-Promise.all([
-  fetch(careerURL).then(res=>res.json()),
-  fetch(skillURL).then(res=>res.json())
-])
-.then(([careerData, skillData])=>{
+  const careerURL =
+  "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
 
-  loading.style.display="none";
 
-  careerCount.innerText = careerData.length;
-  skillCount.innerText = skillData.length;
-  totalCount.innerText = careerData.length + skillData.length;
+  const skillURL =
+  "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
 
-  let careerMap = {};
-  careerData.forEach(r=>{
-    let c = r["Top Career"] || "Unknown";
-    careerMap[c] = (careerMap[c] || 0) + 1;
+
+  Promise.all([
+
+    fetch(careerURL)
+    .then(res => res.json()),
+
+    fetch(skillURL)
+    .then(res => res.json())
+
+  ])
+
+  .then(([careerData, skillData]) => {
+
+
+    document.getElementById("loading")
+    .style.display = "none";
+
+
+    document.getElementById("careerCount")
+    .innerText = careerData.length;
+
+
+    document.getElementById("skillCount")
+    .innerText = skillData.length;
+
+
+    document.getElementById("totalCount")
+    .innerText =
+    careerData.length + skillData.length;
+
+
+    /* =========================
+    CAREER CHART
+    ========================= */
+
+    let careerMap = {};
+
+
+    careerData.forEach(r => {
+
+      let career =
+      r["Top Career"] || "Unknown";
+
+
+      careerMap[career] =
+      (careerMap[career] || 0) + 1;
+
+    });
+
+
+    new Chart(
+      document.getElementById("careerChart"),
+      {
+
+        type:"doughnut",
+
+        data:{
+
+          labels:Object.keys(careerMap),
+
+          datasets:[{
+
+            data:Object.values(careerMap)
+
+          }]
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+    SKILLX CHART
+    ========================= */
+
+    let skillMap = {};
+
+
+    skillData.forEach(r => {
+
+      let domain =
+      r["Bundle Domain"] || "Unknown";
+
+
+      skillMap[domain] =
+      (skillMap[domain] || 0) + 1;
+
+    });
+
+
+    new Chart(
+      document.getElementById("skillChart"),
+      {
+
+        type:"pie",
+
+        data:{
+
+          labels:Object.keys(skillMap),
+
+          datasets:[{
+
+            data:Object.values(skillMap)
+
+          }]
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+    COMPARISON CHART
+    ========================= */
+
+    new Chart(
+      document.getElementById("comparisonChart"),
+      {
+
+        type:"bar",
+
+        data:{
+
+          labels:[
+            "Career",
+            "SkillX"
+          ],
+
+          datasets:[{
+
+            label:"Students",
+
+            data:[
+              careerData.length,
+              skillData.length
+            ]
+
+          }]
+
+        }
+
+      }
+    );
+
+
+  })
+
+  .catch(error => {
+
+    console.error(error);
+
+    document.getElementById("loading")
+    .innerHTML =
+    "❌ Failed to load dashboard data";
+
   });
 
-  new Chart(careerChart,{
-    type:'doughnut',
-    data:{labels:Object.keys(careerMap),datasets:[{data:Object.values(careerMap)}]}
-  });
 
-  let skillMap = {};
-  skillData.forEach(r=>{
-    let d = r["Bundle Domain"] || "Unknown";
-    skillMap[d] = (skillMap[d] || 0) + 1;
-  });
-
-  new Chart(skillChart,{
-    type:'pie',
-    data:{labels:Object.keys(skillMap),datasets:[{data:Object.values(skillMap)}]}
-  });
-
-  new Chart(comparisonChart,{
-    type:'bar',
-    data:{
-      labels:["Career","SkillX"],
-      datasets:[{label:"Students",data:[careerData.length, skillData.length]}]
-    }
-  });
-
-});
 }
 
 
-function openWorkshopModal() {
-  const modal = document.getElementById('workshopModal');
-  modal.classList.add('show');
-}
-
-function closeWorkshopModal() {
-  document.getElementById('workshopModal').classList.remove('show');
-}
-
-function goToWorkshop() {
-  const workshop = document.getElementById('workshopSelect').value;
-  if (workshop) {
-    alert('🚀 ' + workshop + ' selected!');
-    
-    // Optional: Specific redirects
-    if (workshop === "AI for Business Decision-Making") {
-      window.open("skillx-result-final.html", "_blank");
-    }
-    
-    closeWorkshopModal();
-  } else {
-    alert('⚠️select workshop');
-  }
-}
-
-// Close when clicking outside
-window.onclick = function(e){
-  let modal = document.getElementById("workshopModal");
-  if(e.target === modal){
-    closeWorkshopModal();
-  }
-}
+/* =========================
+SKILLX MENU TOGGLE
+========================= */
 
 const skillxToggle =
 document.getElementById("skillxToggle");
 
+
 const allModules =
 document.getElementById("allModules");
 
-/* SHOW/HIDE MAIN MENU */
 
 skillxToggle.addEventListener("click", () => {
 
-if(allModules.style.display === "block"){
+  if(allModules.style.display === "block"){
 
     allModules.style.display = "none";
 
-}else{
+  }
+
+  else{
 
     allModules.style.display = "block";
-}
+
+  }
 
 });
 
-/* SUBMENU ACCORDION */
+
+/* =========================
+SUBMENU ACCORDION
+========================= */
 
 const moduleButtons =
 document.querySelectorAll(".module-btn");
 
+
 moduleButtons.forEach(button => {
 
-button.addEventListener("click", () => {
+  button.addEventListener("click", () => {
 
-    button.parentElement.classList.toggle("active");
+    button.parentElement
+    .classList.toggle("active");
+
+  });
+
 });
-});
+
+
 </script>
 
 </body>
 </html>
-
-
