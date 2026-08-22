@@ -10,6 +10,10 @@
 
 <style>
 
+/* =========================
+GLOBAL
+========================= */
+
 *{
   margin:0;
   padding:0;
@@ -52,6 +56,114 @@ body::after{
 }
 
 /* =========================
+LOGIN
+========================= */
+
+.login-box{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(25px);
+  padding:35px;
+  border-radius:20px;
+  text-align:center;
+  width:320px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+}
+
+.login-box h2{
+  margin-bottom:15px;
+  color:#ffd700;
+}
+
+.login-box input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:10px;
+  border:none;
+  outline:none;
+}
+
+.login-box button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(45deg,#ffd700,#ff9800);
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.login-box button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px gold;
+}
+
+.error{
+  color:#ff4b4b;
+  font-size:13px;
+  margin-top:10px;
+}
+
+/* =========================
+DASHBOARD
+========================= */
+
+#dashboard{
+  display:none;
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+  width:250px;
+  height:100vh;
+  position:fixed;
+  left:0;
+  top:0;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+  padding:20px;
+  border-right:1px solid rgba(255,255,255,0.1);
+  overflow-y:auto;
+}
+
+.sidebar h2{
+  color:#ffd700;
+  margin-bottom:20px;
+}
+
+.sidebar a{
+  text-decoration:none;
+}
+
+.sidebar button{
+  width:100%;
+  margin:10px 0;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  cursor:pointer;
+  transition:0.3s;
+  font-size:14px;
+}
+
+.sidebar button:hover,
+.sidebar button.active{
+  background:#ffd700;
+  color:#000;
+  transform:scale(1.03);
+}
+
+/* =========================
 SKILLX MENU
 ========================= */
 
@@ -85,10 +197,6 @@ SKILLX MENU
   overflow-y:auto;
   padding-right:5px;
   animation:fadeMenu 0.3s ease;
-}
-
-.all-modules::-webkit-scrollbar{
-  width:6px;
 }
 
 .module{
@@ -179,124 +287,19 @@ SKILLX MENU
 }
 
 /* =========================
-LOGIN
-========================= */
-
-.login-box{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(25px);
-  padding:35px;
-  border-radius:20px;
-  text-align:center;
-  width:320px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.5);
-}
-
-.login-box h2{
-  margin-bottom:15px;
-  color:black;
-}
-
-.login-box input{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border-radius:10px;
-  border:none;
-  outline:none;
-}
-
-.login-box button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  background:linear-gradient(45deg,#ffd700,#ff9800);
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.login-box button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px gold;
-}
-
-.error{
-  color:#ff4b4b;
-  font-size:13px;
-}
-
-/* =========================
-DASHBOARD
-========================= */
-
-#dashboard{
-  display:none;
-}
-
-/* =========================
-SIDEBAR
-========================= */
-
-.sidebar{
-  width:250px;
-  height:100vh;
-  position:fixed;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(20px);
-  padding:20px;
-  border-right:1px solid rgba(255,255,255,0.1);
-  overflow-y:auto;
-}
-
-.sidebar h2{
-  color:#ffd700;
-  margin-bottom:20px;
-}
-
-.sidebar a{
-  text-decoration:none;
-}
-
-.sidebar button{
-  width:100%;
-  margin:10px 0;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  background:rgba(255,255,255,0.1);
-  color:#fff;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.sidebar button:hover{
-  background:#ffd700;
-  color:#000;
-  transform:scale(1.05);
-}
-
-.sidebar::-webkit-scrollbar{
-  width:6px;
-}
-
-/* =========================
-MAIN
+MAIN CONTENT
 ========================= */
 
 .main{
   margin-left:260px;
   padding:30px;
+  min-height:100vh;
 }
 
 .header{
   font-size:28px;
   margin-bottom:25px;
+  font-weight:bold;
 }
 
 /* =========================
@@ -311,18 +314,17 @@ CARDS
 
 .card{
   flex:1;
-  min-width:250px;
+  min-width:220px;
   padding:20px;
   border-radius:20px;
   background:rgba(255,255,255,0.08);
   backdrop-filter:blur(20px);
   box-shadow:0 10px 30px rgba(0,0,0,0.4);
   transition:0.4s;
-  transform:perspective(1000px) rotateX(5deg);
 }
 
 .card:hover{
-  transform:perspective(1000px) rotateX(0deg) scale(1.05);
+  transform:scale(1.03);
 }
 
 .card h3{
@@ -333,6 +335,17 @@ CARDS
 .value{
   font-size:30px;
   font-weight:bold;
+}
+
+/* =========================
+LOADING
+========================= */
+
+.loading{
+  text-align:center;
+  margin-top:20px;
+  font-size:18px;
+  color:#ffd700;
 }
 
 /* =========================
@@ -355,14 +368,56 @@ CHARTS
 }
 
 /* =========================
-LOADING
+SHEET TABLE
 ========================= */
 
-.loading{
-  text-align:center;
-  margin-top:20px;
-  font-size:18px;
+.sheet-container{
+  display:none;
+  margin-top:30px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.sheet-title{
   color:#ffd700;
+  font-size:22px;
+  margin-bottom:20px;
+}
+
+.table-wrapper{
+  width:100%;
+  overflow-x:auto;
+  max-height:600px;
+  overflow-y:auto;
+}
+
+.sheet-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:800px;
+}
+
+.sheet-table th{
+  padding:15px;
+  text-align:left;
+  color:#ffd700;
+  background:rgba(255,255,255,0.12);
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+.sheet-table td{
+  padding:14px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  color:#fff;
+}
+
+.sheet-table tr:hover{
+  background:rgba(255,255,255,0.08);
 }
 
 /* =========================
@@ -446,6 +501,13 @@ SIDEBAR
   <h2>📊 Dashboard</h2>
 
 
+  <!-- MAIN DASHBOARD -->
+
+  <button onclick="showMainDashboard()" id="mainDashboardBtn">
+    🏠 Main Dashboard
+  </button>
+
+
   <!-- CAREER QUIZ -->
 
   <a href="Career-result.html?sheet=Sheet1">
@@ -466,24 +528,27 @@ SIDEBAR
 
   <!-- APTITUDE QUIZ -->
 
-  <button onclick="openSheet('Aptitude & Placement Quiz')">
+  <button
+    onclick="openSheet('Aptitude & Placement Quiz')"
+    id="aptitudeBtn"
+  >
     🧠 Aptitude & Placement Quiz
-</button>
+  </button>
 
 
   <!-- GJIMT CAREER ZONE -->
 
-  
-<button onclick="openSheet('GJIMT Career Zone')">
+  <button
+    onclick="openSheet('GJIMT Career Zone')"
+    id="careerZoneBtn"
+  >
     🎯 GJIMT Career Zone
-</button>
+  </button>
 
-  <!-- =========================
-  SKILLX RESULT MENU
-  ========================= -->
+
+  <!-- SKILLX RESULT MENU -->
 
   <div class="skillx-menu">
-
 
     <button class="main-btn" id="skillxToggle">
       💼 SkillX Result ▼
@@ -589,7 +654,6 @@ SIDEBAR
 
       </div>
 
-
     </div>
 
   </div>
@@ -608,7 +672,6 @@ SIDEBAR
     🚪 Logout
   </button>
 
-
 </div>
 
 
@@ -619,14 +682,14 @@ MAIN CONTENT
 <div class="main">
 
 
-  <div class="header">
+  <div class="header" id="pageTitle">
     🚀 Smart Analytics Dashboard
   </div>
 
 
   <!-- CARDS -->
 
-  <div class="cards">
+  <div class="cards" id="dashboardCards">
 
     <div class="card">
       <h3>Career Students</h3>
@@ -648,6 +711,8 @@ MAIN CONTENT
   </div>
 
 
+  <!-- LOADING -->
+
   <div class="loading" id="loading">
     ⏳ Loading data...
   </div>
@@ -655,7 +720,7 @@ MAIN CONTENT
 
   <!-- CHARTS -->
 
-  <div class="charts">
+  <div class="charts" id="chartsSection">
 
     <div class="chart-box">
       <canvas id="careerChart"></canvas>
@@ -669,6 +734,34 @@ MAIN CONTENT
 
     <div class="chart-box">
       <canvas id="comparisonChart"></canvas>
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+  SELECTED SHEET DATA
+  ========================= -->
+
+  <div class="sheet-container" id="sheetContainer">
+
+    <div class="sheet-title" id="sheetTitle">
+      Sheet Data
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table class="sheet-table">
+
+        <thead id="sheetHead">
+        </thead>
+
+        <tbody id="sheetBody">
+        </tbody>
+
+      </table>
+
     </div>
 
   </div>
@@ -694,12 +787,21 @@ const validUser = "admin";
 const validPass = "12345";
 
 
+let careerChartInstance = null;
+let skillChartInstance = null;
+let comparisonChartInstance = null;
+
+
+/* =========================
+LOGIN FUNCTION
+========================= */
+
 function login(){
 
-  let user =
+  const user =
   document.getElementById("username").value;
 
-  let pass =
+  const pass =
   document.getElementById("password").value;
 
 
@@ -723,68 +825,11 @@ function login(){
   }
 
 }
+
+
 /* =========================
-OPEN DIFFERENT SHEETS
+LOGOUT
 ========================= */
-
-function openSheet(sheetName){
-
-  const spreadsheetId =
-  "1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw";
-
-  const sheetURL =
-  "https://opensheet.elk.sh/" +
-  spreadsheetId +
-  "/" +
-  encodeURIComponent(sheetName);
-
-  console.log("Opening Sheet:", sheetName);
-  console.log("Sheet URL:", sheetURL);
-
-  document.getElementById("loading").style.display = "block";
-
-  document.getElementById("loading").innerHTML =
-  "⏳ Loading " + sheetName + "...";
-
-  fetch(sheetURL)
-
-  .then(res => {
-
-    if(!res.ok){
-      throw new Error("Sheet not found");
-    }
-
-    return res.json();
-
-  })
-
-  .then(data => {
-
-    document.getElementById("loading").style.display = "none";
-
-    alert(
-      "✅ " + sheetName +
-      " loaded successfully!\n\n" +
-      "Total Students: " + data.length
-    );
-
-    console.log(data);
-
-    /* HERE YOU CAN DISPLAY
-       THE SHEET DATA ON THE DASHBOARD */
-
-  })
-
-  .catch(error => {
-
-    console.error(error);
-
-    document.getElementById("loading").innerHTML =
-    "❌ Failed to load sheet: " + sheetName;
-
-  });
-
-}
 
 function logout(){
 
@@ -794,7 +839,311 @@ function logout(){
 
 
 /* =========================
-LOAD DASHBOARD
+OPEN DIFFERENT SHEETS
+========================= */
+
+function openSheet(sheetName){
+
+  const spreadsheetId =
+  "1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw";
+
+
+  const sheetURL =
+  "https://opensheet.elk.sh/" +
+  spreadsheetId +
+  "/" +
+  encodeURIComponent(sheetName);
+
+
+  console.log("Loading Sheet:", sheetName);
+  console.log("URL:", sheetURL);
+
+
+  /* UPDATE PAGE TITLE */
+
+  document.getElementById("pageTitle").innerHTML =
+  sheetName === "Aptitude & Placement Quiz"
+  ? "🧠 Aptitude & Placement Quiz"
+  : "🎯 GJIMT Career Zone";
+
+
+  /* SHOW LOADING */
+
+  const loading =
+  document.getElementById("loading");
+
+  loading.style.display = "block";
+
+  loading.innerHTML =
+  "⏳ Loading " + sheetName + "...";
+
+
+  /* HIDE MAIN CHARTS */
+
+  document.getElementById("chartsSection")
+  .style.display = "none";
+
+
+  /* HIDE TABLE UNTIL DATA LOADS */
+
+  document.getElementById("sheetContainer")
+  .style.display = "none";
+
+
+  /* UPDATE ACTIVE BUTTON */
+
+  document.querySelectorAll(".sidebar button")
+  .forEach(button => {
+
+    button.classList.remove("active");
+
+  });
+
+
+  if(sheetName === "Aptitude & Placement Quiz"){
+
+    document.getElementById("aptitudeBtn")
+    .classList.add("active");
+
+  }
+
+
+  if(sheetName === "GJIMT Career Zone"){
+
+    document.getElementById("careerZoneBtn")
+    .classList.add("active");
+
+  }
+
+
+  /* FETCH DATA */
+
+  fetch(sheetURL)
+
+  .then(response => {
+
+    if(!response.ok){
+
+      throw new Error(
+        "Unable to load sheet"
+      );
+
+    }
+
+    return response.json();
+
+  })
+
+  .then(data => {
+
+
+    loading.style.display = "none";
+
+
+    if(!data || data.length === 0){
+
+      loading.style.display = "block";
+
+      loading.innerHTML =
+      "⚠️ No data found in " + sheetName;
+
+      return;
+
+    }
+
+
+    /* =========================
+    UPDATE CARDS
+    ========================= */
+
+    document.getElementById("careerCount")
+    .innerText = data.length;
+
+
+    document.getElementById("skillCount")
+    .innerText = "-";
+
+
+    document.getElementById("totalCount")
+    .innerText = data.length;
+
+
+    /* =========================
+    SHEET TITLE
+    ========================= */
+
+    document.getElementById("sheetTitle")
+    .innerHTML =
+    "📋 " + sheetName +
+    " <span style='float:right;font-size:16px;color:#fff'>Total Students: " +
+    data.length +
+    "</span>";
+
+
+    /* =========================
+    GET COLUMN NAMES
+    ========================= */
+
+    const columns =
+    Object.keys(data[0]);
+
+
+    const sheetHead =
+    document.getElementById("sheetHead");
+
+
+    const sheetBody =
+    document.getElementById("sheetBody");
+
+
+    sheetHead.innerHTML = "";
+    sheetBody.innerHTML = "";
+
+
+    /* CREATE HEADER */
+
+    const headerRow =
+    document.createElement("tr");
+
+
+    columns.forEach(column => {
+
+      const th =
+      document.createElement("th");
+
+      th.textContent =
+      column;
+
+      headerRow.appendChild(th);
+
+    });
+
+
+    sheetHead.appendChild(headerRow);
+
+
+    /* CREATE DATA ROWS */
+
+    data.forEach(row => {
+
+
+      const tr =
+      document.createElement("tr");
+
+
+      columns.forEach(column => {
+
+
+        const td =
+        document.createElement("td");
+
+
+        let value =
+        row[column];
+
+
+        if(
+          value === undefined ||
+          value === null ||
+          value === ""
+        ){
+
+          value = "-";
+
+        }
+
+
+        td.textContent =
+        value;
+
+
+        tr.appendChild(td);
+
+      });
+
+
+      sheetBody.appendChild(tr);
+
+
+    });
+
+
+    /* SHOW TABLE */
+
+    document.getElementById("sheetContainer")
+    .style.display = "block";
+
+
+  })
+
+  .catch(error => {
+
+
+    console.error(error);
+
+
+    loading.style.display = "block";
+
+    loading.innerHTML =
+    "❌ Failed to load " +
+    sheetName +
+    ". Please check the exact Google Sheet tab name.";
+
+
+  });
+
+}
+
+
+/* =========================
+SHOW MAIN DASHBOARD
+========================= */
+
+function showMainDashboard(){
+
+
+  /* REMOVE ACTIVE BUTTONS */
+
+  document.querySelectorAll(".sidebar button")
+  .forEach(button => {
+
+    button.classList.remove("active");
+
+  });
+
+
+  document.getElementById("mainDashboardBtn")
+  .classList.add("active");
+
+
+  /* RESET TITLE */
+
+  document.getElementById("pageTitle")
+  .innerHTML =
+  "🚀 Smart Analytics Dashboard";
+
+
+  /* HIDE SELECTED SHEET TABLE */
+
+  document.getElementById("sheetContainer")
+  .style.display = "none";
+
+
+  /* SHOW CHARTS */
+
+  document.getElementById("chartsSection")
+  .style.display = "grid";
+
+
+  /* LOAD MAIN DATA AGAIN */
+
+  loadDashboard();
+
+}
+
+
+/* =========================
+LOAD MAIN DASHBOARD
 ========================= */
 
 function loadDashboard(){
@@ -808,13 +1157,39 @@ function loadDashboard(){
   "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
 
 
+  document.getElementById("loading")
+  .style.display = "block";
+
+
+  document.getElementById("loading")
+  .innerHTML =
+  "⏳ Loading dashboard data...";
+
+
   Promise.all([
 
     fetch(careerURL)
-    .then(res => res.json()),
+    .then(res => {
+
+      if(!res.ok){
+        throw new Error("Career data failed");
+      }
+
+      return res.json();
+
+    }),
+
 
     fetch(skillURL)
-    .then(res => res.json())
+    .then(res => {
+
+      if(!res.ok){
+        throw new Error("SkillX data failed");
+      }
+
+      return res.json();
+
+    })
 
   ])
 
@@ -825,12 +1200,18 @@ function loadDashboard(){
     .style.display = "none";
 
 
+    /* =========================
+    UPDATE CARDS
+    ========================= */
+
     document.getElementById("careerCount")
-    .innerText = careerData.length;
+    .innerText =
+    careerData.length;
 
 
     document.getElementById("skillCount")
-    .innerText = skillData.length;
+    .innerText =
+    skillData.length;
 
 
     document.getElementById("totalCount")
@@ -839,84 +1220,167 @@ function loadDashboard(){
 
 
     /* =========================
-    CAREER CHART
+    DESTROY OLD CHARTS
+    ========================= */
+
+    if(careerChartInstance){
+
+      careerChartInstance.destroy();
+
+    }
+
+
+    if(skillChartInstance){
+
+      skillChartInstance.destroy();
+
+    }
+
+
+    if(comparisonChartInstance){
+
+      comparisonChartInstance.destroy();
+
+    }
+
+
+    /* =========================
+    CAREER CHART DATA
     ========================= */
 
     let careerMap = {};
 
 
-    careerData.forEach(r => {
+    careerData.forEach(row => {
 
-      let career =
-      r["Top Career"] || "Unknown";
+
+      const career =
+      row["Top Career"] ||
+      "Unknown";
 
 
       careerMap[career] =
       (careerMap[career] || 0) + 1;
 
+
     });
 
 
+    careerChartInstance =
     new Chart(
+
       document.getElementById("careerChart"),
+
       {
 
         type:"doughnut",
 
         data:{
 
-          labels:Object.keys(careerMap),
+          labels:
+          Object.keys(careerMap),
 
           datasets:[{
 
-            data:Object.values(careerMap)
+            label:"Career Students",
+
+            data:
+            Object.values(careerMap)
 
           }]
+
+        },
+
+        options:{
+
+          responsive:true,
+
+          plugins:{
+
+            title:{
+
+              display:true,
+
+              text:"Career Preferences"
+
+            }
+
+          }
 
         }
 
       }
+
     );
 
 
     /* =========================
-    SKILLX CHART
+    SKILLX CHART DATA
     ========================= */
 
     let skillMap = {};
 
 
-    skillData.forEach(r => {
+    skillData.forEach(row => {
 
-      let domain =
-      r["Bundle Domain"] || "Unknown";
+
+      const domain =
+      row["Bundle Domain"] ||
+      "Unknown";
 
 
       skillMap[domain] =
       (skillMap[domain] || 0) + 1;
 
+
     });
 
 
+    skillChartInstance =
     new Chart(
+
       document.getElementById("skillChart"),
+
       {
 
         type:"pie",
 
         data:{
 
-          labels:Object.keys(skillMap),
+          labels:
+          Object.keys(skillMap),
 
           datasets:[{
 
-            data:Object.values(skillMap)
+            label:"SkillX Students",
+
+            data:
+            Object.values(skillMap)
 
           }]
+
+        },
+
+        options:{
+
+          responsive:true,
+
+          plugins:{
+
+            title:{
+
+              display:true,
+
+              text:"SkillX Domain"
+
+            }
+
+          }
 
         }
 
       }
+
     );
 
 
@@ -924,8 +1388,11 @@ function loadDashboard(){
     COMPARISON CHART
     ========================= */
 
+    comparisonChartInstance =
     new Chart(
+
       document.getElementById("comparisonChart"),
+
       {
 
         type:"bar",
@@ -933,8 +1400,11 @@ function loadDashboard(){
         data:{
 
           labels:[
+
             "Career",
+
             "SkillX"
+
           ],
 
           datasets:[{
@@ -942,15 +1412,37 @@ function loadDashboard(){
             label:"Students",
 
             data:[
+
               careerData.length,
+
               skillData.length
+
             ]
 
           }]
 
+        },
+
+        options:{
+
+          responsive:true,
+
+          plugins:{
+
+            title:{
+
+              display:true,
+
+              text:"Career vs SkillX Students"
+
+            }
+
+          }
+
         }
 
       }
+
     );
 
 
@@ -958,14 +1450,16 @@ function loadDashboard(){
 
   .catch(error => {
 
+
     console.error(error);
+
 
     document.getElementById("loading")
     .innerHTML =
     "❌ Failed to load dashboard data";
 
-  });
 
+  });
 
 }
 
@@ -982,21 +1476,26 @@ const allModules =
 document.getElementById("allModules");
 
 
-skillxToggle.addEventListener("click", () => {
+skillxToggle.addEventListener(
+  "click",
+  () => {
 
-  if(allModules.style.display === "block"){
+    if(
+      allModules.style.display === "block"
+    ){
 
-    allModules.style.display = "none";
+      allModules.style.display = "none";
+
+    }
+
+    else{
+
+      allModules.style.display = "block";
+
+    }
 
   }
-
-  else{
-
-    allModules.style.display = "block";
-
-  }
-
-});
+);
 
 
 /* =========================
@@ -1009,12 +1508,19 @@ document.querySelectorAll(".module-btn");
 
 moduleButtons.forEach(button => {
 
-  button.addEventListener("click", () => {
 
-    button.parentElement
-    .classList.toggle("active");
+  button.addEventListener(
+    "click",
+    () => {
 
-  });
+
+      button.parentElement
+      .classList.toggle("active");
+
+
+    }
+  );
+
 
 });
 
