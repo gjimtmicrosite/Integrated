@@ -723,7 +723,68 @@ function login(){
   }
 
 }
+/* =========================
+OPEN DIFFERENT SHEETS
+========================= */
 
+function openSheet(sheetName){
+
+  const spreadsheetId =
+  "1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw";
+
+  const sheetURL =
+  "https://opensheet.elk.sh/" +
+  spreadsheetId +
+  "/" +
+  encodeURIComponent(sheetName);
+
+  console.log("Opening Sheet:", sheetName);
+  console.log("Sheet URL:", sheetURL);
+
+  document.getElementById("loading").style.display = "block";
+
+  document.getElementById("loading").innerHTML =
+  "⏳ Loading " + sheetName + "...";
+
+  fetch(sheetURL)
+
+  .then(res => {
+
+    if(!res.ok){
+      throw new Error("Sheet not found");
+    }
+
+    return res.json();
+
+  })
+
+  .then(data => {
+
+    document.getElementById("loading").style.display = "none";
+
+    alert(
+      "✅ " + sheetName +
+      " loaded successfully!\n\n" +
+      "Total Students: " + data.length
+    );
+
+    console.log(data);
+
+    /* HERE YOU CAN DISPLAY
+       THE SHEET DATA ON THE DASHBOARD */
+
+  })
+
+  .catch(error => {
+
+    console.error(error);
+
+    document.getElementById("loading").innerHTML =
+    "❌ Failed to load sheet: " + sheetName;
+
+  });
+
+}
 
 function logout(){
 
