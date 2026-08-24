@@ -1748,12 +1748,69 @@ const questionBank=[
 let quizQuestions=[],currentIndex=0,score=0,selectedOption=null,timer=null,timeLeft=TIME_PER_QUESTION;
 
 function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});}
-function startQuiz(){
- const fields=["fullName","phone","email","program","startDate","endDate"];
- if(fields.some(id=>!document.getElementById(id).value.trim())){alert("Please fill all participant details before starting the assessment.");return;}
- fields.forEach(id=>student[id]=document.getElementById(id).value.trim());
- quizQuestions=[...questionBank];currentIndex=0;score=0;selectedOption=null;
- document.getElementById("qTotal").textContent=TOTAL_QUESTIONS;showScreen("screen-quiz");renderQuestion();
+function startQuiz() {
+
+    const fields = [
+        "fullName",
+        "phone",
+        "email",
+        "program",
+        "startDate"
+    ];
+
+    // Validate all required fields
+    for (const id of fields) {
+
+        const element = document.getElementById(id);
+
+        if (!element) {
+            console.error(`Missing HTML element with id="${id}"`);
+
+            alert(`Form error: "${id}" field is missing.`);
+
+            return;
+        }
+
+        if (!element.value.trim()) {
+            alert("Please fill all participant details before starting the assessment.");
+
+            element.focus();
+
+            return;
+        }
+    }
+
+    // Store participant details
+    student.fullName = document.getElementById("fullName").value.trim();
+    student.phone = document.getElementById("phone").value.trim();
+    student.email = document.getElementById("email").value.trim();
+    student.program = document.getElementById("program").value.trim();
+    student.startDate = document.getElementById("startDate").value.trim();
+
+    // IMPORTANT:
+    // Do not use student.endDate anymore
+
+    // Reset quiz
+    quizQuestions = [...questionBank]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, TOTAL_QUESTIONS);
+
+    currentIndex = 0;
+    score = 0;
+    selectedOption = null;
+
+    // Set total questions
+    const qTotal = document.getElementById("qTotal");
+
+    if (qTotal) {
+        qTotal.textContent = TOTAL_QUESTIONS;
+    }
+
+    // Open quiz screen
+    showScreen("screen-quiz");
+
+    // Load first question
+    renderQuestion();
 }
 function renderQuestion(){
  clearInterval(timer);selectedOption=null;timeLeft=TIME_PER_QUESTION;
