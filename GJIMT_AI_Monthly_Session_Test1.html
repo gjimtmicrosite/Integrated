@@ -1092,72 +1092,68 @@ textarea {
    CERTIFICATE
    ========================================================= */
 
+/* =========================================================
+   PROFESSIONAL CERTIFICATE DESIGN
+   ========================================================= */
+
 .certificate-wrapper {
-    margin-top: 24px;
+    margin-top: 28px;
 }
 
 .certificate-card {
     background: #ffffff;
-
-    border-radius: 18px;
-
-    padding: 18px;
-
+    border-radius: 22px;
+    padding: 16px;
     box-shadow:
-        0 10px 30px rgba(30, 64, 175, 0.08);
-
-    border: 1px solid #e1e7f0;
-
+        0 18px 45px rgba(30, 64, 175, 0.12);
     overflow-x: auto;
 }
 
-
-/* Certificate itself */
-
+/* Main certificate */
 .certificate-inner {
     position: relative;
-
     overflow: hidden;
 
-    border-radius: 12px;
+    width: 1000px;
+    min-height: 600px;
 
-    border: 5px double #7185c4;
+    padding: 34px 44px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    color: #172554;
 
     background:
         radial-gradient(
-            circle at top left,
-            rgba(79, 124, 255, 0.08),
+            circle at 10% 10%,
+            rgba(99, 102, 241, 0.08),
             transparent 28%
         ),
         radial-gradient(
-            circle at bottom right,
-            rgba(139, 92, 246, 0.08),
+            circle at 90% 90%,
+            rgba(14, 165, 233, 0.08),
             transparent 30%
         ),
         linear-gradient(
             135deg,
-            #ffffff,
-            #f5f8ff
+            #ffffff 0%,
+            #f8fbff 50%,
+            #f4f7ff 100%
         );
 
-    color: #111827;
+    /* Strong outer border */
+    border: 8px double #3454b4;
 
-    width: 1000px;
+    border-radius: 18px;
 
-    min-height: 560px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: space-between;
-
-    padding: 28px 36px;
+    box-shadow:
+        inset 0 0 0 2px rgba(255,255,255,0.9),
+        inset 0 0 0 10px rgba(52,84,180,0.04);
 }
 
-
-/* Certificate decorative line */
-
+/* Inner elegant border */
 .certificate-inner::before {
     content: "";
 
@@ -1165,126 +1161,202 @@ textarea {
 
     left: 18px;
     right: 18px;
-
     top: 18px;
     bottom: 18px;
 
-    border: 1px solid rgba(79, 124, 255, 0.18);
+    border: 2px solid rgba(52,84,180,0.55);
 
-    border-radius: 8px;
+    border-radius: 10px;
 
     pointer-events: none;
+
+    z-index: 1;
 }
 
+/* Second decorative border */
+.certificate-inner::after {
+    content: "";
 
-/* Logos */
+    position: absolute;
+
+    left: 28px;
+    right: 28px;
+    top: 28px;
+    bottom: 28px;
+
+    border: 1px solid rgba(99,102,241,0.22);
+
+    border-radius: 7px;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+/* =========================================================
+   CERTIFICATE LOGOS
+   ========================================================= */
 
 .cert-header-logos {
     display: flex;
 
     justify-content: space-between;
-
     align-items: center;
 
-    gap: 12px;
+    gap: 25px;
 
     position: relative;
+    z-index: 3;
 
-    z-index: 2;
+    padding: 4px 12px;
 }
 
-.cert-header-logos img{
-    max-height:90px;
-    max-width:240px;
-    object-fit:contain;
+.cert-header-logos img {
+    max-height: 82px;
+    max-width: 245px;
+
+    object-fit: contain;
+
+    display: block;
 }
 
-
-/* Certificate title */
+/* =========================================================
+   TITLE
+   ========================================================= */
 
 .cert-title-area {
     text-align: center;
 
-    margin-top: 6px;
-
     position: relative;
+    z-index: 3;
 
-    z-index: 2;
+    margin-top: 8px;
 }
 
 .cert-title {
-    font-size: 31px;
+    font-size: 34px;
 
-    letter-spacing: 0.1em;
+    letter-spacing: 0.13em;
 
     text-transform: uppercase;
 
-    color: #243b73;
+    color: #263f82;
 
-    font-weight: 800;
+    font-weight: 900;
+
+    text-shadow:
+        0 1px 0 #ffffff;
 }
 
 .cert-subtitle {
-    margin-top: 6px;
+    margin-top: 8px;
 
     font-size: 16px;
 
     color: #64748b;
 
     font-weight: 700;
+
+    letter-spacing: 0.03em;
 }
 
+/* Small decorative line under title */
 
-/* Certificate body */
+.cert-title-area::after {
+    content: "";
+
+    display: block;
+
+    width: 180px;
+    height: 3px;
+
+    margin: 14px auto 0;
+
+    border-radius: 99px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #3454b4,
+            #6366f1,
+            #0ea5e9
+        );
+}
+
+/* =========================================================
+   CERTIFICATE BODY
+   ========================================================= */
 
 .cert-body {
     text-align: center;
 
-    padding: 0 28px;
+    padding: 0 50px;
 
     position: relative;
-
-    z-index: 2;
+    z-index: 3;
 }
 
 .cert-name-label {
     font-size: 13px;
 
-    letter-spacing: 0.16em;
+    letter-spacing: 0.20em;
 
     text-transform: uppercase;
 
-    color: #7b8799;
+    color: #64748b;
+
+    font-weight: 700;
 }
 
 .cert-name {
-    margin-top: 7px;
+    margin-top: 8px;
 
-    font-size: 36px;
+    font-size: 40px;
 
-    font-weight: 800;
+    font-weight: 900;
 
-    color: #18233a;
+    color: #172554;
+
+    letter-spacing: 0.02em;
 }
 
 .cert-text {
-    margin-top: 10px;
+    margin-top: 14px;
 
-    font-size: 16px;
+    font-size: 17px;
 
     color: #475569;
 
-    line-height: 1.7;
+    line-height: 1.8;
 }
 
 .cert-text strong {
-    font-weight: 800;
+    color: #263f82;
 
-    color: #243b73;
+    font-weight: 900;
 }
 
+/* =========================================================
+   SCORE HIGHLIGHT
+   ========================================================= */
 
-/* Certificate footer */
+#certScore {
+    display: inline-block;
+
+    padding: 4px 12px;
+
+    border-radius: 999px;
+
+    background: #eaf1ff;
+
+    color: #3155b5;
+
+    border: 1px solid #c9d7ff;
+}
+
+/* =========================================================
+   FOOTER / SIGNATURES
+   ========================================================= */
 
 .cert-footer {
     display: flex;
@@ -1293,41 +1365,45 @@ textarea {
 
     align-items: flex-end;
 
-    gap: 20px;
+    gap: 30px;
 
     position: relative;
 
-    z-index: 2;
+    z-index: 3;
+
+    padding: 0 45px;
 }
 
 .sig-block {
     flex: 1;
 
     text-align: center;
+
+    max-width: 220px;
 }
 
 .sig-img {
-    height: 45px;
+    height: 52px;
 
-    max-width: 120px;
+    max-width: 140px;
 
     object-fit: contain;
 
     display: block;
 
-    margin: 0 auto 8px;
+    margin: 0 auto 9px;
 }
 
 .sig-name {
-    font-weight: 700;
+    font-weight: 800;
 
     font-size: 14px;
 
-    color: #18233a;
+    color: #172554;
 
-    border-top: 1px solid #94a3b8;
+    border-top: 1px solid #64748b;
 
-    padding-top: 4px;
+    padding-top: 6px;
 }
 
 .sig-role {
@@ -1335,10 +1411,25 @@ textarea {
 
     color: #64748b;
 
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
+/* =========================================================
+   CERTIFICATE CORNER DECORATIONS
+   ========================================================= */
 
+.certificate-inner .corner {
+    position: absolute;
+
+    width: 45px;
+    height: 45px;
+
+    border-color: #3454b4;
+
+    z-index: 3;
+}
+
+/* Optional if you add corner elements later */
 /* =========================================================
    FEEDBACK
    ========================================================= */
@@ -1857,7 +1948,7 @@ with a score of <strong><span id="certScore">0%</span></strong>.
 const TOTAL_QUESTIONS = 15;
 const TIME_PER_QUESTION = 60;
 
-const student={fullName:"",phone:"",email:"",program:"",startDate:"",endDate:""};
+const student={fullName:"",phone:"",email:"",program:"",startDate:""};
 const feedback={timing:"",coverage:"",speed:"",faculty:"",understanding:"",ambience:"",useful:"",suggestions:"",rating:"",comments:""};
 
 const questionBank = [
@@ -2193,21 +2284,84 @@ function buildFeedbackSummaryText(){
 }
 function copyFeedbackSummary(){const m=buildFeedbackSummaryText();if(navigator.clipboard)navigator.clipboard.writeText(m).then(()=>alert("Feedback summary copied.")).catch(()=>prompt("Copy this feedback summary:",m));else prompt("Copy this feedback summary:",m);}
 function sendFeedbackWhatsApp(phone){window.open("https://wa.me/91"+phone+"?text="+encodeURIComponent(buildFeedbackSummaryText()),"_blank");}
-function restartQuiz(){clearInterval(timer);["fullName","phone","email","program","startDate","endDate"].forEach(id=>document.getElementById(id).value="");showScreen("screen-intro");}
+function restartQuiz(){
+    clearInterval(timer);
 
+    [
+        "fullName",
+        "phone",
+        "email",
+        "program",
+        "startDate"
+    ].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.value = "";
+    });
+
+    showScreen("screen-intro");
+}
 const SCRIPT_URL="https://script.google.com/macros/s/AKfycbwH2lf15ENm0V_iqJnSxLbG-qRB9lP_AZcp6wwQnTMlEIiPb97xJbV5zkMRmXM8_Hyxgw/exec";
 const SHEET_NAME="AI Monthly Session";
 
-function saveQuizData(score,percent,band){
- const fd=new URLSearchParams();
- fd.append("type","aimonthlyquiz");fd.append("sheetName",SHEET_NAME);fd.append("name",student.fullName);fd.append("phone",student.phone);fd.append("email",student.email);fd.append("program",student.program);fd.append("startDate",student.startDate);fd.append("endDate",student.endDate);fd.append("score",score);fd.append("percent",percent);fd.append("band",band);
- fetch(SCRIPT_URL,{method:"POST",body:fd}).then(r=>r.json()).then(d=>console.log("AI test saved:",d)).catch(e=>console.error("AI TEST SAVE ERROR:",e));
+function saveQuizData(score, percent, band){
+
+    const fd = new URLSearchParams();
+
+    fd.append("type", "aimonthlyquiz");
+    fd.append("sheetName", SHEET_NAME);
+
+    fd.append("name", student.fullName);
+    fd.append("phone", student.phone);
+    fd.append("email", student.email);
+    fd.append("program", student.program);
+
+    fd.append("startDate", student.startDate);
+
+    fd.append("score", score);
+    fd.append("percent", percent);
+    fd.append("band", band);
+
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: fd
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("AI Monthly Session result saved:", data);
+    })
+    .catch(error => {
+        console.error("AI TEST SAVE ERROR:", error);
+    });
 }
 function saveFeedbackData(){
- const fd=new URLSearchParams();
- fd.append("type","aimonthlyfeedback");fd.append("sheetName",SHEET_NAME);fd.append("name",student.fullName);fd.append("phone",student.phone);fd.append("email",student.email);fd.append("program",student.program);fd.append("startDate",student.startDate);fd.append("endDate",student.endDate);
- Object.keys(feedback).forEach(k=>fd.append(k,feedback[k]));
- fetch(SCRIPT_URL,{method:"POST",body:fd}).then(r=>r.json()).then(d=>console.log("AI feedback saved:",d)).catch(e=>console.error("AI FEEDBACK SAVE ERROR:",e));
+
+    const fd = new URLSearchParams();
+
+    fd.append("type", "aimonthlyfeedback");
+    fd.append("sheetName", SHEET_NAME);
+
+    fd.append("name", student.fullName);
+    fd.append("phone", student.phone);
+    fd.append("email", student.email);
+    fd.append("program", student.program);
+
+    fd.append("startDate", student.startDate);
+
+    Object.keys(feedback).forEach(function(key){
+        fd.append(key, feedback[key]);
+    });
+
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: fd
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("AI Monthly Session feedback saved:", data);
+    })
+    .catch(error => {
+        console.error("AI FEEDBACK SAVE ERROR:", error);
+    });
 }
 </script>
 </body>
