@@ -41,7 +41,24 @@ label{display:block;margin:14px 0 8px;font-size:14px;font-weight:700;color:#4755
 <label for="fbSuggestions">8. Which topic would you be most interested in for the next AI Monthly Session?</label><select id="fbSuggestions"><option value="">Select a session topic</option><option value="Napkin AI">Napkin AI – AI-powered visual thinking & diagrams</option><option value="Kickresume">Kickresume – AI-powered Resume & Career Building</option><option value="Gamma">Gamma – AI-powered Presentations & Content Creation</option><option value="Other">Other – Please specify in comments</option></select>
 <label for="fbRating">9. Overall rating of this session</label><select id="fbRating"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select>
 <label for="fbComments">10. Any additional comments or suggestions?</label><textarea id="fbComments" placeholder="Write your response here"></textarea>
-<div style="margin-top:16px"><label for="studentImage">11. Upload a photo / image related to your feedback</label><input type="file" id="studentImage" accept="image/jpeg,image/png,image/jpg"><small style="display:block;margin-top:8px;color:#64748b">JPG, JPEG or PNG • Maximum 5 MB. The image will be compressed before being saved to Google Drive.</small><div id="imagePreview" style="margin-top:12px"></div><div id="uploadStatus" class="small-note"></div></div>
+<div style="margin-top:16px"><label for="studentImage">11. Upload a photo / image related to your feedback</label>
+  <input
+  type="file"
+  id="studentImage"
+  accept="image/*"
+  capture="environment"
+  style="
+    display:block;
+    width:100%;
+    padding:14px;
+    font-size:16px;
+    background:#ffffff;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    box-sizing:border-box;
+    cursor:pointer;
+  ">
+  <small style="display:block;margin-top:8px;color:#64748b">JPG, JPEG or PNG • Maximum 5 MB. The image will be compressed before being saved to Google Drive.</small><div id="imagePreview" style="margin-top:12px"></div><div id="uploadStatus" class="small-note"></div></div>
 <div class="btn-row"><button class="btn btn-primary" id="feedbackSubmitBtn" onclick="finishFeedback()">Submit Feedback & View Summary</button></div></div></section>
 
 <section id="screen-feedback-summary" class="screen"><div class="card"><h2>Thank You for Your Feedback</h2><p class="muted" id="fbSummaryIntro"></p><div class="help-box" id="fbSummaryBox"></div><div class="contact-box"><h3 style="margin-top:0">Share Feedback</h3><p style="line-height:1.7">Copy the feedback summary and share it with the AI Monthly Sessions coordination team.</p><div class="btn-row"><button class="btn btn-dark" onclick="copyFeedbackSummary()">Copy Feedback Summary</button><button class="btn btn-primary" onclick="sendFeedbackWhatsApp('7973241456')">Send to 79732 41456</button><button class="btn btn-primary" onclick="sendFeedbackWhatsApp('8988368113')">Send to 89883 68113</button><button class="btn btn-secondary" onclick="restartQuiz()">Back to Start</button></div></div></div><div class="footer-note">GJIMT AI Monthly Sessions • Session 1</div></section>
@@ -338,7 +355,139 @@ function base64DataUrlToFile(dataUrl,fileName){
 }
 
 function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function compressImage(file){return new Promise((resolve,reject)=>{if(!file){resolve(null);return}if(!/^image\/(jpeg|png|jpg)$/i.test(file.type)){alert('Please select a JPG, JPEG or PNG image.');document.getElementById('studentImage').value='';resolve(null);return}const reader=new FileReader();reader.onerror=reject;reader.onload=e=>{const img=new Image();img.onload=()=>{const max=1200;let w=img.width,h=img.height;if(w>max||h>max){const scale=Math.min(max/w,max/h);w=Math.round(w*scale);h=Math.round(h*scale)}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);let quality=.78,data=canvas.toDataURL('image/jpeg',quality);while(data.length>1400000&&quality>.45){quality-=.06;data=canvas.toDataURL('image/jpeg',quality)}document.getElementById('imagePreview').innerHTML='<img src="'+data+'" style="max-width:220px;max-height:160px;border-radius:10px;border:1px solid #d7deeb">';resolve({name:(file.name||'student-photo').replace(/[^a-zA-Z0-9._-]/g,'_'),data:data})};img.onerror=reject;img.src=e.target.result};reader.readAsDataURL(file)})}
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+
+    if (!file) {
+      resolve(null);
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      reject(new Error("Image must be smaller than 10 MB."));
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onerror = function () {
+      reject(new Error("Could not read the selected image."));
+    };
+
+    reader.onload = function (event) {
+
+      const img = new Image();
+
+      img.onload = function () {
+
+        try {
+
+          const maxSize = 1200;
+
+          let width = img.naturalWidth || img.width;
+          let height = img.naturalHeight || img.height;
+
+          if (!width || !height) {
+            reject(new Error("Could not read image dimensions."));
+            return;
+          }
+
+          if (width > maxSize || height > maxSize) {
+
+            const scale = Math.min(
+              maxSize / width,
+              maxSize / height
+            );
+
+            width = Math.round(width * scale);
+            height = Math.round(height * scale);
+          }
+
+          const canvas = document.createElement("canvas");
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+
+          if (!ctx) {
+            reject(new Error("Image processing is not supported."));
+            return;
+          }
+
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, width, height);
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+          let quality = 0.80;
+
+          let imageData =
+            canvas.toDataURL(
+              "image/jpeg",
+              quality
+            );
+
+          // Keep uploaded Base64 reasonably small.
+          while (
+            imageData.length > 1400000 &&
+            quality > 0.45
+          ) {
+            quality -= 0.05;
+
+            imageData =
+              canvas.toDataURL(
+                "image/jpeg",
+                quality
+              );
+          }
+
+          const originalName =
+            file.name || "student-photo";
+
+          const cleanName =
+            originalName
+              .replace(/\.[^/.]+$/, "")
+              .replace(/[^a-zA-Z0-9._-]/g, "_");
+
+          const finalName =
+            (cleanName || "student-photo") + ".jpg";
+
+          resolve({
+            name: finalName,
+            data: imageData
+          });
+
+        } catch (error) {
+
+          reject(error);
+
+        }
+
+      };
+
+      img.onerror = function () {
+
+        reject(
+          new Error(
+            "This image format cannot be read. Please select a JPG or PNG image."
+          )
+        );
+
+      };
+
+      img.src = event.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
 function buildFeedbackSummaryText(){return ['GJIMT AI Monthly Sessions – Session 1 Feedback','',`Name: ${student.fullName}`,`Program: ${student.program}`,`WhatsApp: ${student.phone}`,`Email: ${student.email}`,'',`Session: AI Monthly Sessions – Session 1: Talk Better to AI`,`Date: ${formatDate(student.startDate)}`,'','Ratings (1–5):',`• Timing & punctuality: ${feedback.timing||'-'}`,`• Content coverage & clarity: ${feedback.coverage||'-'}`,`• Speed / pace: ${feedback.speed||'-'}`,`• Faculty teaching & interaction: ${feedback.faculty||'-'}`,`• AI understanding/confidence: ${feedback.understanding||'-'}`,`• Ambience & facilities: ${feedback.ambience||'-'}`,`• Overall rating: ${feedback.rating||'-'}`,'','Most useful part:',feedback.useful||'-','','Next AI learning interest:',feedback.suggestions||'-','','Additional comments:',feedback.comments||'-',feedback.imageName?`Uploaded image: ${feedback.imageName}`:''].join('\n')}
 function copyFeedbackSummary(){const m=buildFeedbackSummaryText();if(navigator.clipboard)navigator.clipboard.writeText(m).then(()=>alert('Feedback summary copied.')).catch(()=>prompt('Copy this feedback summary:',m));else prompt('Copy this feedback summary:',m)}
 function sendFeedbackWhatsApp(phone){window.open('https://wa.me/91'+phone+'?text='+encodeURIComponent(buildFeedbackSummaryText()),'_blank')}
@@ -413,8 +562,85 @@ async function saveFeedbackData(){
     throw e;
   }
 }
-document.getElementById('studentImage').addEventListener('change',function(){const file=this.files[0];const preview=document.getElementById('imagePreview');preview.innerHTML='';document.getElementById('uploadStatus').textContent='';if(!file)return;if(!/^image\/(jpeg|png|jpg)$/i.test(file.type)){alert('Please select JPG, JPEG or PNG.');this.value='';return}if(file.size>5*1024*1024){alert('Image size must be less than 5 MB.');this.value='';return}preview.innerHTML='<div class="small-note">Image selected: '+escapeHtml(file.name)+' ('+Math.round(file.size/1024)+' KB). It will be compressed before upload.</div>'});
-function uploadFileToDrive(file,fileType){
+document.getElementById('studentImage').addEventListener('change', async function () {
+
+    const file = this.files[0];
+
+    const preview = document.getElementById('imagePreview');
+    const status = document.getElementById('uploadStatus');
+
+    preview.innerHTML = '';
+    status.textContent = '';
+
+    if (!file) return;
+
+    // Accept any image type supported by the phone/browser
+    if (!file.type || !file.type.startsWith('image/')) {
+        alert('Please select an image.');
+        this.value = '';
+        return;
+    }
+
+    // Maximum original image size
+    if (file.size > 10 * 1024 * 1024) {
+        alert('Image size must be less than 10 MB.');
+        this.value = '';
+        return;
+    }
+
+    try {
+
+        status.textContent = 'Preparing image...';
+
+        // Compress the image immediately
+        const result = await compressImage(file);
+
+        if (!result) {
+            throw new Error('Image could not be processed.');
+        }
+
+        // Store compressed image for later upload
+        feedback.imageName = result.name;
+        feedback.imageData = result.data;
+
+        preview.innerHTML =
+            '<div class="small-note">' +
+            '✓ Image selected: ' +
+            escapeHtml(file.name) +
+            ' (' +
+            Math.round(file.size / 1024) +
+            ' KB)' +
+            '<br>✓ Image ready for upload' +
+            '</div>' +
+
+            '<img src="' +
+            result.data +
+            '" style="' +
+            'display:block;' +
+            'max-width:220px;' +
+            'max-height:160px;' +
+            'margin-top:10px;' +
+            'border-radius:10px;' +
+            'border:1px solid #ddd;' +
+            'object-fit:contain;' +
+            '">';
+
+        status.textContent = '✓ Image selected successfully';
+
+    } catch (error) {
+
+        console.error('Image processing error:', error);
+
+        alert(
+            'Unable to process this image. Please select a JPG or PNG photo.'
+        );
+
+        this.value = '';
+        preview.innerHTML = '';
+        status.textContent = '';
+    }
+
+});function uploadFileToDrive(file,fileType){
   if(!file){
     return Promise.reject(new Error('No file supplied.'));
   }
