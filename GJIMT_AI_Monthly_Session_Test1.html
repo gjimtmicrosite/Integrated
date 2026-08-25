@@ -2015,7 +2015,24 @@ with a score of <strong><span id="certScore">0%</span></strong>.
     placeholder="Write your response here">
 </textarea>
 
+<div class="form-group">
+    <label for="studentImage">
+        11. Upload a photo / image related to your feedback
+    </label>
 
+    <input
+        type="file"
+        id="studentImage"
+        name="studentImage"
+        accept="image/*"
+    >
+
+    <small style="display:block;margin-top:8px;color:#64748b;">
+        JPG, JPEG or PNG • Maximum 5 MB
+    </small>
+
+    <div id="imagePreview" style="margin-top:12px;"></div>
+</div>
 <div class="btn-row">
     <button 
         class="btn btn-primary" 
@@ -2536,6 +2553,41 @@ function saveFeedbackData(){
         console.error("AI FEEDBACK SAVE ERROR:", error);
     });
 }
+
+document.getElementById("studentImage").addEventListener("change", function () {
+
+    const file = this.files[0];
+    const preview = document.getElementById("imagePreview");
+
+    preview.innerHTML = "";
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please select an image file.");
+        this.value = "";
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        alert("Image size must be less than 5 MB.");
+        this.value = "";
+        return;
+    }
+
+    const img = document.createElement("img");
+
+    img.src = URL.createObjectURL(file);
+
+    img.style.maxWidth = "220px";
+    img.style.maxHeight = "160px";
+    img.style.marginTop = "5px";
+    img.style.borderRadius = "10px";
+    img.style.border = "1px solid #d7deeb";
+
+    preview.appendChild(img);
+});
+
 </script>
 </body>
 </html>
