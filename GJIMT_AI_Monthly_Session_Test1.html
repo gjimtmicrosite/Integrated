@@ -1727,22 +1727,173 @@ const TIME_PER_QUESTION = 60;
 const student={fullName:"",phone:"",email:"",program:"",startDate:"",endDate:""};
 const feedback={timing:"",coverage:"",speed:"",faculty:"",understanding:"",ambience:"",useful:"",suggestions:"",rating:"",comments:""};
 
-const questionBank=[
-{q:"What does AI stand for?",o:["Automated Internet","Artificial Intelligence","Advanced Information","Automated Intelligence"],a:1},
-{q:"Which of these is an AI chatbot?",o:["ChatGPT","Excel","Calculator","Notepad"],a:0},
-{q:"Which company created ChatGPT?",o:["Google","Microsoft","OpenAI","Apple"],a:2},
-{q:"Which AI tool is mainly known for generating images?",o:["DALL·E","Excel","PowerPoint","Gmail"],a:0},
-{q:"What can generative AI create?",o:["Only text","Only images","Text, images, audio & more","Only numbers"],a:2},
-{q:"Which one is an example of an AI assistant?",o:["Siri","Paint","Calculator","Notepad"],a:0},
-{q:"What is a prompt?",o:["An AI error","An instruction given to AI","A computer virus","A password"],a:1},
-{q:"Which prompt is likely to give a better AI response?",o:["Write something","Tell me","Explain AI in 100 words for a first-year management student","AI??"],a:2},
-{q:"True or False: AI can sometimes give incorrect information.",o:["True","False"],a:0},
-{q:"What is ChatGPT mainly designed to do?",o:["Have conversations and generate content","Repair computers","Print documents","Charge phones"],a:0},
-{q:"Which of these can AI help students with?",o:["Brainstorming","Summarising","Explaining concepts","All of these"],a:3},
-{q:"What should you do before submitting AI-generated information?",o:["Trust it blindly","Verify and evaluate it","Copy it directly","Ignore it"],a:1},
-{q:"Which is a good use of AI?",o:["Generating ideas","Checking understanding","Learning a concept","All of these"],a:3},
-{q:"What is the best description of Generative AI?",o:["AI that generates new content","AI that only calculates numbers","AI that only stores files","AI that only searches websites"],a:0},
-{q:"AI is best viewed as…",o:["A replacement for thinking","A tool that can augment human thinking","A magic answer machine","Something only programmers can use"],a:1}
+const questionBank = [
+
+    {
+        q: "What is a prompt?",
+        o: [
+            "A computer virus",
+            "An instruction given to AI",
+            "A programming language",
+            "A database"
+        ],
+        a: 1
+    },
+
+    {
+        q: "What is the main purpose of Prompt Engineering?",
+        o: [
+            "To repair computers",
+            "To write better instructions for AI",
+            "To create hardware",
+            "To browse the internet"
+        ],
+        a: 1
+    },
+
+    {
+        q: "Which of the following is a good prompt?",
+        o: [
+            "“Do it”",
+            "“Tell me”",
+            "“Explain Marketing in simple words with 3 examples.”",
+            "“Marketing?”"
+        ],
+        a: 2
+    },
+
+    {
+        q: "Which tool can understand and respond to prompts?",
+        o: [
+            "ChatGPT",
+            "Calculator only",
+            "Keyboard",
+            "Printer"
+        ],
+        a: 0
+    },
+
+    {
+        q: "What should a good prompt generally be?",
+        o: [
+            "Confusing",
+            "Clear and specific",
+            "Very short always",
+            "Unrelated"
+        ],
+        a: 1
+    },
+
+    {
+        q: "If you want AI to write an email, what should you specify?",
+        o: [
+            "Only the word “email”",
+            "Purpose and required details",
+            "Computer brand",
+            "Internet speed"
+        ],
+        a: 1
+    },
+
+    {
+        q: "Which prompt is more specific?",
+        o: [
+            "“Tell me about business.”",
+            "“Explain 3 advantages of digital marketing for small businesses.”",
+            "“Business?”",
+            "“Marketing”"
+        ],
+        a: 1
+    },
+
+    {
+        q: "What does an AI-generated answer depend greatly on?",
+        o: [
+            "The quality of the prompt",
+            "Keyboard size",
+            "Monitor size",
+            "Printer speed"
+        ],
+        a: 0
+    },
+
+    {
+        q: "What is meant by “role” in a prompt?",
+        o: [
+            "Giving AI a specific identity or expertise",
+            "Changing the computer screen",
+            "Changing a password",
+            "Installing software"
+        ],
+        a: 0
+    },
+
+    {
+        q: "Which is an example of assigning a role to AI?",
+        o: [
+            "“Hello AI”",
+            "“Act as a marketing expert.”",
+            "“Open my laptop.”",
+            "“Start Windows.”"
+        ],
+        a: 1
+    },
+
+    {
+        q: "Why should we provide context in a prompt?",
+        o: [
+            "To confuse AI",
+            "To help AI understand the situation",
+            "To increase computer memory",
+            "To change the keyboard"
+        ],
+        a: 1
+    },
+
+    {
+        q: "What can you ask AI to do with a long paragraph?",
+        o: [
+            "Summarize it",
+            "Break the computer",
+            "Delete the internet",
+            "Increase RAM"
+        ],
+        a: 0
+    },
+
+    {
+        q: "Which instruction is useful when you want a particular format?",
+        o: [
+            "“Answer somehow.”",
+            "“Give the answer in a table.”",
+            "“Do anything.”",
+            "“You decide.”"
+        ],
+        a: 1
+    },
+
+    {
+        q: "What should you do if the AI's first answer is not satisfactory?",
+        o: [
+            "Stop using AI",
+            "Refine or improve the prompt",
+            "Turn off the monitor",
+            "Delete the browser"
+        ],
+        a: 1
+    },
+
+    {
+        q: "Which of the following is an appropriate use of Prompt Engineering for students?",
+        o: [
+            "Asking AI to explain a difficult topic",
+            "Damaging a computer",
+            "Creating a virus",
+            "Hacking someone's account"
+        ],
+        a: 0
+    }
+
 ];
 
 let quizQuestions=[],currentIndex=0,score=0,selectedOption=null,timer=null,timeLeft=TIME_PER_QUESTION;
