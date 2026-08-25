@@ -1676,27 +1676,162 @@ with a score of <strong><span id="certScore">0%</span></strong>.
 
 <section id="screen-feedback" class="screen">
 <div class="card">
+
 <h2>Session Feedback: AI Monthly Session – Session 1</h2>
+
 <p class="muted" id="feedbackIntro"></p>
-<div class="help-box"><h3>Rate 1 = Very Dissatisfied, 5 = Very Satisfied</h3></div>
-<div style="margin-top:16px">
-<div class="likert-row"><label for="fbTiming">1. Session start time & punctuality</label><select id="fbTiming"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-<div class="likert-row"><label for="fbCoverage">2. AI content coverage and clarity</label><select id="fbCoverage"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-<div class="likert-row"><label for="fbSpeed">3. Speed/pace of session</label><select id="fbSpeed"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-<div class="likert-row"><label for="fbFaculty">4. Faculty teaching & interaction</label><select id="fbFaculty"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-<div class="likert-row"><label for="fbUnderstanding">5. Your AI understanding/confidence after the session</label><select id="fbUnderstanding"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-<div class="likert-row"><label for="fbAmbience">6. Ambience & facilities</label><select id="fbAmbience"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
+
+<div class="help-box">
+    <h3>Rate 1 = Very Dissatisfied, 5 = Very Satisfied</h3>
 </div>
 
-<label for="fbUseful">7. What was the most useful part of the AI session?</label><textarea id="fbUseful" placeholder="Write your response here"></textarea>
-<label for="fbSuggestions">8. What would you like to learn in the next AI Monthly Session?</label><textarea id="fbSuggestions" placeholder="Write your response here"></textarea>
-<label for="fbRating">9. Overall rating of this session</label><select id="fbRating"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select>
-<label for="fbComments">10. Any additional comments or suggestions?</label><textarea id="fbComments" placeholder="Write your response here"></textarea>
+<div style="margin-top:16px">
 
-<div class="btn-row"><button class="btn btn-primary" onclick="finishFeedback()">Submit Feedback & View Summary</button></div>
+<div class="likert-row">
+    <label for="fbTiming">1. Session start time & punctuality</label>
+    <select id="fbTiming">
+        <option value="">Select rating</option>
+        <option value="1">1 - Very Dissatisfied</option>
+        <option value="2">2 - Dissatisfied</option>
+        <option value="3">3 - Neutral</option>
+        <option value="4">4 - Satisfied</option>
+        <option value="5">5 - Very Satisfied</option>
+    </select>
+</div>
+
+<div class="likert-row">
+    <label for="fbCoverage">2. AI content coverage and clarity</label>
+    <select id="fbCoverage">
+        <option value="">Select rating</option>
+        <option value="1">1 - Very Dissatisfied</option>
+        <option value="2">2 - Dissatisfied</option>
+        <option value="3">3 - Neutral</option>
+        <option value="4">4 - Satisfied</option>
+        <option value="5">5 - Very Satisfied</option>
+    </select>
+</div>
+
+<div class="likert-row">
+    <label for="fbSpeed">3. Speed/pace of session</label>
+    <select id="fbSpeed">
+        <option value="">Select rating</option>
+        <option value="1">1 - Very Dissatisfied</option>
+        <option value="2">2 - Dissatisfied</option>
+        <option value="3">3 - Neutral</option>
+        <option value="4">4 - Satisfied</option>
+        <option value="5">5 - Very Satisfied</option>
+    </select>
+</div>
+
+<div class="likert-row">
+    <label for="fbFaculty">4. Faculty teaching & interaction</label>
+    <select id="fbFaculty">
+        <option value="">Select rating</option>
+        <option value="1">1 - Very Dissatisfied</option>
+        <option value="2">2 - Dissatisfied</option>
+        <option value="3">3 - Neutral</option>
+        <option value="4">4 - Satisfied</option>
+        <option value="5">5 - Very Satisfied</option>
+    </select>
+</div>
+
+<div class="likert-row">
+    <label for="fbUnderstanding">
+        5. Your AI understanding/confidence after the session
+    </label>
+    <select id="fbUnderstanding">
+        <option value="">Select rating</option>
+        <option value="1">1 - Very Dissatisfied</option>
+        <option value="2">2 - Dissatisfied</option>
+        <option value="3">3 - Neutral</option>
+        <option value="4">4 - Satisfied</option>
+        <option value="5">5 - Very Satisfied</option>
+    </select>
+</div>
+
+<div class="likert-row">
+    <label for="fbAmbience">6. Ambience & facilities</label>
+    <select id="fbAmbience">
+        <option value="">Select rating</option>
+        <option value="1">1 - Very Dissatisfied</option>
+        <option value="2">2 - Dissatisfied</option>
+        <option value="3">3 - Neutral</option>
+        <option value="4">4 - Satisfied</option>
+        <option value="5">5 - Very Satisfied</option>
+    </select>
+</div>
+
+</div>
+
+<!-- Question 7 -->
+<label for="fbUseful">
+    7. What was the most useful part of the AI session?
+</label>
+
+<textarea 
+    id="fbUseful" 
+    placeholder="Write your response here">
+</textarea>
+
+
+<!-- Question 8 - NEXT SESSION TOPIC -->
+<label for="fbSuggestions">
+    8.Which topic would you be most interested in for the next AI Monthly Session?
+</label>
+
+<select id="fbSuggestions">
+    <option value="">Select a session topic</option>
+    <option value="Napkin AI">
+        Napkin AI – AI-powered visual thinking & diagrams
+    </option>
+    <option value="Kickresume">
+        Kickresume – AI-powered Resume & Career Building
+    </option>
+    <option value="Gamma">
+        Gamma – AI-powered Presentations & Content Creation
+    </option>
+    <option value="Other">
+        Other – Please specify in comments
+    </option>
+</select>
+
+
+<!-- Question 9 -->
+<label for="fbRating">
+    9. Overall rating of this session
+</label>
+
+<select id="fbRating">
+    <option value="">Select rating</option>
+    <option value="1">1 - Very Dissatisfied</option>
+    <option value="2">2 - Dissatisfied</option>
+    <option value="3">3 - Neutral</option>
+    <option value="4">4 - Satisfied</option>
+    <option value="5">5 - Very Satisfied</option>
+</select>
+
+
+<!-- Question 10 -->
+<label for="fbComments">
+    10. Any additional comments or suggestions?
+</label>
+
+<textarea 
+    id="fbComments" 
+    placeholder="Write your response here">
+</textarea>
+
+
+<div class="btn-row">
+    <button 
+        class="btn btn-primary" 
+        onclick="finishFeedback()">
+        Submit Feedback & View Summary
+    </button>
+</div>
+
 </div>
 </section>
-
 <section id="screen-feedback-summary" class="screen">
 <div class="card">
 <h2>Thank You for Your Feedback</h2>
