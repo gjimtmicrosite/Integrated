@@ -2490,40 +2490,99 @@ function restartQuiz(){
 
     showScreen("screen-intro");
 }
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbxEhPk0Z8EuI0lmbtitq8x9e9XM32cJrr_55rzyrCLxWr66zmrIDzfFAw74R12EYb7dcA/exec";
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbw3wtYWmUrnXB3yw8h04JBMOcus_k7psx6dUoBL_P9A28l0fWJ7dK4WM061q2vgAhuFkg/exec";
 const SHEET_NAME="AI Monthly Session";
 
-function saveQuizData(score, percent, band){
+function saveQuizData(score, percent, band) {
 
     const fd = new URLSearchParams();
 
     fd.append("type", "aimonthlyquiz");
-    fd.append("sheetName", SHEET_NAME);
 
     fd.append("name", student.fullName);
     fd.append("phone", student.phone);
     fd.append("email", student.email);
     fd.append("program", student.program);
-
     fd.append("startDate", student.startDate);
 
     fd.append("score", score);
     fd.append("percent", percent);
     fd.append("band", band);
 
+
+    console.log(
+        "Sending quiz data:",
+        Object.fromEntries(fd)
+    );
+
+
     fetch(SCRIPT_URL, {
+
         method: "POST",
+
         body: fd
+
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("AI Monthly Session result saved:", data);
+
+    .then(response => {
+
+        console.log(
+            "Quiz response status:",
+            response.status
+        );
+
+        return response.text();
+
     })
+
+    .then(text => {
+
+        console.log(
+            "Quiz response:",
+            text
+        );
+
+        try {
+
+            const data =
+                JSON.parse(text);
+
+            if (data.success) {
+
+                console.log(
+                    "✅ Quiz saved successfully"
+                );
+
+            } else {
+
+                console.error(
+                    "❌ Quiz save failed:",
+                    data.error
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Invalid response from Apps Script:",
+                text
+            );
+
+        }
+
+    })
+
     .catch(error => {
-        console.error("AI TEST SAVE ERROR:", error);
+
+        console.error(
+            "❌ AI TEST SAVE ERROR:",
+            error
+        );
+
     });
-}
-function saveFeedbackData(){
+
+}function saveFeedbackData(){
 
     const fd = new URLSearchParams();
 
