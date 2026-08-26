@@ -67,6 +67,64 @@ label{display:block;margin:14px 0 8px;font-size:14px;font-weight:700;color:#4755
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 'use strict';
+  'use strict';
+
+// ================================
+// QUIZ EXPIRY TIME
+// ================================
+
+// Quiz will close on 26 August 2026 at 9:45 AM
+const QUIZ_EXPIRY = new Date("2026-08-26T09:45:00+05:30");
+
+function checkQuizExpiry() {
+  const now = new Date();
+
+  if (now > QUIZ_EXPIRY) {
+
+    document.body.innerHTML = `
+      <div style="
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+        font-family:Arial,sans-serif;
+        background:#f5f7fb;
+      ">
+        <div style="
+          max-width:600px;
+          width:100%;
+          background:white;
+          padding:40px;
+          border-radius:20px;
+          text-align:center;
+          box-shadow:0 10px 30px rgba(0,0,0,0.1);
+        ">
+          <div style="font-size:60px;">🔒</div>
+
+          <h1>Assessment Closed</h1>
+
+          <p style="font-size:18px;color:#555;">
+            This assessment is now closed.
+          </p>
+
+          <p style="color:#777;">
+            The response submission time has ended.
+          </p>
+        </div>
+      </div>
+    `;
+
+    return false;
+  }
+
+  return true;
+}
+
+// Check immediately when website opens
+if (!checkQuizExpiry()) {
+  throw new Error("Quiz has expired.");
+}
 const TOTAL_QUESTIONS=15,TIME_PER_QUESTION=60;
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwbSrjaj2B9M4Ailu5pSjfZVuvu-Sv2vqyAnWbFZdJykAiRdKySCk__wQvsDBnPJ-vklQ/exec';
 const student={fullName:'',phone:'',email:'',program:'',startDate:''};
