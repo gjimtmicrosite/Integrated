@@ -164,7 +164,7 @@ SIDEBAR
 }
 
 /* =========================
-SKILLX MENU
+SKILLX / AI SESSION MENU
 ========================= */
 
 .skillx-menu{
@@ -546,7 +546,9 @@ SIDEBAR
   </button>
 
 
-  <!-- SKILLX RESULT MENU -->
+  <!-- =========================
+  SKILLX RESULT MENU
+  ========================= -->
 
   <div class="skillx-menu">
 
@@ -657,88 +659,104 @@ SIDEBAR
     </div>
 
   </div>
-<!-- =========================
-AI SESSION MENU
-========================= -->
-
-<div class="skillx-menu">
-
-  <button class="main-btn" id="aiSessionToggle">
-    🤖 AI Session ▼
-  </button>
-
-  <div class="all-modules" id="aiSessionModules">
 
 
-    <!-- SESSION 1 -->
+  <!-- =========================
+  AI SESSION MENU
+  ========================= -->
 
-    <div class="module">
+  <div class="skillx-menu">
 
-      <button class="module-btn">
-        ▶ 📅 Session 1
-      </button>
+    <button class="main-btn" id="aiSessionToggle">
+      🤖 AI Session ▼
+    </button>
 
-      <div class="submenu">
-
-        <a href="javascript:void(0)"
-           onclick="openSheet('AI Monthly Session')">
-          📊 Score
-        </a>
-
-        <a href="javascript:void(0)"
-           onclick="openSheet('AI Monthly Session Feedback')">
-          💬 Feedback
-        </a>
-
-      </div>
-
-    </div>
+    <div class="all-modules" id="aiSessionModules">
 
 
-    <!-- SESSION 2 -->
+      <!-- SESSION 1 -->
 
-    <div class="module">
+      <div class="module">
 
-      <button class="module-btn">
-        ▶ 📅 Session 2
-      </button>
+        <button class="module-btn">
+          ▶ 📅 Session 1
+        </button>
 
-      <div class="submenu">
+        <div class="submenu">
 
-        <a href="javascript:void(0)"
-           onclick="alert('Session 2 data will be added soon')">
-          📊 Score
-        </a>
+          <a
+            href="javascript:void(0)"
+            onclick="openSheet('AI Monthly Session')"
+          >
+            📊 Score
+          </a>
 
-        <a href="javascript:void(0)"
-           onclick="alert('Session 2 feedback will be added soon')">
-          💬 Feedback
-        </a>
+          <a
+            href="javascript:void(0)"
+            onclick="openSheet('AI Monthly Session Feedback')"
+          >
+            💬 Feedback
+          </a>
+
+        </div>
 
       </div>
 
-    </div>
+
+      <!-- SESSION 2 -->
+
+      <div class="module">
+
+        <button class="module-btn">
+          ▶ 📅 Session 2
+        </button>
+
+        <div class="submenu">
+
+          <a
+            href="javascript:void(0)"
+            onclick="alert('Session 2 data will be added soon')"
+          >
+            📊 Score
+          </a>
+
+          <a
+            href="javascript:void(0)"
+            onclick="alert('Session 2 feedback will be added soon')"
+          >
+            💬 Feedback
+          </a>
+
+        </div>
+
+      </div>
 
 
-    <!-- SESSION 3 -->
+      <!-- SESSION 3 -->
 
-    <div class="module">
+      <div class="module">
 
-      <button class="module-btn">
-        ▶ 📅 Session 3
-      </button>
+        <button class="module-btn">
+          ▶ 📅 Session 3
+        </button>
 
-      <div class="submenu">
+        <div class="submenu">
 
-        <a href="javascript:void(0)"
-           onclick="alert('Session 3 data will be added soon')">
-          📊 Score
-        </a>
+          <a
+            href="javascript:void(0)"
+            onclick="alert('Session 3 data will be added soon')"
+          >
+            📊 Score
+          </a>
 
-        <a href="javascript:void(0)"
-           onclick="alert('Session 3 feedback will be added soon')">
-          💬 Feedback
-        </a>
+          <a
+            href="javascript:void(0)"
+            onclick="alert('Session 3 feedback will be added soon')"
+          >
+            💬 Feedback
+          </a>
+
+        </div>
 
       </div>
 
@@ -746,7 +764,6 @@ AI SESSION MENU
 
   </div>
 
-</div>
 
   <!-- REFRESH -->
 
@@ -888,19 +905,19 @@ LOGIN FUNCTION
 function login(){
 
   const user =
-  document.getElementById("username").value;
+    document.getElementById("username").value;
 
   const pass =
-  document.getElementById("password").value;
+    document.getElementById("password").value;
 
 
   if(user === validUser && pass === validPass){
 
     document.getElementById("loginBox")
-    .style.display = "none";
+      .style.display = "none";
 
     document.getElementById("dashboard")
-    .style.display = "block";
+      .style.display = "block";
 
     loadDashboard();
 
@@ -909,7 +926,7 @@ function login(){
   else{
 
     document.getElementById("error")
-    .innerText = "Invalid Login!";
+      .innerText = "Invalid Login!";
 
   }
 
@@ -933,253 +950,413 @@ OPEN DIFFERENT SHEETS
 
 function openSheet(sheetName){
 
-  const spreadsheetId =
-  "1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw";
+  /* =========================
+     MAIN DASHBOARD SPREADSHEET
+  ========================= */
 
+  const spreadsheetId =
+    "1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw";
+
+
+  /* =========================
+     AI SESSION SPREADSHEET
+  ========================= */
+
+  const aiSpreadsheetId =
+    "1MI30En02AmG1jpdEsV5y-_QIr84f655rcW58Ni8CCW0";
+
+
+  /* =========================
+     SELECT CORRECT SPREADSHEET
+  ========================= */
+
+  let selectedSpreadsheetId =
+    spreadsheetId;
+
+
+  /*
+     AI SESSION SHEETS
+  */
+
+  if(
+    sheetName === "AI Monthly Session" ||
+    sheetName === "AI Monthly Session Feedback"
+  ){
+
+    selectedSpreadsheetId =
+      aiSpreadsheetId;
+
+  }
+
+
+  /* =========================
+     CREATE SHEET URL
+  ========================= */
 
   const sheetURL =
-  "https://opensheet.elk.sh/" +
-  spreadsheetId +
-  "/" +
-  encodeURIComponent(sheetName);
+    "https://opensheet.elk.sh/" +
+    selectedSpreadsheetId +
+    "/" +
+    encodeURIComponent(sheetName);
 
 
+  console.log("--------------------------------");
   console.log("Loading Sheet:", sheetName);
-  console.log("URL:", sheetURL);
+  console.log(
+    "Spreadsheet ID:",
+    selectedSpreadsheetId
+  );
+  console.log(
+    "Sheet URL:",
+    sheetURL
+  );
+  console.log("--------------------------------");
 
 
-  /* UPDATE PAGE TITLE */
+  /* =========================
+     UPDATE PAGE TITLE
+  ========================= */
 
-  document.getElementById("pageTitle").innerHTML =
-  sheetName === "Aptitude & Placement Quiz"
-  ? "🧠 Aptitude & Placement Quiz"
-  : "🎯 GJIMT Career Zone";
+  let pageTitle = "";
 
 
-  /* SHOW LOADING */
+  if(
+    sheetName === "Aptitude & Placement Quiz"
+  ){
+
+    pageTitle =
+      "🧠 Aptitude & Placement Quiz";
+
+  }
+
+  else if(
+    sheetName === "GJIMT Career Zone"
+  ){
+
+    pageTitle =
+      "🎯 GJIMT Career Zone";
+
+  }
+
+  else if(
+    sheetName === "AI Monthly Session"
+  ){
+
+    pageTitle =
+      "🤖 AI Session - Session 1 - Score";
+
+  }
+
+  else if(
+    sheetName === "AI Monthly Session Feedback"
+  ){
+
+    pageTitle =
+      "🤖 AI Session - Session 1 - Feedback";
+
+  }
+
+  else{
+
+    pageTitle =
+      "📋 " + sheetName;
+
+  }
+
+
+  document.getElementById("pageTitle")
+    .innerHTML = pageTitle;
+
+
+  /* =========================
+     SHOW LOADING
+  ========================= */
 
   const loading =
-  document.getElementById("loading");
+    document.getElementById("loading");
 
-  loading.style.display = "block";
+
+  loading.style.display =
+    "block";
+
 
   loading.innerHTML =
-  "⏳ Loading " + sheetName + "...";
+    "⏳ Loading " +
+    sheetName +
+    "...";
 
 
-  /* HIDE MAIN CHARTS */
+  /* =========================
+     HIDE MAIN CHARTS
+  ========================= */
 
   document.getElementById("chartsSection")
-  .style.display = "none";
+    .style.display = "none";
 
 
-  /* HIDE TABLE UNTIL DATA LOADS */
+  /* =========================
+     HIDE TABLE
+  ========================= */
 
   document.getElementById("sheetContainer")
-  .style.display = "none";
+    .style.display = "none";
 
 
-  /* UPDATE ACTIVE BUTTON */
+  /* =========================
+     REMOVE ACTIVE BUTTONS
+  ========================= */
 
   document.querySelectorAll(".sidebar button")
-  .forEach(button => {
+    .forEach(button => {
 
-    button.classList.remove("active");
-
-  });
-
-
-  if(sheetName === "Aptitude & Placement Quiz"){
-
-    document.getElementById("aptitudeBtn")
-    .classList.add("active");
-
-  }
-
-
-  if(sheetName === "GJIMT Career Zone"){
-
-    document.getElementById("careerZoneBtn")
-    .classList.add("active");
-
-  }
-
-
-  /* FETCH DATA */
-
-  fetch(sheetURL)
-
-  .then(response => {
-
-    if(!response.ok){
-
-      throw new Error(
-        "Unable to load sheet"
-      );
-
-    }
-
-    return response.json();
-
-  })
-
-  .then(data => {
-
-
-    loading.style.display = "none";
-
-
-    if(!data || data.length === 0){
-
-      loading.style.display = "block";
-
-      loading.innerHTML =
-      "⚠️ No data found in " + sheetName;
-
-      return;
-
-    }
-
-
-    /* =========================
-    UPDATE CARDS
-    ========================= */
-
-    document.getElementById("careerCount")
-    .innerText = data.length;
-
-
-    document.getElementById("skillCount")
-    .innerText = "-";
-
-
-    document.getElementById("totalCount")
-    .innerText = data.length;
-
-
-    /* =========================
-    SHEET TITLE
-    ========================= */
-
-    document.getElementById("sheetTitle")
-    .innerHTML =
-    "📋 " + sheetName +
-    " <span style='float:right;font-size:16px;color:#fff'>Total Students: " +
-    data.length +
-    "</span>";
-
-
-    /* =========================
-    GET COLUMN NAMES
-    ========================= */
-
-    const columns =
-    Object.keys(data[0]);
-
-
-    const sheetHead =
-    document.getElementById("sheetHead");
-
-
-    const sheetBody =
-    document.getElementById("sheetBody");
-
-
-    sheetHead.innerHTML = "";
-    sheetBody.innerHTML = "";
-
-
-    /* CREATE HEADER */
-
-    const headerRow =
-    document.createElement("tr");
-
-
-    columns.forEach(column => {
-
-      const th =
-      document.createElement("th");
-
-      th.textContent =
-      column;
-
-      headerRow.appendChild(th);
+      button.classList.remove("active");
 
     });
 
 
-    sheetHead.appendChild(headerRow);
+  /* =========================
+     ACTIVE MAIN MENU
+  ========================= */
+
+  if(
+    sheetName === "Aptitude & Placement Quiz"
+  ){
+
+    document.getElementById("aptitudeBtn")
+      .classList.add("active");
+
+  }
 
 
-    /* CREATE DATA ROWS */
+  if(
+    sheetName === "GJIMT Career Zone"
+  ){
 
-    data.forEach(row => {
+    document.getElementById("careerZoneBtn")
+      .classList.add("active");
+
+  }
 
 
-      const tr =
-      document.createElement("tr");
+  /* =========================
+     FETCH DATA
+  ========================= */
+
+  fetch(sheetURL)
+
+    .then(response => {
+
+      if(!response.ok){
+
+        throw new Error(
+          "Unable to load Google Sheet"
+        );
+
+      }
+
+      return response.json();
+
+    })
+
+
+    .then(data => {
+
+      console.log(
+        "Successfully loaded:",
+        sheetName
+      );
+
+
+      /* =========================
+         HIDE LOADING
+      ========================= */
+
+      loading.style.display =
+        "none";
+
+
+      /* =========================
+         CHECK DATA
+      ========================= */
+
+      if(
+        !data ||
+        data.length === 0
+      ){
+
+        loading.style.display =
+          "block";
+
+        loading.innerHTML =
+          "⚠️ No data found in " +
+          sheetName;
+
+        return;
+
+      }
+
+
+      /* =========================
+         UPDATE CARDS
+      ========================= */
+
+      document.getElementById("careerCount")
+        .innerText = data.length;
+
+
+      document.getElementById("skillCount")
+        .innerText = "-";
+
+
+      document.getElementById("totalCount")
+        .innerText = data.length;
+
+
+      /* =========================
+         SHEET TITLE
+      ========================= */
+
+      document.getElementById("sheetTitle")
+        .innerHTML =
+          "📋 " +
+          sheetName +
+          " <span style='float:right;font-size:16px;color:#fff'>" +
+          "Total Students: " +
+          data.length +
+          "</span>";
+
+
+      /* =========================
+         GET COLUMN NAMES
+      ========================= */
+
+      const columns =
+        Object.keys(data[0]);
+
+
+      const sheetHead =
+        document.getElementById("sheetHead");
+
+
+      const sheetBody =
+        document.getElementById("sheetBody");
+
+
+      sheetHead.innerHTML =
+        "";
+
+      sheetBody.innerHTML =
+        "";
+
+
+      /* =========================
+         CREATE HEADER
+      ========================= */
+
+      const headerRow =
+        document.createElement("tr");
 
 
       columns.forEach(column => {
 
-
-        const td =
-        document.createElement("td");
-
-
-        let value =
-        row[column];
+        const th =
+          document.createElement("th");
 
 
-        if(
-          value === undefined ||
-          value === null ||
-          value === ""
-        ){
-
-          value = "-";
-
-        }
+        th.textContent =
+          column;
 
 
-        td.textContent =
-        value;
-
-
-        tr.appendChild(td);
+        headerRow.appendChild(th);
 
       });
 
 
-      sheetBody.appendChild(tr);
+      sheetHead.appendChild(
+        headerRow
+      );
 
+
+      /* =========================
+         CREATE DATA ROWS
+      ========================= */
+
+      data.forEach(row => {
+
+        const tr =
+          document.createElement("tr");
+
+
+        columns.forEach(column => {
+
+          const td =
+            document.createElement("td");
+
+
+          let value =
+            row[column];
+
+
+          if(
+            value === undefined ||
+            value === null ||
+            value === ""
+          ){
+
+            value = "-";
+
+          }
+
+
+          td.textContent =
+            value;
+
+
+          tr.appendChild(td);
+
+        });
+
+
+        sheetBody.appendChild(
+          tr
+        );
+
+      });
+
+
+      /* =========================
+         SHOW TABLE
+      ========================= */
+
+      document.getElementById(
+        "sheetContainer"
+      ).style.display = "block";
+
+    })
+
+
+    /* =========================
+       ERROR HANDLING
+    ========================= */
+
+    .catch(error => {
+
+      console.error(
+        "Google Sheet Error:",
+        error
+      );
+
+
+      loading.style.display =
+        "block";
+
+
+      loading.innerHTML =
+        "❌ Failed to load " +
+        sheetName +
+        ". Please check the Google Sheet ID, tab name, and sharing settings.";
 
     });
-
-
-    /* SHOW TABLE */
-
-    document.getElementById("sheetContainer")
-    .style.display = "block";
-
-
-  })
-
-  .catch(error => {
-
-
-    console.error(error);
-
-
-    loading.style.display = "block";
-
-    loading.innerHTML =
-    "❌ Failed to load " +
-    sheetName +
-    ". Please check the exact Google Sheet tab name.";
-
-
-  });
 
 }
 
@@ -1190,38 +1367,51 @@ SHOW MAIN DASHBOARD
 
 function showMainDashboard(){
 
-
   /* REMOVE ACTIVE BUTTONS */
 
-  document.querySelectorAll(".sidebar button")
+  document.querySelectorAll(
+    ".sidebar button"
+  )
   .forEach(button => {
 
-    button.classList.remove("active");
+    button.classList.remove(
+      "active"
+    );
 
   });
 
 
-  document.getElementById("mainDashboardBtn")
+  document.getElementById(
+    "mainDashboardBtn"
+  )
   .classList.add("active");
 
 
   /* RESET TITLE */
 
-  document.getElementById("pageTitle")
+  document.getElementById(
+    "pageTitle"
+  )
   .innerHTML =
-  "🚀 Smart Analytics Dashboard";
+    "🚀 Smart Analytics Dashboard";
 
 
   /* HIDE SELECTED SHEET TABLE */
 
-  document.getElementById("sheetContainer")
-  .style.display = "none";
+  document.getElementById(
+    "sheetContainer"
+  )
+  .style.display =
+    "none";
 
 
   /* SHOW CHARTS */
 
-  document.getElementById("chartsSection")
-  .style.display = "grid";
+  document.getElementById(
+    "chartsSection"
+  )
+  .style.display =
+    "grid";
 
 
   /* LOAD MAIN DATA AGAIN */
@@ -1237,316 +1427,349 @@ LOAD MAIN DASHBOARD
 
 function loadDashboard(){
 
-
   const careerURL =
-  "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
+    "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
 
 
   const skillURL =
-  "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
+    "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
 
 
   document.getElementById("loading")
-  .style.display = "block";
+    .style.display =
+      "block";
 
 
   document.getElementById("loading")
-  .innerHTML =
-  "⏳ Loading dashboard data...";
+    .innerHTML =
+      "⏳ Loading dashboard data...";
 
 
   Promise.all([
 
     fetch(careerURL)
-    .then(res => {
+      .then(res => {
 
-      if(!res.ok){
-        throw new Error("Career data failed");
-      }
+        if(!res.ok){
 
-      return res.json();
+          throw new Error(
+            "Career data failed"
+          );
 
-    }),
+        }
+
+        return res.json();
+
+      }),
 
 
     fetch(skillURL)
-    .then(res => {
+      .then(res => {
 
-      if(!res.ok){
-        throw new Error("SkillX data failed");
-      }
+        if(!res.ok){
 
-      return res.json();
+          throw new Error(
+            "SkillX data failed"
+          );
 
-    })
+        }
+
+        return res.json();
+
+      })
 
   ])
 
-  .then(([careerData, skillData]) => {
+  .then(
+    ([careerData, skillData]) => {
+
+      document.getElementById(
+        "loading"
+      ).style.display =
+        "none";
 
 
-    document.getElementById("loading")
-    .style.display = "none";
+      /* =========================
+         UPDATE CARDS
+      ========================= */
+
+      document.getElementById(
+        "careerCount"
+      ).innerText =
+        careerData.length;
 
 
-    /* =========================
-    UPDATE CARDS
-    ========================= */
-
-    document.getElementById("careerCount")
-    .innerText =
-    careerData.length;
+      document.getElementById(
+        "skillCount"
+      ).innerText =
+        skillData.length;
 
 
-    document.getElementById("skillCount")
-    .innerText =
-    skillData.length;
+      document.getElementById(
+        "totalCount"
+      ).innerText =
+        careerData.length +
+        skillData.length;
 
 
-    document.getElementById("totalCount")
-    .innerText =
-    careerData.length + skillData.length;
+      /* =========================
+         DESTROY OLD CHARTS
+      ========================= */
+
+      if(careerChartInstance){
+
+        careerChartInstance.destroy();
+
+      }
 
 
-    /* =========================
-    DESTROY OLD CHARTS
-    ========================= */
+      if(skillChartInstance){
 
-    if(careerChartInstance){
+        skillChartInstance.destroy();
 
-      careerChartInstance.destroy();
-
-    }
+      }
 
 
-    if(skillChartInstance){
+      if(comparisonChartInstance){
 
-      skillChartInstance.destroy();
+        comparisonChartInstance.destroy();
 
-    }
-
-
-    if(comparisonChartInstance){
-
-      comparisonChartInstance.destroy();
-
-    }
+      }
 
 
-    /* =========================
-    CAREER CHART DATA
-    ========================= */
+      /* =========================
+         CAREER CHART DATA
+      ========================= */
 
-    let careerMap = {};
-
-
-    careerData.forEach(row => {
+      let careerMap = {};
 
 
-      const career =
-      row["Top Career"] ||
-      "Unknown";
+      careerData.forEach(row => {
+
+        const career =
+          row["Top Career"] ||
+          "Unknown";
 
 
-      careerMap[career] =
-      (careerMap[career] || 0) + 1;
+        careerMap[career] =
+          (careerMap[career] || 0) +
+          1;
+
+      });
 
 
-    });
+      careerChartInstance =
+        new Chart(
 
+          document.getElementById(
+            "careerChart"
+          ),
 
-    careerChartInstance =
-    new Chart(
+          {
 
-      document.getElementById("careerChart"),
+            type:"doughnut",
 
-      {
+            data:{
 
-        type:"doughnut",
+              labels:
+                Object.keys(
+                  careerMap
+                ),
 
-        data:{
+              datasets:[{
 
-          labels:
-          Object.keys(careerMap),
+                label:
+                  "Career Students",
 
-          datasets:[{
+                data:
+                  Object.values(
+                    careerMap
+                  )
 
-            label:"Career Students",
+              }]
 
-            data:
-            Object.values(careerMap)
+            },
 
-          }]
+            options:{
 
-        },
+              responsive:true,
 
-        options:{
+              plugins:{
 
-          responsive:true,
+                title:{
 
-          plugins:{
+                  display:true,
 
-            title:{
+                  text:
+                    "Career Preferences"
 
-              display:true,
+                }
 
-              text:"Career Preferences"
+              }
 
             }
 
           }
 
-        }
-
-      }
-
-    );
+        );
 
 
-    /* =========================
-    SKILLX CHART DATA
-    ========================= */
+      /* =========================
+         SKILLX CHART DATA
+      ========================= */
 
-    let skillMap = {};
-
-
-    skillData.forEach(row => {
+      let skillMap = {};
 
 
-      const domain =
-      row["Bundle Domain"] ||
-      "Unknown";
+      skillData.forEach(row => {
+
+        const domain =
+          row["Bundle Domain"] ||
+          "Unknown";
 
 
-      skillMap[domain] =
-      (skillMap[domain] || 0) + 1;
+        skillMap[domain] =
+          (skillMap[domain] || 0) +
+          1;
+
+      });
 
 
-    });
+      skillChartInstance =
+        new Chart(
 
+          document.getElementById(
+            "skillChart"
+          ),
 
-    skillChartInstance =
-    new Chart(
+          {
 
-      document.getElementById("skillChart"),
+            type:"pie",
 
-      {
+            data:{
 
-        type:"pie",
+              labels:
+                Object.keys(
+                  skillMap
+                ),
 
-        data:{
+              datasets:[{
 
-          labels:
-          Object.keys(skillMap),
+                label:
+                  "SkillX Students",
 
-          datasets:[{
+                data:
+                  Object.values(
+                    skillMap
+                  )
 
-            label:"SkillX Students",
+              }]
 
-            data:
-            Object.values(skillMap)
+            },
 
-          }]
+            options:{
 
-        },
+              responsive:true,
 
-        options:{
+              plugins:{
 
-          responsive:true,
+                title:{
 
-          plugins:{
+                  display:true,
 
-            title:{
+                  text:
+                    "SkillX Domain"
 
-              display:true,
+                }
 
-              text:"SkillX Domain"
-
-            }
-
-          }
-
-        }
-
-      }
-
-    );
-
-
-    /* =========================
-    COMPARISON CHART
-    ========================= */
-
-    comparisonChartInstance =
-    new Chart(
-
-      document.getElementById("comparisonChart"),
-
-      {
-
-        type:"bar",
-
-        data:{
-
-          labels:[
-
-            "Career",
-
-            "SkillX"
-
-          ],
-
-          datasets:[{
-
-            label:"Students",
-
-            data:[
-
-              careerData.length,
-
-              skillData.length
-
-            ]
-
-          }]
-
-        },
-
-        options:{
-
-          responsive:true,
-
-          plugins:{
-
-            title:{
-
-              display:true,
-
-              text:"Career vs SkillX Students"
+              }
 
             }
 
           }
 
-        }
-
-      }
-
-    );
+        );
 
 
-  })
+      /* =========================
+         COMPARISON CHART
+      ========================= */
+
+      comparisonChartInstance =
+        new Chart(
+
+          document.getElementById(
+            "comparisonChart"
+          ),
+
+          {
+
+            type:"bar",
+
+            data:{
+
+              labels:[
+
+                "Career",
+
+                "SkillX"
+
+              ],
+
+              datasets:[{
+
+                label:
+                  "Students",
+
+                data:[
+
+                  careerData.length,
+
+                  skillData.length
+
+                ]
+
+              }]
+
+            },
+
+            options:{
+
+              responsive:true,
+
+              plugins:{
+
+                title:{
+
+                  display:true,
+
+                  text:
+                    "Career vs SkillX Students"
+
+                }
+
+              }
+
+            }
+
+          }
+
+        );
+
+    }
+  )
 
   .catch(error => {
 
+    console.error(
+      error
+    );
 
-    console.error(error);
 
-
-    document.getElementById("loading")
-    .innerHTML =
-    "❌ Failed to load dashboard data";
-
+    document.getElementById(
+      "loading"
+    ).innerHTML =
+      "❌ Failed to load dashboard data";
 
   });
 
@@ -1558,11 +1781,15 @@ SKILLX MENU TOGGLE
 ========================= */
 
 const skillxToggle =
-document.getElementById("skillxToggle");
+  document.getElementById(
+    "skillxToggle"
+  );
 
 
 const allModules =
-document.getElementById("allModules");
+  document.getElementById(
+    "allModules"
+  );
 
 
 skillxToggle.addEventListener(
@@ -1570,16 +1797,19 @@ skillxToggle.addEventListener(
   () => {
 
     if(
-      allModules.style.display === "block"
+      allModules.style.display ===
+      "block"
     ){
 
-      allModules.style.display = "none";
+      allModules.style.display =
+        "none";
 
     }
 
     else{
 
-      allModules.style.display = "block";
+      allModules.style.display =
+        "block";
 
     }
 
@@ -1592,35 +1822,42 @@ SUBMENU ACCORDION
 ========================= */
 
 const moduleButtons =
-document.querySelectorAll(".module-btn");
+  document.querySelectorAll(
+    ".module-btn"
+  );
 
 
 moduleButtons.forEach(button => {
-
 
   button.addEventListener(
     "click",
     () => {
 
-
       button.parentElement
-      .classList.toggle("active");
-
+        .classList.toggle(
+          "active"
+        );
 
     }
   );
 
-
 });
+
+
 /* =========================
 AI SESSION MENU TOGGLE
 ========================= */
 
 const aiSessionToggle =
-document.getElementById("aiSessionToggle");
+  document.getElementById(
+    "aiSessionToggle"
+  );
+
 
 const aiSessionModules =
-document.getElementById("aiSessionModules");
+  document.getElementById(
+    "aiSessionModules"
+  );
 
 
 aiSessionToggle.addEventListener(
@@ -1628,16 +1865,19 @@ aiSessionToggle.addEventListener(
   () => {
 
     if(
-      aiSessionModules.style.display === "block"
+      aiSessionModules.style.display ===
+      "block"
     ){
 
-      aiSessionModules.style.display = "none";
+      aiSessionModules.style.display =
+        "none";
 
     }
 
     else{
 
-      aiSessionModules.style.display = "block";
+      aiSessionModules.style.display =
+        "block";
 
     }
 
