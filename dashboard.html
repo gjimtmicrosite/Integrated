@@ -1,6 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,432 +12,1072 @@
 
 <style>
 
-/* =========================
-GLOBAL
-========================= */
+/* =========================================================
+   GLOBAL
+========================================================= */
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',Arial,sans-serif;
+}
+
+html,
+body{
+    min-height:100%;
 }
 
 body{
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
-  overflow-x:hidden;
+    background:linear-gradient(
+        135deg,
+        #0f2027,
+        #203a43,
+        #2c5364
+    );
+
+    color:#fff;
+    overflow-x:hidden;
 }
 
-/* =========================
-BACKGROUND GLOW
-========================= */
+/* =========================================================
+   BACKGROUND GLOW
+========================================================= */
 
 body::before{
-  content:"";
-  position:fixed;
-  width:500px;
-  height:500px;
-  background:radial-gradient(circle,#00f2ff,transparent);
-  top:-100px;
-  left:-100px;
-  filter:blur(150px);
-  z-index:-1;
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+
+    background:
+        radial-gradient(
+            circle,
+            #00f2ff,
+            transparent
+        );
+
+    top:-100px;
+    left:-100px;
+
+    filter:blur(150px);
+
+    z-index:-1;
+    pointer-events:none;
 }
 
 body::after{
-  content:"";
-  position:fixed;
-  width:500px;
-  height:500px;
-  background:radial-gradient(circle,#ff00c8,transparent);
-  bottom:-100px;
-  right:-100px;
-  filter:blur(150px);
-  z-index:-1;
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+
+    background:
+        radial-gradient(
+            circle,
+            #ff00c8,
+            transparent
+        );
+
+    bottom:-100px;
+    right:-100px;
+
+    filter:blur(150px);
+
+    z-index:-1;
+    pointer-events:none;
 }
 
-/* =========================
-LOGIN
-========================= */
+/* =========================================================
+   LOGIN
+========================================================= */
 
 .login-box{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(25px);
-  padding:35px;
-  border-radius:20px;
-  text-align:center;
-  width:320px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:320px;
+    max-width:90%;
+
+    padding:35px;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.5);
+
+    z-index:1000;
 }
 
 .login-box h2{
-  margin-bottom:15px;
-  color:#ffd700;
+    margin-bottom:15px;
+    color:#ffd700;
 }
 
 .login-box input{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border-radius:10px;
-  border:none;
-  outline:none;
+
+    width:100%;
+
+    padding:12px;
+
+    margin:10px 0;
+
+    border-radius:10px;
+
+    border:none;
+    outline:none;
+
+    font-size:14px;
 }
 
 .login-box button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  background:linear-gradient(45deg,#ffd700,#ff9800);
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            45deg,
+            #ffd700,
+            #ff9800
+        );
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
 }
 
 .login-box button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px gold;
+
+    transform:scale(1.03);
+
+    box-shadow:
+        0 0 20px gold;
+}
+
+.login-box a{
+    display:block;
+    text-decoration:none;
+}
+
+.login-box a button{
+    background:
+        linear-gradient(
+            45deg,
+            #00f2ff,
+            #00c6ff
+        );
 }
 
 .error{
-  color:#ff4b4b;
-  font-size:13px;
-  margin-top:10px;
+
+    color:#ff4b4b;
+
+    font-size:13px;
+
+    margin-top:10px;
+
+    min-height:18px;
 }
 
-/* =========================
-DASHBOARD
-========================= */
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 #dashboard{
-  display:none;
+    display:none;
+    min-height:100vh;
 }
 
-/* =========================
-SIDEBAR
-========================= */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 .sidebar{
-  width:250px;
-  height:100vh;
-  position:fixed;
-  left:0;
-  top:0;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(20px);
-  padding:20px;
-  border-right:1px solid rgba(255,255,255,0.1);
-  overflow-y:auto;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:260px;
+    height:100vh;
+
+    padding:20px;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border-right:
+        1px solid rgba(255,255,255,0.1);
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    z-index:100;
+
+    scrollbar-width:thin;
+}
+
+.sidebar::-webkit-scrollbar{
+    width:6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,0.25);
+    border-radius:10px;
 }
 
 .sidebar h2{
-  color:#ffd700;
-  margin-bottom:15px;
+
+    color:#ffd700;
+
+    margin-bottom:18px;
+
+    font-size:22px;
 }
 
-.sidebar a{
-  text-decoration:none;
+/* =========================================================
+   NORMAL SIDEBAR BUTTONS
+========================================================= */
+
+.sidebar > button,
+.sidebar > a > button{
+
+    width:100%;
+
+    margin:6px 0;
+
+    padding:11px;
+
+    border-radius:12px;
+
+    border:none;
+
+    background:
+        rgba(255,255,255,0.10);
+
+    color:#fff;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+    font-size:14px;
+
+    display:block;
 }
 
-.sidebar button{
-  width:100%;
-  margin:8px 0;
-  padding:10px;
-  border-radius:12px;
-  border:none;
-  background:rgba(255,255,255,0.1);
-  color:#fff;
-  cursor:pointer;
-  transition:0.3s;
-  font-size:14px;
+.sidebar > button:hover,
+.sidebar > a > button:hover,
+.sidebar > button.active,
+.sidebar > a > button.active{
+
+    background:#ffd700;
+
+    color:#000;
+
+    transform:translateX(3px);
 }
 
-.sidebar button:hover,
-.sidebar button.active{
-  background:#ffd700;
-  color:#000;
-  transform:scale(1.03);
+.sidebar > a{
+
+    display:block;
+
+    text-decoration:none;
+
+    width:100%;
 }
 
-/* =========================
-SKILLX / AI SESSION MENU
-========================= */
+/* =========================================================
+   SEPARATOR
+========================================================= */
 
-.skillx-menu{
-  width:100%;
-  margin-top:10px;
+.menu-divider{
+
+    height:1px;
+
+    background:
+        rgba(255,255,255,0.12);
+
+    margin:15px 0;
 }
+
+/* =========================================================
+   MENU SECTION
+========================================================= */
+
+.menu-section{
+
+    width:100%;
+
+    margin-top:10px;
+
+    margin-bottom:12px;
+
+    position:relative;
+}
+
+/* =========================================================
+   MAIN MENU BUTTON
+========================================================= */
 
 .main-btn{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:14px;
-  background:linear-gradient(135deg,#00c6ff,#0072ff);
-  color:white;
-  font-size:13px;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.3s;
-  margin-bottom:10px;
+
+    width:100%;
+
+    padding:12px 13px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00c6ff,
+            #0072ff
+        );
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:8px;
 }
 
 .main-btn:hover{
-  background:linear-gradient(135deg,#ffd700,#ff9800);
-  color:black;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffd700,
+            #ff9800
+        );
+
+    color:#000;
 }
 
-.all-modules{
-  display:none;
-  max-height:75vh;
-  overflow-y:auto;
-  padding-right:5px;
-  animation:fadeMenu 0.3s ease;
+.main-btn.open{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffd700,
+            #ff9800
+        );
+
+    color:#000;
 }
+
+/* =========================================================
+   SKILLX RESULT DIRECT LINK
+========================================================= */
+
+.skillx-result-link{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:12px;
+
+    margin:10px 0;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e2de2,
+            #4a00e0
+        );
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    transition:0.25s;
+
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.skillx-result-link:hover{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffd700,
+            #ff9800
+        );
+
+    color:#000;
+
+    transform:translateX(3px);
+}
+
+/* =========================================================
+   EXPANDABLE MODULE AREA
+========================================================= */
+
+.menu-content{
+
+    display:none;
+
+    width:100%;
+
+    margin-top:8px;
+
+    padding:5px;
+
+    border-radius:14px;
+
+    background:
+        rgba(0,0,0,0.12);
+
+    animation:
+        fadeMenu 0.25s ease;
+}
+
+.menu-content.open{
+    display:block;
+}
+
+/* =========================================================
+   MODULE
+========================================================= */
 
 .module{
-  margin-bottom:10px;
-  border-radius:14px;
-  overflow:visible;
+
+    width:100%;
+
+    margin-bottom:8px;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    background:
+        rgba(255,255,255,0.04);
 }
+
+.module:last-child{
+    margin-bottom:0;
+}
+
+/* =========================================================
+   MODULE BUTTON
+========================================================= */
 
 .module-btn{
-  width:100%;
-  padding:11px;
-  border:none;
-  color:white;
-  font-size:11px;
-  font-weight:700;
-  text-align:left;
-  cursor:pointer;
-  transition:0.3s;
-}
 
-.module:nth-child(1) .module-btn{
-  background:linear-gradient(135deg,#00c6ff,#0072ff);
+    width:100%;
+
+    padding:11px;
+
+    border:none;
+
+    color:white;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00c6ff,
+            #0072ff
+        );
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
 }
 
 .module:nth-child(2) .module-btn{
-  background:linear-gradient(135deg,#ff9800,#ff5722);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9800,
+            #ff5722
+        );
 }
 
 .module:nth-child(3) .module-btn{
-  background:linear-gradient(135deg,#8e2de2,#4a00e0);
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e2de2,
+            #4a00e0
+        );
 }
 
 .module-btn:hover{
-  transform:scale(1.02);
+    filter:brightness(1.15);
 }
 
+.module-btn .arrow{
+    transition:transform 0.25s;
+}
+
+.module.active .module-btn .arrow{
+    transform:rotate(90deg);
+}
+
+/* =========================================================
+   SUBMENU
+========================================================= */
+
 .submenu{
-  display:none;
-  padding:8px;
+
+    display:none;
+
+    padding:8px;
+
+    background:
+        rgba(255,255,255,0.04);
 }
 
 .module.active .submenu{
-  display:block;
-}
-
-.module:nth-child(1) .submenu{
-  background:rgba(0,114,255,0.15);
-}
-
-.module:nth-child(2) .submenu{
-  background:rgba(255,102,0,0.32);
-}
-
-.module:nth-child(3) .submenu{
-  background:rgba(142,45,226,0.15);
+    display:block;
 }
 
 .submenu a{
-  display:block;
-  text-decoration:none;
-  color:white;
-  padding:9px;
-  margin:6px 0;
-  border-radius:10px;
-  font-size:11px;
-  transition:0.3s;
-  background:rgba(255,255,255,0.08);
+
+    display:block;
+
+    text-decoration:none;
+
+    color:white;
+
+    padding:9px;
+
+    margin:5px 0;
+
+    border-radius:9px;
+
+    font-size:11px;
+
+    transition:0.25s;
+
+    background:
+        rgba(255,255,255,0.08);
 }
 
 .submenu a:hover{
-  background:white;
-  color:black;
-  transform:translateX(4px);
+
+    background:#fff;
+
+    color:#000;
+
+    transform:translateX(4px);
 }
 
-@keyframes fadeMenu{
+/* =========================================================
+   AI SESSION COLORS
+========================================================= */
 
-  from{
-    opacity:0;
-    transform:translateY(-10px);
-  }
+.ai-session .module:nth-child(1) .module-btn{
 
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-
+    background:
+        linear-gradient(
+            135deg,
+            #00c6ff,
+            #0072ff
+        );
 }
 
-/* =========================
-MAIN CONTENT
-========================= */
+.ai-session .module:nth-child(2) .module-btn{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9800,
+            #ff5722
+        );
+}
+
+.ai-session .module:nth-child(3) .module-btn{
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e2de2,
+            #4a00e0
+        );
+}
+
+/* =========================================================
+   REFRESH / LOGOUT
+========================================================= */
+
+.refresh-btn{
+
+    margin-top:10px !important;
+}
+
+.logout-btn{
+
+    background:
+        rgba(255,75,75,0.15) !important;
+
+    color:#ff8b8b !important;
+}
+
+.logout-btn:hover{
+
+    background:#ff4b4b !important;
+
+    color:#fff !important;
+}
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
 
 .main{
-  margin-left:260px;
-  padding:30px;
-  min-height:100vh;
+
+    margin-left:260px;
+
+    padding:30px;
+
+    min-height:100vh;
+
+    width:calc(100% - 260px);
 }
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
-  font-size:28px;
-  margin-bottom:25px;
-  font-weight:bold;
+
+    font-size:28px;
+
+    margin-bottom:25px;
+
+    font-weight:bold;
+
+    word-break:break-word;
 }
 
-/* =========================
-CARDS
-========================= */
+/* =========================================================
+   CARDS
+========================================================= */
 
 .cards{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
+
+    gap:20px;
 }
 
 .card{
-  flex:1;
-  min-width:220px;
-  padding:20px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
-  transition:0.4s;
+
+    min-width:0;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.4);
+
+    transition:0.3s;
 }
 
 .card:hover{
-  transform:scale(1.03);
+    transform:translateY(-4px);
 }
 
 .card h3{
-  margin-bottom:10px;
-  color:#ffd700;
+
+    margin-bottom:10px;
+
+    color:#ffd700;
+
+    font-size:16px;
 }
 
 .value{
-  font-size:30px;
-  font-weight:bold;
+
+    font-size:30px;
+
+    font-weight:bold;
 }
 
-/* =========================
-LOADING
-========================= */
+/* =========================================================
+   LOADING
+========================================================= */
 
 .loading{
-  text-align:center;
-  margin-top:20px;
-  font-size:18px;
-  color:#ffd700;
+
+    text-align:center;
+
+    margin-top:20px;
+
+    font-size:18px;
+
+    color:#ffd700;
+
+    min-height:24px;
 }
 
-/* =========================
-CHARTS
-========================= */
+/* =========================================================
+   CHARTS
+========================================================= */
 
 .charts{
-  margin-top:30px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:20px;
+
+    margin-top:30px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(300px,1fr)
+        );
+
+    gap:20px;
 }
 
 .chart-box{
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  padding:20px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+    min-width:0;
+
+    height:360px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.4);
+
+    position:relative;
 }
 
-/* =========================
-SHEET TABLE
-========================= */
+.chart-box canvas{
+
+    width:100% !important;
+    height:100% !important;
+}
+
+/* =========================================================
+   SHEET CONTAINER
+========================================================= */
 
 .sheet-container{
-  display:none;
-  margin-top:30px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  padding:20px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+    display:none;
+
+    margin-top:30px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.4);
+
+    width:100%;
+
+    min-width:0;
 }
 
 .sheet-title{
-  color:#ffd700;
-  font-size:22px;
-  margin-bottom:20px;
+
+    color:#ffd700;
+
+    font-size:22px;
+
+    margin-bottom:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+.sheet-total{
+
+    font-size:16px;
+
+    color:#fff;
+
+    font-weight:normal;
 }
 
 .table-wrapper{
-  width:100%;
-  overflow-x:auto;
-  max-height:600px;
-  overflow-y:auto;
+
+    width:100%;
+
+    overflow-x:auto;
+
+    max-height:600px;
+
+    overflow-y:auto;
+
+    border-radius:10px;
 }
 
 .sheet-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:800px;
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:800px;
 }
 
 .sheet-table th{
-  padding:15px;
-  text-align:left;
-  color:#ffd700;
-  background:rgba(255,255,255,0.12);
-  position:sticky;
-  top:0;
-  z-index:2;
+
+    padding:15px;
+
+    text-align:left;
+
+    color:#ffd700;
+
+    background:
+        rgba(255,255,255,0.12);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:2;
+
+    white-space:nowrap;
 }
 
 .sheet-table td{
-  padding:14px;
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  color:#fff;
+
+    padding:14px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.1);
+
+    color:#fff;
+
+    white-space:nowrap;
 }
 
 .sheet-table tr:hover{
-  background:rgba(255,255,255,0.08);
+
+    background:
+        rgba(255,255,255,0.08);
 }
 
-/* =========================
-MOBILE
-========================= */
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes fadeMenu{
+
+    from{
+        opacity:0;
+        transform:translateY(-5px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:1100px){
+
+    .cards{
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+    }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media(max-width:900px){
 
-  .sidebar{
-    position:relative;
-    width:100%;
-    height:auto;
-  }
+    body{
+        overflow-x:hidden;
+    }
 
-  .main{
-    margin-left:0;
-    padding:20px;
-  }
+    .sidebar{
+
+        position:relative;
+
+        width:100%;
+
+        height:auto;
+
+        max-height:none;
+
+        border-right:none;
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,0.1);
+
+        padding:15px;
+    }
+
+    .main{
+
+        margin-left:0;
+
+        width:100%;
+
+        padding:20px;
+    }
+
+    .cards{
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .charts{
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .chart-box{
+
+        height:320px;
+    }
+
+    .header{
+
+        font-size:23px;
+    }
+
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media(max-width:500px){
+
+    .sidebar{
+        padding:12px;
+    }
+
+    .main{
+        padding:15px;
+    }
+
+    .login-box{
+        width:calc(100% - 30px);
+        padding:25px;
+    }
+
+    .chart-box{
+        height:280px;
+    }
+
+    .sheet-container{
+        padding:12px;
+    }
+
+    .sheet-title{
+        font-size:18px;
+    }
 
 }
 
@@ -445,1450 +1087,1925 @@ MOBILE
 <body>
 
 
-<!-- =========================
-LOGIN
-========================= -->
+<!-- =========================================================
+     LOGIN
+========================================================= -->
 
 <div class="login-box" id="loginBox">
 
-  <h2>🔐 Secure Login</h2>
+    <h2>🔐 Secure Login</h2>
 
-  <input
-    type="text"
-    id="username"
-    placeholder="Username"
-  >
-
-  <input
-    type="password"
-    id="password"
-    placeholder="Password"
-  >
-
-  <button onclick="login()">
-    Login
-  </button>
-
-  <a href="https://gjimtmicrosite.github.io/Integrated/">
-    <button
-      style="
-      margin-top:10px;
-      background:linear-gradient(45deg,#00f2ff,#00c6ff);
-      "
+    <input
+        type="text"
+        id="username"
+        placeholder="Username"
+        autocomplete="username"
     >
-      🏠 Back to Main Page
-    </button>
-  </a>
 
-  <p class="error" id="error"></p>
+    <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        autocomplete="current-password"
+    >
+
+    <button onclick="login()">
+        Login
+    </button>
+
+    <a href="https://gjimtmicrosite.github.io/Integrated/">
+
+        <button
+            type="button"
+            style="margin-top:10px;"
+        >
+            🏠 Back to Main Page
+        </button>
+
+    </a>
+
+    <p
+        class="error"
+        id="error"
+    ></p>
 
 </div>
 
 
-<!-- =========================
-DASHBOARD
-========================= -->
+<!-- =========================================================
+     DASHBOARD
+========================================================= -->
 
 <div id="dashboard">
 
 
-<!-- =========================
-SIDEBAR
-========================= -->
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
 
-<div class="sidebar">
+<aside class="sidebar">
 
-  <h2>📊 Dashboard</h2>
+    <h2>📊 Dashboard</h2>
 
 
-  <!-- MAIN DASHBOARD -->
+    <!-- MAIN DASHBOARD -->
 
-  <button onclick="showMainDashboard()" id="mainDashboardBtn">
-    🏠 Main Dashboard
-  </button>
-
-
-  <!-- CAREER QUIZ -->
-
-  <a href="Career-result.html?sheet=Sheet1">
-    <button>
-      🎓 Career Quiz
-    </button>
-  </a>
-
-
-  <!-- SKILLX QUIZ -->
-
-  <a href="skillx-result.html">
-    <button>
-      💼 SkillX Quiz
-    </button>
-  </a>
-
-
-  <!-- APTITUDE QUIZ -->
-
-  <button
-    onclick="openSheet('Aptitude & Placement Quiz')"
-    id="aptitudeBtn"
-  >
-    🧠 Aptitude & Placement Quiz
-  </button>
-
-
-  <!-- GJIMT CAREER ZONE -->
-
-  <button
-    onclick="openSheet('GJIMT Career Zone')"
-    id="careerZoneBtn"
-  >
-    🎯 GJIMT Career Zone
-  </button>
-
-
-  <!-- =========================
-  SKILLX RESULT MENU
-  ========================= -->
-
-  <div class="skillx-menu">
-
-  <a href="SkillX_Result_Summary_Dashboard.html"
-   class="skillx-result-btn"
-   id="skillxSummaryBtn">
-   💼 SkillX Result
-</a>
-
-</div>
-
-
-    <div class="all-modules" id="allModules">
-
-
-      <!-- DIGITAL POWER SKILLS -->
-
-      <div class="module">
-
-        <button class="module-btn">
-          ▶ Digital Power Skills
-        </button>
-
-        <div class="submenu">
-
-          <a href="skillx-result-final.html?sheet=ai-enbled">
-            🤖 AI Documentation
-          </a>
-
-          <a href="excel-powerbi.html">
-            📊 Excel + Power BI
-          </a>
-
-          <a href="web-dev.html">
-            💻 Web Development
-          </a>
-
-          <a href="cyber-security.html">
-            🔐 Information Security
-          </a>
-
-          <a href="cloud-computing.html">
-            ☁️ Cloud Computing
-          </a>
-
-        </div>
-
-      </div>
-
-
-      <!-- COMMUNICATION -->
-
-      <div class="module">
-
-        <button class="module-btn">
-          ▶ Communication & Branding
-        </button>
-
-        <div class="submenu">
-
-          <a href="functional-english.html">
-            🗣 Functional English
-          </a>
-
-          <a href="public-speaking.html">
-            🎤 Public Speaking
-          </a>
-
-          <a href="skillx-result-final.html?sheet=canva">
-            🎨 Canva Editing
-          </a>
-
-        </div>
-
-      </div>
-
-
-      <!-- BUSINESS -->
-
-      <div class="module">
-
-        <button class="module-btn">
-          ▶ Business & Finance
-        </button>
-
-        <div class="submenu">
-
-          <a href="resume-linkedin.html">
-            📄 Resume & LinkedIn
-          </a>
-
-          <a href="prompt-engineering.html">
-            ⚡ Prompt Engineering
-          </a>
-
-          <a href="skillx-result-final.html?sheet=ai-business">
-            🧠 AI for Business
-          </a>
-
-          <a href="skillx-result-final.html?sheet=vedicmath">
-            ➗ Vedic Maths
-          </a>
-
-          <a href="skillx-result-final.html?sheet=Tally">
-            💰 Tally Basics
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-  AI SESSION MENU
-  ========================= -->
-
-  <div class="skillx-menu">
-
-    <button class="main-btn" id="aiSessionToggle">
-      🤖 AI Session ▼
+    <button
+        onclick="showMainDashboard()"
+        id="mainDashboardBtn"
+    >
+        🏠 Main Dashboard
     </button>
 
-    <div class="all-modules" id="aiSessionModules">
 
+    <!-- CAREER QUIZ -->
 
-      <!-- SESSION 1 -->
+    <a href="Career-result.html?sheet=Sheet1">
 
-      <div class="module">
-
-        <button class="module-btn">
-          ▶ 📅 Session 1
+        <button>
+            🎓 Career Quiz
         </button>
 
-        <div class="submenu">
-
-          <a
-            href="javascript:void(0)"
-            onclick="openSheet('AI Monthly Session')"
-          >
-            📊 Score
-          </a>
-
-          <a
-            href="javascript:void(0)"
-            onclick="openSheet('AI Monthly Session Feedback')"
-          >
-            💬 Feedback
-          </a>
-
-        </div>
-
-      </div>
+    </a>
 
 
-      <!-- SESSION 2 -->
+    <!-- SKILLX QUIZ -->
 
-      <div class="module">
+    <a href="skillx-result.html">
 
-        <button class="module-btn">
-          ▶ 📅 Session 2
+        <button>
+            💼 SkillX Quiz
         </button>
 
-        <div class="submenu">
-
-          <a
-            href="javascript:void(0)"
-            onclick="alert('Session 2 data will be added soon')"
-          >
-            📊 Score
-          </a>
-
-          <a
-            href="javascript:void(0)"
-            onclick="alert('Session 2 feedback will be added soon')"
-          >
-            💬 Feedback
-          </a>
-
-        </div>
-
-      </div>
+    </a>
 
 
-      <!-- SESSION 3 -->
+    <!-- APTITUDE -->
 
-      <div class="module">
+    <button
+        onclick="openSheet('Aptitude & Placement Quiz')"
+        id="aptitudeBtn"
+    >
+        🧠 Aptitude & Placement Quiz
+    </button>
 
-        <button class="module-btn">
-          ▶ 📅 Session 3
+
+    <!-- CAREER ZONE -->
+
+    <button
+        onclick="openSheet('GJIMT Career Zone')"
+        id="careerZoneBtn"
+    >
+        🎯 GJIMT Career Zone
+    </button>
+
+
+    <div class="menu-divider"></div>
+
+
+    <!-- =====================================================
+         SKILLX RESULT
+    ====================================================== -->
+
+    <a
+        href="SkillX_Result_Summary_Dashboard.html"
+        class="skillx-result-link"
+        id="skillxSummaryBtn"
+    >
+        💼 SkillX Result
+    </a>
+
+
+    <!-- =====================================================
+         SKILLX MODULES
+    ====================================================== -->
+
+    <div class="menu-section">
+
+        <button
+            class="main-btn"
+            id="skillxModulesToggle"
+            type="button"
+            onclick="toggleMainMenu('skillxModules')"
+        >
+
+            <span>
+                📚 SkillX Modules
+            </span>
+
+            <span id="skillxArrow">
+                ▼
+            </span>
+
         </button>
 
-        <div class="submenu">
 
-          <a
-            href="javascript:void(0)"
-            onclick="alert('Session 3 data will be added soon')"
-          >
-            📊 Score
-          </a>
+        <div
+            class="menu-content"
+            id="skillxModules"
+        >
 
-          <a
-            href="javascript:void(0)"
-            onclick="alert('Session 3 feedback will be added soon')"
-          >
-            💬 Feedback
-          </a>
+
+            <!-- DIGITAL POWER SKILLS -->
+
+            <div class="module">
+
+                <button
+                    class="module-btn"
+                    type="button"
+                    onclick="toggleModule(this)"
+                >
+
+                    <span>
+                        ▶ Digital Power Skills
+                    </span>
+
+                    <span class="arrow">
+                        ▶
+                    </span>
+
+                </button>
+
+
+                <div class="submenu">
+
+                    <a href="skillx-result-final.html?sheet=ai-enbled">
+                        🤖 AI Documentation
+                    </a>
+
+                    <a href="excel-powerbi.html">
+                        📊 Excel + Power BI
+                    </a>
+
+                    <a href="web-dev.html">
+                        💻 Web Development
+                    </a>
+
+                    <a href="cyber-security.html">
+                        🔐 Information Security
+                    </a>
+
+                    <a href="cloud-computing.html">
+                        ☁️ Cloud Computing
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMMUNICATION -->
+
+            <div class="module">
+
+                <button
+                    class="module-btn"
+                    type="button"
+                    onclick="toggleModule(this)"
+                >
+
+                    <span>
+                        ▶ Communication & Branding
+                    </span>
+
+                    <span class="arrow">
+                        ▶
+                    </span>
+
+                </button>
+
+
+                <div class="submenu">
+
+                    <a href="functional-english.html">
+                        🗣 Functional English
+                    </a>
+
+                    <a href="public-speaking.html">
+                        🎤 Public Speaking
+                    </a>
+
+                    <a href="skillx-result-final.html?sheet=canva">
+                        🎨 Canva Editing
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUSINESS -->
+
+            <div class="module">
+
+                <button
+                    class="module-btn"
+                    type="button"
+                    onclick="toggleModule(this)"
+                >
+
+                    <span>
+                        ▶ Business & Finance
+                    </span>
+
+                    <span class="arrow">
+                        ▶
+                    </span>
+
+                </button>
+
+
+                <div class="submenu">
+
+                    <a href="resume-linkedin.html">
+                        📄 Resume & LinkedIn
+                    </a>
+
+                    <a href="prompt-engineering.html">
+                        ⚡ Prompt Engineering
+                    </a>
+
+                    <a href="skillx-result-final.html?sheet=ai-business">
+                        🧠 AI for Business
+                    </a>
+
+                    <a href="skillx-result-final.html?sheet=vedicmath">
+                        ➗ Vedic Maths
+                    </a>
+
+                    <a href="skillx-result-final.html?sheet=Tally">
+                        💰 Tally Basics
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
-
-      </div>
 
     </div>
 
-  </div>
+
+    <!-- =====================================================
+         AI SESSION
+    ====================================================== -->
+
+    <div class="menu-section">
+
+        <button
+            class="main-btn"
+            id="aiSessionToggle"
+            type="button"
+            onclick="toggleMainMenu('aiSessionModules')"
+        >
+
+            <span>
+                🤖 AI Session
+            </span>
+
+            <span id="aiSessionArrow">
+                ▼
+            </span>
+
+        </button>
 
 
-  <!-- REFRESH -->
+        <div
+            class="menu-content ai-session"
+            id="aiSessionModules"
+        >
 
-  <button onclick="location.reload()">
-    🔄 Refresh
-  </button>
+
+            <!-- SESSION 1 -->
+
+            <div class="module">
+
+                <button
+                    class="module-btn"
+                    type="button"
+                    onclick="toggleModule(this)"
+                >
+
+                    <span>
+                        ▶ 📅 Session 1
+                    </span>
+
+                    <span class="arrow">
+                        ▶
+                    </span>
+
+                </button>
 
 
-  <!-- LOGOUT -->
+                <div class="submenu">
 
-  <button onclick="logout()">
-    🚪 Logout
-  </button>
+                    <a
+                        href="javascript:void(0)"
+                        onclick="openSheet('AI Monthly Session')"
+                    >
+                        📊 Score
+                    </a>
+
+                    <a
+                        href="javascript:void(0)"
+                        onclick="openSheet('AI Monthly Session Feedback')"
+                    >
+                        💬 Feedback
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- SESSION 2 -->
+
+            <div class="module">
+
+                <button
+                    class="module-btn"
+                    type="button"
+                    onclick="toggleModule(this)"
+                >
+
+                    <span>
+                        ▶ 📅 Session 2
+                    </span>
+
+                    <span class="arrow">
+                        ▶
+                    </span>
+
+                </button>
+
+
+                <div class="submenu">
+
+                    <a
+                        href="javascript:void(0)"
+                        onclick="comingSoon('Session 2 Score')"
+                    >
+                        📊 Score
+                    </a>
+
+                    <a
+                        href="javascript:void(0)"
+                        onclick="comingSoon('Session 2 Feedback')"
+                    >
+                        💬 Feedback
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- SESSION 3 -->
+
+            <div class="module">
+
+                <button
+                    class="module-btn"
+                    type="button"
+                    onclick="toggleModule(this)"
+                >
+
+                    <span>
+                        ▶ 📅 Session 3
+                    </span>
+
+                    <span class="arrow">
+                        ▶
+                    </span>
+
+                </button>
+
+
+                <div class="submenu">
+
+                    <a
+                        href="javascript:void(0)"
+                        onclick="comingSoon('Session 3 Score')"
+                    >
+                        📊 Score
+                    </a>
+
+                    <a
+                        href="javascript:void(0)"
+                        onclick="comingSoon('Session 3 Feedback')"
+                    >
+                        💬 Feedback
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="menu-divider"></div>
+
+
+    <!-- REFRESH -->
+
+    <button
+        class="refresh-btn"
+        onclick="location.reload()"
+    >
+        🔄 Refresh
+    </button>
+
+
+    <!-- LOGOUT -->
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        🚪 Logout
+    </button>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <div
+        class="header"
+        id="pageTitle"
+    >
+        🚀 Smart Analytics Dashboard
+    </div>
+
+
+    <!-- =====================================================
+         CARDS
+    ====================================================== -->
+
+    <div
+        class="cards"
+        id="dashboardCards"
+    >
+
+        <div class="card">
+
+            <h3>
+                Career Students
+            </h3>
+
+            <div
+                class="value"
+                id="careerCount"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                SkillX Students
+            </h3>
+
+            <div
+                class="value"
+                id="skillCount"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Total Students
+            </h3>
+
+            <div
+                class="value"
+                id="totalCount"
+            >
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         LOADING
+    ====================================================== -->
+
+    <div
+        class="loading"
+        id="loading"
+    >
+        ⏳ Loading data...
+    </div>
+
+
+    <!-- =====================================================
+         CHARTS
+    ====================================================== -->
+
+    <div
+        class="charts"
+        id="chartsSection"
+    >
+
+        <div class="chart-box">
+
+            <canvas id="careerChart"></canvas>
+
+        </div>
+
+
+        <div class="chart-box">
+
+            <canvas id="skillChart"></canvas>
+
+        </div>
+
+
+        <div class="chart-box">
+
+            <canvas id="comparisonChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SHEET DATA
+    ====================================================== -->
+
+    <div
+        class="sheet-container"
+        id="sheetContainer"
+    >
+
+        <div
+            class="sheet-title"
+            id="sheetTitle"
+        >
+            <span>
+                📋 Sheet Data
+            </span>
+
+            <span
+                class="sheet-total"
+                id="sheetTotal"
+            >
+                Total Students: 0
+            </span>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="sheet-table">
+
+                <thead id="sheetHead"></thead>
+
+                <tbody id="sheetBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
 
 </div>
 
 
-<!-- =========================
-MAIN CONTENT
-========================= -->
-
-<div class="main">
-
-
-  <div class="header" id="pageTitle">
-    🚀 Smart Analytics Dashboard
-  </div>
-
-
-  <!-- CARDS -->
-
-  <div class="cards" id="dashboardCards">
-
-    <div class="card">
-      <h3>Career Students</h3>
-      <div class="value" id="careerCount">0</div>
-    </div>
-
-
-    <div class="card">
-      <h3>SkillX Students</h3>
-      <div class="value" id="skillCount">0</div>
-    </div>
-
-
-    <div class="card">
-      <h3>Total Students</h3>
-      <div class="value" id="totalCount">0</div>
-    </div>
-
-  </div>
-
-
-  <!-- LOADING -->
-
-  <div class="loading" id="loading">
-    ⏳ Loading data...
-  </div>
-
-
-  <!-- CHARTS -->
-
-  <div class="charts" id="chartsSection">
-
-    <div class="chart-box">
-      <canvas id="careerChart"></canvas>
-    </div>
-
-
-    <div class="chart-box">
-      <canvas id="skillChart"></canvas>
-    </div>
-
-
-    <div class="chart-box">
-      <canvas id="comparisonChart"></canvas>
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-  SELECTED SHEET DATA
-  ========================= -->
-
-  <div class="sheet-container" id="sheetContainer">
-
-    <div class="sheet-title" id="sheetTitle">
-      Sheet Data
-    </div>
-
-
-    <div class="table-wrapper">
-
-      <table class="sheet-table">
-
-        <thead id="sheetHead">
-        </thead>
-
-        <tbody id="sheetBody">
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-
-</div>
-
-</div>
-
-
-<!-- =========================
-JAVASCRIPT
-========================= -->
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
 
 <script>
 
-
-/* =========================
-LOGIN
-========================= */
+/* =========================================================
+   LOGIN
+========================================================= */
 
 const validUser = "admin";
 const validPass = "12345";
 
+
+/* =========================================================
+   CHART INSTANCES
+========================================================= */
 
 let careerChartInstance = null;
 let skillChartInstance = null;
 let comparisonChartInstance = null;
 
 
-/* =========================
-LOGIN FUNCTION
-========================= */
+/* =========================================================
+   LOGIN FUNCTION
+========================================================= */
 
 function login(){
 
-  const user =
-    document.getElementById("username").value;
+    const user =
+        document.getElementById("username").value.trim();
 
-  const pass =
-    document.getElementById("password").value;
+    const pass =
+        document.getElementById("password").value;
 
 
-  if(user === validUser && pass === validPass){
+    if(
+        user === validUser &&
+        pass === validPass
+    ){
 
-    document.getElementById("loginBox")
-      .style.display = "none";
+        document.getElementById("loginBox")
+            .style.display = "none";
 
-    document.getElementById("dashboard")
-      .style.display = "block";
+        document.getElementById("dashboard")
+            .style.display = "block";
 
-    loadDashboard();
+        document.getElementById("error")
+            .innerText = "";
 
-  }
+        showMainDashboard();
 
-  else{
+    }
 
-    document.getElementById("error")
-      .innerText = "Invalid Login!";
+    else{
 
-  }
+        document.getElementById("error")
+            .innerText =
+            "Invalid Username or Password!";
+
+    }
 
 }
 
 
-/* =========================
-LOGOUT
-========================= */
+/* =========================================================
+   ENTER KEY LOGIN
+========================================================= */
+
+document.getElementById("password")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(event.key === "Enter"){
+
+                login();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
 
 function logout(){
 
-  location.reload();
+    document.getElementById("dashboard")
+        .style.display = "none";
+
+    document.getElementById("loginBox")
+        .style.display = "block";
+
+    document.getElementById("username")
+        .value = "";
+
+    document.getElementById("password")
+        .value = "";
+
+    document.getElementById("error")
+        .innerText = "";
 
 }
 
 
-/* =========================
-OPEN DIFFERENT SHEETS
-========================= */
+/* =========================================================
+   MAIN MENU TOGGLE
+   Keeps SkillX Modules and AI Session separate.
+========================================================= */
 
-function openSheet(sheetName){
+function toggleMainMenu(menuId){
 
-  /* =========================
-     MAIN DASHBOARD SPREADSHEET
-  ========================= */
+    const skillxMenu =
+        document.getElementById("skillxModules");
 
-  const spreadsheetId =
-    "1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw";
+    const aiMenu =
+        document.getElementById("aiSessionModules");
 
+    const skillxButton =
+        document.getElementById("skillxModulesToggle");
 
-  /* =========================
-     AI SESSION SPREADSHEET
-  ========================= */
+    const aiButton =
+        document.getElementById("aiSessionToggle");
 
-  const aiSpreadsheetId =
-    "1Ml30EnO2AmG1pjdEsV5y_-QIr84f655rcW58Ni8CCW0";
 
+    if(menuId === "skillxModules"){
 
-  /* =========================
-     SELECT CORRECT SPREADSHEET
-  ========================= */
+        const shouldOpen =
+            !skillxMenu.classList.contains("open");
 
-  let selectedSpreadsheetId =
-    spreadsheetId;
 
+        /* CLOSE AI SESSION */
 
-  /*
-     AI SESSION SHEETS
-  */
+        aiMenu.classList.remove("open");
+        aiButton.classList.remove("open");
 
-  if(
-    sheetName === "AI Monthly Session" ||
-    sheetName === "AI Monthly Session Feedback"
-  ){
+        document.getElementById("aiSessionArrow")
+            .innerText = "▼";
 
-    selectedSpreadsheetId =
-      aiSpreadsheetId;
 
-  }
+        /* TOGGLE SKILLX */
 
+        if(shouldOpen){
 
-  /* =========================
-     CREATE SHEET URL
-  ========================= */
+            skillxMenu.classList.add("open");
 
-  const sheetURL =
-    "https://opensheet.elk.sh/" +
-    selectedSpreadsheetId +
-    "/" +
-    encodeURIComponent(sheetName);
+            skillxButton.classList.add("open");
 
+            document.getElementById("skillxArrow")
+                .innerText = "▲";
 
-  console.log("--------------------------------");
-  console.log("Loading Sheet:", sheetName);
-  console.log(
-    "Spreadsheet ID:",
-    selectedSpreadsheetId
-  );
-  console.log(
-    "Sheet URL:",
-    sheetURL
-  );
-  console.log("--------------------------------");
+        }
 
+        else{
 
-  /* =========================
-     UPDATE PAGE TITLE
-  ========================= */
+            skillxMenu.classList.remove("open");
 
-  let pageTitle = "";
+            skillxButton.classList.remove("open");
 
+            document.getElementById("skillxArrow")
+                .innerText = "▼";
 
-  if(
-    sheetName === "Aptitude & Placement Quiz"
-  ){
+        }
 
-    pageTitle =
-      "🧠 Aptitude & Placement Quiz";
+    }
 
-  }
 
-  else if(
-    sheetName === "GJIMT Career Zone"
-  ){
+    if(menuId === "aiSessionModules"){
 
-    pageTitle =
-      "🎯 GJIMT Career Zone";
+        const shouldOpen =
+            !aiMenu.classList.contains("open");
 
-  }
 
-  else if(
-    sheetName === "AI Monthly Session"
-  ){
+        /* CLOSE SKILLX */
 
-    pageTitle =
-      "🤖 AI Session - Session 1 - Score";
+        skillxMenu.classList.remove("open");
+        skillxButton.classList.remove("open");
 
-  }
+        document.getElementById("skillxArrow")
+            .innerText = "▼";
 
-  else if(
-    sheetName === "AI Monthly Session Feedback"
-  ){
 
-    pageTitle =
-      "🤖 AI Session - Session 1 - Feedback";
+        /* TOGGLE AI */
 
-  }
+        if(shouldOpen){
 
-  else{
+            aiMenu.classList.add("open");
 
-    pageTitle =
-      "📋 " + sheetName;
+            aiButton.classList.add("open");
 
-  }
+            document.getElementById("aiSessionArrow")
+                .innerText = "▲";
 
+        }
 
-  document.getElementById("pageTitle")
-    .innerHTML = pageTitle;
+        else{
 
+            aiMenu.classList.remove("open");
 
-  /* =========================
-     SHOW LOADING
-  ========================= */
+            aiButton.classList.remove("open");
 
-  const loading =
-    document.getElementById("loading");
+            document.getElementById("aiSessionArrow")
+                .innerText = "▼";
 
+        }
 
-  loading.style.display =
-    "block";
+    }
 
+}
 
-  loading.innerHTML =
-    "⏳ Loading " +
-    sheetName +
-    "...";
 
+/* =========================================================
+   SUBMENU ACCORDION
+   Only one submenu opens inside each section.
+========================================================= */
 
-  /* =========================
-     HIDE MAIN CHARTS
-  ========================= */
+function toggleModule(button){
 
-  document.getElementById("chartsSection")
-    .style.display = "none";
+    const currentModule =
+        button.parentElement;
 
+    const parentMenu =
+        currentModule.parentElement;
 
-  /* =========================
-     HIDE TABLE
-  ========================= */
 
-  document.getElementById("sheetContainer")
-    .style.display = "none";
+    parentMenu
+        .querySelectorAll(".module")
+        .forEach(module => {
 
+            if(module !== currentModule){
 
-  /* =========================
-     REMOVE ACTIVE BUTTONS
-  ========================= */
+                module.classList.remove("active");
 
-  document.querySelectorAll(".sidebar button")
-    .forEach(button => {
-
-      button.classList.remove("active");
-
-    });
-
-
-  /* =========================
-     ACTIVE MAIN MENU
-  ========================= */
-
-  if(
-    sheetName === "Aptitude & Placement Quiz"
-  ){
-
-    document.getElementById("aptitudeBtn")
-      .classList.add("active");
-
-  }
-
-
-  if(
-    sheetName === "GJIMT Career Zone"
-  ){
-
-    document.getElementById("careerZoneBtn")
-      .classList.add("active");
-
-  }
-
-
-  /* =========================
-     FETCH DATA
-  ========================= */
-
-  fetch(sheetURL)
-
-    .then(response => {
-
-      if(!response.ok){
-
-        throw new Error(
-          "Unable to load Google Sheet"
-        );
-
-      }
-
-      return response.json();
-
-    })
-
-
-    .then(data => {
-
-      console.log(
-        "Successfully loaded:",
-        sheetName
-      );
-
-
-      /* =========================
-         HIDE LOADING
-      ========================= */
-
-      loading.style.display =
-        "none";
-
-
-      /* =========================
-         CHECK DATA
-      ========================= */
-
-      if(
-        !data ||
-        data.length === 0
-      ){
-
-        loading.style.display =
-          "block";
-
-        loading.innerHTML =
-          "⚠️ No data found in " +
-          sheetName;
-
-        return;
-
-      }
-
-
-      /* =========================
-         UPDATE CARDS
-      ========================= */
-
-      document.getElementById("careerCount")
-        .innerText = data.length;
-
-
-      document.getElementById("skillCount")
-        .innerText = "-";
-
-
-      document.getElementById("totalCount")
-        .innerText = data.length;
-
-
-      /* =========================
-         SHEET TITLE
-      ========================= */
-
-      document.getElementById("sheetTitle")
-        .innerHTML =
-          "📋 " +
-          sheetName +
-          " <span style='float:right;font-size:16px;color:#fff'>" +
-          "Total Students: " +
-          data.length +
-          "</span>";
-
-
-      /* =========================
-         GET COLUMN NAMES
-      ========================= */
-
-      const columns =
-        Object.keys(data[0]);
-
-
-      const sheetHead =
-        document.getElementById("sheetHead");
-
-
-      const sheetBody =
-        document.getElementById("sheetBody");
-
-
-      sheetHead.innerHTML =
-        "";
-
-      sheetBody.innerHTML =
-        "";
-
-
-      /* =========================
-         CREATE HEADER
-      ========================= */
-
-      const headerRow =
-        document.createElement("tr");
-
-
-      columns.forEach(column => {
-
-        const th =
-          document.createElement("th");
-
-
-        th.textContent =
-          column;
-
-
-        headerRow.appendChild(th);
-
-      });
-
-
-      sheetHead.appendChild(
-        headerRow
-      );
-
-
-      /* =========================
-         CREATE DATA ROWS
-      ========================= */
-
-      data.forEach(row => {
-
-        const tr =
-          document.createElement("tr");
-
-
-        columns.forEach(column => {
-
-          const td =
-            document.createElement("td");
-
-
-          let value =
-            row[column];
-
-
-          if(
-            value === undefined ||
-            value === null ||
-            value === ""
-          ){
-
-            value = "-";
-
-          }
-
-
-          td.textContent =
-            value;
-
-
-          tr.appendChild(td);
+            }
 
         });
 
 
-        sheetBody.appendChild(
-          tr
-        );
+    currentModule.classList.toggle("active");
 
-      });
+}
 
 
-      /* =========================
-         SHOW TABLE
-      ========================= */
+/* =========================================================
+   COMING SOON
+========================================================= */
 
-      document.getElementById(
-        "sheetContainer"
-      ).style.display = "block";
+function comingSoon(name){
 
-    })
+    alert(
+        name +
+        " data will be added soon."
+    );
 
-
-    /* =========================
-       ERROR HANDLING
-    ========================= */
-
-    .catch(error => {
-
-      console.error(
-        "Google Sheet Error:",
-        error
-      );
+}
 
 
-      loading.style.display =
+/* =========================================================
+   OPEN GOOGLE SHEET
+========================================================= */
+
+function openSheet(sheetName){
+
+    /* =====================================================
+       MAIN DASHBOARD SPREADSHEET
+    ====================================================== */
+
+    const spreadsheetId =
+        "1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw";
+
+
+    /* =====================================================
+       AI SESSION SPREADSHEET
+    ====================================================== */
+
+    const aiSpreadsheetId =
+        "1Ml30EnO2AmG1pjdEsV5y_-QIr84f655rcW58Ni8CCW0";
+
+
+    /* =====================================================
+       SELECT SPREADSHEET
+    ====================================================== */
+
+    let selectedSpreadsheetId =
+        spreadsheetId;
+
+
+    if(
+        sheetName === "AI Monthly Session" ||
+        sheetName === "AI Monthly Session Feedback"
+    ){
+
+        selectedSpreadsheetId =
+            aiSpreadsheetId;
+
+    }
+
+
+    /* =====================================================
+       OPEN SHEET URL
+    ====================================================== */
+
+    const sheetURL =
+        "https://opensheet.elk.sh/" +
+        selectedSpreadsheetId +
+        "/" +
+        encodeURIComponent(sheetName);
+
+
+    console.log(
+        "Loading:",
+        sheetName
+    );
+
+    console.log(
+        "Spreadsheet:",
+        selectedSpreadsheetId
+    );
+
+    console.log(
+        "URL:",
+        sheetURL
+    );
+
+
+    /* =====================================================
+       PAGE TITLE
+    ====================================================== */
+
+    let pageTitle;
+
+
+    if(
+        sheetName ===
+        "Aptitude & Placement Quiz"
+    ){
+
+        pageTitle =
+            "🧠 Aptitude & Placement Quiz";
+
+    }
+
+    else if(
+        sheetName ===
+        "GJIMT Career Zone"
+    ){
+
+        pageTitle =
+            "🎯 GJIMT Career Zone";
+
+    }
+
+    else if(
+        sheetName ===
+        "AI Monthly Session"
+    ){
+
+        pageTitle =
+            "🤖 AI Session - Session 1 - Score";
+
+    }
+
+    else if(
+        sheetName ===
+        "AI Monthly Session Feedback"
+    ){
+
+        pageTitle =
+            "🤖 AI Session - Session 1 - Feedback";
+
+    }
+
+    else{
+
+        pageTitle =
+            "📋 " + sheetName;
+
+    }
+
+
+    document.getElementById("pageTitle")
+        .innerHTML = pageTitle;
+
+
+    /* =====================================================
+       LOADING
+    ====================================================== */
+
+    const loading =
+        document.getElementById("loading");
+
+
+    loading.style.display =
         "block";
 
 
-      loading.innerHTML =
-        "❌ Failed to load " +
+    loading.innerHTML =
+        "⏳ Loading " +
         sheetName +
-        ". Please check the Google Sheet ID, tab name, and sharing settings.";
+        "...";
+
+
+    /* =====================================================
+       HIDE CHARTS
+    ====================================================== */
+
+    document.getElementById("chartsSection")
+        .style.display = "none";
+
+
+    /* =====================================================
+       HIDE OLD TABLE
+    ====================================================== */
+
+    document.getElementById("sheetContainer")
+        .style.display = "none";
+
+
+    /* =====================================================
+       CLEAR OLD TABLE
+    ====================================================== */
+
+    document.getElementById("sheetHead")
+        .innerHTML = "";
+
+    document.getElementById("sheetBody")
+        .innerHTML = "";
+
+
+    /* =====================================================
+       REMOVE ACTIVE BUTTONS
+    ====================================================== */
+
+    document
+        .querySelectorAll(".sidebar button")
+        .forEach(button => {
+
+            button.classList.remove("active");
+
+        });
+
+
+    /* =====================================================
+       ACTIVE BUTTON
+    ====================================================== */
+
+    if(
+        sheetName ===
+        "Aptitude & Placement Quiz"
+    ){
+
+        document.getElementById("aptitudeBtn")
+            .classList.add("active");
+
+    }
+
+
+    if(
+        sheetName ===
+        "GJIMT Career Zone"
+    ){
+
+        document.getElementById("careerZoneBtn")
+            .classList.add("active");
+
+    }
+
+
+    /* =====================================================
+       FETCH GOOGLE SHEET
+    ====================================================== */
+
+    fetch(sheetURL)
+
+        .then(response => {
+
+            if(!response.ok){
+
+                throw new Error(
+                    "Unable to load Google Sheet"
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+
+        .then(data => {
+
+            console.log(
+                "Successfully loaded:",
+                sheetName
+            );
+
+
+            /* =================================================
+               CHECK DATA
+            ================================================== */
+
+            if(
+                !data ||
+                data.length === 0
+            ){
+
+                loading.style.display =
+                    "block";
+
+                loading.innerHTML =
+                    "⚠️ No data found in " +
+                    sheetName;
+
+                return;
+
+            }
+
+
+            /* =================================================
+               UPDATE CARDS
+            ================================================== */
+
+            document.getElementById(
+                "careerCount"
+            ).innerText =
+                data.length;
+
+
+            document.getElementById(
+                "skillCount"
+            ).innerText =
+                "-";
+
+
+            document.getElementById(
+                "totalCount"
+            ).innerText =
+                data.length;
+
+
+            /* =================================================
+               SHEET TITLE
+            ================================================== */
+
+            document.getElementById(
+                "sheetTitle"
+            ).innerHTML =
+                "<span>📋 " +
+                escapeHTML(sheetName) +
+                "</span>" +
+                "<span class='sheet-total'>" +
+                "Total Students: " +
+                data.length +
+                "</span>";
+
+
+            document.getElementById(
+                "sheetTotal"
+            ).innerText =
+                "Total Students: " +
+                data.length;
+
+
+            /* =================================================
+               COLUMNS
+            ================================================== */
+
+            const columns =
+                Object.keys(data[0]);
+
+
+            const sheetHead =
+                document.getElementById(
+                    "sheetHead"
+                );
+
+
+            const sheetBody =
+                document.getElementById(
+                    "sheetBody"
+                );
+
+
+            sheetHead.innerHTML =
+                "";
+
+            sheetBody.innerHTML =
+                "";
+
+
+            /* =================================================
+               HEADER
+            ================================================== */
+
+            const headerRow =
+                document.createElement("tr");
+
+
+            columns.forEach(column => {
+
+                const th =
+                    document.createElement("th");
+
+
+                th.textContent =
+                    column;
+
+
+                headerRow.appendChild(th);
+
+            });
+
+
+            sheetHead.appendChild(
+                headerRow
+            );
+
+
+            /* =================================================
+               DATA ROWS
+            ================================================== */
+
+            data.forEach(row => {
+
+                const tr =
+                    document.createElement("tr");
+
+
+                columns.forEach(column => {
+
+                    const td =
+                        document.createElement("td");
+
+
+                    let value =
+                        row[column];
+
+
+                    if(
+                        value === undefined ||
+                        value === null ||
+                        value === ""
+                    ){
+
+                        value = "-";
+
+                    }
+
+
+                    td.textContent =
+                        value;
+
+
+                    tr.appendChild(td);
+
+                });
+
+
+                sheetBody.appendChild(
+                    tr
+                );
+
+            });
+
+
+            /* =================================================
+               SHOW TABLE
+            ================================================== */
+
+            document.getElementById(
+                "sheetContainer"
+            ).style.display =
+                "block";
+
+
+            loading.style.display =
+                "none";
+
+        })
+
+
+        /* =====================================================
+           ERROR
+        ====================================================== */
+
+        .catch(error => {
+
+            console.error(
+                "Google Sheet Error:",
+                error
+            );
+
+
+            loading.style.display =
+                "block";
+
+
+            loading.innerHTML =
+                "❌ Failed to load " +
+                sheetName +
+                ". Please check the Google Sheet ID, tab name, and sharing settings.";
+
+        });
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   MAIN DASHBOARD
+========================================================= */
+
+function showMainDashboard(){
+
+    /* =====================================================
+       REMOVE ACTIVE BUTTONS
+    ====================================================== */
+
+    document
+        .querySelectorAll(".sidebar button")
+        .forEach(button => {
+
+            button.classList.remove("active");
+
+        });
+
+
+    /* =====================================================
+       ACTIVE MAIN DASHBOARD
+    ====================================================== */
+
+    document.getElementById(
+        "mainDashboardBtn"
+    ).classList.add("active");
+
+
+    /* =====================================================
+       TITLE
+    ====================================================== */
+
+    document.getElementById(
+        "pageTitle"
+    ).innerHTML =
+        "🚀 Smart Analytics Dashboard";
+
+
+    /* =====================================================
+       HIDE SHEET
+    ====================================================== */
+
+    document.getElementById(
+        "sheetContainer"
+    ).style.display =
+        "none";
+
+
+    /* =====================================================
+       SHOW CHARTS
+    ====================================================== */
+
+    document.getElementById(
+        "chartsSection"
+    ).style.display =
+        "grid";
+
+
+    /* =====================================================
+       LOAD DASHBOARD
+    ====================================================== */
+
+    loadDashboard();
+
+}
+
+
+/* =========================================================
+   LOAD MAIN DASHBOARD
+========================================================= */
+
+function loadDashboard(){
+
+    const careerURL =
+        "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
+
+
+    const skillURL =
+        "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
+
+
+    const loading =
+        document.getElementById("loading");
+
+
+    loading.style.display =
+        "block";
+
+
+    loading.innerHTML =
+        "⏳ Loading dashboard data...";
+
+
+    Promise.all([
+
+        fetch(careerURL)
+            .then(res => {
+
+                if(!res.ok){
+
+                    throw new Error(
+                        "Career data failed"
+                    );
+
+                }
+
+                return res.json();
+
+            }),
+
+
+        fetch(skillURL)
+            .then(res => {
+
+                if(!res.ok){
+
+                    throw new Error(
+                        "SkillX data failed"
+                    );
+
+                }
+
+                return res.json();
+
+            })
+
+    ])
+
+    .then(
+        ([careerData,skillData]) => {
+
+
+            /* =================================================
+               UPDATE COUNTS
+            ================================================== */
+
+            document.getElementById(
+                "careerCount"
+            ).innerText =
+                careerData.length;
+
+
+            document.getElementById(
+                "skillCount"
+            ).innerText =
+                skillData.length;
+
+
+            document.getElementById(
+                "totalCount"
+            ).innerText =
+                careerData.length +
+                skillData.length;
+
+
+            /* =================================================
+               DESTROY OLD CHARTS
+            ================================================== */
+
+            destroyCharts();
+
+
+            /* =================================================
+               CAREER MAP
+            ================================================== */
+
+            const careerMap = {};
+
+
+            careerData.forEach(row => {
+
+                const career =
+                    row["Top Career"] ||
+                    "Unknown";
+
+
+                careerMap[career] =
+                    (careerMap[career] || 0) + 1;
+
+            });
+
+
+            /* =================================================
+               CAREER CHART
+            ================================================== */
+
+            careerChartInstance =
+                new Chart(
+
+                    document.getElementById(
+                        "careerChart"
+                    ),
+
+                    {
+
+                        type:"doughnut",
+
+                        data:{
+
+                            labels:
+                                Object.keys(
+                                    careerMap
+                                ),
+
+                            datasets:[{
+
+                                label:
+                                    "Career Students",
+
+                                data:
+                                    Object.values(
+                                        careerMap
+                                    )
+
+                            }]
+
+                        },
+
+                        options:{
+
+                            responsive:true,
+
+                            maintainAspectRatio:false,
+
+                            plugins:{
+
+                                title:{
+
+                                    display:true,
+
+                                    text:
+                                        "Career Preferences",
+
+                                    color:"#ffffff",
+
+                                    font:{
+                                        size:18
+                                    }
+
+                                },
+
+                                legend:{
+
+                                    labels:{
+                                        color:"#ffffff"
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                );
+
+
+            /* =================================================
+               SKILL MAP
+            ================================================== */
+
+            const skillMap = {};
+
+
+            skillData.forEach(row => {
+
+                const domain =
+                    row["Bundle Domain"] ||
+                    "Unknown";
+
+
+                skillMap[domain] =
+                    (skillMap[domain] || 0) + 1;
+
+            });
+
+
+            /* =================================================
+               SKILL CHART
+            ================================================== */
+
+            skillChartInstance =
+                new Chart(
+
+                    document.getElementById(
+                        "skillChart"
+                    ),
+
+                    {
+
+                        type:"pie",
+
+                        data:{
+
+                            labels:
+                                Object.keys(
+                                    skillMap
+                                ),
+
+                            datasets:[{
+
+                                label:
+                                    "SkillX Students",
+
+                                data:
+                                    Object.values(
+                                        skillMap
+                                    )
+
+                            }]
+
+                        },
+
+                        options:{
+
+                            responsive:true,
+
+                            maintainAspectRatio:false,
+
+                            plugins:{
+
+                                title:{
+
+                                    display:true,
+
+                                    text:
+                                        "SkillX Domain",
+
+                                    color:"#ffffff",
+
+                                    font:{
+                                        size:18
+                                    }
+
+                                },
+
+                                legend:{
+
+                                    labels:{
+                                        color:"#ffffff"
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                );
+
+
+            /* =================================================
+               COMPARISON CHART
+            ================================================== */
+
+            comparisonChartInstance =
+                new Chart(
+
+                    document.getElementById(
+                        "comparisonChart"
+                    ),
+
+                    {
+
+                        type:"bar",
+
+                        data:{
+
+                            labels:[
+                                "Career",
+                                "SkillX"
+                            ],
+
+                            datasets:[{
+
+                                label:
+                                    "Students",
+
+                                data:[
+
+                                    careerData.length,
+
+                                    skillData.length
+
+                                ]
+
+                            }]
+
+                        },
+
+                        options:{
+
+                            responsive:true,
+
+                            maintainAspectRatio:false,
+
+                            scales:{
+
+                                x:{
+
+                                    ticks:{
+                                        color:"#ffffff"
+                                    }
+
+                                },
+
+                                y:{
+
+                                    beginAtZero:true,
+
+                                    ticks:{
+                                        color:"#ffffff"
+                                    }
+
+                                }
+
+                            },
+
+                            plugins:{
+
+                                title:{
+
+                                    display:true,
+
+                                    text:
+                                        "Career vs SkillX Students",
+
+                                    color:"#ffffff",
+
+                                    font:{
+                                        size:18
+                                    }
+
+                                },
+
+                                legend:{
+
+                                    labels:{
+                                        color:"#ffffff"
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                );
+
+
+            loading.style.display =
+                "none";
+
+        }
+
+    )
+
+    .catch(error => {
+
+        console.error(
+            "Dashboard Error:",
+            error
+        );
+
+
+        loading.style.display =
+            "block";
+
+
+        loading.innerHTML =
+            "❌ Failed to load dashboard data. Please check your Google Sheets.";
 
     });
 
 }
 
 
-/* =========================
-SHOW MAIN DASHBOARD
-========================= */
+/* =========================================================
+   DESTROY CHARTS
+========================================================= */
 
-function showMainDashboard(){
+function destroyCharts(){
 
-  /* REMOVE ACTIVE BUTTONS */
-
-  document.querySelectorAll(
-    ".sidebar button"
-  )
-  .forEach(button => {
-
-    button.classList.remove(
-      "active"
-    );
-
-  });
-
-
-  document.getElementById(
-    "mainDashboardBtn"
-  )
-  .classList.add("active");
-
-
-  /* RESET TITLE */
-
-  document.getElementById(
-    "pageTitle"
-  )
-  .innerHTML =
-    "🚀 Smart Analytics Dashboard";
-
-
-  /* HIDE SELECTED SHEET TABLE */
-
-  document.getElementById(
-    "sheetContainer"
-  )
-  .style.display =
-    "none";
-
-
-  /* SHOW CHARTS */
-
-  document.getElementById(
-    "chartsSection"
-  )
-  .style.display =
-    "grid";
-
-
-  /* LOAD MAIN DATA AGAIN */
-
-  loadDashboard();
-
-}
-
-
-/* =========================
-LOAD MAIN DASHBOARD
-========================= */
-
-function loadDashboard(){
-
-  const careerURL =
-    "https://opensheet.elk.sh/1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw/Sheet1";
-
-
-  const skillURL =
-    "https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
-
-
-  document.getElementById("loading")
-    .style.display =
-      "block";
-
-
-  document.getElementById("loading")
-    .innerHTML =
-      "⏳ Loading dashboard data...";
-
-
-  Promise.all([
-
-    fetch(careerURL)
-      .then(res => {
-
-        if(!res.ok){
-
-          throw new Error(
-            "Career data failed"
-          );
-
-        }
-
-        return res.json();
-
-      }),
-
-
-    fetch(skillURL)
-      .then(res => {
-
-        if(!res.ok){
-
-          throw new Error(
-            "SkillX data failed"
-          );
-
-        }
-
-        return res.json();
-
-      })
-
-  ])
-
-  .then(
-    ([careerData, skillData]) => {
-
-      document.getElementById(
-        "loading"
-      ).style.display =
-        "none";
-
-
-      /* =========================
-         UPDATE CARDS
-      ========================= */
-
-      document.getElementById(
-        "careerCount"
-      ).innerText =
-        careerData.length;
-
-
-      document.getElementById(
-        "skillCount"
-      ).innerText =
-        skillData.length;
-
-
-      document.getElementById(
-        "totalCount"
-      ).innerText =
-        careerData.length +
-        skillData.length;
-
-
-      /* =========================
-         DESTROY OLD CHARTS
-      ========================= */
-
-      if(careerChartInstance){
+    if(careerChartInstance){
 
         careerChartInstance.destroy();
 
-      }
+        careerChartInstance =
+            null;
+
+    }
 
 
-      if(skillChartInstance){
+    if(skillChartInstance){
 
         skillChartInstance.destroy();
 
-      }
+        skillChartInstance =
+            null;
+
+    }
 
 
-      if(comparisonChartInstance){
+    if(comparisonChartInstance){
 
         comparisonChartInstance.destroy();
 
-      }
-
-
-      /* =========================
-         CAREER CHART DATA
-      ========================= */
-
-      let careerMap = {};
-
-
-      careerData.forEach(row => {
-
-        const career =
-          row["Top Career"] ||
-          "Unknown";
-
-
-        careerMap[career] =
-          (careerMap[career] || 0) +
-          1;
-
-      });
-
-
-      careerChartInstance =
-        new Chart(
-
-          document.getElementById(
-            "careerChart"
-          ),
-
-          {
-
-            type:"doughnut",
-
-            data:{
-
-              labels:
-                Object.keys(
-                  careerMap
-                ),
-
-              datasets:[{
-
-                label:
-                  "Career Students",
-
-                data:
-                  Object.values(
-                    careerMap
-                  )
-
-              }]
-
-            },
-
-            options:{
-
-              responsive:true,
-
-              plugins:{
-
-                title:{
-
-                  display:true,
-
-                  text:
-                    "Career Preferences"
-
-                }
-
-              }
-
-            }
-
-          }
-
-        );
-
-
-      /* =========================
-         SKILLX CHART DATA
-      ========================= */
-
-      let skillMap = {};
-
-
-      skillData.forEach(row => {
-
-        const domain =
-          row["Bundle Domain"] ||
-          "Unknown";
-
-
-        skillMap[domain] =
-          (skillMap[domain] || 0) +
-          1;
-
-      });
-
-
-      skillChartInstance =
-        new Chart(
-
-          document.getElementById(
-            "skillChart"
-          ),
-
-          {
-
-            type:"pie",
-
-            data:{
-
-              labels:
-                Object.keys(
-                  skillMap
-                ),
-
-              datasets:[{
-
-                label:
-                  "SkillX Students",
-
-                data:
-                  Object.values(
-                    skillMap
-                  )
-
-              }]
-
-            },
-
-            options:{
-
-              responsive:true,
-
-              plugins:{
-
-                title:{
-
-                  display:true,
-
-                  text:
-                    "SkillX Domain"
-
-                }
-
-              }
-
-            }
-
-          }
-
-        );
-
-
-      /* =========================
-         COMPARISON CHART
-      ========================= */
-
-      comparisonChartInstance =
-        new Chart(
-
-          document.getElementById(
-            "comparisonChart"
-          ),
-
-          {
-
-            type:"bar",
-
-            data:{
-
-              labels:[
-
-                "Career",
-
-                "SkillX"
-
-              ],
-
-              datasets:[{
-
-                label:
-                  "Students",
-
-                data:[
-
-                  careerData.length,
-
-                  skillData.length
-
-                ]
-
-              }]
-
-            },
-
-            options:{
-
-              responsive:true,
-
-              plugins:{
-
-                title:{
-
-                  display:true,
-
-                  text:
-                    "Career vs SkillX Students"
-
-                }
-
-              }
-
-            }
-
-          }
-
-        );
+        comparisonChartInstance =
+            null;
 
     }
-  )
-
-  .catch(error => {
-
-    console.error(
-      error
-    );
-
-
-    document.getElementById(
-      "loading"
-    ).innerHTML =
-      "❌ Failed to load dashboard data";
-
-  });
 
 }
 
 
-/* =========================
-SKILLX MENU TOGGLE
-========================= */
+/* =========================================================
+   INITIAL STATE
+========================================================= */
 
-const skillxToggle =
-  document.getElementById(
-    "skillxToggle"
-  );
+window.addEventListener(
+    "load",
+    function(){
 
+        document.getElementById(
+            "loginBox"
+        ).style.display =
+            "block";
 
-const allModules =
-  document.getElementById(
-    "allModules"
-  );
-
-
-skillxToggle.addEventListener(
-  "click",
-  () => {
-
-    if(
-      allModules.style.display ===
-      "block"
-    ){
-
-      allModules.style.display =
-        "none";
+        document.getElementById(
+            "dashboard"
+        ).style.display =
+            "none";
 
     }
-
-    else{
-
-      allModules.style.display =
-        "block";
-
-    }
-
-  }
-);
-
-
-/* =========================
-SUBMENU ACCORDION
-========================= */
-
-const moduleButtons =
-  document.querySelectorAll(
-    ".module-btn"
-  );
-
-
-moduleButtons.forEach(button => {
-
-  button.addEventListener(
-    "click",
-    () => {
-
-      button.parentElement
-        .classList.toggle(
-          "active"
-        );
-
-    }
-  );
-
-});
-
-
-/* =========================
-AI SESSION MENU TOGGLE
-========================= */
-
-const aiSessionToggle =
-  document.getElementById(
-    "aiSessionToggle"
-  );
-
-
-const aiSessionModules =
-  document.getElementById(
-    "aiSessionModules"
-  );
-
-
-aiSessionToggle.addEventListener(
-  "click",
-  () => {
-
-    if(
-      aiSessionModules.style.display ===
-      "block"
-    ){
-
-      aiSessionModules.style.display =
-        "none";
-
-    }
-
-    else{
-
-      aiSessionModules.style.display =
-        "block";
-
-    }
-
-  }
 );
 
 </script>
 
 </body>
 </html>
+```
