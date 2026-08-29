@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillX Result Summary</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#075f69,#142b36 55%,#5b2670);
+  color:#fff;
+  min-height:100vh;
+}
+.page{padding:24px;max-width:1500px;margin:auto}
+.hero{
+  background:rgba(20,35,45,.82);
+  border-radius:22px;
+  padding:25px 30px;
+  text-align:center;
+  box-shadow:0 10px 35px rgba(0,0,0,.18);
+}
+.hero h1{margin:0;font-size:34px;color:#fff}
+.hero p{margin:8px 0 0;color:#d7e1e5}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin:20px 0;
+}
+.card{
+  background:rgba(50,75,84,.82);
+  border-radius:20px;
+  padding:22px;
+  text-align:center;
+  min-height:125px;
+}
+.card .number{font-size:38px;font-weight:800;color:#ffd400;margin-top:12px}
+.card .label{font-size:16px;color:#e6edef}
+.section{
+  background:rgba(24,43,52,.82);
+  border-radius:20px;
+  padding:22px;
+  margin-top:20px;
+  box-shadow:0 8px 30px rgba(0,0,0,.12);
+}
+.section h2{margin:0 0 18px;color:#ffd400}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.bar-row{
+  margin:15px 0;
+}
+.bar-top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:7px;
+  font-weight:700;
+}
+.bar{
+  height:14px;
+  border-radius:10px;
+  background:#314b54;
+  overflow:hidden;
+}
+.fill{
+  height:100%;
+  border-radius:10px;
+  background:linear-gradient(90deg,#08a5c0,#8d35df);
+  width:0;
+  transition:width .5s;
+}
+.search{
+  width:100%;
+  padding:14px 18px;
+  border:0;
+  border-radius:12px;
+  background:rgba(255,255,255,.15);
+  color:white;
+  outline:none;
+  font-size:15px;
+  margin-bottom:15px;
+}
+.search::placeholder{color:#d6dce0}
+.table-wrap{
+  overflow:auto;
+  max-height:520px;
+  border-radius:12px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+th{
+  background:#455d66;
+  color:#ffd400;
+  padding:13px 10px;
+  text-align:left;
+  position:sticky;
+  top:0;
+}
+td{
+  padding:12px 10px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+tr:hover{background:rgba(255,255,255,.05)}
+.badge{
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:20px;
+  background:#157f9b;
+  font-size:12px;
+  font-weight:700;
+}
+.status{
+  text-align:center;
+  padding:15px;
+  color:#ffd400;
+}
+.note{
+  color:#bfcbd0;
+  font-size:13px;
+  line-height:1.6;
+}
+@media(max-width:900px){
+ .cards{grid-template-columns:repeat(2,1fr)}
+ .grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+ .page{padding:12px}
+ .cards{grid-template-columns:1fr}
+ .hero h1{font-size:25px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <h1>🚀 SkillX Zero to Hero 2026</h1>
+    <p>Workshop Registration & Result Summary Dashboard</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="label">👥 Total Registrations</div>
+      <div class="number" id="total">0</div>
+    </div>
+    <div class="card">
+      <div class="label">🎓 Different Workshops</div>
+      <div class="number" id="workshops">0</div>
+    </div>
+    <div class="card">
+      <div class="label">📚 Courses</div>
+      <div class="number" id="courses">0</div>
+    </div>
+    <div class="card">
+      <div class="label">📅 Workshop Dates</div>
+      <div class="number" id="dates">0</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="section">
+      <h2>📊 Workshop-wise Registrations</h2>
+      <div id="workshopBars" class="status">⏳ Loading registration data...</div>
+    </div>
+
+    <div class="section">
+      <h2>🎓 Course-wise Registrations</h2>
+      <div id="courseBars" class="status">⏳ Loading registration data...</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>⚡ Workshop Type Summary</h2>
+    <div id="typeBars" class="status">⏳ Loading registration data...</div>
+  </div>
+
+  <div class="section">
+    <h2>📋 All SkillX Zero to Hero Registrations</h2>
+    <input id="search" class="search" placeholder="🔎 Search name, phone, workshop, course..." oninput="filterRows()">
+    <div id="status" class="status">⏳ Loading Google Sheet...</div>
+    <div class="table-wrap">
+      <table id="registrationTable" style="display:none">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">
+      Data is loaded directly from the SkillX Zero to Hero registration Google Sheet.
+      The summary counts are calculated automatically from the sheet, so if registrations
+      increase from 49 to 50, 60, etc., the dashboard updates automatically.
+    </p>
+  </div>
+
+</div>
+
+<script>
+const SPREADSHEET_ID = "1_jz5dlujvDNeVnYUsqVReK4iwBRPEAhuMhGGqlwDmz0";
+
+/*
+  Leave SHEET_NAME empty to use the first tab of the Google Sheet.
+  If your registration data is in another tab, put its exact tab name here.
+*/
+const SHEET_NAME = "";
+
+let allRows = [];
+let headers = [];
+
+function gvizUrl(){
+  let url = "https://docs.google.com/spreadsheets/d/" + SPREADSHEET_ID +
+            "/gviz/tq?tqx=out:json";
+  if(SHEET_NAME){
+    url += "&sheet=" + encodeURIComponent(SHEET_NAME);
+  }
+  return url;
+}
+
+function cleanGviz(text){
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
+  if(start < 0 || end < 0) throw new Error("Invalid Google Sheet response");
+  return JSON.parse(text.substring(start,end+1));
+}
+
+function normal(v){
+  return String(v ?? "").trim();
+}
+
+function findColumn(names){
+  const lower = headers.map(h => h.toLowerCase().replace(/\s+/g," ").trim());
+  for(const name of names){
+    const i = lower.indexOf(name.toLowerCase());
+    if(i >= 0) return headers[i];
+  }
+  return null;
+}
+
+function countBy(rows, column){
+  const map = {};
+  if(!column) return map;
+  rows.forEach(r=>{
+    const value = normal(r[column]) || "Not specified";
+    map[value] = (map[value] || 0) + 1;
+  });
+  return Object.fromEntries(
+    Object.entries(map).sort((a,b)=>b[1]-a[1])
+  );
+}
+
+function renderBars(targetId, counts){
+  const target = document.getElementById(targetId);
+  const entries = Object.entries(counts);
+
+  if(!entries.length){
+    target.innerHTML = "No data available";
+    return;
+  }
+
+  const max = Math.max(...entries.map(x=>x[1]));
+  target.innerHTML = entries.map(([name,count])=>`
+    <div class="bar-row">
+      <div class="bar-top">
+        <span>${escapeHtml(name)}</span>
+        <span>${count}</span>
+      </div>
+      <div class="bar">
+        <div class="fill" style="width:${(count/max)*100}%"></div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderTable(){
+  const table = document.getElementById("registrationTable");
+  table.querySelector("thead").innerHTML =
+    "<tr>" + headers.map(h=>`<th>${escapeHtml(h)}</th>`).join("") + "</tr>";
+
+  table.querySelector("tbody").innerHTML = allRows.map(row=>{
+    return "<tr>" + headers.map(h=>{
+      const value = normal(row[h]);
+      return `<td>${escapeHtml(value || "-")}</td>`;
+    }).join("") + "</tr>";
+  }).join("");
+
+  table.style.display = "table";
+}
+
+function filterRows(){
+  const q = document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll("#registrationTable tbody tr").forEach(tr=>{
+    tr.style.display = tr.innerText.toLowerCase().includes(q) ? "" : "none";
+  });
+}
+
+function escapeHtml(value){
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+async function loadData(){
+  try{
+    const response = await fetch(gvizUrl());
+    if(!response.ok) throw new Error("Google Sheet could not be accessed");
+    const text = await response.text();
+    const data = cleanGviz(text);
+
+    const cols = data.table.cols.map(c => c.label || "");
+    headers = cols.map((h,i)=>h || ("Column " + (i+1)));
+
+    allRows = data.table.rows.map(r=>{
+      const obj = {};
+      headers.forEach((h,i)=>{
+        obj[h] = r.c[i] ? (r.c[i].f ?? r.c[i].v ?? "") : "";
+      });
+      return obj;
+    }).filter(row =>
+      Object.values(row).some(v => normal(v) !== "")
+    );
+
+    const workshopCol = findColumn([
+      "Workshop Name","Workshop","Workshop name"
+    ]);
+    const courseCol = findColumn(["Course","Program"]);
+    const typeCol = findColumn([
+      "Workshop Type","Type"
+    ]);
+    const dateCol = findColumn(["Date","Workshop Date"]);
+
+    document.getElementById("total").textContent = allRows.length;
+    document.getElementById("workshops").textContent =
+      Object.keys(countBy(allRows,workshopCol)).length;
+    document.getElementById("courses").textContent =
+      Object.keys(countBy(allRows,courseCol)).length;
+    document.getElementById("dates").textContent =
+      Object.keys(countBy(allRows,dateCol)).length;
+
+    renderBars("workshopBars",countBy(allRows,workshopCol));
+    renderBars("courseBars",countBy(allRows,courseCol));
+    renderBars("typeBars",countBy(allRows,typeCol));
+
+    renderTable();
+    document.getElementById("status").style.display = "none";
+
+  }catch(error){
+    console.error(error);
+    document.getElementById("status").innerHTML =
+      "❌ Failed to load Google Sheet<br><small>" +
+      escapeHtml(error.message) +
+      "</small>";
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
