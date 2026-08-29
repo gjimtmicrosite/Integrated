@@ -907,7 +907,7 @@ tr:hover{
 
     <!-- CAREER QUIZ -->
 
-    <a href="Career-result.html?sheet=Sheet1">
+    <a href="javascript:void(0)" onclick="openMainSheet('Sheet1','🎓 Career Quiz')">
 
         <button>
 
@@ -920,7 +920,7 @@ tr:hover{
 
     <!-- SKILLX QUIZ -->
 
-    <a href="skillx-result.html">
+    <a href="javascript:void(0)" onclick="openSheet('Sheet1','💼 SkillX Quiz')">
 
         <button>
 
@@ -944,7 +944,7 @@ tr:hover{
     <!-- GJIMT CAREER ZONE -->
 
     <button
-        onclick="location.href='dashboard.html?sheet=GJIMT%20Career%20Zone'">
+        onclick="openMainSheet('GJIMT Career Zone','🎯 GJIMT Career Zone')">
 
         🎯 GJIMT Career Zone
 
@@ -987,35 +987,35 @@ tr:hover{
                 <div class="submenu">
 
 
-                    <a href="skillx-result-final.html?sheet=ai-enbled">
+                    <a href="javascript:void(0)" onclick="openSheet('ai-enbled','SkillX Result - AI Documentation')">
 
                         🤖 AI Documentation
 
                     </a>
 
 
-                    <a href="excel-powerbi.html">
+                    <a href="javascript:void(0)" onclick="openSheet('Excel + Power BI','SkillX Result - Excel + Power BI')">
 
                         📊 Excel + Power BI
 
                     </a>
 
 
-                    <a href="web-dev.html">
+                    <a href="javascript:void(0)" onclick="openSheet('Web Development','SkillX Result - Web Development')">
 
                         💻 Web Development
 
                     </a>
 
 
-                    <a href="cyber-security.html">
+                    <a href="javascript:void(0)" onclick="openSheet('Information Security','SkillX Result - Information Security')">
 
                         🔐 Information Security
 
                     </a>
 
 
-                    <a href="cloud-computing.html">
+                    <a href="javascript:void(0)" onclick="openSheet('Cloud Computing','SkillX Result - Cloud Computing')">
 
                         ☁️ Cloud Computing
 
@@ -1042,21 +1042,21 @@ tr:hover{
                 <div class="submenu">
 
 
-                    <a href="functional-english.html">
+                    <a href="javascript:void(0)" onclick="openSheet('Functional English','SkillX Result - Functional English')">
 
                         🗣 Functional English
 
                     </a>
 
 
-                    <a href="public-speaking.html">
+                    <a href="javascript:void(0)" onclick="openSheet('Public Speaking','SkillX Result - Public Speaking')">
 
                         🎤 Public Speaking
 
                     </a>
 
 
-                    <a href="skillx-result-final.html?sheet=canva">
+                    <a href="javascript:void(0)" onclick="openSheet('canva','SkillX Result - Canva Editing')">
 
                         🎨 Canva Editing
 
@@ -1083,35 +1083,35 @@ tr:hover{
                 <div class="submenu">
 
 
-                    <a href="resume-linkedin.html">
+                    <a href="javascript:void(0)" onclick="openSheet('Resume & LinkedIn','SkillX Result - Resume & LinkedIn')">
 
                         📄 Resume & LinkedIn
 
                     </a>
 
 
-                    <a href="prompt-engineering.html">
+                    <a href="javascript:void(0)" onclick="openSheet('Prompt Engineering','SkillX Result - Prompt Engineering')">
 
                         ⚡ Prompt Engineering
 
                     </a>
 
 
-                    <a href="skillx-result-final.html?sheet=ai-business">
+                    <a href="javascript:void(0)" onclick="openSheet('ai-business','SkillX Result - AI for Business')">
 
                         🧠 AI for Business
 
                     </a>
 
 
-                    <a href="skillx-result-final.html?sheet=vedicmath">
+                    <a href="javascript:void(0)" onclick="openSheet('vedicmath','SkillX Result - Vedic Maths')">
 
                         ➗ Vedic Maths
 
                     </a>
 
 
-                    <a href="skillx-result-final.html?sheet=Tally">
+                    <a href="javascript:void(0)" onclick="openSheet('Tally','SkillX Result - Tally Basics')">
 
                         💰 Tally Basics
 
@@ -1166,7 +1166,7 @@ tr:hover{
 
                     <a
                         href="javascript:void(0)"
-                        onclick="location.href='dashboard.html?sheet=AI%20Monthly%20Session'">
+                        onclick="openAISheet('AI Monthly Session','🤖 AI Session - Session 1 - Score')">
 
                         📊 Score
 
@@ -1175,7 +1175,7 @@ tr:hover{
 
                     <a
                         href="javascript:void(0)"
-                        onclick="location.href='dashboard.html?sheet=AI%20Monthly%20Session%20Feedback'">
+                        onclick="openAISheet('AI Monthly Session Feedback','🤖 AI Session - Session 1 - Feedback')">
 
                         💬 Feedback
 
@@ -1204,7 +1204,7 @@ tr:hover{
 
                     <a
                         href="javascript:void(0)"
-                        onclick="alert('Session 2 data will be added soon')">
+                        onclick="openAISheet('AI Monthly Session 2','🤖 AI Session - Session 2 - Score')">
 
                         📊 Score
 
@@ -1213,7 +1213,7 @@ tr:hover{
 
                     <a
                         href="javascript:void(0)"
-                        onclick="alert('Session 2 feedback will be added soon')">
+                        onclick="openAISheet('AI Monthly Session 2 Feedback','🤖 AI Session - Session 2 - Feedback')">
 
                         💬 Feedback
 
@@ -1242,7 +1242,7 @@ tr:hover{
 
                     <a
                         href="javascript:void(0)"
-                        onclick="alert('Session 3 data will be added soon')">
+                        onclick="openAISheet('AI Monthly Session 3','🤖 AI Session - Session 3 - Score')">
 
                         📊 Score
 
@@ -1251,7 +1251,7 @@ tr:hover{
 
                     <a
                         href="javascript:void(0)"
-                        onclick="alert('Session 3 feedback will be added soon')">
+                        onclick="openAISheet('AI Monthly Session 3 Feedback','🤖 AI Session - Session 3 - Feedback')">
 
                         💬 Feedback
 
@@ -1496,351 +1496,538 @@ tr:hover{
 
 
 <script>
+/* =========================================================
+   GOOGLE SHEET CONFIGURATION
+   ========================================================= */
+
+const MAIN_SPREADSHEET_ID =
+    "1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw";
+
+const SKILLX_SPREADSHEET_ID =
+    "1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk";
+
+const AI_SESSION_SPREADSHEET_ID =
+    "1Ml30EnO2AmG1pjdEsV5y_-QIr84f655rcW58Ni8CCW0";
 
 
-/* =========================
-   SKILLX GOOGLE SHEET
-   KEPT UNCHANGED
-========================= */
+/* =========================================================
+   SHEET LOADER
+   This works like the Dashboard file:
+   click menu -> fetch Google Sheet -> show table
+   ========================================================= */
 
-const sheetURL =
-"https://opensheet.elk.sh/1KTjnVvWgT0MhFfT9kJenWgfWnFvE6TAncqxnhAuxytk/Sheet1";
+function openMainSheet(sheetName, title){
+
+    openGoogleSheet(
+        MAIN_SPREADSHEET_ID,
+        sheetName,
+        title || sheetName
+    );
+}
 
 
-/* =========================
-   FETCH DATA
-========================= */
+function openSheet(sheetName, title){
 
-fetch(sheetURL)
+    openGoogleSheet(
+        SKILLX_SPREADSHEET_ID,
+        sheetName,
+        title || ("📋 " + sheetName)
+    );
+}
 
-.then(res => {
 
-    if(!res.ok){
+function openAISheet(sheetName, title){
 
-        throw new Error(
-            "Unable to load Google Sheet"
+    openGoogleSheet(
+        AI_SESSION_SPREADSHEET_ID,
+        sheetName,
+        title || ("🤖 " + sheetName)
+    );
+}
+
+
+/* =========================================================
+   COMMON GOOGLE SHEET FUNCTION
+   ========================================================= */
+
+function openGoogleSheet(spreadsheetId, sheetName, title){
+
+    const loader =
+        document.getElementById("loader");
+
+    const table =
+        document.getElementById("dataTable");
+
+    const tableBody =
+        document.getElementById("tableBody");
+
+    const tableHead =
+        table.querySelector("thead");
+
+    /* Update heading */
+
+    document.querySelector(".header").innerHTML =
+        title;
+
+    /* Show loader */
+
+    loader.style.display = "block";
+
+    loader.innerHTML =
+        "⏳ Loading " + sheetName + "...";
+
+    table.style.display = "none";
+
+    tableBody.innerHTML = "";
+
+    tableHead.innerHTML = "";
+
+    /* Build opensheet URL */
+
+    const sheetURL =
+        "https://opensheet.elk.sh/" +
+        spreadsheetId +
+        "/" +
+        encodeURIComponent(sheetName);
+
+    console.log("Loading Google Sheet:", sheetName);
+    console.log("Spreadsheet ID:", spreadsheetId);
+    console.log("Sheet URL:", sheetURL);
+
+
+    fetch(sheetURL)
+
+        .then(response => {
+
+            if(!response.ok){
+
+                throw new Error(
+                    "Unable to load Google Sheet"
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+        .then(data => {
+
+            loader.style.display = "none";
+
+            if(!data || data.length === 0){
+
+                loader.style.display = "block";
+
+                loader.innerHTML =
+                    "⚠️ No data found in <b>" +
+                    sheetName +
+                    "</b>";
+
+                resetStats();
+
+                return;
+            }
+
+
+            /* =============================================
+               GET COLUMNS FROM GOOGLE SHEET
+               ============================================= */
+
+            const columns =
+                Object.keys(data[0]);
+
+
+            /* =============================================
+               CREATE TABLE HEADER DYNAMICALLY
+               ============================================= */
+
+            let headerHTML = "<tr>";
+
+            columns.forEach(column => {
+
+                headerHTML +=
+                    "<th>" +
+                    escapeHTML(column) +
+                    "</th>";
+
+            });
+
+            headerHTML += "</tr>";
+
+            tableHead.innerHTML =
+                headerHTML;
+
+
+            /* =============================================
+               CREATE TABLE BODY
+               ============================================= */
+
+            let bodyHTML = "";
+
+            data.forEach(row => {
+
+                bodyHTML += "<tr>";
+
+                columns.forEach(column => {
+
+                    let value =
+                        row[column];
+
+                    if(
+                        value === undefined ||
+                        value === null ||
+                        value === ""
+                    ){
+
+                        value = "-";
+
+                    }
+
+
+                    const isName =
+                        column.toLowerCase() === "name";
+
+
+                    const isScore =
+                        column.toLowerCase().includes("score");
+
+
+                    /* Name opens popup */
+
+                    if(isName){
+
+                        bodyHTML +=
+                            "<td class='name-link' " +
+                            "onclick='showPopup(" +
+                            JSON.stringify(row)
+                                .replace(/'/g,"&#39;") +
+                            ")'>" +
+                            escapeHTML(String(value)) +
+                            "</td>";
+
+                    }
+
+                    /* Score badge */
+
+                    else if(isScore){
+
+                        bodyHTML +=
+                            "<td>" +
+                            "<span class='badge blue'>" +
+                            escapeHTML(String(value)) +
+                            "</span>" +
+                            "</td>";
+
+                    }
+
+                    else{
+
+                        bodyHTML +=
+                            "<td>" +
+                            escapeHTML(String(value)) +
+                            "</td>";
+
+                    }
+
+                });
+
+                bodyHTML += "</tr>";
+
+            });
+
+
+            tableBody.innerHTML =
+                bodyHTML;
+
+
+            table.style.display =
+                "table";
+
+
+            /* =============================================
+               UPDATE STATISTICS
+               ============================================= */
+
+            updateStatistics(data);
+
+
+            /* =============================================
+               SCROLL TABLE TO TOP
+               ============================================= */
+
+            const container =
+                document.querySelector(
+                    ".table-container"
+                );
+
+            if(container){
+
+                container.scrollTop = 0;
+                container.scrollLeft = 0;
+
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "Google Sheet Error:",
+                error
+            );
+
+            loader.style.display =
+                "block";
+
+            loader.innerHTML =
+                "❌ Failed to load <b>" +
+                escapeHTML(sheetName) +
+                "</b><br><br>" +
+                "<small>" +
+                escapeHTML(error.message) +
+                "</small>";
+
+            table.style.display =
+                "none";
+
+            resetStats();
+
+        });
+
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+function updateStatistics(data){
+
+    const total =
+        data.length;
+
+
+    document.getElementById("total")
+        .innerText = total;
+
+
+    /* ---------------------------------------------
+       FIND DOMAIN COLUMN
+       --------------------------------------------- */
+
+    let domainColumn = null;
+
+    const possibleDomainColumns = [
+        "Bundle Domain",
+        "Domain",
+        "Top Career",
+        "Career",
+        "Stream"
+    ];
+
+
+    for(const column of possibleDomainColumns){
+
+        if(
+            data[0] &&
+            Object.prototype.hasOwnProperty.call(
+                data[0],
+                column
+            )
+        ){
+
+            domainColumn = column;
+            break;
+
+        }
+
+    }
+
+
+    if(domainColumn){
+
+        const domainCount = {};
+
+        data.forEach(row => {
+
+            const value =
+                row[domainColumn] || "-";
+
+            domainCount[value] =
+                (domainCount[value] || 0) + 1;
+
+        });
+
+
+        const topDomain =
+            Object.keys(domainCount)
+                .reduce(
+                    (a,b) =>
+                        domainCount[a] >
+                        domainCount[b]
+                            ? a
+                            : b
+                );
+
+
+        document.getElementById("domain")
+            .innerText = topDomain;
+
+    }
+    else{
+
+        document.getElementById("domain")
+            .innerText = "-";
+
+    }
+
+
+    /* ---------------------------------------------
+       FIND SCORE COLUMNS
+       --------------------------------------------- */
+
+    const scoreColumns =
+        Object.keys(data[0]).filter(
+            column =>
+                column
+                    .toLowerCase()
+                    .includes("score")
         );
 
-    }
-
-    return res.json();
-
-})
-
-.then(data => {
-
-
-    document.getElementById(
-        "loader"
-    ).style.display = "none";
-
-
-    if(!data || data.length === 0){
-
-        document.getElementById(
-            "loader"
-        ).style.display = "block";
-
-
-        document.getElementById(
-            "loader"
-        ).innerText = "No Data Found";
-
-
-        return;
-
-    }
-
-
-    document.getElementById(
-        "dataTable"
-    ).style.display = "table";
-
-
-    let total = data.length;
-
-    let domainCount = {};
 
     let totalScore = 0;
-
-    let bodyHTML = "";
+    let scoreCount = 0;
 
 
     data.forEach(row => {
 
+        scoreColumns.forEach(column => {
 
-        let digital =
-            Number(
-                row["Digital Score"]
-            ) || 0;
+            const value =
+                parseFloat(row[column]);
 
+            if(!isNaN(value)){
 
-        let comm =
-            Number(
-                row["Communication Score"]
-            ) || 0;
+                totalScore += value;
+                scoreCount++;
 
+            }
 
-        let business =
-            Number(
-                row["Business Score"]
-            ) || 0;
-
-
-        let avgScore =
-            (
-                digital +
-                comm +
-                business
-            ) / 3;
-
-
-        totalScore += avgScore;
-
-
-        let domain =
-            row["Bundle Domain"] || "-";
-
-
-        domainCount[domain] =
-            (
-                domainCount[domain] || 0
-            ) + 1;
-
-
-        bodyHTML += `
-
-            <tr>
-
-                <td
-                    class="name-link"
-                    onclick='showPopup(${JSON.stringify(row)})'
-                >
-
-                    ${row["Name"] || "-"}
-
-                </td>
-
-
-                <td>
-
-                    ${row["Phone"] || "-"}
-
-                </td>
-
-
-                <td>
-
-                    ${row["Program"] || "-"}
-
-                </td>
-
-
-                <td>
-
-                    ${row["Stream"] || "-"}
-
-                </td>
-
-
-                <td>
-
-                    ${row["Maths12"] || "-"}
-
-                </td>
-
-
-                <td>
-
-                    <span class="badge blue">
-
-                        ${digital}
-
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    <span class="badge green">
-
-                        ${comm}
-
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    <span class="badge orange">
-
-                        ${business}
-
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    ${domain}
-
-                </td>
-
-
-                <td>
-
-                    ₹${row["Bundle Price"] || "-"}
-
-                </td>
-
-
-            </tr>
-
-        `;
+        });
 
     });
 
 
-    document.getElementById(
-        "tableBody"
-    ).innerHTML = bodyHTML;
+    const average =
+        scoreCount > 0
+            ? (totalScore / scoreCount).toFixed(1)
+            : "0";
 
 
-    document.getElementById(
-        "total"
-    ).innerText = total;
+    document.getElementById("avg")
+        .innerText = average;
+
+}
 
 
-    let topDomain =
-        Object.keys(domainCount).reduce(
-            (a,b) =>
-                domainCount[a] >
-                domainCount[b]
-                    ? a
-                    : b
-        );
+/* =========================================================
+   RESET STATS
+   ========================================================= */
+
+function resetStats(){
+
+    document.getElementById("total")
+        .innerText = "0";
+
+    document.getElementById("domain")
+        .innerText = "-";
+
+    document.getElementById("avg")
+        .innerText = "0";
+
+}
 
 
-    document.getElementById(
-        "domain"
-    ).innerText = topDomain;
+/* =========================================================
+   HTML ESCAPE
+   ========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
 
 
-    document.getElementById(
-        "avg"
-    ).innerText =
-        (
-            totalScore / total
-        ).toFixed(1);
-
-
-})
-
-
-.catch(error => {
-
-
-    document.getElementById(
-        "loader"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "loader"
-    ).innerHTML =
-
-        "❌ Failed to load data<br><br>" +
-
-        "<small>" +
-        error.message +
-        "</small>";
-
-
-    console.error(error);
-
-});
-
-
-/* =========================
+/* =========================================================
    POPUP
-========================= */
+   ========================================================= */
 
 function showPopup(row){
 
-
-    document.getElementById(
-        "popup"
-    ).classList.add("show");
+    document.getElementById("popup")
+        .classList.add("show");
 
 
-    document.getElementById(
-        "pName"
-    ).innerText =
-        row["Name"] || "-";
+    document.getElementById("pName")
+        .innerText =
+            row["Name"] || "-";
 
 
-    document.getElementById(
-        "pMust"
-    ).innerText =
-        row["Must Do"] || "-";
+    document.getElementById("pMust")
+        .innerText =
+            row["Must Do"] || "-";
 
 
-    document.getElementById(
-        "pP2"
-    ).innerText =
-        row["Priority 2"] || "-";
+    document.getElementById("pP2")
+        .innerText =
+            row["Priority 2"] || "-";
 
 
-    document.getElementById(
-        "pP3"
-    ).innerText =
-        row["Priority 3"] || "-";
+    document.getElementById("pP3")
+        .innerText =
+            row["Priority 3"] || "-";
 
 
-    document.getElementById(
-        "pDomain"
-    ).innerText =
-        row["Bundle Domain"] || "-";
+    document.getElementById("pDomain")
+        .innerText =
+            row["Bundle Domain"] || "-";
 
 
-    document.getElementById(
-        "pPrice"
-    ).innerText =
-        row["Bundle Price"] || "-";
+    document.getElementById("pPrice")
+        .innerText =
+            row["Bundle Price"] || "-";
 
 }
 
-
-/* =========================
-   CLOSE POPUP
-========================= */
 
 function closePopup(){
 
-    document.getElementById(
-        "popup"
-    ).classList.remove("show");
+    document.getElementById("popup")
+        .classList.remove("show");
 
 }
 
 
-/* =========================
+/* =========================================================
    SEARCH
-========================= */
+   ========================================================= */
 
 function searchTable(){
 
+    const input =
+        document.getElementById("search")
+            .value
+            .toLowerCase();
 
-    let input =
-        document.getElementById(
-            "search"
-        ).value.toLowerCase();
 
-
-    let rows =
+    const rows =
         document.querySelectorAll(
             "#tableBody tr"
         );
@@ -1848,8 +2035,7 @@ function searchTable(){
 
     rows.forEach(row => {
 
-
-        let text =
+        const text =
             row.innerText.toLowerCase();
 
 
@@ -1863,9 +2049,9 @@ function searchTable(){
 }
 
 
-/* =========================
+/* =========================================================
    HOME / LOGOUT
-========================= */
+   ========================================================= */
 
 function goHome(){
 
@@ -1875,9 +2061,9 @@ function goHome(){
 }
 
 
-/* =====================================================
+/* =========================================================
    SKILLX RESULT MAIN MENU
-===================================================== */
+   ========================================================= */
 
 const skillxToggle =
     document.getElementById(
@@ -1895,7 +2081,6 @@ skillxToggle.addEventListener(
     "click",
     () => {
 
-
         if(
             allModules.style.display ===
             "block"
@@ -1904,17 +2089,14 @@ skillxToggle.addEventListener(
             allModules.style.display =
                 "none";
 
-
             skillxToggle.innerHTML =
                 "💼 SkillX Result ▼";
 
-
-        }else{
-
+        }
+        else{
 
             allModules.style.display =
                 "block";
-
 
             skillxToggle.innerHTML =
                 "💼 SkillX Result ▲";
@@ -1925,9 +2107,9 @@ skillxToggle.addEventListener(
 );
 
 
-/* =====================================================
+/* =========================================================
    AI SESSION MAIN MENU
-===================================================== */
+   ========================================================= */
 
 const aiSessionToggle =
     document.getElementById(
@@ -1945,7 +2127,6 @@ aiSessionToggle.addEventListener(
     "click",
     () => {
 
-
         if(
             aiSessionModules.style.display ===
             "block"
@@ -1954,17 +2135,14 @@ aiSessionToggle.addEventListener(
             aiSessionModules.style.display =
                 "none";
 
-
             aiSessionToggle.innerHTML =
                 "🤖 AI Session ▼";
 
-
-        }else{
-
+        }
+        else{
 
             aiSessionModules.style.display =
                 "block";
-
 
             aiSessionToggle.innerHTML =
                 "🤖 AI Session ▲";
@@ -1975,9 +2153,9 @@ aiSessionToggle.addEventListener(
 );
 
 
-/* =====================================================
+/* =========================================================
    SUBMENU ACCORDION
-===================================================== */
+   ========================================================= */
 
 const moduleButtons =
     document.querySelectorAll(
@@ -1987,36 +2165,25 @@ const moduleButtons =
 
 moduleButtons.forEach(button => {
 
-
     button.addEventListener(
         "click",
         function(){
-
 
             const currentModule =
                 this.closest(".module");
 
 
-            /* ---------------------------------
-               CLOSE OTHER MODULES
-            --------------------------------- */
-
             const parentMenu =
                 currentModule.parentElement;
 
 
+            /* Close other modules */
+
             parentMenu
-                .querySelectorAll(
-                    ".module"
-                )
+                .querySelectorAll(".module")
                 .forEach(module => {
 
-
-                    if(
-                        module !==
-                        currentModule
-                    ){
-
+                    if(module !== currentModule){
 
                         module.classList.remove(
                             "active"
@@ -2033,10 +2200,10 @@ moduleButtons.forEach(button => {
 
                             otherButton.innerHTML =
                                 otherButton.innerHTML
-                                .replace(
-                                    "▼",
-                                    "▶"
-                                );
+                                    .replace(
+                                        "▼",
+                                        "▶"
+                                    );
 
                         }
 
@@ -2045,18 +2212,14 @@ moduleButtons.forEach(button => {
                 });
 
 
-            /* ---------------------------------
-               TOGGLE CURRENT MODULE
-            --------------------------------- */
+            /* Toggle current */
 
             currentModule.classList.toggle(
                 "active"
             );
 
 
-            /* ---------------------------------
-               CHANGE ARROW
-            --------------------------------- */
+            /* Change arrow */
 
             if(
                 currentModule.classList.contains(
@@ -2070,7 +2233,8 @@ moduleButtons.forEach(button => {
                         "▼"
                     );
 
-            }else{
+            }
+            else{
 
                 this.innerHTML =
                     this.innerHTML.replace(
@@ -2085,6 +2249,22 @@ moduleButtons.forEach(button => {
 
 });
 
+
+/* =========================================================
+   LOAD DEFAULT SKILLX SHEET
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        openSheet(
+            "Sheet1",
+            "🚀 SkillX Smart Analytics Dashboard"
+        );
+
+    }
+);
 
 </script>
 
