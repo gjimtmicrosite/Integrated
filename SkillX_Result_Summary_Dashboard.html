@@ -1,366 +1,2472 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillX Result Summary</title>
+
+<title>SkillX Result Summary Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
-*{box-sizing:border-box}
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',Arial,sans-serif;
+}
+
+html,
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#075f69,#142b36 55%,#5b2670);
-  color:#fff;
-  min-height:100vh;
+    width:100%;
+    min-height:100%;
 }
-.page{padding:24px;max-width:1500px;margin:auto}
-.hero{
-  background:rgba(20,35,45,.82);
-  border-radius:22px;
-  padding:25px 30px;
-  text-align:center;
-  box-shadow:0 10px 35px rgba(0,0,0,.18);
+
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+    overflow-x:hidden;
 }
-.hero h1{margin:0;font-size:34px;color:#fff}
-.hero p{margin:8px 0 0;color:#d7e1e5}
+
+/* =====================================================
+   BACKGROUND GLOW
+===================================================== */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle,#00f2ff,transparent);
+    top:-150px;
+    left:-150px;
+    filter:blur(150px);
+    z-index:-1;
+    pointer-events:none;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle,#ff00c8,transparent);
+    bottom:-150px;
+    right:-150px;
+    filter:blur(150px);
+    z-index:-1;
+    pointer-events:none;
+}
+
+/* =====================================================
+   DASHBOARD LAYOUT
+===================================================== */
+
+.dashboard-layout{
+    display:flex;
+    width:100%;
+    min-height:100vh;
+}
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+    width:250px;
+    min-width:250px;
+    height:100vh;
+
+    position:fixed;
+    left:0;
+    top:0;
+
+    padding:20px;
+
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border-right:1px solid rgba(255,255,255,0.12);
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    z-index:1000;
+}
+
+.sidebar h2{
+    color:#ffd700;
+    margin-bottom:18px;
+    font-size:22px;
+}
+
+.sidebar a{
+    display:block;
+    width:100%;
+    text-decoration:none;
+}
+
+.sidebar > button,
+.sidebar > a > button{
+    width:100%;
+    margin:6px 0;
+    padding:11px;
+
+    border:none;
+    border-radius:12px;
+
+    background:rgba(255,255,255,0.10);
+    color:#fff;
+
+    cursor:pointer;
+    font-size:13px;
+    font-weight:500;
+
+    transition:0.25s;
+}
+
+.sidebar > button:hover,
+.sidebar > a > button:hover{
+    background:#ffd700;
+    color:#000;
+    transform:translateX(3px);
+}
+
+.sidebar > button.active,
+.sidebar > a > button.active{
+    background:#ffd700;
+    color:#000;
+}
+
+/* =====================================================
+   SKILLX / AI SESSION MAIN BUTTON
+===================================================== */
+
+.skillx-menu{
+    width:100%;
+    margin-top:10px;
+}
+
+.main-btn{
+    width:100%;
+    padding:12px;
+
+    border:none;
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+
+    color:#fff;
+
+    font-size:13px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+    margin-bottom:8px;
+}
+
+.main-btn:hover{
+    background:linear-gradient(135deg,#ffd700,#ff9800);
+    color:#000;
+}
+
+/* =====================================================
+   SKILLX RESULT ACTIVE BUTTON
+===================================================== */
+
+.skillx-result-btn{
+    display:block;
+
+    width:100%;
+
+    padding:12px;
+
+    margin:8px 0;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#ffd700,#ff9800);
+
+    color:#000;
+
+    text-decoration:none;
+
+    font-size:13px;
+    font-weight:700;
+
+    text-align:center;
+
+    box-shadow:0 5px 20px rgba(255,215,0,0.25);
+
+    transition:0.25s;
+}
+
+.skillx-result-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 25px rgba(255,215,0,0.4);
+}
+
+/* =====================================================
+   MODULES
+===================================================== */
+
+.all-modules{
+    display:none;
+
+    width:100%;
+
+    max-height:none;
+
+    overflow:visible;
+
+    padding-right:0;
+
+    animation:fadeMenu 0.25s ease;
+}
+
+.module{
+    width:100%;
+    margin-bottom:9px;
+
+    border-radius:13px;
+
+    overflow:hidden;
+}
+
+.module-btn{
+    width:100%;
+
+    padding:11px;
+
+    border:none;
+
+    color:#fff;
+
+    font-size:11px;
+    font-weight:700;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:0.25s;
+}
+
+.module:nth-child(1) .module-btn{
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+}
+
+.module:nth-child(2) .module-btn{
+    background:linear-gradient(135deg,#ff9800,#ff5722);
+}
+
+.module:nth-child(3) .module-btn{
+    background:linear-gradient(135deg,#8e2de2,#4a00e0);
+}
+
+.module-btn:hover{
+    filter:brightness(1.12);
+}
+
+.submenu{
+    display:none;
+    padding:7px;
+
+    background:rgba(255,255,255,0.06);
+}
+
+.module.active .submenu{
+    display:block;
+}
+
+.submenu a{
+    display:block;
+
+    width:100%;
+
+    text-decoration:none;
+
+    color:#fff;
+
+    padding:8px;
+
+    margin:5px 0;
+
+    border-radius:9px;
+
+    font-size:10px;
+
+    background:rgba(255,255,255,0.08);
+
+    transition:0.25s;
+}
+
+.submenu a:hover{
+    background:#fff;
+    color:#000;
+    transform:translateX(3px);
+}
+
+@keyframes fadeMenu{
+
+    from{
+        opacity:0;
+        transform:translateY(-5px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* =====================================================
+   MAIN CONTENT
+===================================================== */
+
+.main{
+    margin-left:250px;
+
+    width:calc(100% - 250px);
+
+    min-height:100vh;
+
+    padding:30px;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+
+    margin-bottom:25px;
+}
+
+.header-left h1{
+    font-size:28px;
+    font-weight:700;
+}
+
+.header-left p{
+    margin-top:6px;
+    color:rgba(255,255,255,0.7);
+    font-size:13px;
+}
+
+/* =====================================================
+   REFRESH BUTTON
+===================================================== */
+
+.refresh-btn{
+    padding:10px 18px;
+
+    border:none;
+    border-radius:12px;
+
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+
+    color:#fff;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.25s;
+}
+
+.refresh-btn:hover{
+    transform:translateY(-2px);
+    background:linear-gradient(135deg,#ffd700,#ff9800);
+    color:#000;
+}
+
+/* =====================================================
+   SUMMARY CARDS
+===================================================== */
+
 .cards{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-  margin:20px 0;
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(180px,1fr));
+
+    gap:18px;
+
+    margin-bottom:25px;
 }
+
 .card{
-  background:rgba(50,75,84,.82);
-  border-radius:20px;
-  padding:22px;
-  text-align:center;
-  min-height:125px;
+    padding:22px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.35);
+
+    transition:0.3s;
 }
-.card .number{font-size:38px;font-weight:800;color:#ffd400;margin-top:12px}
-.card .label{font-size:16px;color:#e6edef}
-.section{
-  background:rgba(24,43,52,.82);
-  border-radius:20px;
-  padding:22px;
-  margin-top:20px;
-  box-shadow:0 8px 30px rgba(0,0,0,.12);
+
+.card:hover{
+    transform:translateY(-4px);
 }
-.section h2{margin:0 0 18px;color:#ffd400}
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+
+.card h3{
+    color:#ffd700;
+
+    font-size:14px;
+
+    margin-bottom:10px;
 }
-.bar-row{
-  margin:15px 0;
+
+.card .value{
+    font-size:30px;
+
+    font-weight:700;
 }
-.bar-top{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:7px;
-  font-weight:700;
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading{
+    text-align:center;
+
+    padding:18px;
+
+    color:#ffd700;
+
+    font-size:16px;
+
+    display:block;
 }
-.bar{
-  height:14px;
-  border-radius:10px;
-  background:#314b54;
-  overflow:hidden;
+
+/* =====================================================
+   CHART GRID
+===================================================== */
+
+.chart-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:20px;
+
+    margin-top:10px;
 }
-.fill{
-  height:100%;
-  border-radius:10px;
-  background:linear-gradient(90deg,#08a5c0,#8d35df);
-  width:0;
-  transition:width .5s;
+
+.chart-box{
+    min-width:0;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.35);
 }
-.search{
-  width:100%;
-  padding:14px 18px;
-  border:0;
-  border-radius:12px;
-  background:rgba(255,255,255,.15);
-  color:white;
-  outline:none;
-  font-size:15px;
-  margin-bottom:15px;
+
+.chart-box.full{
+    grid-column:1 / -1;
 }
-.search::placeholder{color:#d6dce0}
-.table-wrap{
-  overflow:auto;
-  max-height:520px;
-  border-radius:12px;
+
+.chart-title{
+    color:#ffd700;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    margin-bottom:15px;
 }
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:850px;
+
+.chart-container{
+    position:relative;
+
+    width:100%;
+
+    height:350px;
 }
-th{
-  background:#455d66;
-  color:#ffd400;
-  padding:13px 10px;
-  text-align:left;
-  position:sticky;
-  top:0;
+
+.chart-container.small{
+    height:320px;
 }
-td{
-  padding:12px 10px;
-  border-bottom:1px solid rgba(255,255,255,.1);
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-box{
+    margin-top:20px;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.35);
 }
-tr:hover{background:rgba(255,255,255,.05)}
-.badge{
-  display:inline-block;
-  padding:5px 10px;
-  border-radius:20px;
-  background:#157f9b;
-  font-size:12px;
-  font-weight:700;
+
+.table-title{
+    color:#ffd700;
+
+    font-size:20px;
+
+    font-weight:600;
+
+    margin-bottom:15px;
 }
-.status{
-  text-align:center;
-  padding:15px;
-  color:#ffd400;
+
+.table-wrapper{
+    width:100%;
+
+    overflow-x:auto;
+
+    max-height:500px;
+
+    overflow-y:auto;
+
+    border-radius:12px;
 }
-.note{
-  color:#bfcbd0;
-  font-size:13px;
-  line-height:1.6;
+
+.summary-table{
+    width:100%;
+
+    min-width:500px;
+
+    border-collapse:collapse;
 }
+
+.summary-table th{
+    padding:13px;
+
+    text-align:left;
+
+    color:#ffd700;
+
+    background:rgba(255,255,255,0.13);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:2;
+}
+
+.summary-table td{
+    padding:12px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.10);
+
+    color:#fff;
+}
+
+.summary-table tr:hover{
+    background:rgba(255,255,255,0.08);
+}
+
+.count-badge{
+    display:inline-block;
+
+    min-width:40px;
+
+    padding:5px 10px;
+
+    border-radius:20px;
+
+    background:rgba(255,215,0,0.18);
+
+    color:#ffd700;
+
+    text-align:center;
+
+    font-weight:700;
+}
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.error-box{
+    display:none;
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    background:rgba(255,75,75,0.15);
+
+    border:1px solid rgba(255,75,75,0.4);
+
+    color:#ffb0b0;
+
+    line-height:1.6;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:1100px){
+
+    .cards{
+        grid-template-columns:
+            repeat(2,minmax(180px,1fr));
+    }
+
+    .chart-grid{
+        grid-template-columns:1fr;
+    }
+
+    .chart-box.full{
+        grid-column:auto;
+    }
+
+}
+
 @media(max-width:900px){
- .cards{grid-template-columns:repeat(2,1fr)}
- .grid{grid-template-columns:1fr}
+
+    .dashboard-layout{
+        display:block;
+    }
+
+    .sidebar{
+        position:relative;
+
+        width:100%;
+        min-width:100%;
+
+        height:auto;
+
+        max-height:none;
+
+        border-right:none;
+        border-bottom:
+            1px solid rgba(255,255,255,0.12);
+    }
+
+    .main{
+        margin-left:0;
+
+        width:100%;
+
+        padding:20px;
+    }
+
 }
+
 @media(max-width:600px){
- .page{padding:12px}
- .cards{grid-template-columns:1fr}
- .hero h1{font-size:25px}
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .header-left h1{
+        font-size:23px;
+    }
+
+    .chart-container,
+    .chart-container.small{
+        height:280px;
+    }
+
+    .main{
+        padding:15px;
+    }
+
 }
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+    width:7px;
+    height:7px;
+}
+
+::-webkit-scrollbar-track{
+    background:rgba(255,255,255,0.04);
+}
+
+::-webkit-scrollbar-thumb{
+    background:rgba(255,215,0,0.5);
+    border-radius:10px;
+}
+
 </style>
+
 </head>
+
 <body>
-<div class="page">
 
-  <div class="hero">
-    <h1>🚀 SkillX Zero to Hero 2026</h1>
-    <p>Workshop Registration & Result Summary Dashboard</p>
-  </div>
+<div class="dashboard-layout">
 
-  <div class="cards">
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+```
+<h2>📊 Dashboard</h2>
+
+<!-- MAIN DASHBOARD -->
+
+<a href="dashboard.html">
+    <button>
+        🏠 Main Dashboard
+    </button>
+</a>
+
+
+<!-- CAREER QUIZ -->
+
+<a href="Career-result.html?sheet=Sheet1">
+    <button>
+        🎓 Career Quiz
+    </button>
+</a>
+
+
+<!-- SKILLX QUIZ -->
+
+<a href="skillx-result.html">
+    <button>
+        💼 SkillX Quiz
+    </button>
+</a>
+
+
+<!-- APTITUDE -->
+
+<a href="javascript:void(0)"
+   onclick="returnToDashboard()">
+
+    <button>
+        🧠 Aptitude & Placement Quiz
+    </button>
+
+</a>
+
+
+<!-- CAREER ZONE -->
+
+<a href="javascript:void(0)"
+   onclick="returnToDashboard()">
+
+    <button>
+        🎯 GJIMT Career Zone
+    </button>
+
+</a>
+
+
+<!-- =================================================
+     SKILLX RESULT
+================================================= -->
+
+<div class="skillx-menu">
+
+    <a href="SkillX_Result_Summary_Dashboard.html"
+       class="skillx-result-btn">
+
+        💼 SkillX Result
+
+    </a>
+
+</div>
+
+
+<!-- =================================================
+     SKILLX MODULES
+================================================= -->
+
+<div class="skillx-menu">
+
+    <button
+        class="main-btn"
+        id="skillxToggle">
+
+        💼 SkillX Modules ▼
+
+    </button>
+
+
+    <div
+        class="all-modules"
+        id="allModules">
+
+
+        <!-- DIGITAL POWER SKILLS -->
+
+        <div class="module">
+
+            <button class="module-btn">
+
+                ▶ Digital Power Skills
+
+            </button>
+
+
+            <div class="submenu">
+
+                <a href="skillx-result-final.html?sheet=ai-enbled">
+                    🤖 AI Documentation
+                </a>
+
+                <a href="excel-powerbi.html">
+                    📊 Excel + Power BI
+                </a>
+
+                <a href="web-dev.html">
+                    💻 Web Development
+                </a>
+
+                <a href="cyber-security.html">
+                    🔐 Information Security
+                </a>
+
+                <a href="cloud-computing.html">
+                    ☁️ Cloud Computing
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMMUNICATION -->
+
+        <div class="module">
+
+            <button class="module-btn">
+
+                ▶ Communication & Branding
+
+            </button>
+
+
+            <div class="submenu">
+
+                <a href="functional-english.html">
+                    🗣 Functional English
+                </a>
+
+                <a href="public-speaking.html">
+                    🎤 Public Speaking
+                </a>
+
+                <a href="skillx-result-final.html?sheet=canva">
+                    🎨 Canva Editing
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- BUSINESS -->
+
+        <div class="module">
+
+            <button class="module-btn">
+
+                ▶ Business & Finance
+
+            </button>
+
+
+            <div class="submenu">
+
+                <a href="resume-linkedin.html">
+                    📄 Resume & LinkedIn
+                </a>
+
+                <a href="prompt-engineering.html">
+                    ⚡ Prompt Engineering
+                </a>
+
+                <a href="skillx-result-final.html?sheet=ai-business">
+                    🧠 AI for Business
+                </a>
+
+                <a href="skillx-result-final.html?sheet=vedicmath">
+                    ➗ Vedic Maths
+                </a>
+
+                <a href="skillx-result-final.html?sheet=Tally">
+                    💰 Tally Basics
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =================================================
+     AI SESSION
+================================================= -->
+
+<div class="skillx-menu">
+
+    <button
+        class="main-btn"
+        id="aiSessionToggle">
+
+        🤖 AI Session ▼
+
+    </button>
+
+
+    <div
+        class="all-modules"
+        id="aiSessionModules">
+
+
+        <!-- SESSION 1 -->
+
+        <div class="module">
+
+            <button class="module-btn">
+
+                ▶ 📅 Session 1
+
+            </button>
+
+
+            <div class="submenu">
+
+                <a
+                    href="javascript:void(0)"
+                    onclick="returnToDashboard()">
+
+                    📊 Score
+
+                </a>
+
+
+                <a
+                    href="javascript:void(0)"
+                    onclick="returnToDashboard()">
+
+                    💬 Feedback
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- SESSION 2 -->
+
+        <div class="module">
+
+            <button class="module-btn">
+
+                ▶ 📅 Session 2
+
+            </button>
+
+
+            <div class="submenu">
+
+                <a href="javascript:void(0)">
+                    📊 Score
+                </a>
+
+                <a href="javascript:void(0)">
+                    💬 Feedback
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- SESSION 3 -->
+
+        <div class="module">
+
+            <button class="module-btn">
+
+                ▶ 📅 Session 3
+
+            </button>
+
+
+            <div class="submenu">
+
+                <a href="javascript:void(0)">
+                    📊 Score
+                </a>
+
+                <a href="javascript:void(0)">
+                    💬 Feedback
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- REFRESH -->
+
+<button onclick="location.reload()">
+
+    🔄 Refresh
+
+</button>
+
+
+<!-- BACK -->
+
+<button onclick="returnToDashboard()">
+
+    ↩️ Dashboard
+
+</button>
+```
+
+</aside>
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main">
+
+```
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="header-left">
+
+        <h1>
+            💼 SkillX Result Summary
+        </h1>
+
+        <p>
+            SkillX registrations and workshop-wise performance overview
+        </p>
+
+    </div>
+
+
+    <button
+        class="refresh-btn"
+        onclick="loadSkillXData()">
+
+        🔄 Refresh Data
+
+    </button>
+
+</div>
+
+
+<!-- LOADING -->
+
+<div
+    class="loading"
+    id="loading">
+
+    ⏳ Loading SkillX data...
+
+</div>
+
+
+<!-- ERROR -->
+
+<div
+    class="error-box"
+    id="errorBox">
+
+</div>
+
+
+<!-- =================================================
+     SUMMARY CARDS
+================================================= -->
+
+<div
+    class="cards"
+    id="summaryCards"
+    style="display:none;">
+
+
     <div class="card">
-      <div class="label">👥 Total Registrations</div>
-      <div class="number" id="total">0</div>
+
+        <h3>
+            📝 Total Registrations
+        </h3>
+
+        <div
+            class="value"
+            id="totalStudents">
+
+            0
+
+        </div>
+
     </div>
+
+
     <div class="card">
-      <div class="label">🎓 Different Workshops</div>
-      <div class="number" id="workshops">0</div>
+
+        <h3>
+            🎯 Total Workshops
+        </h3>
+
+        <div
+            class="value"
+            id="totalWorkshops">
+
+            0
+
+        </div>
+
     </div>
+
+
     <div class="card">
-      <div class="label">📚 Courses</div>
-      <div class="number" id="courses">0</div>
+
+        <h3>
+            🏆 Top Workshop
+        </h3>
+
+        <div
+            class="value"
+            id="topWorkshop"
+            style="font-size:20px;">
+
+            -
+
+        </div>
+
     </div>
+
+
     <div class="card">
-      <div class="label">📅 Workshop Dates</div>
-      <div class="number" id="dates">0</div>
-    </div>
-  </div>
 
-  <div class="grid">
-    <div class="section">
-      <h2>📊 Workshop-wise Registrations</h2>
-      <div id="workshopBars" class="status">⏳ Loading registration data...</div>
+        <h3>
+            📊 Highest Registrations
+        </h3>
+
+        <div
+            class="value"
+            id="topWorkshopCount">
+
+            0
+
+        </div>
+
     </div>
 
-    <div class="section">
-      <h2>🎓 Course-wise Registrations</h2>
-      <div id="courseBars" class="status">⏳ Loading registration data...</div>
-    </div>
-  </div>
+</div>
 
-  <div class="section">
-    <h2>⚡ Workshop Type Summary</h2>
-    <div id="typeBars" class="status">⏳ Loading registration data...</div>
-  </div>
 
-  <div class="section">
-    <h2>📋 All SkillX Zero to Hero Registrations</h2>
-    <input id="search" class="search" placeholder="🔎 Search name, phone, workshop, course..." oninput="filterRows()">
-    <div id="status" class="status">⏳ Loading Google Sheet...</div>
-    <div class="table-wrap">
-      <table id="registrationTable" style="display:none">
-        <thead></thead>
-        <tbody></tbody>
-      </table>
+<!-- =================================================
+     CHARTS
+================================================= -->
+
+<div
+    class="chart-grid"
+    id="charts"
+    style="display:none;">
+
+
+    <!-- BAR CHART -->
+
+    <div class="chart-box full">
+
+        <div class="chart-title">
+
+            📊 Workshop-wise Registrations
+
+        </div>
+
+
+        <div class="chart-container">
+
+            <canvas id="workshopBarChart"></canvas>
+
+        </div>
+
     </div>
-    <p class="note">
-      Data is loaded directly from the SkillX Zero to Hero registration Google Sheet.
-      The summary counts are calculated automatically from the sheet, so if registrations
-      increase from 49 to 50, 60, etc., the dashboard updates automatically.
-    </p>
-  </div>
+
+
+    <!-- DOUGHNUT -->
+
+    <div class="chart-box">
+
+        <div class="chart-title">
+
+            🥧 Registration Distribution
+
+        </div>
+
+
+        <div class="chart-container small">
+
+            <canvas id="workshopPieChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOP WORKSHOPS -->
+
+    <div class="chart-box">
+
+        <div class="chart-title">
+
+            📈 Top Workshops
+
+        </div>
+
+
+        <div class="chart-container small">
+
+            <canvas id="topWorkshopChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =================================================
+     SUMMARY TABLE
+================================================= -->
+
+<div
+    class="table-box"
+    id="tableBox"
+    style="display:none;">
+
+
+    <div class="table-title">
+
+        📋 Workshop Registration Summary
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table class="summary-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Workshop / Domain
+                    </th>
+
+                    <th>
+                        Registrations
+                    </th>
+
+                    <th>
+                        Percentage
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="summaryTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+```
+
+</main>
 
 </div>
 
 <script>
-const SPREADSHEET_ID = "1_jz5dlujvDNeVnYUsqVReK4iwBRPEAhuMhGGqlwDmz0";
+
+/* =====================================================
+   CONFIGURATION
+===================================================== */
+
+const SKILLX_SPREADSHEET_ID =
+    "1_jz5dlujvDNeVnYUsqVReK4iwBRPEAhuMhGGqlwDmz0";
+
 
 /*
-  Leave SHEET_NAME empty to use the first tab of the Google Sheet.
-  If your registration data is in another tab, put its exact tab name here.
+   Change this only if your Google Sheet tab has
+   a different name.
+
+   Example:
+   Sheet1
+   Responses
+   SkillX
 */
-const SHEET_NAME = "";
 
-let allRows = [];
-let headers = [];
+const SKILLX_SHEET_NAME = "Sheet1";
 
-function gvizUrl(){
-  let url = "https://docs.google.com/spreadsheets/d/" + SPREADSHEET_ID +
-            "/gviz/tq?tqx=out:json";
-  if(SHEET_NAME){
-    url += "&sheet=" + encodeURIComponent(SHEET_NAME);
-  }
-  return url;
+
+let workshopBarChart = null;
+let workshopPieChart = null;
+let topWorkshopChart = null;
+
+
+/* =====================================================
+   PAGE LOAD
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        setupMenus();
+
+        loadSkillXData();
+
+    }
+);
+
+
+/* =====================================================
+   LOAD SKILLX DATA
+===================================================== */
+
+function loadSkillXData(){
+
+    const loading =
+        document.getElementById("loading");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+
+    loading.style.display = "block";
+
+    loading.innerHTML =
+        "⏳ Loading SkillX registrations...";
+
+
+    errorBox.style.display = "none";
+
+
+    document.getElementById(
+        "summaryCards"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "charts"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "tableBox"
+    ).style.display = "none";
+
+
+    /*
+       IMPORTANT:
+       encodeURIComponent makes sheet names
+       with spaces work correctly.
+    */
+
+    const url =
+        "https://opensheet.elk.sh/" +
+        SKILLX_SPREADSHEET_ID +
+        "/" +
+        encodeURIComponent(SKILLX_SHEET_NAME);
+
+
+    console.log("SkillX URL:",url);
+
+
+    fetch(url)
+
+    .then(function(response){
+
+        if(!response.ok){
+
+            throw new Error(
+                "Google Sheet could not be loaded."
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function(data){
+
+        console.log(
+            "SkillX records:",
+            data
+        );
+
+
+        if(
+            !Array.isArray(data) ||
+            data.length === 0
+        ){
+
+            throw new Error(
+                "No records found in the SkillX sheet."
+            );
+
+        }
+
+
+        loading.style.display = "none";
+
+
+        processSkillXData(data);
+
+    })
+
+    .catch(function(error){
+
+        console.error(
+            "SkillX Error:",
+            error
+        );
+
+
+        loading.style.display = "none";
+
+
+        errorBox.style.display = "block";
+
+
+        errorBox.innerHTML =
+            "❌ <strong>Unable to load SkillX data.</strong><br><br>" +
+
+            "Please check:<br>" +
+
+            "1. Google Sheet ID is correct.<br>" +
+
+            "2. Sheet tab name is <strong>" +
+            SKILLX_SHEET_NAME +
+            "</strong>.<br>" +
+
+            "3. Google Sheet is publicly accessible.<br>" +
+
+            "4. The SkillX data contains records.";
+
+    });
+
 }
 
-function cleanGviz(text){
-  const start = text.indexOf("{");
-  const end = text.lastIndexOf("}");
-  if(start < 0 || end < 0) throw new Error("Invalid Google Sheet response");
-  return JSON.parse(text.substring(start,end+1));
-}
 
-function normal(v){
-  return String(v ?? "").trim();
-}
+/* =====================================================
+   PROCESS DATA
+===================================================== */
 
-function findColumn(names){
-  const lower = headers.map(h => h.toLowerCase().replace(/\s+/g," ").trim());
-  for(const name of names){
-    const i = lower.indexOf(name.toLowerCase());
-    if(i >= 0) return headers[i];
-  }
-  return null;
-}
+function processSkillXData(data){
 
-function countBy(rows, column){
-  const map = {};
-  if(!column) return map;
-  rows.forEach(r=>{
-    const value = normal(r[column]) || "Not specified";
-    map[value] = (map[value] || 0) + 1;
-  });
-  return Object.fromEntries(
-    Object.entries(map).sort((a,b)=>b[1]-a[1])
-  );
-}
+    /*
+       We try several possible column names so the
+       dashboard can work even if your sheet header
+       is slightly different.
+    */
 
-function renderBars(targetId, counts){
-  const target = document.getElementById(targetId);
-  const entries = Object.entries(counts);
 
-  if(!entries.length){
-    target.innerHTML = "No data available";
-    return;
-  }
+    const firstRow = data[0];
 
-  const max = Math.max(...entries.map(x=>x[1]));
-  target.innerHTML = entries.map(([name,count])=>`
-    <div class="bar-row">
-      <div class="bar-top">
-        <span>${escapeHtml(name)}</span>
-        <span>${count}</span>
-      </div>
-      <div class="bar">
-        <div class="fill" style="width:${(count/max)*100}%"></div>
-      </div>
-    </div>
-  `).join("");
-}
+    const columns =
+        Object.keys(firstRow);
 
-function renderTable(){
-  const table = document.getElementById("registrationTable");
-  table.querySelector("thead").innerHTML =
-    "<tr>" + headers.map(h=>`<th>${escapeHtml(h)}</th>`).join("") + "</tr>";
 
-  table.querySelector("tbody").innerHTML = allRows.map(row=>{
-    return "<tr>" + headers.map(h=>{
-      const value = normal(row[h]);
-      return `<td>${escapeHtml(value || "-")}</td>`;
-    }).join("") + "</tr>";
-  }).join("");
-
-  table.style.display = "table";
-}
-
-function filterRows(){
-  const q = document.getElementById("search").value.toLowerCase();
-  document.querySelectorAll("#registrationTable tbody tr").forEach(tr=>{
-    tr.style.display = tr.innerText.toLowerCase().includes(q) ? "" : "none";
-  });
-}
-
-function escapeHtml(value){
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-async function loadData(){
-  try{
-    const response = await fetch(gvizUrl());
-    if(!response.ok) throw new Error("Google Sheet could not be accessed");
-    const text = await response.text();
-    const data = cleanGviz(text);
-
-    const cols = data.table.cols.map(c => c.label || "");
-    headers = cols.map((h,i)=>h || ("Column " + (i+1)));
-
-    allRows = data.table.rows.map(r=>{
-      const obj = {};
-      headers.forEach((h,i)=>{
-        obj[h] = r.c[i] ? (r.c[i].f ?? r.c[i].v ?? "") : "";
-      });
-      return obj;
-    }).filter(row =>
-      Object.values(row).some(v => normal(v) !== "")
+    console.log(
+        "SkillX columns:",
+        columns
     );
 
-    const workshopCol = findColumn([
-      "Workshop Name","Workshop","Workshop name"
-    ]);
-    const courseCol = findColumn(["Course","Program"]);
-    const typeCol = findColumn([
-      "Workshop Type","Type"
-    ]);
-    const dateCol = findColumn(["Date","Workshop Date"]);
 
-    document.getElementById("total").textContent = allRows.length;
-    document.getElementById("workshops").textContent =
-      Object.keys(countBy(allRows,workshopCol)).length;
-    document.getElementById("courses").textContent =
-      Object.keys(countBy(allRows,courseCol)).length;
-    document.getElementById("dates").textContent =
-      Object.keys(countBy(allRows,dateCol)).length;
+    const domainColumn =
+        findColumn(
+            columns,
+            [
+                "Bundle Domain",
+                "Domain",
+                "Workshop",
+                "Workshop Name",
+                "Skill",
+                "SkillX Domain",
+                "Selected Workshop",
+                "Course"
+            ]
+        );
 
-    renderBars("workshopBars",countBy(allRows,workshopCol));
-    renderBars("courseBars",countBy(allRows,courseCol));
-    renderBars("typeBars",countBy(allRows,typeCol));
 
-    renderTable();
-    document.getElementById("status").style.display = "none";
+    /*
+       If the exact column isn't found, try to detect
+       a likely column automatically.
+    */
 
-  }catch(error){
-    console.error(error);
-    document.getElementById("status").innerHTML =
-      "❌ Failed to load Google Sheet<br><small>" +
-      escapeHtml(error.message) +
-      "</small>";
-  }
+    let selectedColumn =
+        domainColumn;
+
+
+    if(!selectedColumn){
+
+        selectedColumn =
+            autoDetectWorkshopColumn(
+                columns
+            );
+
+    }
+
+
+    if(!selectedColumn){
+
+        throw new Error(
+            "Could not find the workshop/domain column. Found columns: " +
+            columns.join(", ")
+        );
+
+    }
+
+
+    console.log(
+        "Using workshop column:",
+        selectedColumn
+    );
+
+
+    /*
+       COUNT WORKSHOPS
+    */
+
+    const workshopMap = {};
+
+
+    data.forEach(function(row){
+
+        let value =
+            row[selectedColumn];
+
+
+        if(
+            value === undefined ||
+            value === null ||
+            String(value).trim() === ""
+        ){
+
+            value = "Unknown";
+
+        }
+
+
+        value =
+            String(value).trim();
+
+
+        workshopMap[value] =
+            (workshopMap[value] || 0) + 1;
+
+    });
+
+
+    /*
+       SORT HIGHEST FIRST
+    */
+
+    const sorted =
+        Object.entries(workshopMap)
+        .sort(function(a,b){
+
+            return b[1] - a[1];
+
+        });
+
+
+    const totalStudents =
+        data.length;
+
+
+    const totalWorkshops =
+        sorted.length;
+
+
+    const topWorkshop =
+        sorted.length > 0
+        ? sorted[0][0]
+        : "-";
+
+
+    const topCount =
+        sorted.length > 0
+        ? sorted[0][1]
+        : 0;
+
+
+    /*
+       UPDATE CARDS
+    */
+
+    document.getElementById(
+        "totalStudents"
+    ).innerText =
+        totalStudents;
+
+
+    document.getElementById(
+        "totalWorkshops"
+    ).innerText =
+        totalWorkshops;
+
+
+    document.getElementById(
+        "topWorkshop"
+    ).innerText =
+        topWorkshop;
+
+
+    document.getElementById(
+        "topWorkshopCount"
+    ).innerText =
+        topCount;
+
+
+    document.getElementById(
+        "summaryCards"
+    ).style.display = "grid";
+
+
+    /*
+       CREATE CHARTS
+    */
+
+    createBarChart(
+        sorted
+    );
+
+
+    createPieChart(
+        sorted
+    );
+
+
+    createTopChart(
+        sorted
+    );
+
+
+    /*
+       CREATE TABLE
+    */
+
+    createSummaryTable(
+        sorted,
+        totalStudents
+    );
+
+
+    document.getElementById(
+        "charts"
+    ).style.display = "grid";
+
+
+    document.getElementById(
+        "tableBox"
+    ).style.display = "block";
+
 }
 
-loadData();
+
+/* =====================================================
+   FIND COLUMN
+===================================================== */
+
+function findColumn(
+    columns,
+    possibleNames
+){
+
+    for(
+        let i = 0;
+        i < possibleNames.length;
+        i++
+    ){
+
+        const wanted =
+            possibleNames[i]
+            .toLowerCase()
+            .trim();
+
+
+        for(
+            let j = 0;
+            j < columns.length;
+            j++
+        ){
+
+            const current =
+                columns[j]
+                .toLowerCase()
+                .trim();
+
+
+            if(current === wanted){
+
+                return columns[j];
+
+            }
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   AUTO DETECT WORKSHOP COLUMN
+===================================================== */
+
+function autoDetectWorkshopColumn(
+    columns
+){
+
+    const keywords = [
+        "domain",
+        "workshop",
+        "skill",
+        "bundle",
+        "course",
+        "program",
+        "interest",
+        "selection",
+        "choice"
+    ];
+
+
+    for(
+        let i = 0;
+        i < columns.length;
+        i++
+    ){
+
+        const name =
+            columns[i].toLowerCase();
+
+
+        for(
+            let j = 0;
+            j < keywords.length;
+            j++
+        ){
+
+            if(
+                name.includes(
+                    keywords[j]
+                )
+            ){
+
+                return columns[i];
+
+            }
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   BAR CHART
+===================================================== */
+
+function createBarChart(
+    sorted
+){
+
+    const ctx =
+        document.getElementById(
+            "workshopBarChart"
+        );
+
+
+    if(workshopBarChart){
+
+        workshopBarChart.destroy();
+
+    }
+
+
+    workshopBarChart =
+        new Chart(
+            ctx,
+            {
+
+                type:"bar",
+
+                data:{
+
+                    labels:
+                        sorted.map(
+                            item => item[0]
+                        ),
+
+                    datasets:[{
+
+                        label:
+                            "Registrations",
+
+                        data:
+                            sorted.map(
+                                item => item[1]
+                            )
+
+                    }]
+
+                },
+
+                options:{
+
+                    responsive:true,
+
+                    maintainAspectRatio:false,
+
+                    indexAxis:"y",
+
+                    plugins:{
+
+                        legend:{
+
+                            display:true
+
+                        },
+
+                        tooltip:{
+
+                            callbacks:{
+
+                                label:function(
+                                    context
+                                ){
+
+                                    return (
+                                        " Registrations: " +
+                                        context.raw
+                                    );
+
+                                }
+
+                            }
+
+                        }
+
+                    },
+
+                    scales:{
+
+                        x:{
+
+                            beginAtZero:true,
+
+                            ticks:{
+
+                                precision:0,
+
+                                color:"#fff"
+
+                            },
+
+                            grid:{
+
+                                color:
+                                    "rgba(255,255,255,0.08)"
+
+                            }
+
+                        },
+
+                        y:{
+
+                            ticks:{
+
+                                color:"#fff"
+
+                            },
+
+                            grid:{
+
+                                color:
+                                    "rgba(255,255,255,0.05)"
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   PIE CHART
+===================================================== */
+
+function createPieChart(
+    sorted
+){
+
+    const ctx =
+        document.getElementById(
+            "workshopPieChart"
+        );
+
+
+    if(workshopPieChart){
+
+        workshopPieChart.destroy();
+
+    }
+
+
+    workshopPieChart =
+        new Chart(
+            ctx,
+            {
+
+                type:"doughnut",
+
+                data:{
+
+                    labels:
+                        sorted.map(
+                            item => item[0]
+                        ),
+
+                    datasets:[{
+
+                        label:
+                            "Registrations",
+
+                        data:
+                            sorted.map(
+                                item => item[1]
+                            )
+
+                    }]
+
+                },
+
+                options:{
+
+                    responsive:true,
+
+                    maintainAspectRatio:false,
+
+                    plugins:{
+
+                        legend:{
+
+                            position:"bottom",
+
+                            labels:{
+
+                                color:"#fff",
+
+                                padding:12
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   TOP WORKSHOPS CHART
+===================================================== */
+
+function createTopChart(
+    sorted
+){
+
+    const ctx =
+        document.getElementById(
+            "topWorkshopChart"
+        );
+
+
+    if(topWorkshopChart){
+
+        topWorkshopChart.destroy();
+
+    }
+
+
+    const top =
+        sorted.slice(0,5);
+
+
+    topWorkshopChart =
+        new Chart(
+            ctx,
+            {
+
+                type:"bar",
+
+                data:{
+
+                    labels:
+                        top.map(
+                            item => item[0]
+                        ),
+
+                    datasets:[{
+
+                        label:
+                            "Registrations",
+
+                        data:
+                            top.map(
+                                item => item[1]
+                            )
+
+                    }]
+
+                },
+
+                options:{
+
+                    responsive:true,
+
+                    maintainAspectRatio:false,
+
+                    plugins:{
+
+                        legend:{
+
+                            display:false
+
+                        }
+
+                    },
+
+                    scales:{
+
+                        y:{
+
+                            beginAtZero:true,
+
+                            ticks:{
+
+                                precision:0,
+
+                                color:"#fff"
+
+                            }
+
+                        },
+
+                        x:{
+
+                            ticks:{
+
+                                color:"#fff",
+
+                                maxRotation:45,
+
+                                minRotation:0
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   SUMMARY TABLE
+===================================================== */
+
+function createSummaryTable(
+    sorted,
+    totalStudents
+){
+
+    const tbody =
+        document.getElementById(
+            "summaryTableBody"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    sorted.forEach(
+        function(item,index){
+
+            const name =
+                item[0];
+
+
+            const count =
+                item[1];
+
+
+            const percentage =
+                totalStudents > 0
+                ? (
+                    count /
+                    totalStudents *
+                    100
+                  ).toFixed(1)
+                : "0.0";
+
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            tr.innerHTML =
+
+                "<td>" +
+                (index + 1) +
+                "</td>" +
+
+                "<td>" +
+                escapeHTML(name) +
+                "</td>" +
+
+                "<td>" +
+                "<span class='count-badge'>" +
+                count +
+                "</span>" +
+                "</td>" +
+
+                "<td>" +
+                percentage +
+                "%" +
+                "</td>";
+
+
+            tbody.appendChild(tr);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(
+    value
+){
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   MENU SETUP
+===================================================== */
+
+function setupMenus(){
+
+    /*
+       SKILLX MODULE MENU
+    */
+
+    const skillxToggle =
+        document.getElementById(
+            "skillxToggle"
+        );
+
+
+    const allModules =
+        document.getElementById(
+            "allModules"
+        );
+
+
+    skillxToggle.addEventListener(
+        "click",
+        function(){
+
+            if(
+                allModules.style.display ===
+                "block"
+            ){
+
+                allModules.style.display =
+                    "none";
+
+                skillxToggle.innerHTML =
+                    "💼 SkillX Modules ▼";
+
+            }
+
+            else{
+
+                allModules.style.display =
+                    "block";
+
+                skillxToggle.innerHTML =
+                    "💼 SkillX Modules ▲";
+
+            }
+
+        }
+    );
+
+
+    /*
+       AI SESSION MENU
+    */
+
+    const aiToggle =
+        document.getElementById(
+            "aiSessionToggle"
+        );
+
+
+    const aiModules =
+        document.getElementById(
+            "aiSessionModules"
+        );
+
+
+    aiToggle.addEventListener(
+        "click",
+        function(){
+
+            if(
+                aiModules.style.display ===
+                "block"
+            ){
+
+                aiModules.style.display =
+                    "none";
+
+                aiToggle.innerHTML =
+                    "🤖 AI Session ▼";
+
+            }
+
+            else{
+
+                aiModules.style.display =
+                    "block";
+
+                aiToggle.innerHTML =
+                    "🤖 AI Session ▲";
+
+            }
+
+        }
+    );
+
+
+    /*
+       ACCORDION
+    */
+
+    document
+        .querySelectorAll(
+            ".module-btn"
+        )
+        .forEach(
+            function(button){
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        const module =
+                            button.parentElement;
+
+
+                        /*
+                           Close other modules
+                           in the same menu.
+                        */
+
+                        const parent =
+                            module.parentElement;
+
+
+                        parent
+                            .querySelectorAll(
+                                ".module"
+                            )
+                            .forEach(
+                                function(other){
+
+                                    if(
+                                        other !==
+                                        module
+                                    ){
+
+                                        other.classList
+                                            .remove(
+                                                "active"
+                                            );
+
+                                    }
+
+                                }
+                            );
+
+
+                        module.classList
+                            .toggle(
+                                "active"
+                            );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   RETURN TO MAIN DASHBOARD
+===================================================== */
+
+function returnToDashboard(){
+
+    /*
+       Change this filename if your main dashboard
+       file has another name.
+    */
+
+    window.location.href =
+        "dashboard.html";
+
+}
+
 </script>
+
 </body>
 </html>
