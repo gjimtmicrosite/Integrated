@@ -4,12 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GJIMT Analytics Dashboard</title>
+<title>GJIMT Career Analytics Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -22,10 +21,6 @@ body{
     color:white;
     overflow-x:hidden;
 }
-
-/* =========================
-   BACKGROUND GLOW
-========================= */
 
 body::before{
     content:"";
@@ -51,51 +46,44 @@ body::after{
     z-index:-1;
 }
 
-
 /* =========================
    SIDEBAR
 ========================= */
-
 .sidebar{
     width:250px;
     height:100vh;
     position:fixed;
     top:0;
     left:0;
-
     background:rgba(255,255,255,0.05);
     backdrop-filter:blur(20px);
-
     padding:18px 14px;
-
     border-right:1px solid rgba(255,255,255,0.1);
-
     overflow-y:auto;
 }
 
 .sidebar h2{
     color:#ffd700;
-    margin-bottom:25px;
-    font-size:24px;
+    margin-bottom:20px;
+    font-size:23px;
+}
+
+.sidebar a{
+    text-decoration:none;
+    display:block;
 }
 
 .sidebar button{
     width:100%;
-    margin:10px 0;
-    padding:13px;
-
+    margin:7px 0;
+    padding:12px;
     border:none;
     border-radius:14px;
-
     background:rgba(255,255,255,0.1);
-
     color:white;
-
-    font-size:15px;
+    font-size:13px;
     font-weight:500;
-
     cursor:pointer;
-
     transition:0.3s;
 }
 
@@ -106,69 +94,157 @@ body::after{
     transform:translateX(5px);
 }
 
+/* =========================
+   COLLAPSIBLE MENUS
+========================= */
+.skillx-menu{
+    width:100%;
+    margin-top:7px;
+}
+
+.main-btn{
+    width:100%;
+    padding:12px !important;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#00c6ff,#0072ff) !important;
+    color:white !important;
+    font-size:13px !important;
+    font-weight:600 !important;
+    cursor:pointer;
+    transition:0.3s;
+    margin-bottom:7px !important;
+}
+
+.main-btn:hover{
+    background:linear-gradient(135deg,#ffd700,#ff9800) !important;
+    color:black !important;
+}
+
+.all-modules{
+    display:none;
+    padding-right:4px;
+    margin-top:4px;
+    animation:fadeMenu 0.3s ease;
+}
+
+.module{
+    margin-bottom:8px;
+    border-radius:12px;
+    overflow:visible;
+}
+
+.module-btn{
+    width:100% !important;
+    min-height:48px;
+    padding:9px 11px !important;
+    border:none;
+    color:white !important;
+    font-size:10px !important;
+    font-weight:700 !important;
+    text-align:left;
+    cursor:pointer;
+    transition:0.3s;
+    border-radius:12px !important;
+    margin:0 !important;
+}
+
+.module:nth-child(1) .module-btn{
+    background:linear-gradient(135deg,#00c6ff,#0072ff) !important;
+}
+.module:nth-child(2) .module-btn{
+    background:linear-gradient(135deg,#ff9800,#ff5722) !important;
+}
+.module:nth-child(3) .module-btn{
+    background:linear-gradient(135deg,#8e2de2,#4a00e0) !important;
+}
+
+.module-btn:hover{
+    transform:scale(1.02);
+}
+
+.submenu{
+    display:none;
+    padding:6px;
+}
+
+.module.active .submenu{
+    display:block;
+}
+
+.module:nth-child(1) .submenu{
+    background:rgba(0,114,255,0.15);
+}
+.module:nth-child(2) .submenu{
+    background:rgba(255,102,0,0.32);
+}
+.module:nth-child(3) .submenu{
+    background:rgba(142,45,226,0.15);
+}
+
+.submenu a{
+    display:block;
+    text-decoration:none;
+    color:white;
+    padding:8px 10px;
+    margin:4px 0;
+    border-radius:8px;
+    font-size:10px;
+    transition:0.3s;
+    background:rgba(255,255,255,0.08);
+}
+
+.submenu a:hover{
+    background:white;
+    color:black;
+    transform:translateX(4px);
+}
+
+@keyframes fadeMenu{
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
 
 /* =========================
    MAIN CONTENT
 ========================= */
-
 .main-content{
     margin-left:260px;
     padding:25px;
 }
 
-
-/* =========================
-   HEADER
-========================= */
-
 .header{
     background:rgba(255,255,255,0.08);
-
     backdrop-filter:blur(18px);
-
     border-radius:20px;
-
     padding:22px;
-
     text-align:center;
-
     font-size:28px;
     font-weight:700;
-
     margin-bottom:25px;
-
     box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
-
-/* =========================
-   STATS
-========================= */
-
 .stats{
     display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
-
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:20px;
-
     margin-bottom:25px;
 }
 
 .stat-card{
     background:rgba(255,255,255,0.08);
-
     backdrop-filter:blur(18px);
-
     border-radius:20px;
-
     padding:22px;
-
     text-align:center;
-
     box-shadow:0 10px 25px rgba(0,0,0,0.3);
-
     transition:0.3s;
 }
 
@@ -188,49 +264,29 @@ body::after{
     color:#ffd700;
 }
 
-
-/* =========================
-   TABLE CARD
-========================= */
-
 .card{
     background:rgba(255,255,255,0.08);
-
     backdrop-filter:blur(18px);
-
     border-radius:22px;
-
     padding:20px;
-
     box-shadow:0 10px 30px rgba(0,0,0,0.35);
 }
-
-
-/* =========================
-   SEARCH BOX
-========================= */
 
 .search-box{
     display:flex;
     gap:12px;
     flex-wrap:wrap;
-
     margin-bottom:20px;
 }
 
 .search-box input{
     flex:1;
     min-width:250px;
-
     padding:12px;
-
     border:none;
     outline:none;
-
     border-radius:12px;
-
     background:rgba(255,255,255,0.12);
-
     color:white;
 }
 
@@ -240,29 +296,18 @@ body::after{
 
 .search-box button{
     padding:12px 18px;
-
     border:none;
     border-radius:12px;
-
     background:linear-gradient(45deg,#667eea,#764ba2);
-
     color:white;
-
     cursor:pointer;
-
     font-weight:600;
-
     transition:0.3s;
 }
 
 .search-box button:hover{
     transform:scale(1.05);
 }
-
-
-/* =========================
-   TABLE
-========================= */
 
 .table-container{
     overflow-x:auto;
@@ -276,31 +321,21 @@ table{
 
 th{
     background:rgba(255,255,255,0.15);
-
     padding:14px;
-
     color:#ffd700;
-
     font-size:14px;
 }
 
 td{
     padding:12px;
     text-align:center;
-
     border-bottom:1px solid rgba(255,255,255,0.08);
-
     font-size:14px;
 }
 
 tr:hover{
     background:rgba(255,255,255,0.05);
 }
-
-
-/* =========================
-   BADGES
-========================= */
 
 .badge{
     padding:6px 10px;
@@ -310,30 +345,11 @@ tr:hover{
     font-weight:600;
 }
 
-.blue{
-    background:#2196f3;
-}
-
-.green{
-    background:#28a745;
-}
-
-.orange{
-    background:#ff9800;
-}
-
-.red{
-    background:#e53935;
-}
-
-.purple{
-    background:#8e2de2;
-}
-
-
-/* =========================
-   LOADER
-========================= */
+.blue{background:#2196f3;}
+.green{background:#28a745;}
+.orange{background:#ff9800;}
+.red{background:#e53935;}
+.purple{background:#8e2de2;}
 
 #loader{
     text-align:center;
@@ -342,152 +358,10 @@ tr:hover{
     color:#ffd700;
 }
 
-
-/* =========================
-   SKILLX MENU
-========================= */
-
-.skillx-menu{
-    width:100%;
-    margin-top:10px;
-}
-
-.main-btn{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:14px;
-
-    background:linear-gradient(135deg,#00c6ff,#0072ff);
-
-    color:white;
-    font-size:13px;
-    font-weight:600;
-    cursor:pointer;
-
-    transition:0.3s;
-    margin-bottom:10px;
-}
-
-.main-btn:hover{
-    background:linear-gradient(135deg,#ffd700,#ff9800);
-    color:black;
-}
-
-.all-modules{
-    display:none;
-    padding-right:4px;
-    margin-top:6px;
-    animation:fadeMenu 0.3s ease;
-}
-
-.module{
-    margin-bottom:8px;
-    border-radius:12px;
-    overflow:hidden;
-}
-
-.module-btn{
-    width:100%;
-    height:60px;
-    padding:9px 12px;
-
-    border:none;
-    color:white;
-
-    font-size:10px;
-    font-weight:600;
-
-    text-align:left;
-
-    cursor:pointer;
-    transition:0.3s;
-
-    border-radius:12px;
-}
-
-.module:nth-child(1) .module-btn{
-    background:linear-gradient(135deg,#00c6ff,#0072ff);
-}
-
-.module:nth-child(2) .module-btn{
-    background:linear-gradient(135deg,#ff9800,#ff5722);
-}
-
-.module:nth-child(3) .module-btn{
-    background:linear-gradient(135deg,#8e2de2,#4a00e0);
-}
-
-.module-btn:hover{
-    transform:scale(1.02);
-}
-
-.submenu{
-    display:none;
-    padding:6px;
-}
-
-.module.active .submenu{
-    display:block;
-}
-
-.module:nth-child(1) .submenu{
-    background:rgba(0,114,255,0.15);
-}
-
-.module:nth-child(2) .submenu{
-    background:rgba(255,102,0,0.32);
-}
-
-.module:nth-child(3) .submenu{
-    background:rgba(142,45,226,0.15);
-}
-
-.submenu a{
-    display:block;
-
-    text-decoration:none;
-    color:white;
-
-    padding:8px 10px;
-    margin:4px 0;
-
-    border-radius:8px;
-
-    font-size:10px;
-
-    transition:0.3s;
-
-    background:rgba(255,255,255,0.08);
-}
-
-.submenu a:hover{
-    background:white;
-    color:black;
-    transform:translateX(4px);
-}
-
-@keyframes fadeMenu{
-
-    from{
-        opacity:0;
-        transform:translateY(-10px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-
-}
-
-
 /* =========================
    MOBILE
 ========================= */
-
 @media(max-width:900px){
-
     .sidebar{
         width:100%;
         height:auto;
@@ -510,64 +384,64 @@ tr:hover{
     .search-box input{
         min-width:100%;
     }
-
 }
-
 </style>
 </head>
 
-
 <body>
-
 
 <!-- =========================
      SIDEBAR
 ========================= -->
-
 <div class="sidebar">
 
     <h2>📊 Dashboard</h2>
 
+    <!-- MAIN DASHBOARD -->
+    <button onclick="goToMainDashboard()">
+        🏠 Main Dashboard
+    </button>
 
+    <!-- CAREER QUIZ - CURRENT PAGE -->
     <button onclick="loadDashboard('career')" id="careerBtn">
         🎓 Career Quiz
     </button>
 
+    <!-- SKILLX QUIZ -->
+    <a href="skillx-result.html">
+        <button>
+            💼 SkillX Quiz
+        </button>
+    </a>
 
+    <!-- APTITUDE QUIZ -->
     <button onclick="loadDashboard('aptitude')" id="aptitudeBtn">
         🧠 Aptitude & Placement Quiz
     </button>
 
-
+    <!-- GJIMT CAREER ZONE -->
     <button onclick="loadDashboard('wellbeing')" id="wellbeingBtn">
         🎯 GJIMT Career Zone
     </button>
 
-
     <!-- =========================
          SKILLX RESULT MENU
     ========================= -->
-
     <div class="skillx-menu">
 
         <button class="main-btn" id="skillxToggle">
             💼 SkillX Result ▼
         </button>
 
-
         <div class="all-modules" id="allModules">
 
-
-            <!-- DIGITAL POWER -->
-
+            <!-- DIGITAL POWER SKILLS -->
             <div class="module">
-
                 <button class="module-btn">
                     ▶ Digital Power Skills
                 </button>
 
                 <div class="submenu">
-
                     <a href="digital-power-skills.html">
                         🤖 AI-Enabled Documentation
                     </a>
@@ -587,22 +461,16 @@ tr:hover{
                     <a href="cloud-computing.html">
                         ☁️ Cloud Computing
                     </a>
-
                 </div>
-
             </div>
 
-
-            <!-- COMMUNICATION -->
-
+            <!-- COMMUNICATION & PERSONAL BRANDING -->
             <div class="module">
-
                 <button class="module-btn">
-                    ▶ COMMUNICATION & PERSONAL BRANDING
+                    ▶ Communication & Personal Branding
                 </button>
 
                 <div class="submenu">
-
                     <a href="functional-english.html">
                         🗣 Functional English
                     </a>
@@ -614,22 +482,16 @@ tr:hover{
                     <a href="canva-editing.html">
                         🎨 Canva Editing
                     </a>
-
                 </div>
-
             </div>
 
-
-            <!-- BUSINESS -->
-
+            <!-- BUSINESS & FINANCIAL SMART SKILLS -->
             <div class="module">
-
                 <button class="module-btn">
-                    ▶ BUSINESS & FINANCIAL SMART SKILLS
+                    ▶ Business & Financial Smart Skills
                 </button>
 
                 <div class="submenu">
-
                     <a href="resume-linkedin.html">
                         📄 Resume Building & LinkedIn
                     </a>
@@ -649,96 +511,124 @@ tr:hover{
                     <a href="tally.html">
                         💰 Tally Accounting Basics
                     </a>
-
                 </div>
-
             </div>
 
         </div>
-
     </div>
 
+    <!-- =========================
+         AI SESSION MENU
+    ========================= -->
+    <div class="skillx-menu">
 
+        <button class="main-btn" id="aiSessionToggle">
+            🤖 AI Session ▼
+        </button>
+
+        <div class="all-modules" id="aiSessionModules">
+
+            <!-- SESSION 1 -->
+            <div class="module">
+                <button class="module-btn">
+                    ▶ 📅 Session 1
+                </button>
+
+                <div class="submenu">
+                    <a href="javascript:void(0)"
+                       onclick="openSheet('AI Monthly Session')">
+                        📊 Score
+                    </a>
+
+                    <a href="javascript:void(0)"
+                       onclick="openSheet('AI Monthly Session Feedback')">
+                        💬 Feedback
+                    </a>
+                </div>
+            </div>
+
+            <!-- SESSION 2 -->
+            <div class="module">
+                <button class="module-btn">
+                    ▶ 📅 Session 2
+                </button>
+
+                <div class="submenu">
+                    <a href="javascript:void(0)"
+                       onclick="alert('Session 2 data will be added soon')">
+                        📊 Score
+                    </a>
+
+                    <a href="javascript:void(0)"
+                       onclick="alert('Session 2 feedback will be added soon')">
+                        💬 Feedback
+                    </a>
+                </div>
+            </div>
+
+            <!-- SESSION 3 -->
+            <div class="module">
+                <button class="module-btn">
+                    ▶ 📅 Session 3
+                </button>
+
+                <div class="submenu">
+                    <a href="javascript:void(0)"
+                       onclick="alert('Session 3 data will be added soon')">
+                        📊 Score
+                    </a>
+
+                    <a href="javascript:void(0)"
+                       onclick="alert('Session 3 feedback will be added soon')">
+                        💬 Feedback
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- REFRESH -->
     <button onclick="location.reload()">
         🔄 Refresh
     </button>
 
-
+    <!-- LOGOUT -->
     <button onclick="goHome()">
         🚪 Logout
     </button>
 
-
 </div>
-
-
 
 <!-- =========================
      MAIN CONTENT
 ========================= -->
-
 <div class="main-content">
-
-
-    <!-- HEADER -->
 
     <div class="header" id="dashboardTitle">
         🚀 Career Test Analytics Dashboard
     </div>
 
-
-    <!-- STATS -->
-
     <div class="stats">
 
         <div class="stat-card">
-
-            <div id="stat1Title">
-                Total Students
-            </div>
-
-            <div id="total">
-                0
-            </div>
-
+            <div id="stat1Title">Total Students</div>
+            <div id="total">0</div>
         </div>
 
-
         <div class="stat-card">
-
-            <div id="stat2Title">
-                Top Career
-            </div>
-
-            <div id="domain">
-                -
-            </div>
-
+            <div id="stat2Title">Top Career</div>
+            <div id="domain">-</div>
         </div>
 
-
         <div class="stat-card">
-
-            <div id="stat3Title">
-                Avg Score
-            </div>
-
-            <div id="avg">
-                0
-            </div>
-
+            <div id="stat3Title">Avg Score</div>
+            <div id="avg">0</div>
         </div>
 
     </div>
 
-
-
-    <!-- TABLE CARD -->
-
     <div class="card">
-
-
-        <!-- SEARCH -->
 
         <div class="search-box">
 
@@ -748,353 +638,176 @@ tr:hover{
                 placeholder="🔍 Search student..."
             >
 
-            <button onclick="searchTable()">
-                Search
-            </button>
+            <button onclick="searchTable()">Search</button>
 
-            <button onclick="resetTable()">
-                Clear
-            </button>
+            <button onclick="resetTable()">Clear</button>
 
         </div>
-
-
-
-        <!-- LOADER -->
 
         <div id="loader">
             ⏳ Loading Student Data...
         </div>
 
-
-
-        <!-- TABLE -->
-
         <div class="table-container">
 
-            <table
-                id="dataTable"
-                style="display:none;"
-            >
+            <table id="dataTable" style="display:none;">
 
-                <thead id="tableHead">
-                </thead>
+                <thead id="tableHead"></thead>
 
-                <tbody id="tableBody">
-                </tbody>
+                <tbody id="tableBody"></tbody>
 
             </table>
 
         </div>
 
-
     </div>
 
-
 </div>
-
-
 
 <script>
 
 /* =====================================================
    GOOGLE SHEET ID
 ===================================================== */
-
 const SHEET_ID =
 "1jNv8d_espnJk8TqeosoXb01rT3dNbpG2auKHMYxXpQw";
 
+/* =====================================================
+   MAIN DASHBOARD FILE
+   Change only this filename if your dashboard file
+   has a different name.
+===================================================== */
+const MAIN_DASHBOARD_FILE = "dashboard.html";
 
 /* =====================================================
    DASHBOARD CONFIGURATION
 ===================================================== */
-
 const dashboards = {
 
-
-    /* ==========================================
-       CAREER QUIZ
-    ========================================== */
-
     career:{
-
         sheet:"Sheet1",
-
         title:"🚀 Career Test Analytics Dashboard",
-
         stat1:"Total Students",
-
         stat2:"Top Career",
-
         stat3:"Avg Score",
-
         columns:[
-
-            "Name",
-            "phone",
-            "stream",
-            "Percentage",
-            "R",
-            "I",
-            "A",
-            "S",
-            "E",
-            "C",
-            "Top Career",
-            "Second",
-            "Third"
-
+            "Name","phone","stream","Percentage",
+            "R","I","A","S","E","C",
+            "Top Career","Second","Third"
         ],
-
         labels:[
-
-            "Name",
-            "Phone",
-            "Stream",
-            "Percentage",
-            "R",
-            "I",
-            "A",
-            "S",
-            "E",
-            "C",
-            "Top Career",
-            "Second",
-            "Third"
-
+            "Name","Phone","Stream","Percentage",
+            "R","I","A","S","E","C",
+            "Top Career","Second","Third"
         ]
-
     },
-
-
-    /* ==========================================
-       APTITUDE QUIZ
-    ========================================== */
 
     aptitude:{
-
         sheet:"Aptitude & Placement Quiz",
-
         title:"🧠 Aptitude & Placement Analytics Dashboard",
-
         stat1:"Total Students",
-
         stat2:"Average Score",
-
         stat3:"Top Score",
-
         columns:[
-
-            "Student Name",
-            "Roll Number",
-            "Program",
-            "Year",
-            "Test Category",
-            "Difficulty Level",
-            "Correct Answers",
-            "Total Questions",
-            "Wrong Answers",
-            "Unattempted Questions",
-            "Score Percentage",
-            "Time Taken",
-            "Test Status"
-
+            "Student Name","Roll Number","Program","Year",
+            "Test Category","Difficulty Level","Correct Answers",
+            "Total Questions","Wrong Answers","Unattempted Questions",
+            "Score Percentage","Time Taken","Test Status"
         ],
-
         labels:[
-
-            "Student Name",
-            "Roll Number",
-            "Program",
-            "Year",
-            "Category",
-            "Level",
-            "Correct",
-            "Total",
-            "Wrong",
-            "Unattempted",
-            "Score %",
-            "Time Taken",
-            "Status"
-
+            "Student Name","Roll Number","Program","Year",
+            "Category","Level","Correct","Total","Wrong",
+            "Unattempted","Score %","Time Taken","Status"
         ]
-
     },
 
-
-    /* ==========================================
-       WELLBEING TEST
-    ========================================== */
-
     wellbeing:{
-
         sheet:"GJIMT Career Zone",
-
         title:"🎯 Student Wellbeing Analytics Dashboard",
-
         stat1:"Total Students",
-
         stat2:"Average Wellbeing",
-
         stat3:"Need Attention",
-
         columns:[
-
-            "Name",
-            "Roll",
-            "Year",
-            "Program",
-            "Phone",
-            "Academic",
-            "Psychological",
-            "Physical",
-            "Social",
-            "Family Financial",
-            "Help Seeking",
-            "Overall",
-            "Status",
-            "Priorities",
-            "Comment",
-            "Contact Wish"
-
+            "Name","Roll","Year","Program","Phone",
+            "Academic","Psychological","Physical","Social",
+            "Family Financial","Help Seeking","Overall",
+            "Status","Priorities","Comment","Contact Wish"
         ],
-
         labels:[
-
-            "Name",
-            "Roll Number",
-            "Year",
-            "Program",
-            "Phone",
-            "Academic",
-            "Psychological",
-            "Physical",
-            "Social",
-            "Family Financial",
-            "Help Seeking",
-            "Overall Score",
-            "Status",
-            "Priorities",
-            "Comment",
-            "Contact Wish"
-
+            "Name","Roll Number","Year","Program","Phone",
+            "Academic","Psychological","Physical","Social",
+            "Family Financial","Help Seeking","Overall Score",
+            "Status","Priorities","Comment","Contact Wish"
         ]
-
     }
-
 };
-
-
-
-/* =====================================================
-   CURRENT DASHBOARD
-===================================================== */
 
 let currentDashboard = "career";
 
-
+/* =====================================================
+   MAIN DASHBOARD REDIRECT
+===================================================== */
+function goToMainDashboard(){
+    window.location.href = MAIN_DASHBOARD_FILE;
+}
 
 /* =====================================================
    LOAD DASHBOARD
 ===================================================== */
-
 function loadDashboard(type){
 
     currentDashboard = type;
 
-    let config = dashboards[type];
+    const config = dashboards[type];
 
-
-    /* UPDATE ACTIVE MENU */
-
-    document.querySelectorAll(".sidebar button")
+    document.querySelectorAll(".sidebar > button")
     .forEach(button => {
-
         button.classList.remove("active-menu");
-
     });
 
-
-    let activeButton =
-    document.getElementById(type + "Btn");
+    const activeButton =
+        document.getElementById(type + "Btn");
 
     if(activeButton){
-
         activeButton.classList.add("active-menu");
-
     }
 
-
-    /* UPDATE TITLE */
-
     document.getElementById("dashboardTitle")
-    .innerText = config.title;
-
-
-    /* UPDATE STAT TITLES */
+        .innerText = config.title;
 
     document.getElementById("stat1Title")
-    .innerText = config.stat1;
+        .innerText = config.stat1;
 
     document.getElementById("stat2Title")
-    .innerText = config.stat2;
+        .innerText = config.stat2;
 
     document.getElementById("stat3Title")
-    .innerText = config.stat3;
+        .innerText = config.stat3;
 
+    document.getElementById("total").innerText = "0";
+    document.getElementById("domain").innerText = "-";
+    document.getElementById("avg").innerText = "0";
 
-    /* RESET VALUES */
+    document.getElementById("search").value = "";
 
-    document.getElementById("total")
-    .innerText = "0";
+    document.getElementById("loader").style.display = "block";
+    document.getElementById("loader").innerHTML =
+        "⏳ Loading Student Data...";
 
-    document.getElementById("domain")
-    .innerText = "-";
-
-    document.getElementById("avg")
-    .innerText = "0";
-
-
-    /* RESET SEARCH */
-
-    document.getElementById("search")
-    .value = "";
-
-
-    /* SHOW LOADER */
-
-    document.getElementById("loader")
-    .style.display = "block";
-
-    document.getElementById("loader")
-    .innerHTML = "⏳ Loading Student Data...";
-
-
-    document.getElementById("dataTable")
-    .style.display = "none";
-
-
-    /* CREATE URL */
+    document.getElementById("dataTable").style.display = "none";
 
     const sheetURL =
-    "https://opensheet.elk.sh/" +
-    SHEET_ID +
-    "/" +
-    encodeURIComponent(config.sheet);
-
-
-    /* FETCH DATA */
+        "https://opensheet.elk.sh/" +
+        SHEET_ID +
+        "/" +
+        encodeURIComponent(config.sheet);
 
     fetch(sheetURL)
 
     .then(res => {
 
         if(!res.ok){
-
-            throw new Error(
-                "Unable to load Google Sheet"
-            );
-
+            throw new Error("Unable to load Google Sheet");
         }
 
         return res.json();
@@ -1103,117 +816,68 @@ function loadDashboard(type){
 
     .then(data => {
 
-        document.getElementById("loader")
-        .style.display = "none";
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("dataTable").style.display = "table";
 
-
-        document.getElementById("dataTable")
-        .style.display = "table";
-
-
-        createTable(
-            data,
-            type
-        );
-
-
-        updateStatistics(
-            data,
-            type
-        );
+        createTable(data,type);
+        updateStatistics(data,type);
 
     })
 
-
     .catch(error => {
 
-        document.getElementById("loader")
-        .style.display = "block";
+        document.getElementById("loader").style.display = "block";
 
-
-        document.getElementById("loader")
-        .innerHTML =
-
-        "❌ Failed to load data<br><br>" +
-
-        "<small>" +
-
-        error.message +
-
-        "</small>";
-
+        document.getElementById("loader").innerHTML =
+            "❌ Failed to load data<br><br>" +
+            "<small>" + error.message + "</small>";
 
         console.error(error);
 
     });
-
 }
-
-
 
 /* =====================================================
    CREATE TABLE
 ===================================================== */
-
 function createTable(data,type){
 
-    let config =
-    dashboards[type];
-
+    const config = dashboards[type];
 
     let headHTML = "<tr>";
 
-
     config.labels.forEach(label => {
-
-        headHTML +=
-        `<th>${label}</th>`;
-
+        headHTML += `<th>${escapeHTML(label)}</th>`;
     });
-
 
     headHTML += "</tr>";
 
-
-    document.getElementById("tableHead")
-    .innerHTML = headHTML;
-
-
+    document.getElementById("tableHead").innerHTML = headHTML;
 
     let bodyHTML = "";
-
 
     if(data.length === 0){
 
         bodyHTML =
-
-        `<tr>
-
-            <td colspan="${config.columns.length}">
-
-                No data available
-
-            </td>
-
-        </tr>`;
-
+            `<tr>
+                <td colspan="${config.columns.length}">
+                    No data available
+                </td>
+            </tr>`;
     }
-
 
     data.forEach(row => {
 
-
         bodyHTML += "<tr>";
-
 
         config.columns.forEach(column => {
 
-
             let value =
-            row[column] || "-";
-
-
-            /* STATUS BADGES */
+                row[column] === undefined ||
+                row[column] === null ||
+                row[column] === ""
+                ? "-"
+                : row[column];
 
             if(
                 column === "Top Career" ||
@@ -1223,489 +887,369 @@ function createTable(data,type){
                 column === "Status"
             ){
 
-
                 let badgeClass = "blue";
 
-
                 if(column === "Second"){
-
                     badgeClass = "green";
-
                 }
-
 
                 if(column === "Third"){
-
                     badgeClass = "orange";
-
                 }
-
 
                 if(column === "Status"){
-
                     badgeClass = "purple";
-
                 }
-
 
                 if(column === "Test Status"){
-
                     badgeClass = "green";
-
                 }
 
+                bodyHTML +=
+                    `<td>
+                        <span class="badge ${badgeClass}">
+                            ${escapeHTML(String(value))}
+                        </span>
+                    </td>`;
+
+            }else{
 
                 bodyHTML +=
-
-                `<td>
-
-                    <span class="badge ${badgeClass}">
-
-                        ${value}
-
-                    </span>
-
-                </td>`;
-
-
+                    `<td>${escapeHTML(String(value))}</td>`;
             }
-
-            else{
-
-
-                bodyHTML +=
-
-                `<td>${value}</td>`;
-
-
-            }
-
 
         });
 
-
         bodyHTML += "</tr>";
-
-
     });
 
-
-    document.getElementById("tableBody")
-    .innerHTML = bodyHTML;
-
+    document.getElementById("tableBody").innerHTML = bodyHTML;
 }
 
-
-
 /* =====================================================
-   UPDATE STATISTICS
+   STATISTICS
 ===================================================== */
-
 function updateStatistics(data,type){
-
-
-    /* ==========================================
-       CAREER QUIZ STATS
-    ========================================== */
 
     if(type === "career"){
 
-        let total =
-        data.length;
-
-
+        const total = data.length;
         let careerCount = {};
-
         let totalScore = 0;
-
 
         data.forEach(row => {
 
+            const R = Number(row["R"]) || 0;
+            const I = Number(row["I"]) || 0;
+            const A = Number(row["A"]) || 0;
+            const S = Number(row["S"]) || 0;
+            const E = Number(row["E"]) || 0;
+            const C = Number(row["C"]) || 0;
 
-            let R =
-            Number(row["R"]) || 0;
-
-            let I =
-            Number(row["I"]) || 0;
-
-            let A =
-            Number(row["A"]) || 0;
-
-            let S =
-            Number(row["S"]) || 0;
-
-            let E =
-            Number(row["E"]) || 0;
-
-            let C =
-            Number(row["C"]) || 0;
-
-
-            let score =
-
-            (R + I + A + S + E + C) / 6;
-
+            const score =
+                (R + I + A + S + E + C) / 6;
 
             totalScore += score;
 
-
-            let topCareer =
-
-            row["Top Career"] || "Unknown";
-
+            const topCareer =
+                row["Top Career"] || "Unknown";
 
             careerCount[topCareer] =
-
-            (careerCount[topCareer] || 0) + 1;
-
-
+                (careerCount[topCareer] || 0) + 1;
         });
 
-
-        document.getElementById("total")
-        .innerText = total;
-
+        document.getElementById("total").innerText = total;
 
         if(total > 0){
 
-
-            let topCareer =
-
-            Object.keys(careerCount)
-
-            .reduce((a,b) =>
-
-                careerCount[a] > careerCount[b]
-
-                ? a
-
-                : b
-
-            );
-
+            const topCareer =
+                Object.keys(careerCount).reduce((a,b) =>
+                    careerCount[a] > careerCount[b] ? a : b
+                );
 
             document.getElementById("domain")
-            .innerText = topCareer;
-
+                .innerText = topCareer;
 
             document.getElementById("avg")
-            .innerText =
-
-            (totalScore / total)
-
-            .toFixed(1);
-
-
+                .innerText = (totalScore / total).toFixed(1);
         }
-
     }
-
-
-
-    /* ==========================================
-       APTITUDE QUIZ STATS
-    ========================================== */
 
     else if(type === "aptitude"){
 
-
-        let total =
-        data.length;
-
-
+        const total = data.length;
         let totalPercentage = 0;
-
         let highestScore = 0;
-
 
         data.forEach(row => {
 
-
-            let score =
-
-            parseFloat(
-                row["Score Percentage"]
-            ) || 0;
-
+            const score =
+                parseFloat(row["Score Percentage"]) || 0;
 
             totalPercentage += score;
 
-
             if(score > highestScore){
-
                 highestScore = score;
-
             }
-
-
         });
 
+        document.getElementById("total").innerText = total;
 
-        document.getElementById("total")
-        .innerText = total;
+        document.getElementById("domain").innerText =
+            total > 0
+            ? (totalPercentage / total).toFixed(1) + "%"
+            : "0%";
 
-
-        document.getElementById("domain")
-        .innerText =
-
-        total > 0
-
-        ? (totalPercentage / total)
-          .toFixed(1) + "%"
-
-        : "0%";
-
-
-        document.getElementById("avg")
-        .innerText =
-
-        highestScore + "%";
-
-
+        document.getElementById("avg").innerText =
+            highestScore + "%";
     }
-
-
-
-    /* ==========================================
-       WELLBEING STATS
-    ========================================== */
 
     else if(type === "wellbeing"){
 
-
-        let total =
-        data.length;
-
-
+        const total = data.length;
         let overallTotal = 0;
-
         let needAttention = 0;
-
 
         data.forEach(row => {
 
-
-            let overall =
-
-            Number(row["Overall"]) || 0;
-
+            const overall =
+                Number(row["Overall"]) || 0;
 
             overallTotal += overall;
 
-
-            let status =
-
-            String(
-                row["Status"] || ""
-            )
-
-            .toLowerCase();
-
+            const status =
+                String(row["Status"] || "").toLowerCase();
 
             if(
-
                 status.includes("attention") ||
-
                 status.includes("concern") ||
-
                 status.includes("low")
-
             ){
-
                 needAttention++;
-
             }
-
-
         });
 
+        document.getElementById("total").innerText = total;
 
-        document.getElementById("total")
-        .innerText = total;
+        document.getElementById("domain").innerText =
+            total > 0
+            ? (overallTotal / total).toFixed(1)
+            : "0";
 
-
-        document.getElementById("domain")
-        .innerText =
-
-        total > 0
-
-        ? (overallTotal / total)
-          .toFixed(1)
-
-        : "0";
-
-
-        document.getElementById("avg")
-        .innerText = needAttention;
-
-
+        document.getElementById("avg").innerText =
+            needAttention;
     }
-
 }
-
-
 
 /* =====================================================
    SEARCH
 ===================================================== */
-
 function searchTable(){
 
+    const input =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
 
-    let input =
-
-    document.getElementById("search")
-
-    .value
-
-    .toLowerCase();
-
-
-    let rows =
-
-    document.querySelectorAll(
-
-        "#tableBody tr"
-
-    );
-
+    const rows =
+        document.querySelectorAll("#tableBody tr");
 
     rows.forEach(row => {
 
-
-        let text =
-
-        row.innerText
-
-        .toLowerCase();
-
+        const text =
+            row.innerText.toLowerCase();
 
         row.style.display =
-
-        text.includes(input)
-
-        ? ""
-
-        : "none";
-
-
+            text.includes(input) ? "" : "none";
     });
-
-
 }
-
-
-
-/* =====================================================
-   RESET SEARCH
-===================================================== */
 
 function resetTable(){
 
-
-    document.getElementById("search")
-    .value = "";
-
-
+    document.getElementById("search").value = "";
     searchTable();
-
-
 }
 
-
-
 /* =====================================================
-   HOME
+   HOME / LOGOUT
 ===================================================== */
-
 function goHome(){
 
     window.location.href =
-    "https://gjimtmicrosite.github.io/Integrated/";
-
+        "https://gjimtmicrosite.github.io/Integrated/";
 }
 
+/* =====================================================
+   AI SESSION SHEETS
+   Uses the same Google Sheet ID as the main Dashboard.
+===================================================== */
+function openSheet(sheetName){
 
+    const sheetURL =
+        "https://opensheet.elk.sh/" +
+        SHEET_ID +
+        "/" +
+        encodeURIComponent(sheetName);
+
+    document.getElementById("dashboardTitle").innerText =
+        "📋 " + sheetName;
+
+    document.getElementById("loader").style.display = "block";
+    document.getElementById("loader").innerHTML =
+        "⏳ Loading " + sheetName + "...";
+
+    document.getElementById("dataTable").style.display = "none";
+
+    fetch(sheetURL)
+
+    .then(response => {
+
+        if(!response.ok){
+            throw new Error("Unable to load sheet");
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("dataTable").style.display = "table";
+
+        createGenericTable(data);
+    })
+
+    .catch(error => {
+
+        document.getElementById("loader").style.display = "block";
+
+        document.getElementById("loader").innerHTML =
+            "❌ Failed to load " + sheetName +
+            "<br><small>Please check the exact Google Sheet tab name.</small>";
+
+        console.error(error);
+    });
+}
+
+function createGenericTable(data){
+
+    const head =
+        document.getElementById("tableHead");
+
+    const body =
+        document.getElementById("tableBody");
+
+    head.innerHTML = "";
+    body.innerHTML = "";
+
+    if(!data || data.length === 0){
+
+        body.innerHTML =
+            `<tr><td>No data available</td></tr>`;
+
+        return;
+    }
+
+    const columns =
+        Object.keys(data[0]);
+
+    let headHTML = "<tr>";
+
+    columns.forEach(column => {
+        headHTML +=
+            `<th>${escapeHTML(column)}</th>`;
+    });
+
+    headHTML += "</tr>";
+
+    head.innerHTML = headHTML;
+
+    data.forEach(row => {
+
+        let rowHTML = "<tr>";
+
+        columns.forEach(column => {
+
+            const value =
+                row[column] === undefined ||
+                row[column] === null ||
+                row[column] === ""
+                ? "-"
+                : row[column];
+
+            rowHTML +=
+                `<td>${escapeHTML(String(value))}</td>`;
+        });
+
+        rowHTML += "</tr>";
+
+        body.innerHTML += rowHTML;
+    });
+}
 
 /* =====================================================
-   SKILLX MAIN MENU
+   SAFE HTML DISPLAY
 ===================================================== */
+function escapeHTML(value){
 
-const skillxToggle =
-document.getElementById("skillxToggle");
+    return value
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
 
+/* =====================================================
+   SKILLX MENU TOGGLE
+===================================================== */
+document.getElementById("skillxToggle")
+.addEventListener("click", () => {
 
-const allModules =
-document.getElementById("allModules");
+    const menu =
+        document.getElementById("allModules");
 
-
-skillxToggle.addEventListener("click", () => {
-
-
-    if(
-
-        allModules.style.display === "block"
-
-    ){
-
-
-        allModules.style.display = "none";
-
-
-    }
-
-    else{
-
-
-        allModules.style.display = "block";
-
-
-    }
-
-
+    menu.style.display =
+        menu.style.display === "block"
+        ? "none"
+        : "block";
 });
 
+/* =====================================================
+   AI SESSION MENU TOGGLE
+===================================================== */
+document.getElementById("aiSessionToggle")
+.addEventListener("click", () => {
 
+    const menu =
+        document.getElementById("aiSessionModules");
+
+    menu.style.display =
+        menu.style.display === "block"
+        ? "none"
+        : "block";
+});
 
 /* =====================================================
-   SKILLX SUBMENU ACCORDION
+   SUBMENU ACCORDION
 ===================================================== */
-
-const moduleButtons =
-
-document.querySelectorAll(
-
-    ".module-btn"
-
-);
-
-
-moduleButtons.forEach(button => {
-
+document.querySelectorAll(".module-btn")
+.forEach(button => {
 
     button.addEventListener("click", () => {
 
-
         button.parentElement
-
-        .classList
-
-        .toggle("active");
-
+            .classList
+            .toggle("active");
 
     });
-
-
 });
-
-
 
 /* =====================================================
    DEFAULT DASHBOARD
 ===================================================== */
-
 loadDashboard("career");
-
 
 </script>
 
