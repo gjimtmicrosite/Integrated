@@ -657,7 +657,96 @@ SIDEBAR
     </div>
 
   </div>
+<!-- =========================
+AI SESSION MENU
+========================= -->
 
+<div class="skillx-menu">
+
+  <button class="main-btn" id="aiSessionToggle">
+    🤖 AI Session ▼
+  </button>
+
+  <div class="all-modules" id="aiSessionModules">
+
+
+    <!-- SESSION 1 -->
+
+    <div class="module">
+
+      <button class="module-btn">
+        ▶ 📅 Session 1
+      </button>
+
+      <div class="submenu">
+
+        <a href="javascript:void(0)"
+           onclick="openSheet('AI Monthly Session')">
+          📊 Score
+        </a>
+
+        <a href="javascript:void(0)"
+           onclick="openSheet('AI Monthly Session Feedback')">
+          💬 Feedback
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- SESSION 2 -->
+
+    <div class="module">
+
+      <button class="module-btn">
+        ▶ 📅 Session 2
+      </button>
+
+      <div class="submenu">
+
+        <a href="javascript:void(0)"
+           onclick="alert('Session 2 data will be added soon')">
+          📊 Score
+        </a>
+
+        <a href="javascript:void(0)"
+           onclick="alert('Session 2 feedback will be added soon')">
+          💬 Feedback
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- SESSION 3 -->
+
+    <div class="module">
+
+      <button class="module-btn">
+        ▶ 📅 Session 3
+      </button>
+
+      <div class="submenu">
+
+        <a href="javascript:void(0)"
+           onclick="alert('Session 3 data will be added soon')">
+          📊 Score
+        </a>
+
+        <a href="javascript:void(0)"
+           onclick="alert('Session 3 feedback will be added soon')">
+          💬 Feedback
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
   <!-- REFRESH -->
 
@@ -1523,7 +1612,37 @@ moduleButtons.forEach(button => {
 
 
 });
+/* =========================
+AI SESSION MENU TOGGLE
+========================= */
 
+const aiSessionToggle =
+document.getElementById("aiSessionToggle");
+
+const aiSessionModules =
+document.getElementById("aiSessionModules");
+
+
+aiSessionToggle.addEventListener(
+  "click",
+  () => {
+
+    if(
+      aiSessionModules.style.display === "block"
+    ){
+
+      aiSessionModules.style.display = "none";
+
+    }
+
+    else{
+
+      aiSessionModules.style.display = "block";
+
+    }
+
+  }
+);
 
 </script>
 
