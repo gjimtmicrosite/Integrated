@@ -339,67 +339,54 @@ body::after{
 /* =========================================================
    MAIN MENU BUTTON
 ========================================================= */
+/* =========================================================
+   MAIN MENU BUTTON
+========================================================= */
 
 .main-btn{
-
     width:100%;
-
-    padding:12px 13px;
+    padding:10px;
+    margin:6px 0;
 
     border:none;
+    border-radius:12px;
 
-    border-radius:14px;
+    /* NORMAL STATE */
+    background:rgba(255,255,255,0.10);
 
-    background:
-        linear-gradient(
-            135deg,
-            #00c6ff,
-            #0072ff
-        );
+    color:#fff;
 
-    color:white;
-
-    font-size:13px;
-
+    font-size:14px;
     font-weight:600;
 
     cursor:pointer;
-
     transition:0.25s;
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 
     gap:8px;
 }
 
+/* HOVER ONLY */
 .main-btn:hover{
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffd700,
-            #ff9800
-        );
-
+    background:#ffd700;
     color:#000;
+    transform:translateX(3px);
 }
 
+/* IMPORTANT:
+   Do NOT keep an opened menu highlighted */
 .main-btn.open{
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffd700,
-            #ff9800
-        );
-
-    color:#000;
+    background:rgba(255,255,255,0.10);
+    color:#fff;
+    transform:none;
 }
 
+/* =========================================================
+   SKILLX RESULT DIRECT LINK
+========================================================= */
 /* =========================================================
    SKILLX RESULT DIRECT LINK
 ========================================================= */
@@ -409,45 +396,34 @@ body::after{
     width:100%;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
-    padding:12px;
+    padding:10px;
 
-    margin:10px 0;
+    margin:6px 0;
 
-    border-radius:14px;
+    border-radius:12px;
 
     text-decoration:none;
 
-    background:
-        linear-gradient(
-            135deg,
-            #8e2de2,
-            #4a00e0
-        );
+    /* NORMAL STATE */
+    background:rgba(255,255,255,0.10);
 
     color:#fff;
 
-    font-size:13px;
-
-    font-weight:700;
+    font-size:14px;
+    font-weight:600;
 
     transition:0.25s;
 
-    border:1px solid rgba(255,255,255,0.1);
+    border:none;
 }
 
+/* HOVER ONLY */
 .skillx-result-link:hover{
 
-    background:
-        linear-gradient(
-            135deg,
-            #ffd700,
-            #ff9800
-        );
+    background:#ffd700;
 
     color:#000;
 
