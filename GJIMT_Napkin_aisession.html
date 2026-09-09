@@ -183,24 +183,98 @@ label{display:block;margin:14px 0 8px;font-size:14px;font-weight:700;color:#4755
   <div class="footer-note">GJIMT AI Monthly Sessions • Napkin AI • Career Roadmap</div>
 </section>
 
-<section id="screen-feedback" class="screen">
-  <div class="card">
-    <h2>Session Feedback: Napkin AI – Career Roadmap</h2>
-    <p class="muted" id="feedbackIntro"></p>
+   <div style="margin-top:16px">
 
-    <div class="help-box">
-      <h3>Rate 1 = Very Dissatisfied, 5 = Very Satisfied</h3>
-      <p class="small-note">Please submit the feedback honestly. Ratings and the useful-part response are required. Comments and image upload are optional.</p>
-    </div>
+  <div class="likert-row">
+    <label for="fbTiming">
+      1. Session content & clarity
+    </label>
+    <select id="fbTiming">
+      <option value="">Select rating</option>
+      <option value="1">1 - Very Dissatisfied</option>
+      <option value="2">2 - Dissatisfied</option>
+      <option value="3">3 - Neutral</option>
+      <option value="4">4 - Satisfied</option>
+      <option value="5">5 - Very Satisfied</option>
+    </select>
+  </div>
 
-    <div style="margin-top:16px">
-      <div class="likert-row"><label for="fbTiming">1. Session start time & punctuality</label><select id="fbTiming"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-      <div class="likert-row"><label for="fbCoverage">2. Napkin AI content coverage and clarity</label><select id="fbCoverage"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-      <div class="likert-row"><label for="fbSpeed">3. Speed/pace of session</label><select id="fbSpeed"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-      <div class="likert-row"><label for="fbFaculty">4. Faculty teaching & interaction</label><select id="fbFaculty"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-      <div class="likert-row"><label for="fbUnderstanding">5. Your understanding/confidence after the session</label><select id="fbUnderstanding"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-      <div class="likert-row"><label for="fbAmbience">6. Ambience & facilities</label><select id="fbAmbience"><option value="">Select rating</option><option value="1">1 - Very Dissatisfied</option><option value="2">2 - Dissatisfied</option><option value="3">3 - Neutral</option><option value="4">4 - Satisfied</option><option value="5">5 - Very Satisfied</option></select></div>
-    </div>
+
+  <div class="likert-row">
+    <label for="fbCoverage">
+      2. Hands-on practical learning
+    </label>
+    <select id="fbCoverage">
+      <option value="">Select rating</option>
+      <option value="1">1 - Very Dissatisfied</option>
+      <option value="2">2 - Dissatisfied</option>
+      <option value="3">3 - Neutral</option>
+      <option value="4">4 - Satisfied</option>
+      <option value="5">5 - Very Satisfied</option>
+    </select>
+  </div>
+
+
+  <div class="likert-row">
+    <label for="fbSpeed">
+      3. Ease of understanding the AI tool
+    </label>
+    <select id="fbSpeed">
+      <option value="">Select rating</option>
+      <option value="1">1 - Very Dissatisfied</option>
+      <option value="2">2 - Dissatisfied</option>
+      <option value="3">3 - Neutral</option>
+      <option value="4">4 - Satisfied</option>
+      <option value="5">5 - Very Satisfied</option>
+    </select>
+  </div>
+
+
+  <div class="likert-row">
+    <label for="fbFaculty">
+      4. Faculty teaching, demonstration & interaction
+    </label>
+    <select id="fbFaculty">
+      <option value="">Select rating</option>
+      <option value="1">1 - Very Dissatisfied</option>
+      <option value="2">2 - Dissatisfied</option>
+      <option value="3">3 - Neutral</option>
+      <option value="4">4 - Satisfied</option>
+      <option value="5">5 - Very Satisfied</option>
+    </select>
+  </div>
+
+
+  <div class="likert-row">
+    <label for="fbUnderstanding">
+      5. Practical usefulness for studies, projects or career
+    </label>
+    <select id="fbUnderstanding">
+      <option value="">Select rating</option>
+      <option value="1">1 - Very Dissatisfied</option>
+      <option value="2">2 - Dissatisfied</option>
+      <option value="3">3 - Neutral</option>
+      <option value="4">4 - Satisfied</option>
+      <option value="5">5 - Very Satisfied</option>
+    </select>
+  </div>
+
+
+  <div class="likert-row">
+    <label for="fbAmbience">
+      6. Confidence in using the AI tool after the session
+    </label>
+    <select id="fbAmbience">
+      <option value="">Select rating</option>
+      <option value="1">1 - Very Dissatisfied</option>
+      <option value="2">2 - Dissatisfied</option>
+      <option value="3">3 - Neutral</option>
+      <option value="4">4 - Satisfied</option>
+      <option value="5">5 - Very Satisfied</option>
+    </select>
+  </div>
+
+</div>
 
     <label for="fbUseful">7. What was the most useful part of the Napkin AI session?</label>
     <textarea id="fbUseful" placeholder="For example: creating the career roadmap, adding skills, timeline, actions, measurable targets, recruiter review, or visual design"></textarea>
@@ -1864,7 +1938,7 @@ async function saveQuizData(
 async function saveFeedbackData(){
 
   const data={
-    type:'aimonthlyfeedback',
+    type:'aisession2feedback',
 
     name:student.fullName,
     phone:student.phone,
