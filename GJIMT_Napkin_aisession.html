@@ -148,134 +148,280 @@ label{display:block;margin:14px 0 8px;font-size:14px;font-weight:700;color:#4755
   </div>
 </section>
 
-<section id="screen-result" class="screen">
+<section id="screen-feedback" class="screen">
+
   <div class="card">
-    <div id="resultBadge" class="result-badge">Result</div>
-    <h2 id="resultTitle">Your Napkin AI Assessment Result</h2>
-    <p class="muted" id="studentSummary"></p>
 
-    <div class="score-box">
-      <div class="score-tile"><div class="big" id="scoreMarks">0 / 15</div><div class="small">Correct Answers</div></div>
-      <div class="score-tile"><div class="big" id="scorePercent">0%</div><div class="small">Final Percentage</div></div>
-      <div class="score-tile"><div class="big" id="scoreOutcome">Band</div><div class="small">Performance Band</div></div>
+    <h2>Session Feedback: AI Monthly Sessions – Session 2</h2>
+
+    <p class="muted" id="feedbackIntro"></p>
+
+    <div class="help-box">
+      <h3>Rate each statement from 1 to 5</h3>
+      <p style="margin:6px 0 0;color:#64748b;">
+        1 = Very Dissatisfied |
+        2 = Dissatisfied |
+        3 = Neutral |
+        4 = Satisfied |
+        5 = Very Satisfied
+      </p>
     </div>
 
-    <div class="advice" id="adviceBox"></div>
-    <div class="next-session" id="nextSessionBox"></div>
 
-    <div class="locked-cert" id="certificateLockedBox">
-      <div class="locked-icon">🔒</div>
-      <h3 style="margin:0 0 8px">Certificate Locked Until Feedback</h3>
-      <p class="unlock-note" id="certificateLockMessage"></p>
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="goToFeedback()">Continue to Feedback</button>
-        <button class="btn btn-secondary" onclick="restartQuiz()">Retake Test</button>
+    <!-- 1–6 FEEDBACK RATINGS -->
+
+    <div style="margin-top:16px">
+
+      <div class="likert-row">
+        <label for="fbTiming">
+          1. Session content & clarity
+        </label>
+
+        <select id="fbTiming">
+          <option value="">Select rating</option>
+          <option value="1">1 - Very Dissatisfied</option>
+          <option value="2">2 - Dissatisfied</option>
+          <option value="3">3 - Neutral</option>
+          <option value="4">4 - Satisfied</option>
+          <option value="5">5 - Very Satisfied</option>
+        </select>
       </div>
-      <p class="small-note">Your feedback must be successfully submitted before the certificate is generated or made available.</p>
+
+
+      <div class="likert-row">
+        <label for="fbCoverage">
+          2. Hands-on practical learning
+        </label>
+
+        <select id="fbCoverage">
+          <option value="">Select rating</option>
+          <option value="1">1 - Very Dissatisfied</option>
+          <option value="2">2 - Dissatisfied</option>
+          <option value="3">3 - Neutral</option>
+          <option value="4">4 - Satisfied</option>
+          <option value="5">5 - Very Satisfied</option>
+        </select>
+      </div>
+
+
+      <div class="likert-row">
+        <label for="fbSpeed">
+          3. Ease of understanding the AI tool
+        </label>
+
+        <select id="fbSpeed">
+          <option value="">Select rating</option>
+          <option value="1">1 - Very Dissatisfied</option>
+          <option value="2">2 - Dissatisfied</option>
+          <option value="3">3 - Neutral</option>
+          <option value="4">4 - Satisfied</option>
+          <option value="5">5 - Very Satisfied</option>
+        </select>
+      </div>
+
+
+      <div class="likert-row">
+        <label for="fbFaculty">
+          4. Faculty teaching, demonstration & interaction
+        </label>
+
+        <select id="fbFaculty">
+          <option value="">Select rating</option>
+          <option value="1">1 - Very Dissatisfied</option>
+          <option value="2">2 - Dissatisfied</option>
+          <option value="3">3 - Neutral</option>
+          <option value="4">4 - Satisfied</option>
+          <option value="5">5 - Very Satisfied</option>
+        </select>
+      </div>
+
+
+      <div class="likert-row">
+        <label for="fbUnderstanding">
+          5. Practical usefulness for studies, projects or career
+        </label>
+
+        <select id="fbUnderstanding">
+          <option value="">Select rating</option>
+          <option value="1">1 - Very Dissatisfied</option>
+          <option value="2">2 - Dissatisfied</option>
+          <option value="3">3 - Neutral</option>
+          <option value="4">4 - Satisfied</option>
+          <option value="5">5 - Very Satisfied</option>
+        </select>
+      </div>
+
+
+      <div class="likert-row">
+        <label for="fbAmbience">
+          6. Confidence in using the AI tool after the session
+        </label>
+
+        <select id="fbAmbience">
+          <option value="">Select rating</option>
+          <option value="1">1 - Very Dissatisfied</option>
+          <option value="2">2 - Dissatisfied</option>
+          <option value="3">3 - Neutral</option>
+          <option value="4">4 - Satisfied</option>
+          <option value="5">5 - Very Satisfied</option>
+        </select>
+      </div>
+
     </div>
 
-    <div class="contact-box" style="margin-top:18px">
-      <h3 style="margin-top:0">Next Step</h3>
-      <p style="line-height:1.7">Complete the feedback form to unlock your certificate if you achieved the required score. Your feedback helps us improve future AI Monthly Sessions.</p>
+
+    <!-- 7. MOST USEFUL PART -->
+
+    <label for="fbUseful">
+      7. What was the most useful part of today's AI session?
+    </label>
+
+    <textarea
+      id="fbUseful"
+      placeholder="Tell us what you found most useful..."
+    ></textarea>
+
+
+    <!-- 8. NEXT SESSION -->
+
+    <label for="fbSuggestions">
+      8. Which topic would you be most interested in for the next AI Monthly Session?
+    </label>
+
+    <select id="fbSuggestions">
+
+      <option value="">
+        Select a session topic
+      </option>
+
+      <option value="Kickresume">
+        Kickresume – AI-powered Resume & Career Building
+      </option>
+
+      <option value="Gamma">
+        Gamma – AI-powered Presentations & Content Creation
+      </option>
+
+      <option value="Canva AI">
+        Canva AI – AI-powered Design & Content Creation
+      </option>
+
+      <option value="Prompt Engineering">
+        Prompt Engineering – Better AI Instructions
+      </option>
+
+      <option value="Other">
+        Other – Please specify in comments
+      </option>
+
+    </select>
+
+
+    <!-- 9. OVERALL RATING -->
+
+    <label for="fbRating">
+      9. Overall rating of this session
+    </label>
+
+    <select id="fbRating">
+
+      <option value="">
+        Select rating
+      </option>
+
+      <option value="1">1 - Very Dissatisfied</option>
+      <option value="2">2 - Dissatisfied</option>
+      <option value="3">3 - Neutral</option>
+      <option value="4">4 - Satisfied</option>
+      <option value="5">5 - Very Satisfied</option>
+
+    </select>
+
+
+    <!-- 10. COMMENTS -->
+
+    <label for="fbComments">
+      10. Any additional comments or suggestions?
+      <span style="font-weight:400;color:#64748b;">
+        (Optional)
+      </span>
+    </label>
+
+    <textarea
+      id="fbComments"
+      placeholder="Write your suggestions here..."
+    ></textarea>
+
+
+    <!-- 11. IMAGE -->
+
+    <div style="margin-top:16px">
+
+      <label for="studentImage">
+        11. Upload a photo / image related to your feedback
+        <span style="font-weight:400;color:#64748b;">
+          (Optional)
+        </span>
+      </label>
+
+      <input
+        type="file"
+        id="studentImage"
+        accept="image/*"
+        style="
+          display:block;
+          width:100%;
+          padding:14px;
+          font-size:16px;
+          background:#ffffff;
+          border:1px solid #cbd5e1;
+          border-radius:10px;
+          box-sizing:border-box;
+          cursor:pointer;
+        "
+      >
+
+      <small
+        style="
+          display:block;
+          margin-top:8px;
+          color:#64748b;
+        "
+      >
+        JPG, JPEG or PNG • Maximum 5 MB.
+      </small>
+
+      <div
+        id="imagePreview"
+        style="margin-top:12px"
+      ></div>
+
+      <div
+        id="uploadStatus"
+        class="small-note"
+      ></div>
+
     </div>
+
+
+    <!-- SUBMIT FEEDBACK -->
+
+    <div class="btn-row">
+
+      <button
+        class="btn btn-primary"
+        id="feedbackSubmitBtn"
+        onclick="finishFeedback()"
+      >
+        Submit Feedback & Unlock Certificate
+      </button>
+
+    </div>
+
   </div>
 
-  <div class="footer-note">GJIMT AI Monthly Sessions • Napkin AI • Career Roadmap</div>
 </section>
-
-   <div style="margin-top:16px">
-
-  <div class="likert-row">
-    <label for="fbTiming">
-      1. Session content & clarity
-    </label>
-    <select id="fbTiming">
-      <option value="">Select rating</option>
-      <option value="1">1 - Very Dissatisfied</option>
-      <option value="2">2 - Dissatisfied</option>
-      <option value="3">3 - Neutral</option>
-      <option value="4">4 - Satisfied</option>
-      <option value="5">5 - Very Satisfied</option>
-    </select>
-  </div>
-
-
-  <div class="likert-row">
-    <label for="fbCoverage">
-      2. Hands-on practical learning
-    </label>
-    <select id="fbCoverage">
-      <option value="">Select rating</option>
-      <option value="1">1 - Very Dissatisfied</option>
-      <option value="2">2 - Dissatisfied</option>
-      <option value="3">3 - Neutral</option>
-      <option value="4">4 - Satisfied</option>
-      <option value="5">5 - Very Satisfied</option>
-    </select>
-  </div>
-
-
-  <div class="likert-row">
-    <label for="fbSpeed">
-      3. Ease of understanding the AI tool
-    </label>
-    <select id="fbSpeed">
-      <option value="">Select rating</option>
-      <option value="1">1 - Very Dissatisfied</option>
-      <option value="2">2 - Dissatisfied</option>
-      <option value="3">3 - Neutral</option>
-      <option value="4">4 - Satisfied</option>
-      <option value="5">5 - Very Satisfied</option>
-    </select>
-  </div>
-
-
-  <div class="likert-row">
-    <label for="fbFaculty">
-      4. Faculty teaching, demonstration & interaction
-    </label>
-    <select id="fbFaculty">
-      <option value="">Select rating</option>
-      <option value="1">1 - Very Dissatisfied</option>
-      <option value="2">2 - Dissatisfied</option>
-      <option value="3">3 - Neutral</option>
-      <option value="4">4 - Satisfied</option>
-      <option value="5">5 - Very Satisfied</option>
-    </select>
-  </div>
-
-
-  <div class="likert-row">
-    <label for="fbUnderstanding">
-      5. Practical usefulness for studies, projects or career
-    </label>
-    <select id="fbUnderstanding">
-      <option value="">Select rating</option>
-      <option value="1">1 - Very Dissatisfied</option>
-      <option value="2">2 - Dissatisfied</option>
-      <option value="3">3 - Neutral</option>
-      <option value="4">4 - Satisfied</option>
-      <option value="5">5 - Very Satisfied</option>
-    </select>
-  </div>
-
-
-  <div class="likert-row">
-    <label for="fbAmbience">
-      6. Confidence in using the AI tool after the session
-    </label>
-    <select id="fbAmbience">
-      <option value="">Select rating</option>
-      <option value="1">1 - Very Dissatisfied</option>
-      <option value="2">2 - Dissatisfied</option>
-      <option value="3">3 - Neutral</option>
-      <option value="4">4 - Satisfied</option>
-      <option value="5">5 - Very Satisfied</option>
-    </select>
-  </div>
-
-</div>
-
+   
     <label for="fbUseful">7. What was the most useful part of the Napkin AI session?</label>
     <textarea id="fbUseful" placeholder="For example: creating the career roadmap, adding skills, timeline, actions, measurable targets, recruiter review, or visual design"></textarea>
 
