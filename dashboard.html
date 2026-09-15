@@ -1454,14 +1454,14 @@ body::after{
 
                     <a
                         href="javascript:void(0)"
-                        onclick="comingSoon('Session 2 Score')"
+                        onclick="openSheet('ai-session2')"
                     >
                         📊 Score
                     </a>
 
                     <a
                         href="javascript:void(0)"
-                        onclick="comingSoon('Session 2 Feedback')"
+                        onclick="comingSoon('ai-session2-feedback')"
                     >
                         💬 Feedback
                     </a>
@@ -1999,8 +1999,10 @@ function openSheet(sheetName){
 
 
     if(
-        sheetName === "AI Monthly Session" ||
-        sheetName === "AI Monthly Session Feedback"
+         sheetName === "AI Monthly Session" ||
+    sheetName === "AI Monthly Session Feedback" ||
+    sheetName === "ai-session2" ||
+    sheetName === "ai-session2-feedback"
     ){
 
         selectedSpreadsheetId =
