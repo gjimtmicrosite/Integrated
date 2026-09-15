@@ -319,39 +319,38 @@ label{display:block;margin:14px 0 8px;font-size:14px;font-weight:700;color:#4755
     ></textarea>
 
 
-    <!-- 8. NEXT SESSION -->
+    <!-- 8. NEXT SESSION TOPIC SUGGESTIONS -->
 
-    <label for="fbSuggestions">
-      8. Which topic would you be most interested in for the next AI Monthly Session?
+    <label>
+      8. Suggest three topics you would like us to conduct in the next AI Monthly Sessions.
     </label>
+    <p class="small-note" style="margin-top:0">
+      Please enter your own ideas. You may suggest AI tools, practical skills, career topics, or any AI-related session you would like to attend.
+    </p>
 
-    <select id="fbSuggestions">
+    <label for="fbTopic1">Topic Suggestion 1</label>
+    <input
+      id="fbTopic1"
+      type="text"
+      maxlength="120"
+      placeholder="Enter your first topic suggestion"
+    >
 
-      <option value="">
-        Select a session topic
-      </option>
+    <label for="fbTopic2">Topic Suggestion 2</label>
+    <input
+      id="fbTopic2"
+      type="text"
+      maxlength="120"
+      placeholder="Enter your second topic suggestion"
+    >
 
-      <option value="Kickresume">
-        Kickresume – AI-powered Resume & Career Building
-      </option>
-
-      <option value="Gamma">
-        Gamma – AI-powered Presentations & Content Creation
-      </option>
-
-      <option value="Canva AI">
-        Canva AI – AI-powered Design & Content Creation
-      </option>
-
-      <option value="Prompt Engineering">
-        Prompt Engineering – Better AI Instructions
-      </option>
-
-      <option value="Other">
-        Other – Please specify in comments
-      </option>
-
-    </select>
+    <label for="fbTopic3">Topic Suggestion 3</label>
+    <input
+      id="fbTopic3"
+      type="text"
+      maxlength="120"
+      placeholder="Enter your third topic suggestion"
+    >
 
 
     <!-- 9. OVERALL RATING -->
@@ -585,6 +584,9 @@ const feedback = {
   understanding:'',
   ambience:'',
   useful:'',
+  topic1:'',
+  topic2:'',
+  topic3:'',
   suggestions:'',
   rating:'',
   comments:'',
@@ -1116,7 +1118,14 @@ function readFeedback(){
   feedback.understanding=requiredValue('fbUnderstanding');
   feedback.ambience=requiredValue('fbAmbience');
   feedback.useful=requiredValue('fbUseful');
-  feedback.suggestions=requiredValue('fbSuggestions');
+  feedback.topic1=requiredValue('fbTopic1');
+  feedback.topic2=requiredValue('fbTopic2');
+  feedback.topic3=requiredValue('fbTopic3');
+  feedback.suggestions=[
+    feedback.topic1,
+    feedback.topic2,
+    feedback.topic3
+  ].join(' | ');
   feedback.rating=requiredValue('fbRating');
   feedback.comments=requiredValue('fbComments');
 }
@@ -1130,7 +1139,9 @@ function validateFeedback(){
     ['fbUnderstanding','Please select a rating for your understanding/confidence.'],
     ['fbAmbience','Please select a rating for ambience & facilities.'],
     ['fbUseful','Please describe the most useful part of the session.'],
-    ['fbSuggestions','Please select your preferred next-session topic.'],
+    ['fbTopic1','Please enter your first topic suggestion for the next AI session.'],
+    ['fbTopic2','Please enter your second topic suggestion for the next AI session.'],
+    ['fbTopic3','Please enter your third topic suggestion for the next AI session.'],
     ['fbRating','Please select the overall session rating.']
   ];
 
@@ -1292,8 +1303,10 @@ function showFeedbackSummary(){
       .replace(/\n/g,'<br>')+
     '<br><br>'+
 
-    '<strong>Next AI learning interest:</strong><br>'+
-    escapeHtml(feedback.suggestions||'-')+
+    '<strong>Suggested topics for upcoming AI sessions:</strong><br>'+
+    '1. '+escapeHtml(feedback.topic1||'-')+'<br>'+
+    '2. '+escapeHtml(feedback.topic2||'-')+'<br>'+
+    '3. '+escapeHtml(feedback.topic3||'-')+
     '<br><br>'+
 
     '<strong>Additional comments:</strong><br>'+
@@ -1645,8 +1658,10 @@ function buildFeedbackSummaryText(){
     'Most useful part:',
     feedback.useful||'-',
     '',
-    'Next AI learning interest:',
-    feedback.suggestions||'-',
+    'Suggested topics for upcoming AI sessions:',
+    `1. ${feedback.topic1||'-'}`,
+    `2. ${feedback.topic2||'-'}`,
+    `3. ${feedback.topic3||'-'}`,
     '',
     'Additional comments:',
     feedback.comments||'-',
@@ -1950,7 +1965,6 @@ function restartQuiz(){
     'fbFaculty',
     'fbUnderstanding',
     'fbAmbience',
-    'fbSuggestions',
     'fbRating'
   ].forEach(id=>{
 
@@ -1960,7 +1974,7 @@ function restartQuiz(){
 
   });
 
-  ['fbUseful','fbComments'].forEach(id=>{
+  ['fbUseful','fbTopic1','fbTopic2','fbTopic3','fbComments'].forEach(id=>{
 
     const el=document.getElementById(id);
 
@@ -2123,6 +2137,9 @@ async function saveFeedbackData(){
     understanding:feedback.understanding,
     ambience:feedback.ambience,
     useful:feedback.useful,
+    topic1:feedback.topic1,
+    topic2:feedback.topic2,
+    topic3:feedback.topic3,
     suggestions:feedback.suggestions,
     rating:feedback.rating,
     comments:feedback.comments
