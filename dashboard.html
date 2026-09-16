@@ -1986,11 +1986,6 @@ function openSheet(sheetName){
        AI SESSION SPREADSHEET
     ====================================================== */
 
-    /*
-       IMPORTANT:
-       AI Session data is stored in a DIFFERENT Google Spreadsheet.
-       Only the four AI Session tabs below use this ID.
-    */
     const aiSpreadsheetId =
         "1Ml30EnO2AmG1pjdEsV5y_-QIr84f655rcW58Ni8CCW0";
 
@@ -2288,7 +2283,7 @@ function openSheet(sheetName){
                 "<span>📋 " +
                 escapeHTML(sheetName) +
                 "</span>" +
-                "<span class='sheet-total'>" +
+                "<span class='sheet-total' id='sheetTotal'>" +
                 "Total Students: " +
                 data.length +
                 "</span>";
