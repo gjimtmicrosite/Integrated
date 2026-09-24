@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GJIMT Mega Convocation 2026 - Registration Desk</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- SheetJS Library for multi-sheet Excel parsing in browser -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --primary: #0A1931;
+      --secondary: #B25900;
+      --accent: #2563eb;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; padding: 24px 16px; }
+    .container { max-width: 960px; margin: 0 auto; }
+    
+    .header { text-align: center; margin-bottom: 20px; }
+    .header h1 { font-size: 1.6rem; color: var(--primary); font-weight: 800; margin-bottom: 4px; }
+    .header p { font-size: 0.95rem; color: var(--secondary); font-weight: 700; text-transform: uppercase; }
+    .header .meta { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+
+    .sync-bar {
+      background: #ffffff; border: 1.5px solid var(--border); border-radius: 12px;
+      padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    }
+    .sync-status { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.9rem; }
+    .status-dot { width: 11px; height: 11px; border-radius: 50%; background: #eab308; }
+    .status-dot.active { background: #16a34a; }
+    .sync-actions { display: flex; gap: 10px; align-items: center; }
+
+    .file-btn-wrapper {
+      position: relative; overflow: hidden; display: inline-block;
+    }
+    .file-btn-wrapper input[type=file] {
+      position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
+    }
+
+    .tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
+    .tab-btn {
+      padding: 12px 24px; border: 1.5px solid var(--border); background: #ffffff;
+      border-radius: 10px; font-weight: 700; font-size: 0.92rem; cursor: pointer;
+      color: var(--text-muted); transition: all 0.2s ease; display: flex; align-items: center; gap: 8px;
+    }
+    .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .tab-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); box-shadow: 0 4px 10px rgba(10,25,49,0.2); }
+
+    .card {
+      background: var(--card-bg); border-radius: 14px; border: 1px solid var(--border);
+      padding: 26px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .search-box { display: flex; gap: 10px; margin-top: 10px; margin-bottom: 20px; }
+    .search-box input {
+      flex: 1; padding: 14px 16px; border: 2px solid var(--border); border-radius: 10px;
+      font-size: 1.05rem; outline: none; font-weight: 600;
+    }
+    .search-box input:focus { border-color: var(--primary); }
+
+    .btn {
+      padding: 12px 24px; border: none; border-radius: 8px; font-weight: 700;
+      cursor: pointer; font-size: 0.92rem; transition: all 0.2s; display: inline-flex;
+      align-items: center; justify-content: center;
+    }
+    .btn-primary { background: var(--primary); color: #ffffff; }
+    .btn-primary:hover { background: #152b52; }
+    .btn-outline { background: #f8fafc; border: 1.5px solid var(--border); color: var(--text-main); }
+    .btn-outline:hover { background: #e2e8f0; }
+    .btn-success {
+      background: var(--success); color: #ffffff; width: 100%; font-size: 1.1rem;
+      padding: 16px; margin-top: 16px; border-radius: 10px; box-shadow: 0 4px 12px rgba(22,163,74,0.25);
+    }
+    .btn-success:hover { background: #15803d; }
+    
+    .btn-disabled {
+      width: 100%; font-size: 0.95rem; padding: 14px; margin-top: 16px;
+      text-align: center; border-radius: 10px; font-weight: 700;
+    }
+    .disabled-red { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .disabled-green { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+
+    .details-box { display: none; margin-top: 15px; border-top: 1px solid var(--border); padding-top: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .item { background: #f8fafc; padding: 12px 16px; border-radius: 10px; border: 1px solid #e2e8f0; }
+    .item-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+    .item-val { font-size: 0.98rem; color: var(--text-main); font-weight: 700; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 9999px; font-size: 0.8rem; font-weight: 800; }
+    .badge-yes { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .badge-no { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+    .table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+    .filter-select { padding: 9px 14px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 0.88rem; font-weight: 600; outline: none; }
+    .table-container { overflow-x: auto; max-height: 520px; border: 1px solid var(--border); border-radius: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.86rem; text-align: left; }
+    th { background: #0A1931; color: #ffffff; padding: 12px 14px; position: sticky; top: 0; z-index: 2; font-weight: 600; }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: #334155; }
+    tr:nth-child(even) td { background-color: #f8fafc; }
+    tr:hover td { background-color: #f1f5f9; }
+
+    .confirm-actions { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+    .btn-yes { background:#16a34a; color:#fff; padding:16px; font-size:1.05rem; }
+    .btn-no { background:#dc2626; color:#fff; padding:16px; font-size:1.05rem; }
+    .remarks-box { background:#fff7ed; border:1px solid #fed7aa; padding:14px 16px; border-radius:10px; margin-top:12px; }
+    .save-note { margin-top:10px; font-size:.82rem; color:var(--text-muted); text-align:center; }
+    .sheet-pill {
+      display: inline-block; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>GIAN JYOTI INSTITUTE OF MANAGEMENT AND TECHNOLOGY</h1>
+    <p>21st Mega Convocation 2026 — Multi-Program Registration Desk</p>
+    <div class="meta">Conferment of Degrees for Batches 2020 to 2025 | Saturday, 26 September 2026</div>
+  </div>
+
+  <div class="sync-bar">
+    <div class="sync-status">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="recordCountText">Connecting to Convocation Google Sheet…</span>
+    </div>
+    <div class="sync-actions">
+      <button class="btn btn-primary" style="font-size:0.85rem;" onclick="loadFromGoogleSheet()">🔄 Refresh Google Sheet</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tabRegisterBtn" onclick="switchTab('register')">
+      <span>🎓</span> Register Scholar
+    </button>
+    <button class="tab-btn" id="tabListBtn" onclick="switchTab('list')">
+      <span>📋</span> View On-Spot Confirmed List
+    </button>
+  </div>
+
+  <div id="viewRegister" class="card">
+    <label style="font-weight:700; font-size:0.95rem; color:var(--primary); display:block;">
+      Enter Student Mobile Number or Roll Number:
+    </label>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Enter Roll No (e.g. 1922755) or Mobile (e.g. 8284966351)..." onkeypress="if(event.key==='Enter') searchStudent()">
+      <button class="btn btn-primary" onclick="searchStudent()">Search Scholar</button>
+    </div>
+
+    <div class="details-box" id="studentDetails">
+      <div class="grid">
+        <div class="item">
+          <div class="item-label">Student Name</div>
+          <div class="item-val" id="dispName">-</div>
+        </div>
+        <div class="item">
+          <div class="item-label">Roll Number</div>
+          <div class="item-val" id="dispRoll">-</div>
+        </div>
+        <div class="item">
+          <div class="item-label">Program / Sheet</div>
+          <div class="item-val" id="dispProgram">-</div>
+        </div>
+        <div class="item">
+          <div class="item-label">Batch</div>
+          <div class="item-val" id="dispBatch">-</div>
+        </div>
+        <div class="item">
+          <div class="item-label">Mobile Number</div>
+          <div class="item-val" id="dispPhone">-</div>
+        </div>
+        <div class="item">
+          <div class="item-label">Course Status</div>
+          <div class="item-val" id="dispStatus">-</div>
+        </div>
+        <div class="item">
+          <div class="item-label">Registration Status</div>
+          <div class="item-val" id="dispReg">-</div>
+        </div>
+        <div class="item">
+          <div class="item-label">Eligibility</div>
+          <div class="item-val" id="dispEligibility">-</div>
+        </div>
+        <div class="item">
+          <div class="item-label">On-Spot Confirmation</div>
+          <div class="item-val" id="dispOnSpot">-</div>
+        </div>
+      </div>
+
+      <div class="remarks-box"><div class="item-label">Remarks</div><div class="item-val" id="dispRemarks">-</div></div>
+      <div id="actionContainer"></div>
+    </div>
+  </div>
+
+  <div id="viewList" class="card" style="display:none;">
+    <div class="table-controls">
+      <div>
+        <label style="font-weight:700; font-size:0.85rem; margin-right:8px; color:var(--primary);">Filter by Program / Sheet:</label>
+        <select id="programFilter" class="filter-select" onchange="renderRegisteredTable()">
+          <option value="ALL">All Programs</option>
+        </select>
+      </div>
+      <div id="totalRegisteredBadge" style="font-weight:800; color:var(--secondary); font-size:0.95rem;">
+        Registered Scholars: 0
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table id="regTable">
+        <thead>
+          <tr>
+            <th style="width:45px;">#</th>
+            <th>Student Name</th>
+            <th>Roll No</th>
+            <th>Program / Sheet</th>
+            <th>Batch</th>
+            <th>Mobile No</th>
+            <th style="text-align:center;">Registered</th>
+          </tr>
+        </thead>
+        <tbody id="regTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  // IMPORTANT: Paste your deployed Google Apps Script Web App URL below.
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyGMP9RzzxtENdA8QmS7jGnVfYukdaFTP_eOMoFk3EsGYPxgOMel78StjnuLwMwUbH2vg/exec';
+  const SPREADSHEET_ID = '1Sfke8qMKSiLtiG8wowbVvOs8DPw8jntvvesdZiFaqak';
+  var allCombinedStudents = [];
+  var currentSelectedStudent = null;
+
+  window.onload = function(){ loadFromGoogleSheet(); };
+  function cellToString(v){ return v===undefined||v===null?'':String(v).trim(); }
+  function cleanNum(str){ var s=String(str||'').replace(/[^0-9]/g,''); if(s.length===12&&s.startsWith('91'))s=s.substring(2); if(s.length===11&&s.startsWith('0'))s=s.substring(1); return s; }
+  function getProp(obj,candidates){ for(var k in obj){ var clean=k.toLowerCase().replace(/[^a-z0-9]/g,''); for(var i=0;i<candidates.length;i++){ if(clean===candidates[i]||clean.indexOf(candidates[i])!==-1)return cellToString(obj[k]); }} return ''; }
+  function esc(s){ return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+
+  function jsonp(params){
+    return new Promise((resolve,reject)=>{
+      if(!API_URL || API_URL.indexOf('PASTE_')===0){ reject(new Error('Google Apps Script Web App URL is not configured yet.')); return; }
+      const cb='gjimtCb_'+Date.now()+'_'+Math.floor(Math.random()*10000); params.callback=cb; params.spreadsheetId=SPREADSHEET_ID;
+      const sc=document.createElement('script'); const timer=setTimeout(()=>{cleanup();reject(new Error('Google Sheet request timed out.'));},15000);
+      function cleanup(){clearTimeout(timer);delete window[cb];if(sc.parentNode)sc.parentNode.removeChild(sc);}
+      window[cb]=data=>{cleanup();data&&data.ok?resolve(data):reject(new Error((data&&data.error)||'Unknown Google Sheet error'));};
+      sc.onerror=()=>{cleanup();reject(new Error('Could not connect to Google Sheet backend.'));};
+      sc.src=API_URL+'?'+new URLSearchParams(params).toString(); document.body.appendChild(sc);
+    });
+  }
+
+  async function loadFromGoogleSheet(){
+    document.getElementById('recordCountText').innerText='Connecting to Convocation Google Sheet…';
+    try{ const res=await jsonp({action:'list'}); allCombinedStudents=res.rows||[]; document.getElementById('statusDot').classList.add('active'); document.getElementById('recordCountText').innerText='LIVE: '+allCombinedStudents.length+' scholars loaded from Google Sheet'; populateProgramDropdown(); renderRegisteredTable(); }
+    catch(e){ document.getElementById('statusDot').classList.remove('active'); document.getElementById('recordCountText').innerText='Backend setup required — '+e.message; }
+  }
+
+  function searchStudent(){
+    var raw=document.getElementById('searchInput').value.trim(); if(!raw){alert('Please enter a Roll Number or Mobile Number.');return;} if(!allCombinedStudents.length){alert('Google Sheet data is not loaded yet. Click Refresh Google Sheet.');return;}
+    var qn=cleanNum(raw), qt=raw.toLowerCase().replace(/[^a-z0-9]/g,''); var found=null;
+    for(var i=0;i<allCombinedStudents.length;i++){ var s=allCombinedStudents[i], rr=getProp(s,['roll','rollno','rollnumber','universityrollno','studentrollno']), pp=getProp(s,['mobile','mobileno','phone','phoneno','contact','contactno']); if((qn&&(cleanNum(rr)===qn||cleanNum(pp)===qn))||(qt&&(rr.toLowerCase().replace(/[^a-z0-9]/g,'')===qt||pp.toLowerCase().replace(/[^a-z0-9]/g,'')===qt))){found=s;break;} }
+    if(!found){alert('No student record found matching: '+raw);document.getElementById('studentDetails').style.display='none';return;} currentSelectedStudent=found; displayStudentProfile(found);
+  }
+
+  function displayStudentProfile(s){
+    var name=getProp(s,['name','studentname','fullname','nameofstudent']), roll=getProp(s,['roll','rollno','rollnumber','universityrollno']), prog=getProp(s,['program','course','degree','branch'])||s._originSheet, batch=getProp(s,['batch','passingyear','cohort']), phone=getProp(s,['mobile','mobileno','phone','phoneno','contact']), status=getProp(s,['status','coursestatus','result','academicstatus']), reg=getProp(s,['registered','registration','regstatus'])||'No';
+    var eligibility=getProp(s,['eligibility','eligible','convocationeligibility','eligiblestatus'])||status||'N/A'; var remarks=getProp(s,['remarks','remark','comments','comment','reason','eligibilityremarks'])||'No remarks'; var onspot=getProp(s,['onspotconfirmation','onspot','spotconfirmation','attendanceconfirmation','arrived'])||'Pending';
+    document.getElementById('dispName').innerText=name||'N/A'; document.getElementById('dispRoll').innerText=roll||'N/A'; document.getElementById('dispProgram').innerHTML=esc(prog||'N/A')+' <span class="sheet-pill">'+esc(s._originSheet||'')+'</span>'; document.getElementById('dispBatch').innerText=batch||'N/A'; document.getElementById('dispPhone').innerText=phone||'N/A'; document.getElementById('dispStatus').innerText=status||'N/A'; document.getElementById('dispReg').innerHTML=reg.toLowerCase()==='yes'?'<span class="badge badge-yes">Yes</span>':'<span class="badge badge-no">No</span>'; document.getElementById('dispEligibility').innerText=eligibility; document.getElementById('dispRemarks').innerText=remarks; document.getElementById('dispOnSpot').innerHTML=onspot.toLowerCase()==='yes'?'<span class="badge badge-yes">YES — Confirmed</span>':onspot.toLowerCase()==='no'?'<span class="badge badge-no">NO — Not Confirmed</span>':'<span class="badge">Pending</span>';
+    document.getElementById('actionContainer').innerHTML='<div class="confirm-actions"><button class="btn btn-yes" onclick="saveOnSpot(\'YES\')">✓ YES — Confirm Arrival</button><button class="btn btn-no" onclick="saveOnSpot(\'NO\')">✕ NO — Not Arrived</button></div><div class="save-note">Selection is saved immediately to the Google Sheet with date and time. NO can later be changed to YES.</div>';
+    document.getElementById('studentDetails').style.display='block';
+  }
+
+  async function saveOnSpot(value){
+    if(!currentSelectedStudent)return; var roll=getProp(currentSelectedStudent,['roll','rollno','rollnumber','universityrollno']), phone=getProp(currentSelectedStudent,['mobile','mobileno','phone','phoneno','contact']);
+    if(!confirm('Save On-Spot Confirmation as '+value+' for '+(getProp(currentSelectedStudent,['name','studentname'])||'this scholar')+'?'))return;
+    try{ var res=await jsonp({action:'update',sheet:currentSelectedStudent._originSheet||'',row:currentSelectedStudent._rowNumber||'',roll:roll,phone:phone,value:value}); currentSelectedStudent['On Spot Confirmation']=value; currentSelectedStudent['Check-in Date & Time']=res.timestamp||''; displayStudentProfile(currentSelectedStudent); renderRegisteredTable(); alert('Saved successfully in Google Sheet: '+value); }
+    catch(e){alert('Could not save: '+e.message);}
+  }
+
+  function switchTab(tab){document.getElementById('viewRegister').style.display=tab==='register'?'block':'none';document.getElementById('viewList').style.display=tab==='list'?'block':'none';document.getElementById('tabRegisterBtn').classList.toggle('active',tab==='register');document.getElementById('tabListBtn').classList.toggle('active',tab==='list');if(tab==='list')renderRegisteredTable();}
+  function populateProgramDropdown(){var sel=document.getElementById('programFilter'),ps={};allCombinedStudents.forEach(s=>{var p=getProp(s,['program','course','degree','branch'])||s._originSheet;if(p)ps[p]=1;});sel.innerHTML='<option value="ALL">All Programs / Sheets</option>';Object.keys(ps).sort().forEach(p=>{var o=document.createElement('option');o.value=p;o.innerText=p;sel.appendChild(o);});}
+  function renderRegisteredTable(){var filter=document.getElementById('programFilter').value,t=document.getElementById('regTableBody');t.innerHTML='';var c=0;allCombinedStudents.forEach(s=>{var on=getProp(s,['onspotconfirmation','onspot','spotconfirmation','attendanceconfirmation','arrived']),p=getProp(s,['program','course','degree','branch'])||s._originSheet;if(on.toLowerCase()==='yes'&&(filter==='ALL'||p===filter)){c++;var tr=document.createElement('tr');tr.innerHTML='<td>'+c+'</td><td><b>'+esc(getProp(s,['name','studentname','fullname'])||'-')+'</b></td><td>'+esc(getProp(s,['roll','rollno','rollnumber'])||'-')+'</td><td>'+esc(p||'-')+'</td><td>'+esc(getProp(s,['batch','passingyear'])||'-')+'</td><td>'+esc(getProp(s,['mobile','phone','mobileno'])||'-')+'</td><td style="text-align:center"><span class="badge badge-yes">YES</span></td>';t.appendChild(tr);}});document.getElementById('totalRegisteredBadge').innerText='On-Spot Confirmed Scholars: '+c;if(!c)t.innerHTML='<tr><td colspan="7" style="text-align:center;padding:24px;color:#94a3b8">No on-spot confirmed students found.</td></tr>';}
+</script>
+
+</body>
+</html>
